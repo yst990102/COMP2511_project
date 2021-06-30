@@ -8,6 +8,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch StartGame",
+            "request": "launch",
+            "mainClass": "unsw.loopmania.StartGame",
+            "projectName": "21T2-cs2511-project_6d0f4d75"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - LoopManiaApplication",
             "request": "launch",
             "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
