@@ -1,9 +1,9 @@
-##### Assumptions:
+# Assumptions:
 
 ## Basic Rules:
 
 
-# 1. Default attributes of Character are listed below:
+### 1. Default attributes of Character are listed below:
 
 - Default HP: 300
 - Default Attack: 5
@@ -12,7 +12,7 @@
 - Default Gold: $100
 
 
-# 2. Default attributes of different types of enemy are listed below:
+### 2. Default attributes of different types of enemy are listed below:
 
 Slug
 - HP: 15
@@ -40,16 +40,16 @@ Vampire
 - additional damage of a critical bite: 10
 
 
-# 3. There will be 5 slugs spawned randomly on path tiles each turn.
+### 3. There will be 5 slugs spawned randomly on path tiles each turn.
 
 
-# 4. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
+#### 4. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
 
 
-# 5. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
+#### 5. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
 
 
-# 6. There are three ways to win the game
+#### 6. There are three ways to win the game
 - Complete 50 cycles
 - Complete 30 cycles AND (amassing 5000 Gold OR obtaining 5000 experience points)
 - Amass 8000 Gold AND obtain 3000 experience points
@@ -59,7 +59,7 @@ Vampire
 ## Items Rules:
 
 
-# 1. The attack, defense of each equipment are listed below:
+#### 1. The attack, defense of each equipment are listed below:
 
 
 Sword
@@ -85,20 +85,20 @@ Helmet
 - Decrease Attack (Character): 2
 - Decrease Attack (enemy): 2
 
-# 2. A health potion will heal 50 HP.
+#### 2. A health potion will heal 50 HP.
 
 
-# 3. The health potion can be used by clicking it.
+#### 3. The health potion can be used by clicking it.
 
 
-# 4. When HP is full, health will not be restored when Character consumes the health potion.
+#### 4. When HP is full, health will not be restored when Character consumes the health potion.
 
 
 
 ## Building Rules:
 
 
-# 1. functions of each building
+#### 1. functions of each building
 
 Vampire Castle
 - produces 3 vampires every 5 cycles
@@ -127,24 +127,24 @@ Campfire
 ## Fighting Rules:
 
 
-# 1. At least one card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
+#### 1. At least one card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
 
 Slug: $50, XP 100
 Zombie: $100, XP 200
 Vampire: $200, XP 300
 
 
-# 2. When a battle starts, the Character will attack first in each turn by default.
+#### 2. When a battle starts, the Character will attack first in each turn by default.
 
 
-# 3. Every time the Character wins a battle,  there is a 5% chance of obtaining a rare item.
+#### 3. Every time the Character wins a battle,  there is a 5% chance of obtaining a rare item.
 
 
 
 ## Selling Rules:
 
 
-# 1. The price of each equipment is fixed when selling or purchasing.
+#### 1. The price of each equipment is fixed when selling or purchasing.
 
 Sword
 Price: $150
@@ -168,8 +168,8 @@ Health potion
 Price: $200
 
 
-# 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
+#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
 
 
-# 3. When the old equipment is replaced by the new one, the Character receives $100 Gold and 100 XP.
+#### 3. When the old equipment is replaced by the new one, the Character receives $100 Gold and 100 XP.
 
