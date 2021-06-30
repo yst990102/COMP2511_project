@@ -129,9 +129,9 @@ Campfire
 
 #### 1. At least one card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
 
-Slug: $50, XP 100
-Zombie: $100, XP 200
-Vampire: $200, XP 300
+- Slug: $50, XP 100
+- Zombie: $100, XP 200
+- Vampire: $200, XP 300
 
 
 #### 2. When a battle starts, the Character will attack first in each turn by default.
@@ -146,26 +146,19 @@ Vampire: $200, XP 300
 
 #### 1. The price of each equipment is fixed when selling or purchasing.
 
-Sword
-Price: $150
+- Sword: $150
 
-Stake
-Price: $150
+- Stake: $150
 
-Staff
-Price: $200
+- Staff: $200
 
-Armour
-Price: $250
+- Armour: $250
 
-Shield
-Price: $150
+- Shield: $150
 
-Helmet
-Price: $200
+- Helmet: $200
 
-Health potion
-Price: $200
+- Health potion: $200
 
 
 #### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
