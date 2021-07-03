@@ -5,9 +5,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * represents an equipped or unequipped sword in the backend world
  */
-public class Sword extends Equipment {
+public class Armour extends Equipment {
     // TODO = add more weapon/item types
-    public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }    
 }
