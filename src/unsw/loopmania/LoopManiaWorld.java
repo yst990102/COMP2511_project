@@ -179,23 +179,47 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawn a sword in the world and return the sword entity
-     * @return a sword to be spawned in the controller as a JavaFX node
+     * spawn a equipment in the world and return the equipment entity
+     * @return a equipment to be spawned in the controller as a JavaFX node
      */
-    public Sword addUnequippedSword(){
-        // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
+    public Equipment addUnequippedEquipment(){
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
-        // now we insert the new sword, as we know we have at least made a slot available...
-        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(sword);
-        return sword;
+        // now we insert the new equipment, as we know we have at least made a slot available...
+        int randomInt = new Random().nextInt(6);
+
+        if (randomInt == 0){
+            Helmet helmet = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(helmet);
+            return helmet;
+        }else if (randomInt == 1){
+            Shield shield = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(shield);
+            return shield;
+        }else if (randomInt == 2){
+            Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(sword);
+            return sword;
+        }else if (randomInt == 3){
+            Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(stake);
+            return stake;
+        }else if (randomInt == 4){
+            Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(staff);
+            return staff;
+        }else{
+            Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(armour);
+            return armour;
+        }
     }
 
     /**
