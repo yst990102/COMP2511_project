@@ -11,20 +11,13 @@
             "name": "Launch StartGame",
             "request": "launch",
             "mainClass": "unsw.loopmania.StartGame",
-            "projectName": "21T2-cs2511-project_fea1bc54"
-        },
-        {
-            "type": "java",
-            "name": "Launch StartGame",
-            "request": "launch",
-            "mainClass": "unsw.loopmania.StartGame",
-            "projectName": "21T2-cs2511-project_2375a448"
+            "projectName": "21T2-cs2511-project_16ffd6c0"
         },
         {
             "type": "java",
             "name": "CodeLens (Launch) - LoopManiaApplication",
             "request": "launch",
-            "vmArgs": "--module-path ./lib",
+            "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
             "mainClass": "unsw.loopmania.LoopManiaApplication"
         }
     ]
