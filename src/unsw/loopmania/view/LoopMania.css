@@ -1,0 +1,24 @@
+#main-container {
+  -fx-background-color: #23212d;
+}
+
+.button {
+  -fx-background-repeat: no-repeat;
+  -fx-background-color: transparent;
+}
+
+.button:hover {
+  -fx-cursor: hand;
+}
+
+#exit-button {
+  -fx-background-image: url("../../../assets/button_background.png");
+}
+
+#pause-button {
+  -fx-background-image: url("../../../assets/button_background.png");
+}
+
+#description-box {
+  -fx-background-image: url("../../../assets/description_box.png");
+}

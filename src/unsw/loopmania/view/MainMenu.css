@@ -2,12 +2,12 @@
   -fx-background-image: url("../../../assets/main_menu_background.jpg");
 }
 
-#startGameButton {
+#start-game-button {
   -fx-background-image: url("../../../assets/start_game_button.png");
   -fx-background-repeat: no-repeat;
   -fx-background-color: transparent;
 }
 
-#startGameButton:hover {
+#start-game-button:hover {
   -fx-cursor: hand;
 }

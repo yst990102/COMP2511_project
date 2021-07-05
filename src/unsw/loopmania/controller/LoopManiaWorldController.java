@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
 import javafx.util.Duration;
 import java.util.EnumMap;
 
@@ -105,6 +106,9 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane unequippedInventory;
+
+    @FXML
+    private Button pauseButton;
 
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -193,6 +197,7 @@ public class LoopManiaWorldController {
         
         Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
         Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
+        Image cardSlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
 
         // Add the ground first so it is below all other entities (inculding all the twists and turns)
@@ -211,7 +216,7 @@ public class LoopManiaWorldController {
         
         // add the ground underneath the cards
         for (int x=0; x<world.getWidth(); x++){
-            ImageView groundView = new ImageView(pathTilesImage);
+            ImageView groundView = new ImageView(cardSlotImage);
             groundView.setViewport(imagePart);
             cards.add(groundView, x, 0);
         }
@@ -618,6 +623,18 @@ public class LoopManiaWorldController {
             break;
         default:
             break;
+        }
+    }
+
+    @FXML
+    public void handlePauseButtonClick() {
+        if (isPaused){
+            startTimer();
+            pauseButton.setText("Pause");
+        }
+        else{
+            pause();
+            pauseButton.setText("Continue");
         }
     }
 
