@@ -13,7 +13,9 @@ public class MainMenuController {
      */
     private MenuSwitcher gameSwitcher;
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
+    //startGameButton
+
+    public void setModeSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
     }
 
