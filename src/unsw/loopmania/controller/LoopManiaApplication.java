@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.controller;
 
 import java.io.IOException;
 
@@ -32,13 +32,13 @@ public class LoopManiaApplication extends Application {
         // load the main game
         LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
         mainController = loopManiaLoader.loadController();
-        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
+        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("../view/LoopManiaView.fxml"));
         gameLoader.setController(mainController);
         Parent gameRoot = gameLoader.load();
 
         // load the main menu
         MainMenuController mainMenuController = new MainMenuController();
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("../view/MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 

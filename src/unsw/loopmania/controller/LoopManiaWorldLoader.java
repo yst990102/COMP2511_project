@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.controller;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,6 +12,14 @@ import org.json.JSONTokener;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.List;
+
+import unsw.loopmania.model.LoopManiaWorld;
+import unsw.loopmania.model.Entity;
+import unsw.loopmania.model.PathTile;
+import unsw.loopmania.model.PathPosition;
+import unsw.loopmania.model.Character;
+
+
 
 /**
  * Loads a world from a .json file.

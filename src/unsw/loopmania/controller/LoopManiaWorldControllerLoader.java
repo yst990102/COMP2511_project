@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.controller;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,6 +14,10 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.Rectangle2D;
 
 import java.io.File;
+
+import unsw.loopmania.model.Character;
+import unsw.loopmania.model.PathTile;
+import unsw.loopmania.model.Entity;
 
 /**
  * A LoopManiaLoader that also creates the necessary ImageViews for the UI,

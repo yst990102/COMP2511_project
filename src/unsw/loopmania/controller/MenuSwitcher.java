@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.controller;
 
 // simple interface for lambda expression to switch a menu... no args required...
 public interface MenuSwitcher {

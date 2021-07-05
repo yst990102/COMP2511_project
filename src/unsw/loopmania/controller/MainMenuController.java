@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.controller;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.model;
 
 /**
  * represents the main character in the backend of the game world

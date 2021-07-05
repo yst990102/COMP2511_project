@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.controller;
 
 public class StartGame {
   public static void main(String[] args) {
