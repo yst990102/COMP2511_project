@@ -34,18 +34,18 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.model.LoopManiaWorld;
-import unsw.loopmania.model.Shield;
-import unsw.loopmania.model.Staff;
-import unsw.loopmania.model.Stake;
 import unsw.loopmania.model.DragIcon;
-import unsw.loopmania.model.Armour;
 import unsw.loopmania.model.BasicEnemy;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.Equipment;
-import unsw.loopmania.model.Helmet;
 import unsw.loopmania.model.VampireCastleCard;
+import unsw.loopmania.model.Equipments.Armour;
+import unsw.loopmania.model.Equipments.Helmet;
+import unsw.loopmania.model.Equipments.Shield;
+import unsw.loopmania.model.Equipments.Staff;
+import unsw.loopmania.model.Equipments.Stake;
+import unsw.loopmania.model.Equipments.Sword;
 import unsw.loopmania.model.VampireCastleBuilding;
-import unsw.loopmania.model.Sword;
 
 
 /**

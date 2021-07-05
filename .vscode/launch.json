@@ -10,7 +10,7 @@
             "type": "java",
             "name": "Launch StartGame",
             "request": "launch",
-            "mainClass": "unsw.loopmania.model.StartGame",
+            "mainClass": "unsw.loopmania.controller.StartGame",
             "projectName": "21T2-cs2511-project_c5760f1f"
         },
         {

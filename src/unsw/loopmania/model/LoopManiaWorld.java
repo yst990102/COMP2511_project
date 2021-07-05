@@ -7,6 +7,12 @@ import java.util.Random;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.model.Equipments.Armour;
+import unsw.loopmania.model.Equipments.Helmet;
+import unsw.loopmania.model.Equipments.Shield;
+import unsw.loopmania.model.Equipments.Staff;
+import unsw.loopmania.model.Equipments.Stake;
+import unsw.loopmania.model.Equipments.Sword;
 
 /**
  * A backend world.
