@@ -1,0 +1,13 @@
+#main-container {
+  -fx-background-image: url("../../../assets/main_menu_background.jpg");
+}
+
+#startGameButton {
+  -fx-background-image: url("../../../assets/startGameButton.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-color: transparent;
+}
+
+#startGameButton:hover {
+  -fx-cursor: hand;
+}
