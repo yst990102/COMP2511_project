@@ -34,9 +34,15 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.model.LoopManiaWorld;
+import unsw.loopmania.model.Shield;
+import unsw.loopmania.model.Staff;
+import unsw.loopmania.model.Stake;
 import unsw.loopmania.model.DragIcon;
+import unsw.loopmania.model.Armour;
 import unsw.loopmania.model.BasicEnemy;
 import unsw.loopmania.model.Entity;
+import unsw.loopmania.model.Equipment;
+import unsw.loopmania.model.Helmet;
 import unsw.loopmania.model.VampireCastleCard;
 import unsw.loopmania.model.VampireCastleBuilding;
 import unsw.loopmania.model.Sword;
@@ -122,9 +128,18 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
+    // Card Images
     private Image vampireCastleCardImage;
-    private Image basicEnemyImage;
+    // Enemy Images
+    private Image SlugEnemyImage;
+    // Equipment Images
     private Image swordImage;
+    private Image helmetImage;
+    private Image shieldImage;
+    private Image stakeImage;
+    private Image staffImage;
+    private Image armourImage;
+    // Building Images
     private Image basicBuildingImage;
 
     /**
@@ -172,10 +187,24 @@ public class LoopManiaWorldController {
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
         entityImages = new ArrayList<>(initialEntities);
+        
+        // Cards
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
-        basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        
+        // Enemies
+        SlugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        
+        // Item - Equipments
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
+        helmetImage = new Image((new File("src/images/helmet.png")).toURI().toString());
+        shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
+        stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
+        staffImage = new Image((new File("src/images/staff.png")).toURI().toString());
+        armourImage = new Image((new File("src/images/armour.png")).toURI().toString());
+        
+        // Buildings
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -292,11 +321,11 @@ public class LoopManiaWorldController {
     /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadSword(){
+    private void loadDroppedEquipments(){
         // TODO = load more types of weapon
         // start by getting first available coordinates
-        Sword sword = world.addUnequippedSword();
-        onLoad(sword);
+        Equipment droppedEquipment = world.addUnequippedEquipment();
+        onLoad(droppedEquipment);
     }
 
     /**
@@ -307,7 +336,7 @@ public class LoopManiaWorldController {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadSword();
+        loadDroppedEquipments();
         loadVampireCard();
     }
 
@@ -332,12 +361,30 @@ public class LoopManiaWorldController {
      * load a sword into the GUI.
      * Particularly, we must connect to the drag detection event handler,
      * and load the image into the unequippedInventory GridPane.
-     * @param sword
+     * @param equipment
      */
-    private void onLoad(Sword sword) {
-        ImageView view = new ImageView(swordImage);
+    private void onLoad(Equipment equipment) {
+        ImageView view;
+
+        if (equipment.getClass().equals(Helmet.class)){
+            view = new ImageView(helmetImage);
+        }else if(equipment.getClass().equals(Shield.class)){
+            view = new ImageView(shieldImage);
+        }else if(equipment.getClass().equals(Sword.class)){
+            view = new ImageView(swordImage);
+        }else if(equipment.getClass().equals(Stake.class)){
+            view = new ImageView(stakeImage);
+        }else if(equipment.getClass().equals(Staff.class)){
+            view = new ImageView(staffImage);
+        }else if(equipment.getClass().equals(Armour.class)){
+            view = new ImageView(armourImage);
+        }else{
+            view = new ImageView();
+        }
+
+
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(sword, view);
+        addEntity(equipment, view);
         unequippedInventory.getChildren().add(view);
     }
 
@@ -346,7 +393,7 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(BasicEnemy enemy) {
-        ImageView view = new ImageView(basicEnemyImage);
+        ImageView view = new ImageView(SlugEnemyImage);
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }

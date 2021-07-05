@@ -1,4 +1,4 @@
-package unsw.loopmania;
+package unsw.loopmania.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
