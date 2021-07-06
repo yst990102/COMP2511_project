@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.property.IntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -28,9 +29,11 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
-import java.util.EnumMap;
+import javafx.beans.binding.Bindings;
 
+import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
 
@@ -109,6 +112,18 @@ public class LoopManiaWorldController {
 
     @FXML
     private Button pauseButton;
+
+    @FXML
+    private Text hp;
+
+    @FXML
+    private Text gold;
+
+    @FXML
+    private Text xp;
+
+    @FXML
+    private Text soldier;
 
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -234,6 +249,12 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        // bind character status to frontend property
+        hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+        gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().hpProperty()));
+        soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
     }
 
     /**
