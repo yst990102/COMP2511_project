@@ -18,6 +18,7 @@ import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.PathTile;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.Character;
+import unsw.loopmania.model.HeroCastle;
 
 
 
@@ -73,20 +74,22 @@ public abstract class LoopManiaWorldLoader {
         int indexInPath = orderedPath.indexOf(new Pair<Integer, Integer>(x, y));
         assert indexInPath != -1;
 
-        Entity entity = null;
         // TODO = load more entity types from the file
         switch (type) {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));
-            world.setCharacter(character);
+            HeroCastle heroCastle = new HeroCastle(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
             onLoad(character);
-            entity = character;
+            onLoad(heroCastle);
+            world.setCharacter(character);
+            world.addEntity(character);
+            world.addEntity(heroCastle);
             break;
         case "path_tile":
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
         // TODO Handle other possible entities
         }
-        world.addEntity(entity);
+        
     }
 
     /**
@@ -156,5 +159,6 @@ public abstract class LoopManiaWorldLoader {
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
 
     // TODO Create additional abstract methods for the other entities
+    public abstract void onLoad(HeroCastle heroCastle);
 
 }
