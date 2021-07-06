@@ -125,6 +125,9 @@ public class LoopManiaWorldController {
     @FXML
     private Text soldier;
 
+    @FXML
+    private Text description;
+
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
@@ -255,6 +258,9 @@ public class LoopManiaWorldController {
         gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
         xp.textProperty().bind(Bindings.convert(world.getCharacter().hpProperty()));
         soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
+
+        // bind world description to frontend property
+        description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
     }
 
     /**

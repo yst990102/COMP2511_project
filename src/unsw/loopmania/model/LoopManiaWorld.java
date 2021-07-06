@@ -7,6 +7,9 @@ import java.util.Random;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 
 /**
  * A backend world.
@@ -19,6 +22,8 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+
+    private StringProperty description;
 
     /**
      * width of the world in GridPane cells
@@ -73,6 +78,7 @@ public class LoopManiaWorld {
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        description = new SimpleStringProperty();
     }
 
     public int getWidth() {
@@ -351,5 +357,21 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(cardNodeX);
 
         return newBuilding;
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public void setDescription(String description) {
+        if (description.length() <= 96) {
+            this.description.set(description);
+        } else {
+            this.description.set(description.substring(0, 92) + "...");
+        }
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
     }
 }

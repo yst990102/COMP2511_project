@@ -198,11 +198,20 @@
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
                   </Label>
-                  <ImageView translateY="8.0">
-                     <image>
-                        <Image url="@../../../assets/description_box.png" />
-                     </image>
-                  </ImageView>
+                  <AnchorPane prefHeight="96.0" prefWidth="125.0" translateY="10.0">
+                     <children>
+                        <ImageView>
+                           <image>
+                              <Image url="@../../../assets/description_box.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="description" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="3.0">
+                           <font>
+                              <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
                   <Button id="pause-button" fx:id="pauseButton" alignment="CENTER" mnemonicParsing="false" onAction="#handlePauseButtonClick" prefHeight="18.0" prefWidth="96.0" text="Puase" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="18.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
