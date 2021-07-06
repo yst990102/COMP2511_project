@@ -38,8 +38,8 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
             throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
-        characterImage = new Image((new File("src/images/human_new.png")).toURI().toString());
-        pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
+        characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
+        pathTilesImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
         
     }
 

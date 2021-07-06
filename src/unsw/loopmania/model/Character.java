@@ -5,8 +5,6 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.lang.Integer;
-
 /**
  * represents the main character in the backend of the game world
  */

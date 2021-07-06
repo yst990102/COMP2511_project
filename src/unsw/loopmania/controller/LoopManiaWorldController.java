@@ -125,6 +125,9 @@ public class LoopManiaWorldController {
     @FXML
     private Text soldier;
 
+    @FXML
+    private Text description;
+
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
 
@@ -191,10 +194,10 @@ public class LoopManiaWorldController {
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
         entityImages = new ArrayList<>(initialEntities);
-        vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
-        basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
-        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
-        basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        vampireCastleCardImage = new Image((new File("src/assets/vampire_castle_card.png")).toURI().toString());
+        basicEnemyImage = new Image((new File("src/assets/slug.png")).toURI().toString());
+        swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
+        basicBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -210,9 +213,9 @@ public class LoopManiaWorldController {
     public void initialize() {
         // TODO = load more images/entities during initialization
         
-        Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
-        Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
-        Image cardSlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
+        Image pathTilesImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
+        Image inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
+        Image cardSlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
 
         // Add the ground first so it is below all other entities (inculding all the twists and turns)
@@ -255,6 +258,9 @@ public class LoopManiaWorldController {
         gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
         xp.textProperty().bind(Bindings.convert(world.getCharacter().hpProperty()));
         soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
+
+        // bind world description to frontend property
+        description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
     }
 
     /**
