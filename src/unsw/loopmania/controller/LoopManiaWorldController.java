@@ -694,7 +694,6 @@ public class LoopManiaWorldController {
         boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
         if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
             pause();
-            pauseButton.setText("Continue");
             storeSwitcher.switchMenu();
         }
     }
