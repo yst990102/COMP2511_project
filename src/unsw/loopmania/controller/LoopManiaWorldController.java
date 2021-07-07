@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.property.IntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -27,9 +28,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
-import java.util.EnumMap;
+import javafx.beans.binding.Bindings;
 
+import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
 
@@ -111,6 +115,24 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane unequippedInventory;
+
+    @FXML
+    private Button pauseButton;
+
+    @FXML
+    private Text hp;
+
+    @FXML
+    private Text gold;
+
+    @FXML
+    private Text xp;
+
+    @FXML
+    private Text soldier;
+
+    @FXML
+    private Text description;
 
     // all image views including tiles, character, enemies, cards... even though cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -220,8 +242,9 @@ public class LoopManiaWorldController {
     public void initialize() {
         // TODO = load more images/entities during initialization
         
-        Image pathTilesImage = new Image((new File("src/images/32x32GrassAndDirtPath.png")).toURI().toString());
-        Image inventorySlotImage = new Image((new File("src/images/empty_slot.png")).toURI().toString());
+        Image pathTilesImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
+        Image inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
+        Image cardSlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
 
         // Add the ground first so it is below all other entities (inculding all the twists and turns)
@@ -240,7 +263,7 @@ public class LoopManiaWorldController {
         
         // add the ground underneath the cards
         for (int x=0; x<world.getWidth(); x++){
-            ImageView groundView = new ImageView(pathTilesImage);
+            ImageView groundView = new ImageView(cardSlotImage);
             groundView.setViewport(imagePart);
             cards.add(groundView, x, 0);
         }
@@ -258,6 +281,15 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        // bind character status to frontend property
+        hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+        gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().hpProperty()));
+        soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
+
+        // bind world description to frontend property
+        description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
     }
 
     /**
@@ -665,6 +697,18 @@ public class LoopManiaWorldController {
             break;
         default:
             break;
+        }
+    }
+
+    @FXML
+    public void handlePauseButtonClick() {
+        if (isPaused){
+            startTimer();
+            pauseButton.setText("Pause");
+        }
+        else{
+            pause();
+            pauseButton.setText("Continue");
         }
     }
 

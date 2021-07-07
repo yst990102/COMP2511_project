@@ -4,10 +4,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="480.0" stylesheets="@SelectMode.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" stylesheets="@SelectMode.css" prefWidth="387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button id="standard-mode-btn" fx:id="standardModeButton" layoutX="141.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleStandardModeButtonClick" prefHeight="46.0" prefWidth="198.0" styleClass="button" />
-      <Button id="berserker-mode-btn" fx:id="berserkerModeButton" layoutX="141.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleBerserkerModeButtonClick" prefHeight="46.0" prefWidth="198.0" styleClass="button" />
-      <Button id="survival-mode-btn" fx:id="survivalModeButton" layoutX="141.0" layoutY="371.0" mnemonicParsing="false" onAction="#handleSurvivalModeButtonClick" prefHeight="46.0" prefWidth="198.0" styleClass="button" />
+      <Button id="standard-mode-btn" fx:id="standardModeButton" layoutX="114.0" layoutY="177.0" mnemonicParsing="false" onAction="#handleStandardModeButtonClick" prefHeight="37.0" prefWidth="160.0" text="" />
+      <Button id="survival-mode-btn" fx:id="survivalModeButton" layoutX="114.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleSurvivalModeButtonClick" prefHeight="37.0" prefWidth="160.0" text="" />
+      <Button id="berserker-mode-btn" fx:id="berserkerModeButton" layoutX="114.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleBerserkerModeButtonClick" prefHeight="37.0" prefWidth="160.0" text="" />
    </children>
 </Pane>
