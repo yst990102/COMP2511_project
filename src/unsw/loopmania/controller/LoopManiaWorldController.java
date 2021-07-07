@@ -275,6 +275,7 @@ public class LoopManiaWorldController {
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
+            world.updateNthCycle();
             switchToStore();
             List<BasicEnemy> defeatedEnemies = world.runBattles();
             for (BasicEnemy e: defeatedEnemies){
@@ -689,13 +690,17 @@ public class LoopManiaWorldController {
     }
 
     public void switchToStore(){
-        int nthCycle = 1;
-        int numStoreVisit = 0;
+        int nthCycle = world.getNthCycle();
+        int numStoreVisit = world.getNumStoreVisit();
         boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
         if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
             pause();
             storeSwitcher.switchMenu();
         }
+    }
+
+    public void updateNumStoreVisit() {
+        world.updateNumStoreVisit();
     }
     /**
      * Set a node in a GridPane to have its position track the position of an

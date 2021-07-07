@@ -63,6 +63,7 @@ public class StoreController {
 	void handleBackButtonClick(ActionEvent event) throws IOException {
 		gameSwitcher.switchMenu();
 		mainController.startTimer();
+		mainController.updateNumStoreVisit();
 	}
 
 	@FXML
