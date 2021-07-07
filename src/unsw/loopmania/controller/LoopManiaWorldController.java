@@ -187,6 +187,8 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
 
+    private MenuSwitcher storeSwitcher;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -273,6 +275,8 @@ public class LoopManiaWorldController {
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
+            world.updateNthCycle();
+            switchToStore();
             List<BasicEnemy> defeatedEnemies = world.runBattles();
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
@@ -681,6 +685,23 @@ public class LoopManiaWorldController {
         mainMenuSwitcher.switchMenu();
     }
 
+    public void setStoreSwitcher(MenuSwitcher storeSwitcher) {
+        this.storeSwitcher = storeSwitcher;
+    }
+
+    public void switchToStore(){
+        int nthCycle = world.getNthCycle();
+        int numStoreVisit = world.getNumStoreVisit();
+        boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
+        if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
+            pause();
+            storeSwitcher.switchMenu();
+        }
+    }
+
+    public void updateNumStoreVisit() {
+        world.updateNumStoreVisit();
+    }
     /**
      * Set a node in a GridPane to have its position track the position of an
      * entity in the world.

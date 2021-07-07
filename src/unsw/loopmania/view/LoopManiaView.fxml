@@ -212,7 +212,7 @@
                         </Text>
                      </children>
                   </AnchorPane>
-                  <Button id="pause-button" fx:id="pauseButton" alignment="CENTER" mnemonicParsing="false" onAction="#handlePauseButtonClick" prefHeight="18.0" prefWidth="96.0" text="Puase" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="18.0">
+                  <Button id="pause-button" fx:id="pauseButton" alignment="CENTER" mnemonicParsing="false" onAction="#handlePauseButtonClick" prefHeight="18.0" prefWidth="96.0" text="Pause" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="18.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>

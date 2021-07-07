@@ -25,6 +25,9 @@ public class LoopManiaWorld {
 
     private StringProperty description;
 
+    private int nthCycle;
+    private int numStoreVisit;
+
     /**
      * width of the world in GridPane cells
      */
@@ -79,6 +82,8 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
         description = new SimpleStringProperty();
+        nthCycle = 0;
+        numStoreVisit = 0;
     }
 
     public int getWidth() {
@@ -373,5 +378,23 @@ public class LoopManiaWorld {
 
     public StringProperty descriptionProperty() {
         return description;
+    }
+
+    public int getNthCycle() {
+        return nthCycle;
+    }
+
+    public void updateNthCycle() {
+        if (character.getX() == 0 && character.getY() == 0) {
+            nthCycle++;
+        }
+    }
+
+    public int getNumStoreVisit() {
+        return numStoreVisit;
+    }
+
+    public void updateNumStoreVisit() {
+        numStoreVisit++;
     }
 }

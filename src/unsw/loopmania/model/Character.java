@@ -14,7 +14,6 @@ public class Character extends MovingEntity {
     private IntegerProperty gold;
     private IntegerProperty xp;
     private IntegerProperty numSoldier;
-    private int nthCycle;
     private int atk;
     private int def;
 
@@ -79,14 +78,6 @@ public class Character extends MovingEntity {
 
     public void setNumSoldier(int numSoldier) {
         this.numSoldier.set(numSoldier);
-    }
-
-    public int getNthCycle() {
-        return nthCycle;
-    }
-
-    public void setNthCycle(int nthCycle) {
-        this.nthCycle = nthCycle;
     }
 
     public int getATK() {

@@ -48,6 +48,13 @@ public class LoopManiaApplication extends Application {
         selectModeLoader.setController(selectModeController);
         Parent selectModeRoot = selectModeLoader.load();
 
+        // load the store
+        StoreController storeController = new StoreController();
+        storeController.setMainController(mainController);
+        FXMLLoader storeLoader = new FXMLLoader(getClass().getResource("../view/StoreView.fxml"));
+        storeLoader.setController(storeController);
+        Parent storeRoot =  storeLoader.load();
+
         // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
         
@@ -61,6 +68,9 @@ public class LoopManiaApplication extends Application {
         });
 
         mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+        mainController.setStoreSwitcher(() -> {switchToRoot(scene, storeRoot, primaryStage);});
+
+        storeController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
         
         // deploy the main onto the stage
         gameRoot.requestFocus();
