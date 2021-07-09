@@ -258,7 +258,7 @@ public class LoopManiaWorldController {
         // bind character status to frontend property
         hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
         gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
-        xp.textProperty().bind(Bindings.convert(world.getCharacter().hpProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
         soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
 
         // bind world description to frontend property
