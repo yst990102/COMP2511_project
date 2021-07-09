@@ -82,7 +82,7 @@ public class LoopManiaWorld {
      * @param height height of world in number of cells
      * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
      */
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath) {
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goalObject) {
         this.width = width;
         this.height = height;
         nonSpecifiedEntities = new ArrayList<>();
@@ -95,6 +95,10 @@ public class LoopManiaWorld {
         description = new SimpleStringProperty();
         nthCycle = 0;
         numStoreVisit = 0;
+
+        // set goal
+        this.goals = new SimpleStringProperty();
+        setGoals(goalObject.getString("goal") + "  " + goalObject.getInt("quantity"));
     }
 
     public int getWidth() {
@@ -433,12 +437,20 @@ public class LoopManiaWorld {
         numStoreVisit++;
     }
 
-    public StringProperty getGoals() {
-        return this.goals;
+    public StringProperty getGoalProperty(){
+        if (goals.isNull().get()){
+            return new SimpleStringProperty("fuck u 2511");
+        }else{
+            return goals;
+        }
     }
 
-    public void setGoals(StringProperty goals) {
-        this.goals = goals;
+    public String getGoals() {
+        return this.goals.get();
+    }
+
+    public void setGoals(String goals) {
+        this.goals.set(goals);
     }
     
 }

@@ -324,7 +324,7 @@ public class LoopManiaWorldController {
         anchorPaneRoot.getChildren().add(draggedEntity);
 
         // set goal
-        goal.textProperty().bind(Bindings.convert(world.getGoals()));
+        goal.textProperty().bind(Bindings.convert(world.getGoalProperty()));
 
         // bind character status to frontend property
         hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
