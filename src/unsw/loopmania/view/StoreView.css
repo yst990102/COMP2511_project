@@ -1,0 +1,13 @@
+#main-container {
+  -fx-background-color: #23212d;
+}
+
+.button {
+  -fx-background-repeat: no-repeat;
+  -fx-background-image: url("../../../assets/store_button.png");
+  -fx-background-color: transparent;
+}
+
+.button:hover {
+  -fx-cursor: hand;
+}
