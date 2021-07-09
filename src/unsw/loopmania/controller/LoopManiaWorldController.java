@@ -274,6 +274,7 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+            pauseButton.setText("Pause");
             world.runTickMoves();
             world.updateNthCycle();
             switchToStore();
@@ -297,6 +298,7 @@ public class LoopManiaWorldController {
      */
     public void pause(){
         isPaused = true;
+        pauseButton.setText("Continue");
         System.out.println("pausing");
         timeline.stop();
     }
@@ -661,11 +663,9 @@ public class LoopManiaWorldController {
     public void handlePauseButtonClick() {
         if (isPaused){
             startTimer();
-            pauseButton.setText("Pause");
         }
         else{
             pause();
-            pauseButton.setText("Continue");
         }
     }
 
