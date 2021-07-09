@@ -13,5 +13,7 @@ public class Sword extends Equipment {
 
         setAttack(5);
         setDefence(0);
+
+        setPrice(150);
     }
 }

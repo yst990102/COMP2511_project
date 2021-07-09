@@ -12,5 +12,7 @@ public class Armour extends Equipment {
 
         setAttack(0);
         setDefence(5);
+
+        setPrice(250);
     }
 }

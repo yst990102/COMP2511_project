@@ -19,5 +19,7 @@ public class Staff extends Equipment {
 
         this.trance_percentage = 20;
         this.trance_duration = 10;
+
+        setPrice(200);
     }
 }

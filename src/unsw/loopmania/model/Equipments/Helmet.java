@@ -17,5 +17,7 @@ public class Helmet extends Equipment {
         setDefence(2);
 
         this.enemy_attack = -2;
+
+        setPrice(200);
     }
 }

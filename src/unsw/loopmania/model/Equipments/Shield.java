@@ -14,5 +14,7 @@ public class Shield extends Equipment {
         setAttack(0);
         setDefence(2);
 
+        setPrice(150);
+
     }
 }

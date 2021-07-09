@@ -17,5 +17,7 @@ public class Stake extends Equipment {
         setDefence(0);
 
         this.attack_to_vampire = 8;
+
+        setPrice(150);
     }
 }
