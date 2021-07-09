@@ -18,6 +18,7 @@ import unsw.loopmania.model.Equipments.Shield;
 import unsw.loopmania.model.Equipments.Staff;
 import unsw.loopmania.model.Equipments.Stake;
 import unsw.loopmania.model.Equipments.Sword;
+import unsw.loopmania.model.Goal.GoalComposite;
 
 /**
  * A backend world.
@@ -98,7 +99,7 @@ public class LoopManiaWorld {
 
         // set goal
         this.goals = new SimpleStringProperty();
-        setGoals(goalObject.getString("goal") + "  " + goalObject.getInt("quantity"));
+        setGoals(new GoalComposite(goalObject).getContent());
     }
 
     public int getWidth() {
