@@ -56,12 +56,12 @@ public class Character extends MovingEntity {
         this.gold.set(gold);
     }
 
-    public int getXP() {
-        return xp.get();
-    }
-
     public IntegerProperty xpProperty() {
         return xp;
+    }
+    
+    public int getXP() {
+        return xp.get();
     }
 
     public void setXP(int xp) {

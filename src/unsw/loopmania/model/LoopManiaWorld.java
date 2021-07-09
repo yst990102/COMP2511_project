@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import org.javatuples.Pair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -50,6 +52,9 @@ public class LoopManiaWorld {
     private List<Entity> nonSpecifiedEntities;
 
     private Character character;
+
+    // goals
+    private StringProperty goals;
 
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
@@ -427,4 +432,13 @@ public class LoopManiaWorld {
     public void updateNumStoreVisit() {
         numStoreVisit++;
     }
+
+    public StringProperty getGoals() {
+        return this.goals;
+    }
+
+    public void setGoals(StringProperty goals) {
+        this.goals = goals;
+    }
+    
 }

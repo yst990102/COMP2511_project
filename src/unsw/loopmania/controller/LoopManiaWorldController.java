@@ -141,6 +141,9 @@ public class LoopManiaWorldController {
     private Button pauseButton;
 
     @FXML
+    private Text goal;
+
+    @FXML
     private Text hp;
 
     @FXML
@@ -320,10 +323,13 @@ public class LoopManiaWorldController {
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
 
+        // set goal
+        goal.textProperty().bind(Bindings.convert(world.getGoals()));
+
         // bind character status to frontend property
         hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
         gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
-        xp.textProperty().bind(Bindings.convert(world.getCharacter().hpProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
         soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
 
         // bind world description to frontend property
