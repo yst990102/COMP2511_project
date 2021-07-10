@@ -11,13 +11,13 @@ import org.json.JSONObject;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import unsw.loopmania.model.Armours.BasicArmour;
+import unsw.loopmania.model.Equipments.Armours.BasicArmour;
+import unsw.loopmania.model.Equipments.Helmets.BasicHelmet;
+import unsw.loopmania.model.Equipments.Shields.BasicShield;
+import unsw.loopmania.model.Equipments.Weapons.Staff;
+import unsw.loopmania.model.Equipments.Weapons.Stake;
+import unsw.loopmania.model.Equipments.Weapons.Sword;
 import unsw.loopmania.model.Goal.GoalComposite;
-import unsw.loopmania.model.Helmets.BasicHelmet;
-import unsw.loopmania.model.Shields.BasicShield;
-import unsw.loopmania.model.Weapons.Staff;
-import unsw.loopmania.model.Weapons.Stake;
-import unsw.loopmania.model.Weapons.Sword;
 
 /**
  * A backend world.

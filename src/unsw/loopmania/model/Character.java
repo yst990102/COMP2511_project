@@ -1,5 +1,8 @@
 package unsw.loopmania.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,15 +25,21 @@ public class Character extends MovingEntity {
     private Shield Dressed_shield;
     private Helmet Dressed_helmet;
 
+    private List<Item> Bag;
+
 
     public Character(PathPosition position) {
         super(position);
+        
         hp = new SimpleIntegerProperty(300);
         gold = new SimpleIntegerProperty(100);
         xp = new SimpleIntegerProperty(0);
         numSoldier = new SimpleIntegerProperty(0);
+        
         atk = 5;
         def = 0;
+
+        Bag = new ArrayList<Item>(12);
     }
 
     public IntegerProperty hpProperty() {

@@ -44,14 +44,14 @@ import unsw.loopmania.model.DragIcon;
 import unsw.loopmania.model.BasicEnemy;
 // cards
 import unsw.loopmania.model.VampireCastleCard;
-import unsw.loopmania.model.Armours.BasicArmour;
+import unsw.loopmania.model.Equipments.Armours.BasicArmour;
+import unsw.loopmania.model.Equipments.Helmets.BasicHelmet;
+import unsw.loopmania.model.Equipments.Shields.BasicShield;
+import unsw.loopmania.model.Equipments.Weapons.Staff;
+import unsw.loopmania.model.Equipments.Weapons.Stake;
+import unsw.loopmania.model.Equipments.Weapons.Sword;
 // items
 import unsw.loopmania.model.Equipment;
-import unsw.loopmania.model.Helmets.BasicHelmet;
-import unsw.loopmania.model.Shields.BasicShield;
-import unsw.loopmania.model.Weapons.Staff;
-import unsw.loopmania.model.Weapons.Stake;
-import unsw.loopmania.model.Weapons.Sword;
 // buildings
 import unsw.loopmania.model.VampireCastleBuilding;
 
