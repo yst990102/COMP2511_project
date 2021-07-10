@@ -1,16 +1,16 @@
-package unsw.loopmania.model.Equipments;
+package unsw.loopmania.model.Helmets;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.model.Equipment;
+import unsw.loopmania.model.Helmet;
 
 /**
  * represents an equipped or unequipped sword in the backend world
  */
-public class Helmet extends Equipment {
+public class BasicHelmet extends Helmet {
 
     private int enemy_attack = -2;
 
-    public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
+    public BasicHelmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 
         setAttack(-2);

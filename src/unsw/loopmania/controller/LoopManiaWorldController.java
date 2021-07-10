@@ -44,15 +44,14 @@ import unsw.loopmania.model.DragIcon;
 import unsw.loopmania.model.BasicEnemy;
 // cards
 import unsw.loopmania.model.VampireCastleCard;
+import unsw.loopmania.model.Armours.BasicArmour;
 // items
 import unsw.loopmania.model.Equipment;
-// equipments
-import unsw.loopmania.model.Equipments.Armour;
-import unsw.loopmania.model.Equipments.Helmet;
-import unsw.loopmania.model.Equipments.Shield;
-import unsw.loopmania.model.Equipments.Staff;
-import unsw.loopmania.model.Equipments.Stake;
-import unsw.loopmania.model.Equipments.Sword;
+import unsw.loopmania.model.Helmets.BasicHelmet;
+import unsw.loopmania.model.Shields.BasicShield;
+import unsw.loopmania.model.Weapons.Staff;
+import unsw.loopmania.model.Weapons.Stake;
+import unsw.loopmania.model.Weapons.Sword;
 // buildings
 import unsw.loopmania.model.VampireCastleBuilding;
 
@@ -453,9 +452,9 @@ public class LoopManiaWorldController {
     private void onLoad(Equipment equipment) {
         ImageView view;
 
-        if (equipment.getClass().equals(Helmet.class)) {
+        if (equipment.getClass().equals(BasicHelmet.class)) {
             view = new ImageView(helmetImage);
-        } else if (equipment.getClass().equals(Shield.class)) {
+        } else if (equipment.getClass().equals(BasicShield.class)) {
             view = new ImageView(shieldImage);
         } else if (equipment.getClass().equals(Sword.class)) {
             view = new ImageView(swordImage);
@@ -463,7 +462,7 @@ public class LoopManiaWorldController {
             view = new ImageView(stakeImage);
         } else if (equipment.getClass().equals(Staff.class)) {
             view = new ImageView(staffImage);
-        } else if (equipment.getClass().equals(Armour.class)) {
+        } else if (equipment.getClass().equals(BasicArmour.class)) {
             view = new ImageView(armourImage);
         } else {
             view = new ImageView();

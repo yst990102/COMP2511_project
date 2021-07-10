@@ -11,14 +11,13 @@ import org.json.JSONObject;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import unsw.loopmania.model.Equipments.Armour;
-import unsw.loopmania.model.Equipments.Helmet;
-import unsw.loopmania.model.Equipments.Shield;
-import unsw.loopmania.model.Equipments.Staff;
-import unsw.loopmania.model.Equipments.Stake;
-import unsw.loopmania.model.Equipments.Sword;
+import unsw.loopmania.model.Armours.BasicArmour;
 import unsw.loopmania.model.Goal.GoalComposite;
+import unsw.loopmania.model.Helmets.BasicHelmet;
+import unsw.loopmania.model.Shields.BasicShield;
+import unsw.loopmania.model.Weapons.Staff;
+import unsw.loopmania.model.Weapons.Stake;
+import unsw.loopmania.model.Weapons.Sword;
 
 /**
  * A backend world.
@@ -227,11 +226,11 @@ public class LoopManiaWorld {
         int randomInt = new Random().nextInt(6);
 
         if (randomInt == 0){
-            Helmet helmet = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(helmet);
             return helmet;
         }else if (randomInt == 1){
-            Shield shield = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            BasicShield shield = new BasicShield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(shield);
             return shield;
         }else if (randomInt == 2){
@@ -247,7 +246,7 @@ public class LoopManiaWorld {
             unequippedInventoryItems.add(staff);
             return staff;
         }else{
-            Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(armour);
             return armour;
         }
