@@ -5,11 +5,20 @@ import java.util.List;
 import java.util.Random;
 
 import org.javatuples.Pair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
+import unsw.loopmania.model.Equipments.Armour;
+import unsw.loopmania.model.Equipments.Helmet;
+import unsw.loopmania.model.Equipments.Shield;
+import unsw.loopmania.model.Equipments.Staff;
+import unsw.loopmania.model.Equipments.Stake;
+import unsw.loopmania.model.Equipments.Sword;
+import unsw.loopmania.model.Goal.GoalComposite;
 
 /**
  * A backend world.
@@ -45,6 +54,9 @@ public class LoopManiaWorld {
 
     private Character character;
 
+    // goals
+    private StringProperty goals;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -71,7 +83,7 @@ public class LoopManiaWorld {
      * @param height height of world in number of cells
      * @param orderedPath ordered list of x, y coordinate pairs representing position of path cells in world
      */
-    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath) {
+    public LoopManiaWorld(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goalObject) {
         this.width = width;
         this.height = height;
         nonSpecifiedEntities = new ArrayList<>();
@@ -84,6 +96,10 @@ public class LoopManiaWorld {
         description = new SimpleStringProperty();
         nthCycle = 0;
         numStoreVisit = 0;
+
+        // set goal
+        this.goals = new SimpleStringProperty();
+        setGoals(new GoalComposite(goalObject).getContent());
     }
 
     public int getWidth() {
@@ -194,23 +210,47 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawn a sword in the world and return the sword entity
-     * @return a sword to be spawned in the controller as a JavaFX node
+     * spawn a equipment in the world and return the equipment entity
+     * @return a equipment to be spawned in the controller as a JavaFX node
      */
-    public Sword addUnequippedSword(){
-        // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
+    public Equipment addUnequippedEquipment(){
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
-        // now we insert the new sword, as we know we have at least made a slot available...
-        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(sword);
-        return sword;
+        // now we insert the new equipment, as we know we have at least made a slot available...
+        int randomInt = new Random().nextInt(6);
+
+        if (randomInt == 0){
+            Helmet helmet = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(helmet);
+            return helmet;
+        }else if (randomInt == 1){
+            Shield shield = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(shield);
+            return shield;
+        }else if (randomInt == 2){
+            Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(sword);
+            return sword;
+        }else if (randomInt == 3){
+            Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(stake);
+            return stake;
+        }else if (randomInt == 4){
+            Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(staff);
+            return staff;
+        }else{
+            Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(armour);
+            return armour;
+        }
     }
 
     /**
@@ -397,4 +437,21 @@ public class LoopManiaWorld {
     public void updateNumStoreVisit() {
         numStoreVisit++;
     }
+
+    public StringProperty getGoalProperty(){
+        if (goals.isNull().get()){
+            return new SimpleStringProperty("fuck u 2511");
+        }else{
+            return goals;
+        }
+    }
+
+    public String getGoals() {
+        return this.goals.get();
+    }
+
+    public void setGoals(String goals) {
+        this.goals.set(goals);
+    }
+    
 }
