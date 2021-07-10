@@ -86,7 +86,18 @@ public class Character extends MovingEntity {
     }
 
     public int getATK() {
-        return atk;
+        int weapon_atk = 0;
+        int helmet_atk = 0;
+        
+        if (Dressed_weapon != null){
+            weapon_atk = Dressed_weapon.getAttack();
+        }
+        
+        if (Dressed_helmet != null){
+            helmet_atk = Dressed_helmet.getAttack();
+        }
+        
+        return atk + weapon_atk + helmet_atk;
     }
 
     public void setATK(int atk) {
@@ -94,10 +105,40 @@ public class Character extends MovingEntity {
     }
 
     public int getDEF() {
-        return def;
+        int armour_def = 0;
+        int shield_def = 0;
+        int helmet_def = 0;
+
+        if (Dressed_armour != null){
+            armour_def = Dressed_armour.getDefence();
+        }
+
+        if (Dressed_shield != null){
+            shield_def = Dressed_shield.getDefence();
+        }
+
+        if (Dressed_helmet != null){
+            helmet_def = Dressed_helmet.getDefence();
+        }
+
+
+        return def + armour_def + shield_def + helmet_def;
     }
 
     public void setDEF(int def) {
         this.def = def;
+    }
+
+    public void DressUpEquipment(Equipment equipment){
+        if (equipment.getClass().equals(Weapon.class)){
+            this.Dressed_weapon = (Weapon)equipment;
+        }else if (equipment.getClass().equals(Armour.class)){
+            this.Dressed_armour = (Armour)equipment;
+        }else if (equipment.getClass().equals(Shield.class)){
+            this.Dressed_shield = (Shield)equipment;
+        }else if (equipment.getClass().equals(Helmet.class)){
+            this.Dressed_helmet = (Helmet)equipment;
+        }
+
     }
 }
