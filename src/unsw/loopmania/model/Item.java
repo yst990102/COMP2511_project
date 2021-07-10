@@ -3,18 +3,18 @@ package unsw.loopmania.model;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Item extends StaticEntity {
-    private int price;
+    private String description;
 
     public Item(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
 
-    public int getPrice() {
-        return this.price;
+    public String getDescription() {
+        return this.description;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

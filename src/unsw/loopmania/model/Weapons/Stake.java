@@ -18,5 +18,11 @@ public class Stake extends Weapon {
         this.attack_to_vampire = 8;
 
         setPrice(150);
+
+        String description = 
+        "===== Stake =====\n"
+        +"+ 3 attack (+ 8 if Vampire)\n";
+
+       setDescription(description);
     }
 }

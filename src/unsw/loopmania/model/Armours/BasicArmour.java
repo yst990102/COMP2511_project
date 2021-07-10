@@ -13,5 +13,13 @@ public class BasicArmour extends Armour {
         setDefence(5);
 
         setPrice(250);
+
+        String description = 
+         "===== Basic Armour =====\n"
+        +"+ 5 defence\n"
+        +"-50% enemy attack";
+
+        setDescription(description);
+
     }
 }

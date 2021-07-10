@@ -15,5 +15,11 @@ public class BasicShield extends Shield {
 
         setPrice(150);
 
+        String description = 
+        "===== Basic Shield =====\n"
+       +"+ 2 defence\n"
+       +"-60% Vampire crit chance";
+
+       setDescription(description);
     }
 }

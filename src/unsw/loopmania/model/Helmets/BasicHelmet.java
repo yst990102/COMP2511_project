@@ -19,5 +19,13 @@ public class BasicHelmet extends Helmet {
         this.enemy_attack = -2;
 
         setPrice(200);
+
+        String description = 
+        "===== Basic Helmet =====\n"
+        +"- 2 attack\n"
+        +"+ 2 defence\n"
+        +"- 2 enemy attack";
+
+       setDescription(description);
     }
 }

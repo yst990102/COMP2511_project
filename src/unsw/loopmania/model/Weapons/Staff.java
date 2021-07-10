@@ -20,5 +20,13 @@ public class Staff extends Weapon {
         this.trance_duration = 10;
 
         setPrice(200);
+
+        String description = 
+        "===== Staff =====\n"
+       +"+ 2 attack\n\n"
+       +"----Skill:\n"
+       +"    a random chance of inflicting a trance, which transforms the attacked enemy into an allied soldier temporarily";
+
+       setDescription(description);
     }
 }

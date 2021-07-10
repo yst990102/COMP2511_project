@@ -14,5 +14,11 @@ public class Sword extends Weapon {
         setAttack(5);
 
         setPrice(150);
+
+        String description = 
+        "===== Sword =====\n"
+        +"+ 5 attack";
+
+       setDescription(description);
     }
 }
