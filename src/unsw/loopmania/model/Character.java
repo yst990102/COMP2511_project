@@ -39,7 +39,7 @@ public class Character extends MovingEntity {
         atk = 5;
         def = 0;
 
-        Bag = new ArrayList<Item>(12);
+        Bag = new ArrayList<Item>(16);
     }
 
     public IntegerProperty hpProperty() {
