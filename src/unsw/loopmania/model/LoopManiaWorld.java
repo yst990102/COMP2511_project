@@ -18,6 +18,7 @@ import unsw.loopmania.model.Equipments.Weapons.Staff;
 import unsw.loopmania.model.Equipments.Weapons.Stake;
 import unsw.loopmania.model.Equipments.Weapons.Sword;
 import unsw.loopmania.model.Goal.GoalComposite;
+import unsw.loopmania.model.RareItems.TheOneRing;
 
 /**
  * A backend world.
@@ -249,6 +250,34 @@ public class LoopManiaWorld {
             BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(armour);
             return armour;
+        }
+    }
+
+    /**
+     * spawn a item in the world and return the item entity
+     * @return a item to be spawned in the controller as a JavaFX node
+     */
+    public Item addUnusedItem(){
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        
+        // now we insert the new equipment, as we know we have at least made a slot available...
+        int randomInt = new Random().nextInt(5);
+
+        if (randomInt <= 3){
+            Potion potion = new Potion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(potion);
+            return potion;
+        }else{
+            RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(the_one_ring);
+            return the_one_ring;
         }
     }
 

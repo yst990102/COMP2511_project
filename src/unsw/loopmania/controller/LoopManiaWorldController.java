@@ -38,6 +38,8 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.model.LoopManiaWorld;
+import unsw.loopmania.model.Potion;
+import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
 // enemies
@@ -50,8 +52,11 @@ import unsw.loopmania.model.Equipments.Shields.BasicShield;
 import unsw.loopmania.model.Equipments.Weapons.Staff;
 import unsw.loopmania.model.Equipments.Weapons.Stake;
 import unsw.loopmania.model.Equipments.Weapons.Sword;
+import unsw.loopmania.model.Potions.HealthPotion;
+import unsw.loopmania.model.RareItems.TheOneRing;
 // items
 import unsw.loopmania.model.Equipment;
+import unsw.loopmania.model.Item;
 // buildings
 import unsw.loopmania.model.VampireCastleBuilding;
 
@@ -187,6 +192,10 @@ public class LoopManiaWorldController {
     private Image stakeImage;
     private Image staffImage;
     private Image armourImage;
+    // Potions
+    private Image HealthPotionImage;
+    // RareItems
+    private Image TheOneRingImage;
     // Building Images
     private Image basicBuildingImage;
 
@@ -261,6 +270,12 @@ public class LoopManiaWorldController {
         stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
         staffImage = new Image((new File("src/images/staff.png")).toURI().toString());
         armourImage = new Image((new File("src/images/armour.png")).toURI().toString());
+
+        // Potions
+        HealthPotionImage = new Image((new File("src/images/health_potion.png")).toURI().toString());
+
+        // RareItems
+        TheOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
 
         // Buildings
         basicBuildingImage = new Image(
@@ -406,7 +421,9 @@ public class LoopManiaWorldController {
         // TODO = load more types of weapon
         // start by getting first available coordinates
         Equipment droppedEquipment = world.addUnequippedEquipment();
+        Item droppedItem = world.addUnusedItem();
         onLoad(droppedEquipment);
+        onLoad(droppedItem);
     }
 
     /**
@@ -443,7 +460,7 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a sword into the GUI. Particularly, we must connect to the drag
+     * load an equipment into the GUI. Particularly, we must connect to the drag
      * detection event handler, and load the image into the unequippedInventory
      * GridPane.
      * 
@@ -462,14 +479,35 @@ public class LoopManiaWorldController {
             view = new ImageView(stakeImage);
         } else if (equipment.getClass().equals(Staff.class)) {
             view = new ImageView(staffImage);
-        } else if (equipment.getClass().equals(BasicArmour.class)) {
-            view = new ImageView(armourImage);
+        } else if (equipment.getClass().equals(HealthPotion.class)) {
+            view = new ImageView(HealthPotionImage);
+        } else if (equipment.getClass().equals(TheOneRing.class)) {
+            view = new ImageView(TheOneRingImage);
         } else {
             view = new ImageView();
         }
 
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(equipment, view);
+        unequippedInventory.getChildren().add(view);
+    }
+
+    /**
+     * load an Item into the GUI.
+     * @param item
+     */
+    private void onLoad(Item item) {
+        ImageView view;
+
+        if (item.getClass().equals(Potion.class)) {
+            view = new ImageView(HealthPotionImage);
+        } else if (item.getClass().equals(TheOneRing.class)) {
+            view = new ImageView(TheOneRingImage);
+        } else {
+            view = new ImageView();
+        }
+
+        addEntity(item, view);
         unequippedInventory.getChildren().add(view);
     }
 
