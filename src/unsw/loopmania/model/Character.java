@@ -17,10 +17,10 @@ public class Character extends MovingEntity {
     private int atk;
     private int def;
 
-    private Equipment Dressed_weapon;
-    private Equipment Dressed_armour;
-    private Equipment Dressed_shield;
-    private Equipment Dressed_helmet;
+    private Weapon Dressed_weapon;
+    private Armour Dressed_armour;
+    private Shield Dressed_shield;
+    private Helmet Dressed_helmet;
 
 
     public Character(PathPosition position) {
