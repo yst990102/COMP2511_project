@@ -423,6 +423,7 @@ public class LoopManiaWorldController {
         // TODO = load more types of weapon
         // start by getting first available coordinates
 
+        // 每次随机掉落0-3件装备，0-1个药瓶，5%几率掉落rare item
         int droppedEquipment_amount = new Random().nextInt(4);
         int droppedPotion_amount = new Random().nextInt(2);
         int IfRareItemDropped = new Random().nextInt(20);

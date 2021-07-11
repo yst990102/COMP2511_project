@@ -503,11 +503,7 @@ public class LoopManiaWorld {
     }
 
     public StringProperty getGoalProperty(){
-        if (goals.isNull().get()){
-            return new SimpleStringProperty("fuck u 2511");
-        }else{
-            return goals;
-        }
+        return goals;
     }
 
     public String getGoals() {
