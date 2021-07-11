@@ -155,6 +155,18 @@ public class LoopManiaWorld {
      * @param enemy enemy to be killed
      */
     private void killEnemy(BasicEnemy enemy){
+        // 杀掉enemy的时候需要增加gold和exp
+        // - Slug: $50, XP 100
+        // - Zombie: $100, XP 200
+        // - Vampire: $200, XP 300
+        if (enemy.getClass().equals(BasicEnemy.class)){
+            int current_gold = this.character.getGold();
+            this.character.setGold(current_gold + 50);
+
+            int current_exp = this.character.getXP();
+            this.character.setXP(current_exp + 100);
+        }
+
         enemy.destroy();
         enemies.remove(enemy);
     }
@@ -290,7 +302,7 @@ public class LoopManiaWorld {
         }
         
         // now we insert the new rareitem
-        
+
         RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(the_one_ring);
         return the_one_ring;
