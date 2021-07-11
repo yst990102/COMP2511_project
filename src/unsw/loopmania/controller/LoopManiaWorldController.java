@@ -42,6 +42,7 @@ import unsw.loopmania.model.Potion;
 import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
+import unsw.loopmania.model.Armour;
 // enemies
 import unsw.loopmania.model.BasicEnemy;
 // cards
@@ -473,16 +474,14 @@ public class LoopManiaWorldController {
             view = new ImageView(helmetImage);
         } else if (equipment.getClass().equals(BasicShield.class)) {
             view = new ImageView(shieldImage);
+        } else if (equipment.getClass().equals(BasicArmour.class)) {
+            view = new ImageView(armourImage);
         } else if (equipment.getClass().equals(Sword.class)) {
             view = new ImageView(swordImage);
         } else if (equipment.getClass().equals(Stake.class)) {
             view = new ImageView(stakeImage);
         } else if (equipment.getClass().equals(Staff.class)) {
             view = new ImageView(staffImage);
-        } else if (equipment.getClass().equals(HealthPotion.class)) {
-            view = new ImageView(HealthPotionImage);
-        } else if (equipment.getClass().equals(TheOneRing.class)) {
-            view = new ImageView(TheOneRingImage);
         } else {
             view = new ImageView();
         }
@@ -499,7 +498,7 @@ public class LoopManiaWorldController {
     private void onLoad(Item item) {
         ImageView view;
 
-        if (item.getClass().equals(Potion.class)) {
+        if (item.getClass().equals(HealthPotion.class)) {
             view = new ImageView(HealthPotionImage);
         } else if (item.getClass().equals(TheOneRing.class)) {
             view = new ImageView(TheOneRingImage);

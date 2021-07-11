@@ -18,6 +18,7 @@ import unsw.loopmania.model.Equipments.Weapons.Staff;
 import unsw.loopmania.model.Equipments.Weapons.Stake;
 import unsw.loopmania.model.Equipments.Weapons.Sword;
 import unsw.loopmania.model.Goal.GoalComposite;
+import unsw.loopmania.model.Potions.HealthPotion;
 import unsw.loopmania.model.RareItems.TheOneRing;
 
 /**
@@ -268,12 +269,12 @@ public class LoopManiaWorld {
         }
         
         // now we insert the new equipment, as we know we have at least made a slot available...
-        int randomInt = new Random().nextInt(5);
+        int randomInt = new Random().nextInt(20);
 
-        if (randomInt <= 3){
-            Potion potion = new Potion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-            unequippedInventoryItems.add(potion);
-            return potion;
+        if (randomInt <= 19){
+            HealthPotion healthpotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(healthpotion);
+            return healthpotion;
         }else{
             RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(the_one_ring);
@@ -331,6 +332,14 @@ public class LoopManiaWorld {
     private void removeItemByPositionInUnequippedInventoryItems(int index){
         Entity item = unequippedInventoryItems.get(index);
         item.destroy();
+
+        // Everytime remove an item, need to increase 100 gold and 100 exp
+        int current_gold = this.character.getGold();
+        int current_exp = this.character.getXP();
+
+        this.character.setGold(current_gold + 100);
+        this.character.setXP(current_exp + 100);
+
         unequippedInventoryItems.remove(index);
     }
 
