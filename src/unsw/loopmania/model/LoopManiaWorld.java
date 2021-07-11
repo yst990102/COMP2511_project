@@ -218,7 +218,7 @@ public class LoopManiaWorld {
         // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // eject the oldest unequipped equipment and replace it... oldest equipment is that at beginning of items
             // TODO = give some cash/experience rewards for the discarding of the oldest equipment
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
@@ -255,31 +255,46 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawn a item in the world and return the item entity
-     * @return a item to be spawned in the controller as a JavaFX node
+     * spawn a potion in the world and return the potion entity
+     * @return a potion to be spawned in the controller as a JavaFX node
      */
-    public Item addUnusedItem(){
+    public Potion addUnusedPotion(){
         // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // eject the oldest unequipped potion and replace it... oldest potion is that at beginning of items
             // TODO = give some cash/experience rewards for the discarding of the oldest equipment
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
         // now we insert the new equipment, as we know we have at least made a slot available...
-        int randomInt = new Random().nextInt(20);
 
-        if (randomInt <= 19){
-            HealthPotion healthpotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-            unequippedInventoryItems.add(healthpotion);
-            return healthpotion;
-        }else{
-            RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-            unequippedInventoryItems.add(the_one_ring);
-            return the_one_ring;
+        HealthPotion healthpotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(healthpotion);
+        return healthpotion;
+    }
+
+    /**
+     * spawn a RareItem in the world and return the RareItem entity
+     * @return a RareItem to be spawned in the controller as a JavaFX node
+     */
+    public RareItem addRareItem(){
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped RareItem and replace it... oldest RareItem is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
         }
+        
+        // now we insert the new rareitem
+        
+        RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(the_one_ring);
+        return the_one_ring;
+        
     }
 
     /**

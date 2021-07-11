@@ -2,6 +2,7 @@ package unsw.loopmania.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
@@ -421,10 +422,28 @@ public class LoopManiaWorldController {
     private void loadDroppedEquipments() {
         // TODO = load more types of weapon
         // start by getting first available coordinates
-        Equipment droppedEquipment = world.addUnequippedEquipment();
-        Item droppedItem = world.addUnusedItem();
-        onLoad(droppedEquipment);
-        onLoad(droppedItem);
+
+        int droppedEquipment_amount = new Random().nextInt(4);
+        int droppedPotion_amount = new Random().nextInt(2);
+        int IfRareItemDropped = new Random().nextInt(20);
+
+        while (droppedEquipment_amount > 0) {
+            Equipment droppedEquipment = world.addUnequippedEquipment();
+            onLoad(droppedEquipment);
+            droppedEquipment_amount--;
+        }
+
+        while (droppedPotion_amount > 0) {
+            Potion droppedPoition = world.addUnusedPotion();
+            onLoad(droppedPoition);
+            droppedPotion_amount--;
+        }
+
+        if (IfRareItemDropped == 0){
+            RareItem droppedRareItem = world.addRareItem();
+            onLoad(droppedRareItem);
+        }
+        
     }
 
     /**
