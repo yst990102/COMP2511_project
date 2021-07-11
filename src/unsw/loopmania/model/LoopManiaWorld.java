@@ -11,14 +11,15 @@ import org.json.JSONObject;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-import unsw.loopmania.model.Equipments.Armour;
-import unsw.loopmania.model.Equipments.Helmet;
-import unsw.loopmania.model.Equipments.Shield;
-import unsw.loopmania.model.Equipments.Staff;
-import unsw.loopmania.model.Equipments.Stake;
-import unsw.loopmania.model.Equipments.Sword;
+import unsw.loopmania.model.Equipments.Armours.BasicArmour;
+import unsw.loopmania.model.Equipments.Helmets.BasicHelmet;
+import unsw.loopmania.model.Equipments.Shields.BasicShield;
+import unsw.loopmania.model.Equipments.Weapons.Staff;
+import unsw.loopmania.model.Equipments.Weapons.Stake;
+import unsw.loopmania.model.Equipments.Weapons.Sword;
 import unsw.loopmania.model.Goal.GoalComposite;
+import unsw.loopmania.model.Potions.HealthPotion;
+import unsw.loopmania.model.RareItems.TheOneRing;
 
 /**
  * A backend world.
@@ -154,6 +155,18 @@ public class LoopManiaWorld {
      * @param enemy enemy to be killed
      */
     private void killEnemy(BasicEnemy enemy){
+        // 杀掉enemy的时候需要增加gold和exp
+        // - Slug: $50, XP 100
+        // - Zombie: $100, XP 200
+        // - Vampire: $200, XP 300
+        if (enemy.getClass().equals(BasicEnemy.class)){
+            int current_gold = this.character.getGold();
+            this.character.setGold(current_gold + 50);
+
+            int current_exp = this.character.getXP();
+            this.character.setXP(current_exp + 100);
+        }
+
         enemy.destroy();
         enemies.remove(enemy);
     }
@@ -217,7 +230,7 @@ public class LoopManiaWorld {
         // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // eject the oldest unequipped equipment and replace it... oldest equipment is that at beginning of items
             // TODO = give some cash/experience rewards for the discarding of the oldest equipment
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
@@ -227,11 +240,11 @@ public class LoopManiaWorld {
         int randomInt = new Random().nextInt(6);
 
         if (randomInt == 0){
-            Helmet helmet = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(helmet);
             return helmet;
         }else if (randomInt == 1){
-            Shield shield = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            BasicShield shield = new BasicShield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(shield);
             return shield;
         }else if (randomInt == 2){
@@ -247,10 +260,53 @@ public class LoopManiaWorld {
             unequippedInventoryItems.add(staff);
             return staff;
         }else{
-            Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             unequippedInventoryItems.add(armour);
             return armour;
         }
+    }
+
+    /**
+     * spawn a potion in the world and return the potion entity
+     * @return a potion to be spawned in the controller as a JavaFX node
+     */
+    public Potion addUnusedPotion(){
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped potion and replace it... oldest potion is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        
+        // now we insert the new equipment, as we know we have at least made a slot available...
+
+        HealthPotion healthpotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(healthpotion);
+        return healthpotion;
+    }
+
+    /**
+     * spawn a RareItem in the world and return the RareItem entity
+     * @return a RareItem to be spawned in the controller as a JavaFX node
+     */
+    public RareItem addRareItem(){
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped RareItem and replace it... oldest RareItem is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        
+        // now we insert the new rareitem
+
+        RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(the_one_ring);
+        return the_one_ring;
+        
     }
 
     /**
@@ -303,6 +359,14 @@ public class LoopManiaWorld {
     private void removeItemByPositionInUnequippedInventoryItems(int index){
         Entity item = unequippedInventoryItems.get(index);
         item.destroy();
+
+        // Everytime remove an item, need to increase 100 gold and 100 exp
+        int current_gold = this.character.getGold();
+        int current_exp = this.character.getXP();
+
+        this.character.setGold(current_gold + 100);
+        this.character.setXP(current_exp + 100);
+
         unequippedInventoryItems.remove(index);
     }
 
@@ -439,11 +503,7 @@ public class LoopManiaWorld {
     }
 
     public StringProperty getGoalProperty(){
-        if (goals.isNull().get()){
-            return new SimpleStringProperty("fuck u 2511");
-        }else{
-            return goals;
-        }
+        return goals;
     }
 
     public String getGoals() {
