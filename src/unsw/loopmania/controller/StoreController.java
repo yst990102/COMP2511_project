@@ -106,58 +106,58 @@ public class StoreController {
 
 	@FXML
     void ShowArmourInfo(MouseEvent event) {
-		BasicArmour SelledArmour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty ArmourDescription = new SimpleStringProperty();
-		ArmourDescription.set(SelledArmour.getDescription());
-		description.textProperty().bind(Bindings.convert(ArmourDescription));
+		BasicArmour SelledArmour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledArmour.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledArmour.getPrice())));
     }
 
     @FXML
     void ShowHelmetInfo(MouseEvent event) {
-		BasicHelmet SelledHelmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty HelmetDescription = new SimpleStringProperty();
-		HelmetDescription.set(SelledHelmet.getDescription());
-		description.textProperty().bind(Bindings.convert(HelmetDescription));
+		BasicHelmet SelledHelmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledHelmet.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledHelmet.getPrice())));
     }
 
     @FXML
     void ShowPotionInfo(MouseEvent event) {
-		HealthPotion SelledPotion = new HealthPotion(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty HealthPotionDescription = new SimpleStringProperty();
-		HealthPotionDescription.set(SelledPotion.getDescription());
-		description.textProperty().bind(Bindings.convert(HealthPotionDescription));
+		HealthPotion SelledPotion = new HealthPotion(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledPotion.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledPotion.getPrice())));
     }
 
     @FXML
     void ShowShieldInfo(MouseEvent event) {
-		BasicShield SelledShield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty ShieldDescription = new SimpleStringProperty();
-		ShieldDescription.set(SelledShield.getDescription());
-		description.textProperty().bind(Bindings.convert(ShieldDescription));
+		BasicShield SelledShield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledShield.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledShield.getPrice())));
     }
 
     @FXML
     void ShowStaffInfo(MouseEvent event) {
-		Staff SelledStaff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty StaffDescription = new SimpleStringProperty();
-		StaffDescription.set(SelledStaff.getDescription());
-		description.textProperty().bind(Bindings.convert(StaffDescription));
+		Staff SelledStaff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledStaff.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledStaff.getPrice())));
     }
 
     @FXML
     void ShowStakeInfo(MouseEvent event) {
-		Stake SelledStake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty StakeDescription = new SimpleStringProperty();
-		StakeDescription.set(SelledStake.getDescription());
-		description.textProperty().bind(Bindings.convert(StakeDescription));
+		Stake SelledStake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledStake.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledStake.getPrice())));
     }
 
     @FXML
     void ShowSwordInfo(MouseEvent event) {
-		Sword SelledSword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(3));
-		StringProperty SwordDescription = new SimpleStringProperty();
-		SwordDescription.set(SelledSword.getDescription());
-		description.textProperty().bind(Bindings.convert(SwordDescription));
+		Sword SelledSword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+		description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledSword.getDescription())));
+		itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledSword.getPrice())));
     }
 
 

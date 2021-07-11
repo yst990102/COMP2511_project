@@ -16,5 +16,7 @@ public class HealthPotion extends Potion {
         +"+ 50 HP when use";
 
         setDescription(description);
+
+        setPrice(200);
     }    
 }
