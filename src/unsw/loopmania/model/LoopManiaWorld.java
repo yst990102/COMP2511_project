@@ -1,5 +1,13 @@
 package unsw.loopmania.model;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -201,17 +209,39 @@ public class LoopManiaWorld {
     }
 
     public void FightEnemy(Slug enemy) {
-        while (true) {
-            enemy.setHp(enemy.getHp() - character.getATK());
-            if (enemy.getHp() <= 0) {
-                break;
+        FileOutputStream writer;
+        try {
+            writer = new FileOutputStream("fight.txt", true);
+
+            writer.write(("Battle between : character ==== " + enemy + "\n").getBytes());
+
+            while (true) {
+                enemy.setHp(enemy.getHp() - character.getATK());
+                writer.write(("Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
+
+                if (enemy.getHp() <= 0) {
+                    writer.write(("enemy died!!" + "\n").getBytes());
+                    break;
+                }
+
+                int hpLoss = enemy.getAttack() - character.getDEF();
+                character.setHP(character.getHP() - ((hpLoss >= 0) ? hpLoss : 0));
+                writer.write(("Enemy attack character, character lose " + ((hpLoss >= 0) ? hpLoss : 0) + " HP." + "\n").getBytes());
+                if (character.getHP() <= 0) {
+                    writer.write(("Character died!!" + "\n").getBytes());
+                    break;
+                }
             }
-            int hpLoss = enemy.getAttack() - character.getDEF();
-            character.setHP(character.getHP() - ((hpLoss >= 0) ? hpLoss : 0));
-            if (character.getHP() <= 0) {
-                break;
-            }
+
+            writer.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+
     }
 
     /**
