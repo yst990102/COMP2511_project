@@ -8,6 +8,7 @@ import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -161,10 +162,10 @@ public class LoopManiaWorld {
         // - Vampire: $200, XP 300
         if (enemy.getClass().equals(BasicEnemy.class)){
             int current_gold = this.character.getGold();
-            this.character.setGold(current_gold + 50);
+            this.character.setGold(current_gold + enemy.getGold_whenkilled());
 
             int current_exp = this.character.getXP();
-            this.character.setXP(current_exp + 100);
+            this.character.setXP(current_exp + enemy.getExp_whenkilled());
         }
 
         enemy.destroy();
@@ -183,7 +184,10 @@ public class LoopManiaWorld {
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
                 // fight...
-                defeatedEnemies.add(e);
+                FightEnemy(e);
+                if (e.getHp() <= 0){
+                    defeatedEnemies.add(e);
+                }
             }
         }
         for (BasicEnemy e: defeatedEnemies){
@@ -193,6 +197,20 @@ public class LoopManiaWorld {
             killEnemy(e);
         }
         return defeatedEnemies;
+    }
+
+
+    public void FightEnemy(BasicEnemy enemy){
+        while (true) {
+            enemy.setHp(enemy.getHp() - character.getATK());
+            if (enemy.getHp() <= 0){
+                break;
+            }
+            character.setHP(character.getHP() - enemy.getAttack());
+            if (character.getHP() <= 0){
+                break;
+            }
+        }
     }
 
     /**

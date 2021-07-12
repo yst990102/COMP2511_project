@@ -367,6 +367,10 @@ public class LoopManiaWorldController {
             world.updateNthCycle();
             switchToStore();
             List<BasicEnemy> defeatedEnemies = world.runBattles();
+            
+            //refresh character hp after battle
+            hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+
             for (BasicEnemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }

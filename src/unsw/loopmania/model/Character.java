@@ -47,7 +47,8 @@ public class Character extends MovingEntity {
     }
 
     public StringProperty hpPercentageProperty() {
-        return new SimpleStringProperty((getHP() / 300 * 100) + "%");
+        return new SimpleStringProperty(getHP() + "HP");
+        // return new SimpleStringProperty((getHP() / 300 * 100) + "%");
     }
     
     public int getHP() {
