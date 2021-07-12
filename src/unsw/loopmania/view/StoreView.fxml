@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="387.0" stylesheets="@StoreView.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="387.0" stylesheets="@StoreView.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="129.0" layoutY="3.0" text="Store Inventory" textFill="WHITE" AnchorPane.topAnchor="9.0">
          <font>
@@ -38,37 +44,37 @@
          <children>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowSwordInfo" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/basic_sword.png" />
+                  <Image url="@../../../assets/basic_sword.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowStakeInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
-                  <Image url="@../../../images/stake.png" />
+                  <Image url="@../../../assets/stake.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowStaffInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <image>
-                  <Image url="@../../../images/staff.png" />
+                  <Image url="@../../../assets/staff.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowArmourInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                <image>
-                  <Image url="@../../../images/armour.png" />
+                  <Image url="@../../../assets/armour.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowShieldInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
                <image>
-                  <Image url="@../../../images/shield.png" />
+                  <Image url="@../../../assets/shield.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowHelmetInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
                <image>
-                  <Image url="@../../../images/helmet.png" />
+                  <Image url="@../../../assets/helmet.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowPotionInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
                <image>
-                  <Image url="@../../../images/health_potion.png" />
+                  <Image url="@../../../assets/health_potion.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7">
