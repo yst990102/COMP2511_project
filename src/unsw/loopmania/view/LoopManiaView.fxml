@@ -157,13 +157,13 @@
                      </rowConstraints>
                      <children>
                         <!-- swordCell is the cell where a sword intended to be equipped will be dragged by the human player -->
-                        <ImageView id="swordCell" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                        <ImageView id="weaponCell" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                            <image>
                               <Image url="@../../../images/sword_unequipped.png" />
                            </image>
                         </ImageView>
                         <!-- blankCell is an empty cell -->
-                        <ImageView id="blankCell" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                        <ImageView id="helmetCell" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                            <image>
                               <Image url="@../../../images/helmet_slot.png" />
                            </image>
@@ -174,7 +174,7 @@
                               <Image url="@../../../images/shield_unequipped.png" />
                            </image>
                         </ImageView>
-                        <ImageView GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <ImageView id="armourCell" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <image>
                               <Image url="@../../../assets/armout_slot.png" />
                            </image>

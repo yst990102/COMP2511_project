@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -38,9 +39,12 @@ import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
 
+import unsw.loopmania.model.Character;
+
 import unsw.loopmania.model.LoopManiaWorld;
 import unsw.loopmania.model.Potion;
 import unsw.loopmania.model.RareItem;
+import unsw.loopmania.model.Shield;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
 import unsw.loopmania.model.Armour;
@@ -48,6 +52,7 @@ import unsw.loopmania.model.Armour;
 import unsw.loopmania.model.BasicEnemy;
 // cards
 import unsw.loopmania.model.VampireCastleCard;
+import unsw.loopmania.model.Weapon;
 import unsw.loopmania.model.equipments.Armours.BasicArmour;
 import unsw.loopmania.model.equipments.Helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.Shields.BasicShield;
@@ -58,6 +63,7 @@ import unsw.loopmania.model.potions.HealthPotion;
 import unsw.loopmania.model.rareitems.TheOneRing;
 // items
 import unsw.loopmania.model.Equipment;
+import unsw.loopmania.model.Helmet;
 import unsw.loopmania.model.Item;
 // buildings
 import unsw.loopmania.model.VampireCastleBuilding;
@@ -142,6 +148,18 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane unequippedInventory;
+
+    @FXML
+    private ImageView weaponequiped;
+
+    @FXML
+    private ImageView helmetequiped;
+
+    @FXML
+    private ImageView shieldequiped;
+
+    @FXML
+    private ImageView armourequiped;
 
     @FXML
     private Button pauseButton;
@@ -367,7 +385,7 @@ public class LoopManiaWorldController {
             world.updateNthCycle();
             switchToStore();
             List<BasicEnemy> defeatedEnemies = world.runBattles();
-            
+
             //refresh character hp after battle
             hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
 
@@ -444,11 +462,11 @@ public class LoopManiaWorldController {
             droppedPotion_amount--;
         }
 
-        if (IfRareItemDropped == 0){
+        if (IfRareItemDropped == 0) {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
-        
+
     }
 
     /**
@@ -614,12 +632,69 @@ public class LoopManiaWorldController {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn an item in the new location. The above code for spawning a
                                 // building will help, it is very similar
+                                if (targetGridPane.getId().equals("equippedItems")) {
+                                    switch (node.getId()) {
+                                        case "weaponCell":
+                                            if (currentlyDraggedImage.getImage().equals(swordImage)) {
+
+                                                EquipCharacterWithEquipment(world.getCharacter(), Sword.class);
+
+                                            } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
+
+                                                EquipCharacterWithEquipment(world.getCharacter(), Staff.class);
+
+                                            } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
+
+                                                EquipCharacterWithEquipment(world.getCharacter(), Stake.class);
+
+                                            }
+                                            break;
+
+                                        case "helmetCell":
+                                            if (currentlyDraggedImage.getImage().equals(helmetImage)) {
+                                                EquipCharacterWithEquipment(world.getCharacter(), BasicHelmet.class);
+
+                                            }
+                                            break;
+
+                                        case "armourCell":
+                                            if (currentlyDraggedImage.getImage().equals(armourImage)) {
+
+                                                EquipCharacterWithEquipment(world.getCharacter(), BasicArmour.class);
+
+                                            }
+                                            break;
+
+                                        case "shieldCell":
+                                            if (currentlyDraggedImage.getImage().equals(shieldImage)) {
+
+                                                EquipCharacterWithEquipment(world.getCharacter(), BasicShield.class);
+
+                                            }
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                }
+
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 break;
                             default:
                                 break;
                         }
+                        System.out.println("drop的image：" + currentlyDraggedImage.getImage().getUrl());
+                        System.out.println("drop的image type：" + currentlyDraggedType.getClass());
+                        System.out.println("targetGridPane == " + targetGridPane.getId());
+                        System.out.println("node == " + node);
+                        System.out.println("x" + x);
+                        System.out.println("y" + y);
+
+                        System.out.println(targetGridPane.getChildren());
+
+                        System.out.println("new character ATK == " + world.getCharacter().getATK());
+                        System.out.println("new character DEF == " + world.getCharacter().getDEF());
 
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);
@@ -855,8 +930,7 @@ public class LoopManiaWorldController {
     public void handlePauseButtonClick() {
         if (isPaused) {
             startTimer();
-        }
-        else{
+        } else {
             pause();
         }
     }
@@ -982,5 +1056,67 @@ public class LoopManiaWorldController {
         System.out.println("current method = " + currentMethodLabel);
         System.out.println("In application thread? = " + Platform.isFxApplicationThread());
         System.out.println("Current system time = " + java.time.LocalDateTime.now().toString().replace('T', ' '));
+    }
+
+    private void EquipCharacterWithEquipment(Character character, Class<?> equipment) {
+
+        if (equipment.equals(Sword.class)) {
+
+            EquipCharacterWithWeapon(character, Sword.class);
+
+        } else if (equipment.equals(Stake.class)) {
+
+            EquipCharacterWithWeapon(character, Stake.class);
+
+        } else if (equipment.equals(Staff.class)) {
+
+            EquipCharacterWithWeapon(character, Staff.class);
+
+        } else if (equipment.equals(BasicArmour.class)) {
+
+            EquipCharacterWithArmour(character, BasicArmour.class);
+
+        } else if (equipment.equals(BasicShield.class)) {
+
+            EquipCharacterWithShield(character, BasicShield.class);
+
+        } else if (equipment.equals(BasicHelmet.class)) {
+
+            EquipCharacterWithHelmet(character, BasicHelmet.class);
+
+        }
+    }
+
+    private void EquipCharacterWithWeapon(Character character, Class<?> weapon) {
+        Weapon sampleweapon = new Weapon(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        if (weapon.equals(Sword.class)) {
+            sampleweapon = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (weapon.equals(Stake.class)) {
+            sampleweapon = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (weapon.equals(Staff.class)) {
+            sampleweapon = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        }
+
+        character.setATK(character.getATK() + sampleweapon.getAttack());
+    }
+
+    private void EquipCharacterWithArmour(Character character, Class<?> armour) {
+        Armour samplearmour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        character.setDEF(character.getDEF() + samplearmour.getDefence());
+    }
+
+    private void EquipCharacterWithShield(Character character, Class<?> shield) {
+        Shield sampleshield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        character.setDEF(character.getDEF() + sampleshield.getDefence());
+    }
+
+    private void EquipCharacterWithHelmet(Character character, Class<?> helmet) {
+        Helmet samplehelmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        character.setATK(character.getATK() + samplehelmet.getAttack());
+        character.setDEF(character.getDEF() + samplehelmet.getDefence());
     }
 }
