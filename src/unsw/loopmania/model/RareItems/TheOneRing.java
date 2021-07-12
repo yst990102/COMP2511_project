@@ -1,4 +1,4 @@
-package unsw.loopmania.model.RareItems;
+package unsw.loopmania.model.rareitems;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.RareItem;

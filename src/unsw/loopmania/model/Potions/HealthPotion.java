@@ -1,4 +1,4 @@
-package unsw.loopmania.model.Potions;
+package unsw.loopmania.model.potions;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.Potion;

@@ -12,15 +12,15 @@ import javafx.animation.Timeline;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import unsw.loopmania.model.Equipments.Armours.BasicArmour;
-import unsw.loopmania.model.Equipments.Helmets.BasicHelmet;
-import unsw.loopmania.model.Equipments.Shields.BasicShield;
-import unsw.loopmania.model.Equipments.Weapons.Staff;
-import unsw.loopmania.model.Equipments.Weapons.Stake;
-import unsw.loopmania.model.Equipments.Weapons.Sword;
-import unsw.loopmania.model.Goal.GoalComposite;
-import unsw.loopmania.model.Potions.HealthPotion;
-import unsw.loopmania.model.RareItems.TheOneRing;
+import unsw.loopmania.model.equipments.Armours.BasicArmour;
+import unsw.loopmania.model.equipments.Helmets.BasicHelmet;
+import unsw.loopmania.model.equipments.Shields.BasicShield;
+import unsw.loopmania.model.equipments.Weapons.Staff;
+import unsw.loopmania.model.equipments.Weapons.Stake;
+import unsw.loopmania.model.equipments.Weapons.Sword;
+import unsw.loopmania.model.goal.GoalComposite;
+import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.rareitems.TheOneRing;
 
 /**
  * A backend world.
