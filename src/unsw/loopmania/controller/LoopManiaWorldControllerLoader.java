@@ -24,20 +24,20 @@ import unsw.loopmania.model.HeroCastle;
  * A LoopManiaLoader that also creates the necessary ImageViews for the UI,
  * connects them via listeners to the model, and creates a controller.
  * 
- * this should NOT be used to load any entities which spawn, or might be removed (use controller for that)
- * since this doesnt add listeners or teardown functions (so it will be very hacky to remove event handlers)
+ * this should NOT be used to load any entities which spawn, or might be removed
+ * (use controller for that) since this doesnt add listeners or teardown
+ * functions (so it will be very hacky to remove event handlers)
  */
 public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
 
     private List<ImageView> entities;
 
-    //Images
+    // Images
     private Image characterImage;
     private Image pathTilesImage;
     private Image heroCastleImage;
 
-    public LoopManiaWorldControllerLoader(String filename)
-            throws FileNotFoundException {
+    public LoopManiaWorldControllerLoader(String filename) throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
         characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
@@ -59,14 +59,16 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
     }
 
     /**
-     * load path tile ImageView based on configuration in file.
-     * Note how src/images/32x32GrassAndDirtPath.png has 8 images within it
-     * x and y values we produce here are the coordinates of the top left of our sub-image, taken from the top-left of the pathTilesImage
+     * load path tile ImageView based on configuration in file. Note how
+     * src/images/32x32GrassAndDirtPath.png has 8 images within it x and y values we
+     * produce here are the coordinates of the top left of our sub-image, taken from
+     * the top-left of the pathTilesImage
      */
     @Override
     public void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out) {
         // note https://stackoverflow.com/a/58041962
-        // we need to find the offset within the rectangle, we can do this from adjacencies
+        // we need to find the offset within the rectangle, we can do this from
+        // adjacencies
         ImageView view = new ImageView(pathTilesImage);
         int x;
         int y;
@@ -75,19 +77,23 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
             // vertical, no corners
             x = 32;
             y = 0;
-        } else if ((into == PathTile.Direction.DOWN && out == PathTile.Direction.RIGHT) || (into == PathTile.Direction.LEFT && out == PathTile.Direction.UP)) {
+        } else if ((into == PathTile.Direction.DOWN && out == PathTile.Direction.RIGHT)
+                || (into == PathTile.Direction.LEFT && out == PathTile.Direction.UP)) {
             // corner piece, turning left up, or turning down right
             x = 0;
             y = 64;
-        } else if ((into == PathTile.Direction.UP && out == PathTile.Direction.RIGHT) || (into == PathTile.Direction.LEFT && out == PathTile.Direction.DOWN)) {
+        } else if ((into == PathTile.Direction.UP && out == PathTile.Direction.RIGHT)
+                || (into == PathTile.Direction.LEFT && out == PathTile.Direction.DOWN)) {
             // corner piece, turning up right, or turning left down
             x = 32;
             y = 32;
-        } else if ((into == PathTile.Direction.DOWN && out == PathTile.Direction.LEFT) || (into == PathTile.Direction.RIGHT && out == PathTile.Direction.UP)) {
+        } else if ((into == PathTile.Direction.DOWN && out == PathTile.Direction.LEFT)
+                || (into == PathTile.Direction.RIGHT && out == PathTile.Direction.UP)) {
             // corner piece, turning down left, or turning right up
             x = 32;
             y = 64;
-        } else if ((into == PathTile.Direction.RIGHT && out == PathTile.Direction.DOWN) || (into == PathTile.Direction.UP && out == PathTile.Direction.LEFT)) {
+        } else if ((into == PathTile.Direction.RIGHT && out == PathTile.Direction.DOWN)
+                || (into == PathTile.Direction.UP && out == PathTile.Direction.LEFT)) {
             // corner piece, turning right down, or turning up left
             x = 0;
             y = 32;
@@ -103,39 +109,39 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
         addEntity(pathTile, view);
     }
 
-
     /**
-     * pair the  backendentity and view, so the view tracks the coordinates of the entity
+     * pair the backendentity and view, so the view tracks the coordinates of the
+     * entity
+     * 
      * @param entity backend entity
-     * @param view frontend image to be paired with the backend entity
+     * @param view   frontend image to be paired with the backend entity
      */
     private void addEntity(Entity entity, ImageView view) {
         trackPositionOfNonSpawningEntities(entity, view);
         entities.add(view);
     }
 
-
     /**
-     * Track the position of entities which don't spawn or require removal.
-     * We only setup the node to follow the coordinates of the backend entity.<br>
-     * Items which potentially need to be removed should be spawned by controller, and have listener handles and teardown functions added.
+     * Track the position of entities which don't spawn or require removal. We only
+     * setup the node to follow the coordinates of the backend entity.<br>
+     * Items which potentially need to be removed should be spawned by controller,
+     * and have listener handles and teardown functions added.
+     * 
      * @param entity backend entity
-     * @param node frontend image to track the coordinates of the backend entity
+     * @param node   frontend image to track the coordinates of the backend entity
      */
     private static void trackPositionOfNonSpawningEntities(Entity entity, Node node) {
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
         entity.x().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 GridPane.setColumnIndex(node, newValue.intValue());
             }
         });
         entity.y().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 GridPane.setRowIndex(node, newValue.intValue());
             }
         });
@@ -145,12 +151,12 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
     /**
      * Create a controller that can be attached to the LoopManiaView with all the
      * loaded entities.
+     * 
      * @return
      * @throws FileNotFoundException
      */
     public LoopManiaWorldController loadController() throws FileNotFoundException {
-        return new LoopManiaWorldController(load(), entities);        
+        return new LoopManiaWorldController(load(), entities);
     }
-
 
 }

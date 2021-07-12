@@ -13,7 +13,8 @@ import javafx.beans.property.SimpleStringProperty;
  * represents the main character in the backend of the game world
  */
 public class Character extends MovingEntity {
-    // TODO = potentially implement relationships between this class and other classes
+    // TODO = potentially implement relationships between this class and other
+    // classes
     private IntegerProperty hp;
     private IntegerProperty gold;
     private IntegerProperty xp;
@@ -28,15 +29,14 @@ public class Character extends MovingEntity {
 
     private List<Item> Bag;
 
-
     public Character(PathPosition position) {
         super(position);
-        
+
         hp = new SimpleIntegerProperty(300);
         gold = new SimpleIntegerProperty(100);
         xp = new SimpleIntegerProperty(0);
         numSoldier = new SimpleIntegerProperty(0);
-        
+
         atk = 5;
         def = 0;
 
@@ -51,9 +51,10 @@ public class Character extends MovingEntity {
         Double HPpercentage = Double.valueOf(getHP()) / 300 * 100;
         String HP_percentage = String.format("%.2f", HPpercentage);
 
-        return new SimpleStringProperty(HP_percentage + "%");
+        return new SimpleStringProperty(getHP() + "HP");
+        // return new SimpleStringProperty(HP_percentage + "%");
     }
-    
+
     public int getHP() {
         return hp.get();
     }
@@ -77,7 +78,7 @@ public class Character extends MovingEntity {
     public IntegerProperty xpProperty() {
         return xp;
     }
-    
+
     public int getXP() {
         return xp.get();
     }
@@ -101,15 +102,15 @@ public class Character extends MovingEntity {
     public int getATK() {
         int weapon_atk = 0;
         int helmet_atk = 0;
-        
-        if (Dressed_weapon != null){
+
+        if (Dressed_weapon != null) {
             weapon_atk = Dressed_weapon.getAttack();
         }
-        
-        if (Dressed_helmet != null){
+
+        if (Dressed_helmet != null) {
             helmet_atk = Dressed_helmet.getAttack();
         }
-        
+
         return atk + weapon_atk + helmet_atk;
     }
 
@@ -122,18 +123,17 @@ public class Character extends MovingEntity {
         int shield_def = 0;
         int helmet_def = 0;
 
-        if (Dressed_armour != null){
+        if (Dressed_armour != null) {
             armour_def = Dressed_armour.getDefence();
         }
 
-        if (Dressed_shield != null){
+        if (Dressed_shield != null) {
             shield_def = Dressed_shield.getDefence();
         }
 
-        if (Dressed_helmet != null){
+        if (Dressed_helmet != null) {
             helmet_def = Dressed_helmet.getDefence();
         }
-
 
         return def + armour_def + shield_def + helmet_def;
     }
@@ -142,16 +142,57 @@ public class Character extends MovingEntity {
         this.def = def;
     }
 
-    public void DressUpEquipment(Equipment equipment){
-        if (equipment.getClass().equals(Weapon.class)){
-            this.Dressed_weapon = (Weapon)equipment;
-        }else if (equipment.getClass().equals(Armour.class)){
-            this.Dressed_armour = (Armour)equipment;
-        }else if (equipment.getClass().equals(Shield.class)){
-            this.Dressed_shield = (Shield)equipment;
-        }else if (equipment.getClass().equals(Helmet.class)){
-            this.Dressed_helmet = (Helmet)equipment;
+    public void DressUpEquipment(Equipment equipment) {
+        if (equipment.getClass().equals(Weapon.class)) {
+            setDressed_weapon((Weapon) equipment);
+        } else if (equipment.getClass().equals(Armour.class)) {
+            this.Dressed_armour = (Armour) equipment;
+        } else if (equipment.getClass().equals(Shield.class)) {
+            this.Dressed_shield = (Shield) equipment;
+        } else if (equipment.getClass().equals(Helmet.class)) {
+            this.Dressed_helmet = (Helmet) equipment;
         }
 
     }
+
+    public Weapon getDressed_weapon() {
+        return this.Dressed_weapon;
+    }
+
+    public void setDressed_weapon(Weapon Dressed_weapon) {
+        this.Dressed_weapon = Dressed_weapon;
+    }
+
+    public Armour getDressed_armour() {
+        return this.Dressed_armour;
+    }
+
+    public void setDressed_armour(Armour Dressed_armour) {
+        this.Dressed_armour = Dressed_armour;
+    }
+
+    public Shield getDressed_shield() {
+        return this.Dressed_shield;
+    }
+
+    public void setDressed_shield(Shield Dressed_shield) {
+        this.Dressed_shield = Dressed_shield;
+    }
+
+    public Helmet getDressed_helmet() {
+        return this.Dressed_helmet;
+    }
+
+    public void setDressed_helmet(Helmet Dressed_helmet) {
+        this.Dressed_helmet = Dressed_helmet;
+    }
+
+    public List<Item> getBag() {
+        return this.Bag;
+    }
+
+    public void setBag(List<Item> Bag) {
+        this.Bag = Bag;
+    }
+
 }

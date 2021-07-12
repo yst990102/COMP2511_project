@@ -48,11 +48,10 @@ import unsw.loopmania.model.Shield;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
 import unsw.loopmania.model.Armour;
-// enemies
-import unsw.loopmania.model.BasicEnemy;
 // cards
 import unsw.loopmania.model.VampireCastleCard;
 import unsw.loopmania.model.Weapon;
+import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.equipments.Armours.BasicArmour;
 import unsw.loopmania.model.equipments.Helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.Shields.BasicShield;
@@ -203,8 +202,18 @@ public class LoopManiaWorldController {
 
     // Card Images
     private Image vampireCastleCardImage;
+    private Image zombiePitCardImage;
+    private Image towerCardImage;
+    private Image villageCardImage;
+    private Image barracksCardImage;
+    private Image trapCardImage;
+    private Image campfireCardImage;
+
     // Enemy Images
     private Image SlugEnemyImage;
+    private Image ZombieEnemyImage;
+    private Image VampireEnemyImage;
+
     // Equipment Images
     private Image swordImage;
     private Image helmetImage;
@@ -217,7 +226,13 @@ public class LoopManiaWorldController {
     // RareItems
     private Image TheOneRingImage;
     // Building Images
-    private Image basicBuildingImage;
+    private Image vampireCastleBuildingImage;
+    private Image zombiePitBuildingImage;
+    private Image towerBuildingImage;
+    private Image villageBuildingImage;
+    private Image barracksBuildingImage;
+    private Image trapBuildingImage;
+    private Image campfireBuildingImage;
 
     /**
      * the image currently being dragged, if there is one, otherwise null. Holding
@@ -279,9 +294,17 @@ public class LoopManiaWorldController {
 
         // Cards
         vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
+        zombiePitCardImage = new Image((new File("src/images/zombie_pit_card.png")).toURI().toString());
+        towerCardImage = new Image((new File("src/images/tower_card.png")).toURI().toString());
+        villageCardImage = new Image((new File("src/images/village_card.png")).toURI().toString());
+        barracksCardImage = new Image((new File("src/images/barracks_card.png")).toURI().toString());
+        trapCardImage = new Image((new File("src/images/trap_card.png")).toURI().toString());
+        campfireCardImage = new Image((new File("src/images/campfire_card.png")).toURI().toString());
 
         // Enemies
         SlugEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        ZombieEnemyImage = new Image((new File("src/images/zombie.png")).toURI().toString());
+        VampireEnemyImage = new Image((new File("src/images/vampire.png")).toURI().toString());
 
         // Item - Equipments
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
@@ -298,8 +321,14 @@ public class LoopManiaWorldController {
         TheOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
 
         // Buildings
-        basicBuildingImage = new Image(
+        vampireCastleBuildingImage = new Image(
                 (new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        zombiePitBuildingImage = new Image((new File("src/images/zombie_pit.png")).toURI().toString());
+        towerBuildingImage = new Image((new File("src/images/tower.png")).toURI().toString());
+        villageBuildingImage = new Image((new File("src/images/village.png")).toURI().toString());
+        barracksBuildingImage = new Image((new File("src/images/barracks.png")).toURI().toString());
+        trapBuildingImage = new Image((new File("src/images/trap.png")).toURI().toString());
+        campfireBuildingImage = new Image((new File("src/images/campfire.png")).toURI().toString());
 
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -384,16 +413,16 @@ public class LoopManiaWorldController {
             world.runTickMoves();
             world.updateNthCycle();
             switchToStore();
-            List<BasicEnemy> defeatedEnemies = world.runBattles();
+            List<Slug> defeatedEnemies = world.runBattles();
 
-            //refresh character hp after battle
+            // refresh character hp after battle
             hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
 
-            for (BasicEnemy e : defeatedEnemies) {
+            for (Slug e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }
-            List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
-            for (BasicEnemy newEnemy : newEnemies) {
+            List<Slug> newEnemies = world.possiblySpawnEnemies();
+            for (Slug newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
             printThreadingNotes("HANDLED TIMER");
@@ -475,7 +504,7 @@ public class LoopManiaWorldController {
      * 
      * @param enemy defeated enemy for which we should react to the death of
      */
-    private void reactToEnemyDefeat(BasicEnemy enemy) {
+    private void reactToEnemyDefeat(Slug enemy) {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
@@ -535,6 +564,7 @@ public class LoopManiaWorldController {
 
     /**
      * load an Item into the GUI.
+     * 
      * @param item
      */
     private void onLoad(Item item) {
@@ -557,7 +587,7 @@ public class LoopManiaWorldController {
      * 
      * @param enemy
      */
-    private void onLoad(BasicEnemy enemy) {
+    private void onLoad(Slug enemy) {
         ImageView view = new ImageView(SlugEnemyImage);
         addEntity(enemy, view);
         squares.getChildren().add(view);
@@ -569,7 +599,7 @@ public class LoopManiaWorldController {
      * @param building
      */
     private void onLoad(VampireCastleBuilding building) {
-        ImageView view = new ImageView(basicBuildingImage);
+        ImageView view = new ImageView(vampireCastleBuildingImage);
         addEntity(building, view);
         squares.getChildren().add(view);
     }
@@ -621,80 +651,93 @@ public class LoopManiaWorldController {
                         int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType) {
-                            case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn a building here of different types
-                                VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x,
-                                        y);
-                                onLoad(newBuilding);
-                                break;
-                            case ITEM:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a
-                                // building will help, it is very similar
-                                if (targetGridPane.getId().equals("equippedItems")) {
-                                    switch (node.getId()) {
-                                        case "weaponCell":
-                                            if (currentlyDraggedImage.getImage().equals(swordImage)) {
+                        case CARD:
+                            removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                            // TODO = spawn a building here of different types
+                            VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                            onLoad(newBuilding);
+                            break;
+                        case ITEM:
+                            removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                            // TODO = spawn an item in the new location. The above code for spawning a
+                            // building will help, it is very similar
+                            if (targetGridPane.getId().equals("equippedItems")) {
+                                switch (node.getId()) {
+                                case "weaponCell":
+                                    if (currentlyDraggedImage.getImage().equals(swordImage)) {
 
-                                                EquipCharacterWithEquipment(world.getCharacter(), Sword.class);
+                                        Sword equiped_weapon = new Sword(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_weapon(equiped_weapon);
 
-                                            } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
+                                        System.out.println("character equiped weapon == "
+                                                + world.getCharacter().getDressed_weapon().getClass());
 
-                                                EquipCharacterWithEquipment(world.getCharacter(), Staff.class);
+                                    } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
+                                        Staff equiped_weapon = new Staff(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_weapon(equiped_weapon);
 
-                                            } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
+                                    } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
+                                        Stake equiped_weapon = new Stake(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_weapon(equiped_weapon);
 
-                                                EquipCharacterWithEquipment(world.getCharacter(), Stake.class);
-
-                                            }
-                                            break;
-
-                                        case "helmetCell":
-                                            if (currentlyDraggedImage.getImage().equals(helmetImage)) {
-                                                EquipCharacterWithEquipment(world.getCharacter(), BasicHelmet.class);
-
-                                            }
-                                            break;
-
-                                        case "armourCell":
-                                            if (currentlyDraggedImage.getImage().equals(armourImage)) {
-
-                                                EquipCharacterWithEquipment(world.getCharacter(), BasicArmour.class);
-
-                                            }
-                                            break;
-
-                                        case "shieldCell":
-                                            if (currentlyDraggedImage.getImage().equals(shieldImage)) {
-
-                                                EquipCharacterWithEquipment(world.getCharacter(), BasicShield.class);
-
-                                            }
-                                            break;
-
-                                        default:
-                                            break;
                                     }
+                                    break;
+
+                                case "helmetCell":
+                                    if (currentlyDraggedImage.getImage().equals(helmetImage)) {
+
+                                        BasicHelmet equiped_helmet = new BasicHelmet(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_helmet(equiped_helmet);
+
+                                    }
+                                    break;
+
+                                case "armourCell":
+                                    if (currentlyDraggedImage.getImage().equals(armourImage)) {
+
+                                        BasicArmour equiped_armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_armour(equiped_armour);
+
+                                    }
+                                    break;
+
+                                case "shieldCell":
+                                    if (currentlyDraggedImage.getImage().equals(shieldImage)) {
+
+                                        BasicShield equiped_shield = new BasicShield(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_shield(equiped_shield);
+
+                                    }
+                                    break;
+
+                                default:
+                                    break;
                                 }
+                            }
 
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
-                                break;
-                            default:
-                                break;
+                            removeItemByCoordinates(nodeX, nodeY);
+                            targetGridPane.add(image, x, y, 1, 1);
+                            break;
+                        default:
+                            break;
                         }
-                        System.out.println("drop的image：" + currentlyDraggedImage.getImage().getUrl());
-                        System.out.println("drop的image type：" + currentlyDraggedType.getClass());
-                        System.out.println("targetGridPane == " + targetGridPane.getId());
-                        System.out.println("node == " + node);
-                        System.out.println("x" + x);
-                        System.out.println("y" + y);
+                        // System.out.println("drop的image：" + currentlyDraggedImage.getImage().getUrl());
+                        // System.out.println("drop的image type：" + currentlyDraggedType.getClass());
+                        // System.out.println("targetGridPane == " + targetGridPane.getId());
+                        // System.out.println("node == " + node);
+                        // System.out.println("x" + x);
+                        // System.out.println("y" + y);
 
-                        System.out.println(targetGridPane.getChildren());
+                        // System.out.println(targetGridPane.getChildren());
 
-                        System.out.println("new character ATK == " + world.getCharacter().getATK());
-                        System.out.println("new character DEF == " + world.getCharacter().getDEF());
+                        // System.out.println("new character ATK == " + world.getCharacter().getATK());
+                        // System.out.println("new character DEF == " + world.getCharacter().getDEF());
 
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);
@@ -821,14 +864,14 @@ public class LoopManiaWorldController {
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
-                    case CARD:
-                        draggedEntity.setImage(vampireCastleCardImage);
-                        break;
-                    case ITEM:
-                        draggedEntity.setImage(swordImage);
-                        break;
-                    default:
-                        break;
+                case CARD:
+                    draggedEntity.setImage(vampireCastleCardImage);
+                    break;
+                case ITEM:
+                    draggedEntity.setImage(view.getImage());
+                    break;
+                default:
+                    break;
                 }
 
                 draggedEntity.setVisible(true);
@@ -914,15 +957,15 @@ public class LoopManiaWorldController {
     public void handleKeyPress(KeyEvent event) {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
-            case SPACE:
-                if (isPaused) {
-                    startTimer();
-                } else {
-                    pause();
-                }
-                break;
-            default:
-                break;
+        case SPACE:
+            if (isPaused) {
+                startTimer();
+            } else {
+                pause();
+            }
+            break;
+        default:
+            break;
         }
     }
 
@@ -1056,67 +1099,5 @@ public class LoopManiaWorldController {
         System.out.println("current method = " + currentMethodLabel);
         System.out.println("In application thread? = " + Platform.isFxApplicationThread());
         System.out.println("Current system time = " + java.time.LocalDateTime.now().toString().replace('T', ' '));
-    }
-
-    private void EquipCharacterWithEquipment(Character character, Class<?> equipment) {
-
-        if (equipment.equals(Sword.class)) {
-
-            EquipCharacterWithWeapon(character, Sword.class);
-
-        } else if (equipment.equals(Stake.class)) {
-
-            EquipCharacterWithWeapon(character, Stake.class);
-
-        } else if (equipment.equals(Staff.class)) {
-
-            EquipCharacterWithWeapon(character, Staff.class);
-
-        } else if (equipment.equals(BasicArmour.class)) {
-
-            EquipCharacterWithArmour(character, BasicArmour.class);
-
-        } else if (equipment.equals(BasicShield.class)) {
-
-            EquipCharacterWithShield(character, BasicShield.class);
-
-        } else if (equipment.equals(BasicHelmet.class)) {
-
-            EquipCharacterWithHelmet(character, BasicHelmet.class);
-
-        }
-    }
-
-    private void EquipCharacterWithWeapon(Character character, Class<?> weapon) {
-        Weapon sampleweapon = new Weapon(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-        if (weapon.equals(Sword.class)) {
-            sampleweapon = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (weapon.equals(Stake.class)) {
-            sampleweapon = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (weapon.equals(Staff.class)) {
-            sampleweapon = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        }
-
-        character.setATK(character.getATK() + sampleweapon.getAttack());
-    }
-
-    private void EquipCharacterWithArmour(Character character, Class<?> armour) {
-        Armour samplearmour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-        character.setDEF(character.getDEF() + samplearmour.getDefence());
-    }
-
-    private void EquipCharacterWithShield(Character character, Class<?> shield) {
-        Shield sampleshield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-        character.setDEF(character.getDEF() + sampleshield.getDefence());
-    }
-
-    private void EquipCharacterWithHelmet(Character character, Class<?> helmet) {
-        Helmet samplehelmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-        character.setATK(character.getATK() + samplehelmet.getAttack());
-        character.setDEF(character.getDEF() + samplehelmet.getDefence());
     }
 }
