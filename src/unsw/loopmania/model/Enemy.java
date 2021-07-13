@@ -2,8 +2,11 @@ package unsw.loopmania.model;
 
 import java.util.Random;
 
+/**
+ * a basic form of enemy in the world
+ */
 public class Enemy extends MovingEntity {
-
+    
     public int hp;
     public int attack;
     public int speed;

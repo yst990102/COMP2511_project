@@ -1,7 +1,6 @@
 package unsw.loopmania.model.enemies;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;

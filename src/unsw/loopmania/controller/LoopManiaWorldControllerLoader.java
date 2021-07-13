@@ -17,8 +17,8 @@ import java.io.File;
 
 import unsw.loopmania.model.Character;
 import unsw.loopmania.model.PathTile;
+import unsw.loopmania.model.buildings.HeroCastle;
 import unsw.loopmania.model.Entity;
-import unsw.loopmania.model.HeroCastle;
 
 /**
  * A LoopManiaLoader that also creates the necessary ImageViews for the UI,

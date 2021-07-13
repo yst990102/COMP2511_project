@@ -16,9 +16,9 @@ import java.util.List;
 import unsw.loopmania.model.LoopManiaWorld;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.PathTile;
+import unsw.loopmania.model.buildings.HeroCastle;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.Character;
-import unsw.loopmania.model.HeroCastle;
 
 
 

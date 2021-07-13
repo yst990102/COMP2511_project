@@ -1,4 +1,4 @@
-package unsw.loopmania.model.equipments.Helmets;
+package unsw.loopmania.model.equipments.helmets;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.Helmet;

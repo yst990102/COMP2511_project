@@ -1,4 +1,4 @@
-package unsw.loopmania.model;
+package unsw.loopmania.model.cards;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
