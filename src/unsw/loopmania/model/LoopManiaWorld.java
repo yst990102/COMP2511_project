@@ -279,6 +279,11 @@ public class LoopManiaWorld {
                             enemy_attack = ((Vampire) enemy).getAttack(critical_percentage_decrease);
                         }
 
+                        if (character.getDressed_armour() != null) {
+                            enemy_attack *= (1 - Double
+                                    .valueOf(character.getDressed_armour().getDamage_reduce_percentage() / 100));
+                        }
+
                         damage += enemy_attack - character.getDEF();
 
                         attack_times--;
