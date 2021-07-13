@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -37,6 +38,8 @@ import javafx.beans.binding.Bindings;
 import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
+
+import unsw.loopmania.model.Character;
 
 import unsw.loopmania.model.LoopManiaWorld;
 import unsw.loopmania.model.Potion;
@@ -206,6 +209,8 @@ public class LoopManiaWorldController {
     private Image campfireCardImage;
     // Enemy Images
     private Image SlugEnemyImage;
+    private Image ZombieEnemyImage;
+    private Image VampireEnemyImage;
     // Equipment Images
     private Image swordImage;
     private Image helmetImage;
@@ -286,7 +291,7 @@ public class LoopManiaWorldController {
         entityImages = new ArrayList<>(initialEntities);
 
         // Cards
-        vampireCastleCardImage = new Image((new File("src/images/vampire_castle_card.png")).toURI().toString());
+        vampireCastleCardImage = new Image((new File("src/assets/vampire_castle_card.png")).toURI().toString());
         zombiePitCardImage = new Image((new File("src/assets/zombie_pit_card.png")).toURI().toString());
         towerCardImage = new Image((new File("src/assets/tower_card.png")).toURI().toString());
         villageCardImage = new Image((new File("src/assets/village_card.png")).toURI().toString());
@@ -296,6 +301,8 @@ public class LoopManiaWorldController {
 
         // Enemies
         SlugEnemyImage = new Image((new File("src/assets/slug.png")).toURI().toString());
+        ZombieEnemyImage = new Image((new File("src/assets/zombie.png")).toURI().toString());
+        VampireEnemyImage = new Image((new File("src/assets/vampire.png")).toURI().toString());
 
         // Item - Equipments
         swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
@@ -389,6 +396,29 @@ public class LoopManiaWorldController {
         // bind world description to frontend property
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
     }
+
+    public void updateCharacterDescription() {
+        Character currentPlayer = world.getCharacter();
+
+        String characterProperty = "HP : " + currentPlayer.getHP() + "\n" + "Gold : " + currentPlayer.getGold() + "\n"
+                + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getNumSoldier() + "\n\n"
+                + "attack : " + currentPlayer.getATK() + "\n" + "defence : " + currentPlayer.getDEF() + "\n\n"
+                + "Weapon : "
+                + ((currentPlayer.getDressed_weapon() == null) ? " no weapon "
+                        : currentPlayer.getDressed_weapon().getClass().getSimpleName())
+                + "\n" + "Armour : "
+                + ((currentPlayer.getDressed_armour() == null) ? " no armour "
+                        : currentPlayer.getDressed_armour().getClass().getSimpleName())
+                + "\n" + "Shield : "
+                + ((currentPlayer.getDressed_shield() == null) ? " no shield "
+                        : currentPlayer.getDressed_shield().getClass().getSimpleName())
+                + "\n" + "Helmet : " + ((currentPlayer.getDressed_helmet() == null) ? " no helmet "
+                        : currentPlayer.getDressed_helmet().getClass().getSimpleName())
+                + "\n";
+
+        characterdescription.setText(characterProperty);
+    }
+
 
     /**
      * create and run the timer
@@ -500,24 +530,6 @@ public class LoopManiaWorldController {
         loadDroppedEquipments();
         loadDroppedCard();
         // loadVampireCard();
-    }
-
-    /**
-     * load a vampire castle card into the GUI. Particularly, we must connect to the
-     * drag detection event handler, and load the image into the cards GridPane.
-     * 
-     * @param vampireCastleCard
-     */
-    private void onLoad(VampireCastleCard vampireCastleCard) {
-        ImageView view = new ImageView(vampireCastleCardImage);
-
-        // FROM
-        // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
-        // note target setOnDragOver and setOnDragEntered defined in initialize method
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-
-        addEntity(vampireCastleCard, view);
-        cards.getChildren().add(view);
     }
 
     private void onLoad(Card card) {
@@ -639,17 +651,6 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a building into the GUI
-     * 
-     * @param building
-     */
-    private void onLoad(VampireCastleBuilding building) {
-        ImageView view = new ImageView(basicBuildingImage);
-        addEntity(building, view);
-        squares.getChildren().add(view);
-    }
-
-    /**
      * add drag event handlers for dropping into gridpanes, dragging over the
      * background, dropping over the background. These are not attached to invidual
      * items such as swords/cards.
@@ -698,6 +699,7 @@ public class LoopManiaWorldController {
                         int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         Building newBuilding;
+
                         switch (draggableType) {
                             case CARD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
@@ -706,11 +708,74 @@ public class LoopManiaWorldController {
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a
-                                // building will help, it is very similar
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
-                                break;
+                            // TODO = spawn an item in the new location. The above code for spawning a
+                            // building will help, it is very similar
+                            if (targetGridPane.getId().equals("equippedItems")) {
+                                switch (node.getId()) {
+                                case "weaponCell":
+                                    if (currentlyDraggedImage.getImage().equals(swordImage)) {
+
+                                        Sword equiped_weapon = new Sword(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_weapon(equiped_weapon);
+                                        updateCharacterDescription();
+
+                                    } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
+                                        Staff equiped_weapon = new Staff(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_weapon(equiped_weapon);
+                                        updateCharacterDescription();
+
+                                    } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
+                                        Stake equiped_weapon = new Stake(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_weapon(equiped_weapon);
+                                        updateCharacterDescription();
+
+                                    }
+                                    break;
+
+                                case "helmetCell":
+                                    if (currentlyDraggedImage.getImage().equals(helmetImage)) {
+
+                                        BasicHelmet equiped_helmet = new BasicHelmet(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_helmet(equiped_helmet);
+                                        updateCharacterDescription();
+
+                                    }
+                                    break;
+
+                                case "armourCell":
+                                    if (currentlyDraggedImage.getImage().equals(armourImage)) {
+
+                                        BasicArmour equiped_armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_armour(equiped_armour);
+                                        updateCharacterDescription();
+
+                                    }
+                                    break;
+
+                                case "shieldCell":
+                                    if (currentlyDraggedImage.getImage().equals(shieldImage)) {
+
+                                        BasicShield equiped_shield = new BasicShield(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                        world.getCharacter().setDressed_shield(equiped_shield);
+                                        updateCharacterDescription();
+
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                                }
+                            }
+
+                            removeItemByCoordinates(nodeX, nodeY);
+                            targetGridPane.add(image, x, y, 1, 1);
+                            break;
                             case VAMPIRE_CASTLE_CARD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VAMPIRE_CASTLE");
