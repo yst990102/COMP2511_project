@@ -40,27 +40,15 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.model.Character;
-
 import unsw.loopmania.model.LoopManiaWorld;
 import unsw.loopmania.model.Potion;
 import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Armour;
-// enemies
-import unsw.loopmania.model.BasicEnemy;
-import unsw.loopmania.model.Equipments.Armours.BasicArmour;
-import unsw.loopmania.model.Equipments.Helmets.BasicHelmet;
-import unsw.loopmania.model.Equipments.Shields.BasicShield;
-import unsw.loopmania.model.Equipments.Weapons.Staff;
-import unsw.loopmania.model.Equipments.Weapons.Stake;
-import unsw.loopmania.model.Equipments.Weapons.Sword;
-import unsw.loopmania.model.Potions.HealthPotion;
-import unsw.loopmania.model.RareItems.TheOneRing;
-// items
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Item;
-// buildings
 import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.VampireCastleBuilding;
 import unsw.loopmania.model.buildings.ZombiePitBuilding;
@@ -69,15 +57,22 @@ import unsw.loopmania.model.buildings.VillageBuilding;
 import unsw.loopmania.model.buildings.BarracksBuilding;
 import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.CampfireBuilding;
-// cards
 import unsw.loopmania.model.cards.Card;
 import unsw.loopmania.model.cards.VampireCastleCard;
 import unsw.loopmania.model.cards.ZombiePitCard;
+import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.rareItems.TheOneRing;
 import unsw.loopmania.model.cards.TowerCard;
 import unsw.loopmania.model.cards.VillageCard;
 import unsw.loopmania.model.cards.BarracksCard;
 import unsw.loopmania.model.cards.TrapCard;
 import unsw.loopmania.model.cards.CampfireCard;
+import unsw.loopmania.model.equipments.Armours.BasicArmour;
+import unsw.loopmania.model.equipments.Helmets.BasicHelmet;
+import unsw.loopmania.model.equipments.Shields.BasicShield;
+import unsw.loopmania.model.equipments.Weapons.Staff;
+import unsw.loopmania.model.equipments.Weapons.Stake;
+import unsw.loopmania.model.equipments.Weapons.Sword;
 /**
  * the draggable types. If you add more draggable types, add an enum value here.
  * This is so we can see what type is being dragged.
@@ -207,10 +202,12 @@ public class LoopManiaWorldController {
     private Image barracksCardImage;
     private Image trapCardImage;
     private Image campfireCardImage;
+    
     // Enemy Images
     private Image SlugEnemyImage;
     private Image ZombieEnemyImage;
     private Image VampireEnemyImage;
+    
     // Equipment Images
     private Image swordImage;
     private Image helmetImage;
@@ -218,12 +215,14 @@ public class LoopManiaWorldController {
     private Image stakeImage;
     private Image staffImage;
     private Image armourImage;
+    
     // Potions
     private Image HealthPotionImage;
+    
     // RareItems
     private Image TheOneRingImage;
+    
     // Building Images
-    private Image basicBuildingImage;
     private Image vampireCastleBuildingImage;
     private Image zombiePitBuildingImage;
     private Image towerBuildingImage;
@@ -319,7 +318,6 @@ public class LoopManiaWorldController {
         TheOneRingImage = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
 
         // Buildings
-        basicBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
         vampireCastleBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
         zombiePitBuildingImage = new Image((new File("src/assets/zombie_pit.png")).toURI().toString());
         towerBuildingImage = new Image((new File("src/assets/tower.png")).toURI().toString());
@@ -434,12 +432,12 @@ public class LoopManiaWorldController {
             world.runTickMoves();
             world.updateNthCycle();
             switchToStore();
-            List<BasicEnemy> defeatedEnemies = world.runBattles();
-            for (BasicEnemy e : defeatedEnemies) {
+            List<Enemy> defeatedEnemies = world.runBattles();
+            for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }
-            List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
-            for (BasicEnemy newEnemy : newEnemies) {
+            List<Enemy> newEnemies = world.possiblySpawnEnemies();
+            for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
             printThreadingNotes("HANDLED TIMER");
@@ -522,14 +520,13 @@ public class LoopManiaWorldController {
      * 
      * @param enemy defeated enemy for which we should react to the death of
      */
-    private void reactToEnemyDefeat(BasicEnemy enemy) {
+    private void reactToEnemyDefeat(Enemy enemy) {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
         loadDroppedEquipments();
         loadDroppedCard();
-        // loadVampireCard();
     }
 
     private void onLoad(Card card) {
@@ -644,7 +641,7 @@ public class LoopManiaWorldController {
      * 
      * @param enemy
      */
-    private void onLoad(BasicEnemy enemy) {
+    private void onLoad(Enemy enemy) {
         ImageView view = new ImageView(SlugEnemyImage);
         addEntity(enemy, view);
         squares.getChildren().add(view);

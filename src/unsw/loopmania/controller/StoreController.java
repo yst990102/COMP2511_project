@@ -4,15 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-
-import unsw.loopmania.model.Equipments.Armours.BasicArmour;
-import unsw.loopmania.model.Equipments.Helmets.BasicHelmet;
-import unsw.loopmania.model.Equipments.Shields.BasicShield;
-import unsw.loopmania.model.Equipments.Weapons.Staff;
-import unsw.loopmania.model.Equipments.Weapons.Stake;
-import unsw.loopmania.model.Equipments.Weapons.Sword;
-import unsw.loopmania.model.Potions.HealthPotion;
-
+import unsw.loopmania.model.equipments.Armours.BasicArmour;
+import unsw.loopmania.model.equipments.Helmets.BasicHelmet;
+import unsw.loopmania.model.equipments.Shields.BasicShield;
+import unsw.loopmania.model.equipments.Weapons.Staff;
+import unsw.loopmania.model.equipments.Weapons.Stake;
+import unsw.loopmania.model.equipments.Weapons.Sword;
+import unsw.loopmania.model.potions.HealthPotion;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

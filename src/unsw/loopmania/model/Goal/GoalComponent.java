@@ -1,4 +1,4 @@
-package unsw.loopmania.model.Goal;
+package unsw.loopmania.model.goal;
 
 public abstract class GoalComponent {
     String goal;

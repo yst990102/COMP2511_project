@@ -1,4 +1,4 @@
-package unsw.loopmania.model.Goal;
+package unsw.loopmania.model.goal;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package unsw.loopmania.model.Equipments.Shields;
+package unsw.loopmania.model.equipments.Shields;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.Shield;
