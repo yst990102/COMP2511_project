@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.lang.Integer;
 
 import javax.lang.model.element.ExecutableElement;
 
@@ -714,4 +715,92 @@ public class LoopManiaWorld {
         this.goals.set(goals);
     }
 
+    public Vampire CheckVampireSpawn() {
+        for (Building b : buildingEntities) {
+            if (b instanceof VampireCastleBuilding) {
+                if ((getNthCycle() + 1) % 5 == 0 && character.getX() == 0 && character.getY() == 0) {
+                    Pair<Integer, Integer> vampirePos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
+                    int indexInPath = orderedPath.indexOf(vampirePos);
+                    Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
+                    enemies.add(vampire);
+                    return vampire;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Zombie CheckZombieSpawn() {
+        for (Building b : buildingEntities) {
+            if (b instanceof ZombiePitBuilding) {
+                if (character.getX() == 0 && character.getY() == 0) {
+                    Pair<Integer, Integer> vampirePos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
+                    int indexInPath = orderedPath.indexOf(vampirePos);
+                    Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
+                    enemies.add(zombie);
+                    return zombie;
+                } 
+            }
+        }
+        return null;
+    }   
+
+    public void CheckHeroPassVillage() {
+        for (Building b : buildingEntities) {
+            if (b instanceof VillageBuilding) {
+                if (character.getX() == b.getX() && character.getY() == b.getY()) {
+                    character.setHP(300);
+                } 
+            }
+        }
+    }
+
+    public void CheckHeroPassBarracks() {
+        for (Building b : buildingEntities) {
+            if (b instanceof BarracksBuilding) {
+                if (character.getX() == b.getX() && character.getY() == b.getY()) {
+                    character.setNumSoldier(character.getNumSoldier() + 1);
+                } 
+            }
+        }
+    }
+
+    public void CheckEnemyPassTrap() {
+        for (Building b : buildingEntities) {
+            if (b instanceof TrapBuilding) {
+                for (Enemy e : enemies) {
+                    if (b.getX() == e.getX() && b.getY() == e.getY()) {
+                        e.getAttack();
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void CheckHeroInTowerRadius() {
+        for (Building b : buildingEntities) {
+            if (b instanceof TowerBuilding) {
+                TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
+                for (Enemy e : enemies) {
+                    if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math.pow(tower.getShootingRadius(), 2)) {
+                        System.err.println("enemy in tower radius");
+                        e.getAttack();
+                    }
+                }
+            }  
+        }
+    }
+
+    public void CheckHeroInCampfireRadius() {
+        for (Building b : buildingEntities) {
+            if (b instanceof CampfireBuilding) {
+                CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
+                if (Math.pow((character.getX() - b.getX()), 2) + Math.pow((character.getY() - b.getY()), 2) < Math.pow(campfire.getBattleRadius(), 2)) {
+                    System.err.println("character in campfire radius");
+                    character.setATK(character.getATK() * 2);
+                }     
+            }
+        }
+    }
 }

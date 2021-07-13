@@ -75,6 +75,10 @@ import unsw.loopmania.model.equipments.shields.BasicShield;
 import unsw.loopmania.model.equipments.weapons.Staff;
 import unsw.loopmania.model.equipments.weapons.Stake;
 import unsw.loopmania.model.equipments.weapons.Sword;
+import unsw.loopmania.model.enemies.Slug;
+import unsw.loopmania.model.enemies.Vampire;
+import unsw.loopmania.model.enemies.Zombie;
+
 /**
  * the draggable types. If you add more draggable types, add an enum value here.
  * This is so we can see what type is being dragged.
@@ -475,6 +479,13 @@ public class LoopManiaWorldController {
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
+            onLoad(world.CheckVampireSpawn());
+            onLoad(world.CheckZombieSpawn());
+            world.CheckHeroPassVillage();
+            world.CheckHeroPassBarracks();
+            world.CheckEnemyPassTrap();
+            world.CheckHeroInTowerRadius();
+            world.CheckHeroInCampfireRadius();
             printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -679,7 +690,18 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(Enemy enemy) {
-        ImageView view = new ImageView(SlugEnemyImage);
+        ImageView view;
+        
+        if (enemy instanceof Slug) {
+            view = new ImageView(SlugEnemyImage);
+        } else if (enemy instanceof Vampire) {
+            view = new ImageView(VampireEnemyImage);
+        } else if (enemy instanceof Zombie) {
+            view = new ImageView(ZombieEnemyImage);
+        } else {
+            return;
+        }
+
         addEntity(enemy, view);
         squares.getChildren().add(view);
     }
