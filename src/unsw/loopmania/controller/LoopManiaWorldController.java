@@ -31,6 +31,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.beans.binding.Bindings;
@@ -163,6 +164,15 @@ public class LoopManiaWorldController {
 
     @FXML
     private Button pauseButton;
+
+    @FXML
+    private Tooltip pauseButtondescription;
+
+    @FXML
+    private Button exitButton;
+
+    @FXML
+    private Tooltip exitButtondescription;
 
     @FXML
     private Text goal;
@@ -411,6 +421,11 @@ public class LoopManiaWorldController {
         // framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             pauseButton.setText("Pause");
+            pauseButtondescription.setText("Game running. Click to pause.");
+
+            exitButton.setText("Exit");
+            exitButtondescription.setText("Clikc to exit.");
+
             world.runTickMoves();
             world.updateNthCycle();
             switchToStore();
@@ -439,6 +454,7 @@ public class LoopManiaWorldController {
     public void pause() {
         isPaused = true;
         pauseButton.setText("Continue");
+        pauseButtondescription.setText("Game paused. Click to continue.");
         System.out.println("pausing");
         timeline.stop();
     }

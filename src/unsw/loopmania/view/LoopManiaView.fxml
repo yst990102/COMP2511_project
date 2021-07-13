@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -221,14 +222,20 @@
                      </font>
                      <padding>
                         <Insets bottom="10.0" />
-                     </padding></Button>
-                  <Button id="exit-button" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Exit" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="15.0">
+                     </padding>
+                     <tooltip>
+                        <Tooltip fx:id="pauseButtondescription" text="Empty Tooltip" />
+                     </tooltip></Button>
+                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Exit" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="15.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
                      <padding>
                         <Insets bottom="10.0" />
-                     </padding></Button>
+                     </padding>
+                     <tooltip>
+                        <Tooltip fx:id="exitButtondescription" text="Empty Tooltip" />
+                     </tooltip></Button>
                </children>
             </VBox>
          </children>
