@@ -11,6 +11,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.lang.model.element.ExecutableElement;
 
 import org.javatuples.Pair;
 import org.json.JSONArray;
@@ -21,6 +24,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import unsw.loopmania.model.enemies.Slug;
+import unsw.loopmania.model.enemies.Vampire;
+import unsw.loopmania.model.enemies.Zombie;
 import unsw.loopmania.model.equipments.Armours.BasicArmour;
 import unsw.loopmania.model.equipments.Helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.Shields.BasicShield;
@@ -71,7 +76,7 @@ public class LoopManiaWorld {
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
-    private List<Slug> enemies;
+    private List<Enemy> enemies;
 
     // TODO = expand the range of cards
     private List<Card> cardEntities;
@@ -147,10 +152,10 @@ public class LoopManiaWorld {
      * spawns enemies if the conditions warrant it, adds to world
      * @return list of the enemies to be displayed on screen
      */
-    public List<Slug> possiblySpawnEnemies() {
+    public List<Enemy> possiblySpawnEnemies() {
         // TODO = expand this very basic version
         Pair<Integer, Integer> pos = possiblyGetBasicEnemySpawnPosition();
-        List<Slug> spawningEnemies = new ArrayList<>();
+        List<Enemy> spawningEnemies = new ArrayList<>();
         if (pos != null) {
             int indexInPath = orderedPath.indexOf(pos);
             Slug enemy = new Slug(new PathPosition(indexInPath, orderedPath));
@@ -164,18 +169,17 @@ public class LoopManiaWorld {
      * kill an enemy
      * @param enemy enemy to be killed
      */
-    private void killEnemy(Slug enemy) {
+    private void killEnemy(Enemy enemy) {
         // 杀掉enemy的时候需要增加gold和exp
         // - Slug: $50, XP 100
         // - Zombie: $100, XP 200
         // - Vampire: $200, XP 300
-        if (enemy.getClass().equals(Slug.class)) {
-            int current_gold = this.character.getGold();
-            this.character.setGold(current_gold + enemy.getGold_whenkilled());
 
-            int current_exp = this.character.getXP();
-            this.character.setXP(current_exp + enemy.getExp_whenkilled());
-        }
+        int current_gold = this.character.getGold();
+        this.character.setGold(current_gold + enemy.gold_whenkilled);
+
+        int current_exp = this.character.getXP();
+        this.character.setXP(current_exp + enemy.exp_whenkilled);
 
         enemy.destroy();
         enemies.remove(enemy);
@@ -185,21 +189,21 @@ public class LoopManiaWorld {
      * run the expected battles in the world, based on current world state
      * @return list of enemies which have been killed
      */
-    public List<Slug> runBattles() {
+    public List<Enemy> runBattles() {
         // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<Slug> defeatedEnemies = new ArrayList<Slug>();
-        for (Slug e : enemies) {
+        List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
                 FightEnemy(e);
-                if (e.getHp() <= 0) {
+                if (e.hp <= 0) {
                     defeatedEnemies.add(e);
                 }
             }
         }
-        for (Slug e : defeatedEnemies) {
+        for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
             // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
             // due to mutating list we're iterating over
@@ -208,25 +212,83 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    public void FightEnemy(Slug enemy) {
+    public void FightEnemy(Enemy enemy) {
         FileOutputStream writer;
         try {
             writer = new FileOutputStream("fight.txt", true);
-
             writer.write(("Battle between : character ==== " + enemy + "\n").getBytes());
 
             while (true) {
-                enemy.setHp(enemy.getHp() - character.getATK());
+                // 人物攻击敌人
+                enemy.hp -= character.getATK();
                 writer.write(("Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
-
-                if (enemy.getHp() <= 0) {
+                // 如果敌人死亡，则break返还
+                if (enemy.hp <= 0) {
                     writer.write(("enemy died!!" + "\n").getBytes());
                     break;
                 }
 
-                int hpLoss = enemy.getAttack() - character.getDEF();
-                character.setHP(character.getHP() - ((hpLoss >= 0) ? hpLoss : 0));
-                writer.write(("Enemy attack character, character lose " + ((hpLoss >= 0) ? hpLoss : 0) + " HP." + "\n").getBytes());
+                // 敌人攻击人物时
+                int HPLoss = 0;
+                if (enemy.getClass().equals(Slug.class)) { // slug攻击人物时
+                    int damage = 0;
+                    int enemy_attack = 0;
+
+                    if (character.getDressed_helmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                        enemy_attack = enemy.getAttack() - character.getDressed_helmet().getEnemy_attack_decrease();
+                    } else { //当人物不装备helmet时
+                        enemy_attack = enemy.getAttack();
+                    }
+
+                    damage = enemy_attack - character.getDEF();
+
+                    HPLoss = (damage < 0) ? 0 : damage;
+
+                } else if (enemy.getClass().equals(Zombie.class)) { // zombie攻击人物时
+                    int damage = 0;
+                    int enemy_attack = 0;
+
+                    if (character.getDressed_helmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                        enemy_attack = enemy.getAttack() - character.getDressed_helmet().getEnemy_attack_decrease();
+                    } else { //当人物不装备helmet时
+                        enemy_attack = enemy.getAttack();
+                    }
+
+                    damage = enemy_attack - character.getDEF();
+
+                    HPLoss = (damage < 0) ? 0 : damage;
+
+                } else if (enemy.getClass().equals(Vampire.class)) { // zombie攻击人物时
+                    int damage = 0;
+
+                    int attack_times = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
+
+                    while (attack_times > 0) {
+
+                        int enemy_attack = 0;
+                        int critical_percentage_decrease = 0;
+                        if (character.getDressed_shield() != null) {
+                            critical_percentage_decrease = character.getDressed_shield()
+                                    .getCritical_percentage_decrease();
+                        }
+
+                        if (character.getDressed_helmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                            enemy_attack = ((Vampire) enemy).getAttack(critical_percentage_decrease)
+                                    - character.getDressed_helmet().getEnemy_attack_decrease();
+                        } else { //当人物不装备helmet时
+                            enemy_attack = ((Vampire) enemy).getAttack(critical_percentage_decrease);
+                        }
+
+                        damage += enemy_attack - character.getDEF();
+
+                        attack_times--;
+                    }
+
+                    HPLoss = ((damage < 0) ? 0 : damage) * attack_times;
+                }
+
+                character.setHP(character.getHP() - HPLoss);
+                writer.write(("Enemy attack character, character lose " + HPLoss + " HP." + "\n").getBytes());
                 if (character.getHP() <= 0) {
                     writer.write(("Character died!!" + "\n").getBytes());
                     break;
@@ -462,7 +524,7 @@ public class LoopManiaWorld {
      */
     private void moveBasicEnemies() {
         // TODO = expand to more types of enemy
-        for (Slug e : enemies) {
+        for (Enemy e : enemies) {
             e.move();
         }
     }

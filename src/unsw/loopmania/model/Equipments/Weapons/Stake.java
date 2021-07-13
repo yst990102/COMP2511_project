@@ -25,4 +25,10 @@ public class Stake extends Weapon {
 
        setDescription(description);
     }
+
+
+    public int getAttack_to_vampire() {
+        return this.attack_to_vampire;
+    }
+
 }

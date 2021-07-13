@@ -8,15 +8,13 @@ import unsw.loopmania.model.Helmet;
  */
 public class BasicHelmet extends Helmet {
 
-    private int enemy_attack = -2;
-
     public BasicHelmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 
         setAttack(-2);
         setDefence(2);
 
-        this.enemy_attack = -2;
+        setEnemy_attack_decrease(2);
 
         setPrice(200);
 
@@ -28,4 +26,5 @@ public class BasicHelmet extends Helmet {
 
        setDescription(description);
     }
+
 }

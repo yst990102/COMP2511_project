@@ -2,18 +2,18 @@ package unsw.loopmania.model;
 
 import java.util.Random;
 
-import jdk.jfr.Percentage;
-
 public class Enemy extends MovingEntity {
 
-    private int hp;
-    private int attack;
-    private int speed;
-    private int battle_radius;
-    private int support_radius;
+    public int hp;
+    public int attack;
+    public int speed;
+    public int battle_radius;
+    public int support_radius;
 
-    private int gold_whenkilled;
-    private int exp_whenkilled;
+    public int critical_percentage;
+
+    public int gold_whenkilled;
+    public int exp_whenkilled;
 
     public Enemy(PathPosition position) {
         super(position);
@@ -33,60 +33,8 @@ public class Enemy extends MovingEntity {
         }
     }
 
-    public int getHp() {
-        return this.hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
     public int getAttack() {
         return this.attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public int getSpeed() {
-        return this.speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getBattle_radius() {
-        return this.battle_radius;
-    }
-
-    public void setBattle_radius(int battle_radius) {
-        this.battle_radius = battle_radius;
-    }
-
-    public int getSupport_radius() {
-        return this.support_radius;
-    }
-
-    public void setSupport_radius(int support_radius) {
-        this.support_radius = support_radius;
-    }
-
-    public int getGold_whenkilled() {
-        return this.gold_whenkilled;
-    }
-
-    public void setGold_whenkilled(int gold_whenkilled) {
-        this.gold_whenkilled = gold_whenkilled;
-    }
-
-    public int getExp_whenkilled() {
-        return this.exp_whenkilled;
-    }
-
-    public void setExp_whenkilled(int exp_whenkilled) {
-        this.exp_whenkilled = exp_whenkilled;
     }
 
 }

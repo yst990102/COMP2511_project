@@ -47,6 +47,7 @@ import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Shield;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Armour;
 // cards
 import unsw.loopmania.model.VampireCastleCard;
@@ -413,16 +414,16 @@ public class LoopManiaWorldController {
             world.runTickMoves();
             world.updateNthCycle();
             switchToStore();
-            List<Slug> defeatedEnemies = world.runBattles();
+            List<Enemy> defeatedEnemies = world.runBattles();
 
             // refresh character hp after battle
             hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
 
-            for (Slug e : defeatedEnemies) {
+            for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }
-            List<Slug> newEnemies = world.possiblySpawnEnemies();
-            for (Slug newEnemy : newEnemies) {
+            List<Enemy> newEnemies = world.possiblySpawnEnemies();
+            for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
             printThreadingNotes("HANDLED TIMER");
@@ -504,7 +505,7 @@ public class LoopManiaWorldController {
      * 
      * @param enemy defeated enemy for which we should react to the death of
      */
-    private void reactToEnemyDefeat(Slug enemy) {
+    private void reactToEnemyDefeat(Enemy enemy) {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
@@ -587,7 +588,7 @@ public class LoopManiaWorldController {
      * 
      * @param enemy
      */
-    private void onLoad(Slug enemy) {
+    private void onLoad(Enemy enemy) {
         ImageView view = new ImageView(SlugEnemyImage);
         addEntity(enemy, view);
         squares.getChildren().add(view);
@@ -650,6 +651,10 @@ public class LoopManiaWorldController {
 
                         int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
+
+                        System.out.println("Before : character ATK == " + world.getCharacter().getATK());
+                        System.out.println("Before : character DEF == " + world.getCharacter().getDEF());
+
                         switch (draggableType) {
                         case CARD:
                             removeDraggableDragEventHandlers(draggableType, targetGridPane);
@@ -730,14 +735,15 @@ public class LoopManiaWorldController {
                         // System.out.println("drop的image：" + currentlyDraggedImage.getImage().getUrl());
                         // System.out.println("drop的image type：" + currentlyDraggedType.getClass());
                         // System.out.println("targetGridPane == " + targetGridPane.getId());
-                        // System.out.println("node == " + node);
+                        // System.out.println("nodeX == " + nodeX);
+                        // System.out.println("nodeY == " + nodeY);
                         // System.out.println("x" + x);
                         // System.out.println("y" + y);
 
                         // System.out.println(targetGridPane.getChildren());
 
-                        // System.out.println("new character ATK == " + world.getCharacter().getATK());
-                        // System.out.println("new character DEF == " + world.getCharacter().getDEF());
+                        System.out.println("After : character ATK == " + world.getCharacter().getATK());
+                        System.out.println("After : character DEF == " + world.getCharacter().getDEF());
 
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);

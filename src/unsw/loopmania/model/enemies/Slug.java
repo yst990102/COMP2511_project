@@ -11,14 +11,14 @@ public class Slug extends Enemy {
     public Slug(PathPosition position) {
         super(position);
 
-        setHp(15);
-        setAttack(5);
-        setSpeed(5);
-        setBattle_radius(2);
-        setSupport_radius(2);
+        this.hp = 15;
+        this.attack = 5;
+        this.speed = 5;
+        this.battle_radius = 2;
+        this.support_radius = 2;
 
-        setGold_whenkilled(50);
-        setExp_whenkilled(100);
+        this.gold_whenkilled = 50;
+        this.exp_whenkilled = 100;
 
     }
 

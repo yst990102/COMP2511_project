@@ -8,8 +8,8 @@ import unsw.loopmania.model.Weapon;
  */
 public class Staff extends Weapon {
 
-    private int trance_percentage;// unit : %
-    private int trance_duration;// unit : second
+    int trance_percentage;// unit : %
+    int trance_duration;// unit : second
 
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);

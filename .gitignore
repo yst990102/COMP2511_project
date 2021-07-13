@@ -6,3 +6,4 @@ hs_err_pid*
 /build/
 /.gradle/
 .vscode/launch.json
+fight.txt
