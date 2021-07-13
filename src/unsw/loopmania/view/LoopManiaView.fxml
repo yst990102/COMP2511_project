@@ -143,6 +143,9 @@
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
+                     <tooltip>
+                        <Tooltip fx:id="characterdescription" text="CharacterDescription" />
+                     </tooltip>
                   </Label>
                   <!-- equippedItems contains the equipment equipped by the character in special slots -->
                   <!-- TODO = extend this to have slots for equipping armour, shields, helmets, and any other equippable items -->
@@ -224,7 +227,7 @@
                         <Insets bottom="10.0" />
                      </padding>
                      <tooltip>
-                        <Tooltip fx:id="pauseButtondescription" text="Empty Tooltip" />
+                        <Tooltip fx:id="pauseButtondescription" text="PauseButtonDescription" />
                      </tooltip></Button>
                   <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Exit" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="15.0">
                      <font>
@@ -234,7 +237,7 @@
                         <Insets bottom="10.0" />
                      </padding>
                      <tooltip>
-                        <Tooltip fx:id="exitButtondescription" text="Empty Tooltip" />
+                        <Tooltip fx:id="exitButtondescription" text="ExitButtonDescription" />
                      </tooltip></Button>
                </children>
             </VBox>

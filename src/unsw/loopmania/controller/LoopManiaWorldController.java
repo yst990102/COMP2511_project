@@ -190,6 +190,9 @@ public class LoopManiaWorldController {
     private Text soldier;
 
     @FXML
+    private Tooltip characterdescription;
+
+    @FXML
     private Text description;
 
     // all image views including tiles, character, enemies, cards... even though
@@ -410,6 +413,28 @@ public class LoopManiaWorldController {
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
     }
 
+    public void updateCharacterDescription() {
+        Character currentPlayer = world.getCharacter();
+
+        String characterProperty = "HP : " + currentPlayer.getHP() + "\n" + "Gold : " + currentPlayer.getGold() + "\n"
+                + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getNumSoldier() + "\n\n"
+                + "attack : " + currentPlayer.getATK() + "\n" + "defence : " + currentPlayer.getDEF() + "\n\n"
+                + "Weapon : "
+                + ((currentPlayer.getDressed_weapon() == null) ? " no weapon "
+                        : currentPlayer.getDressed_weapon().getClass().getSimpleName())
+                + "\n" + "Armour : "
+                + ((currentPlayer.getDressed_armour() == null) ? " no armour "
+                        : currentPlayer.getDressed_armour().getClass().getSimpleName())
+                + "\n" + "Shield : "
+                + ((currentPlayer.getDressed_shield() == null) ? " no shield "
+                        : currentPlayer.getDressed_shield().getClass().getSimpleName())
+                + "\n" + "Helmet : " + ((currentPlayer.getDressed_helmet() == null) ? " no helmet "
+                        : currentPlayer.getDressed_helmet().getClass().getSimpleName())
+                + "\n";
+
+        characterdescription.setText(characterProperty);
+    }
+
     /**
      * create and run the timer
      */
@@ -427,6 +452,7 @@ public class LoopManiaWorldController {
             exitButtondescription.setText("Clikc to exit.");
 
             world.runTickMoves();
+            updateCharacterDescription();
             world.updateNthCycle();
             switchToStore();
             List<Enemy> defeatedEnemies = world.runBattles();
@@ -690,19 +716,19 @@ public class LoopManiaWorldController {
                                         Sword equiped_weapon = new Sword(new SimpleIntegerProperty(0),
                                                 new SimpleIntegerProperty(0));
                                         world.getCharacter().setDressed_weapon(equiped_weapon);
-
-                                        System.out.println("character equiped weapon == "
-                                                + world.getCharacter().getDressed_weapon().getClass());
+                                        updateCharacterDescription();
 
                                     } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
                                         Staff equiped_weapon = new Staff(new SimpleIntegerProperty(0),
                                                 new SimpleIntegerProperty(0));
                                         world.getCharacter().setDressed_weapon(equiped_weapon);
+                                        updateCharacterDescription();
 
                                     } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
                                         Stake equiped_weapon = new Stake(new SimpleIntegerProperty(0),
                                                 new SimpleIntegerProperty(0));
                                         world.getCharacter().setDressed_weapon(equiped_weapon);
+                                        updateCharacterDescription();
 
                                     }
                                     break;
@@ -713,6 +739,7 @@ public class LoopManiaWorldController {
                                         BasicHelmet equiped_helmet = new BasicHelmet(new SimpleIntegerProperty(0),
                                                 new SimpleIntegerProperty(0));
                                         world.getCharacter().setDressed_helmet(equiped_helmet);
+                                        updateCharacterDescription();
 
                                     }
                                     break;
@@ -723,6 +750,7 @@ public class LoopManiaWorldController {
                                         BasicArmour equiped_armour = new BasicArmour(new SimpleIntegerProperty(0),
                                                 new SimpleIntegerProperty(0));
                                         world.getCharacter().setDressed_armour(equiped_armour);
+                                        updateCharacterDescription();
 
                                     }
                                     break;
@@ -733,6 +761,7 @@ public class LoopManiaWorldController {
                                         BasicShield equiped_shield = new BasicShield(new SimpleIntegerProperty(0),
                                                 new SimpleIntegerProperty(0));
                                         world.getCharacter().setDressed_shield(equiped_shield);
+                                        updateCharacterDescription();
 
                                     }
                                     break;
