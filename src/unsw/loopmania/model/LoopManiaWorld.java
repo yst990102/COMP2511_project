@@ -146,6 +146,10 @@ public class LoopManiaWorld {
         return height;
     }
 
+    public List<Pair<Integer, Integer>> getOrderedPath() {
+        return orderedPath;
+    }
+
     /**
      * set the character. This is necessary because it is loaded as a special entity out of the file
      * @param character the character
@@ -166,6 +170,10 @@ public class LoopManiaWorld {
         // for adding non-specific entities (ones without another dedicated list)
         // TODO = if more specialised types being added from main menu, add more methods like this with specific input types...
         nonSpecifiedEntities.add(entity);
+    }
+
+    public List<Card> getCardEntities() {
+        return cardEntities;
     }
 
     /**
@@ -784,7 +792,6 @@ public class LoopManiaWorld {
                 TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
                 for (Enemy e : enemies) {
                     if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math.pow(tower.getShootingRadius(), 2)) {
-                        System.err.println("enemy in tower radius");
                         e.getAttack();
                     }
                 }
@@ -797,8 +804,7 @@ public class LoopManiaWorld {
             if (b instanceof CampfireBuilding) {
                 CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
                 if (Math.pow((character.getX() - b.getX()), 2) + Math.pow((character.getY() - b.getY()), 2) < Math.pow(campfire.getBattleRadius(), 2)) {
-                    System.err.println("character in campfire radius");
-                    character.setATK(character.getATK() * 2);
+                    character.setATK(character.getATK());
                 }     
             }
         }

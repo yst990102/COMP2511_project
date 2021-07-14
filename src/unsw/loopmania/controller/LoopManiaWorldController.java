@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
+import org.javatuples.Pair;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -423,6 +424,10 @@ public class LoopManiaWorldController {
 
         // bind world description to frontend property
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
+
+        // set tip of button
+        pauseButtondescription.setText("Game running. Click to pause.");
+        exitButtondescription.setText("Clikc to exit.");
     }
 
     public void updateCharacterDescription() {
@@ -454,19 +459,15 @@ public class LoopManiaWorldController {
         // TODO = handle more aspects of the behaviour required by the specification
         System.out.println("starting timer");
         isPaused = false;
+        pauseButton.setText("Pause");
+        pauseButtondescription.setText("Game running. Click to pause.");
         // trigger adding code to process main game logic to queue. JavaFX will target
         // framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
-            pauseButton.setText("Pause");
-            pauseButtondescription.setText("Game running. Click to pause.");
-
-            exitButton.setText("Exit");
-            exitButtondescription.setText("Clikc to exit.");
-
             world.runTickMoves();
             updateCharacterDescription();
             world.updateNthCycle();
-            switchToStore();
+            checkStoreVisit();
             List<Enemy> defeatedEnemies = world.runBattles();
 
             // refresh character hp after battle
@@ -486,7 +487,8 @@ public class LoopManiaWorldController {
             world.CheckEnemyPassTrap();
             world.CheckHeroInTowerRadius();
             world.CheckHeroInCampfireRadius();
-            printThreadingNotes("HANDLED TIMER");
+
+            // printThreadingNotes("HANDLED TIMER");
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -500,7 +502,6 @@ public class LoopManiaWorldController {
         isPaused = true;
         pauseButton.setText("Continue");
         pauseButtondescription.setText("Game paused. Click to continue.");
-        System.out.println("pausing");
         timeline.stop();
     }
 
@@ -717,7 +718,7 @@ public class LoopManiaWorldController {
      *                       (but we of course cannot guarantee they will do so)
      */
     private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
-            GridPane targetGridPane) {
+            GridPane targetGridPane, ImageView view) {
         // TODO = be more selective about where something can be dropped
         // for example, in the specification, villages can only be dropped on path,
         // whilst vampire castles cannot go on the path
@@ -732,6 +733,7 @@ public class LoopManiaWorldController {
                  * card/item to return to its slot (the latter is easier, as you won't have to
                  * store the last valid drop location!)
                  */
+
                 if (currentlyDraggedType == draggableType) {
                     // problem = event is drop completed is false when should be true...
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
@@ -747,6 +749,9 @@ public class LoopManiaWorldController {
                         Integer rIndex = GridPane.getRowIndex(node);
                         int x = cIndex == null ? 0 : cIndex;
                         int y = rIndex == null ? 0 : rIndex;
+                        Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(x), Integer.valueOf(y));
+                        boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
+                        boolean droppedOnCorrectPosition = false;
                         // Places at 0,0 - will need to take coordinates once that is implemented
                         ImageView image = new ImageView(db.getImage());
 
@@ -764,108 +769,136 @@ public class LoopManiaWorldController {
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                            // TODO = spawn an item in the new location. The above code for spawning a
-                            // building will help, it is very similar
-                            if (targetGridPane.getId().equals("equippedItems")) {
-                                switch (node.getId()) {
-                                case "weaponCell":
-                                    if (currentlyDraggedImage.getImage().equals(swordImage)) {
+                                // TODO = spawn an item in the new location. The above code for spawning a
+                                // building will help, it is very similar
+                                if (targetGridPane.getId().equals("equippedItems")) {
+                                    switch (node.getId()) {
+                                    case "weaponCell":
+                                        if (currentlyDraggedImage.getImage().equals(swordImage)) {
 
-                                        Sword equiped_weapon = new Sword(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
-                                        world.getCharacter().setDressed_weapon(equiped_weapon);
-                                        updateCharacterDescription();
+                                            Sword equiped_weapon = new Sword(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                            world.getCharacter().setDressed_weapon(equiped_weapon);
+                                            updateCharacterDescription();
 
-                                    } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
-                                        Staff equiped_weapon = new Staff(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
-                                        world.getCharacter().setDressed_weapon(equiped_weapon);
-                                        updateCharacterDescription();
+                                        } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
+                                            Staff equiped_weapon = new Staff(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                            world.getCharacter().setDressed_weapon(equiped_weapon);
+                                            updateCharacterDescription();
 
-                                    } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
-                                        Stake equiped_weapon = new Stake(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
-                                        world.getCharacter().setDressed_weapon(equiped_weapon);
-                                        updateCharacterDescription();
+                                        } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
+                                            Stake equiped_weapon = new Stake(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                            world.getCharacter().setDressed_weapon(equiped_weapon);
+                                            updateCharacterDescription();
 
+                                        }
+                                        break;
+
+                                    case "helmetCell":
+                                        if (currentlyDraggedImage.getImage().equals(helmetImage)) {
+
+                                            BasicHelmet equiped_helmet = new BasicHelmet(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                            world.getCharacter().setDressed_helmet(equiped_helmet);
+                                            updateCharacterDescription();
+
+                                        }
+                                        break;
+
+                                    case "armourCell":
+                                        if (currentlyDraggedImage.getImage().equals(armourImage)) {
+
+                                            BasicArmour equiped_armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                            world.getCharacter().setDressed_armour(equiped_armour);
+                                            updateCharacterDescription();
+
+                                        }
+                                        break;
+
+                                    case "shieldCell":
+                                        if (currentlyDraggedImage.getImage().equals(shieldImage)) {
+
+                                            BasicShield equiped_shield = new BasicShield(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                            world.getCharacter().setDressed_shield(equiped_shield);
+                                            updateCharacterDescription();
+
+                                        }
+                                        break;
+
+                                    default:
+                                        break;
                                     }
-                                    break;
-
-                                case "helmetCell":
-                                    if (currentlyDraggedImage.getImage().equals(helmetImage)) {
-
-                                        BasicHelmet equiped_helmet = new BasicHelmet(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
-                                        world.getCharacter().setDressed_helmet(equiped_helmet);
-                                        updateCharacterDescription();
-
-                                    }
-                                    break;
-
-                                case "armourCell":
-                                    if (currentlyDraggedImage.getImage().equals(armourImage)) {
-
-                                        BasicArmour equiped_armour = new BasicArmour(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
-                                        world.getCharacter().setDressed_armour(equiped_armour);
-                                        updateCharacterDescription();
-
-                                    }
-                                    break;
-
-                                case "shieldCell":
-                                    if (currentlyDraggedImage.getImage().equals(shieldImage)) {
-
-                                        BasicShield equiped_shield = new BasicShield(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
-                                        world.getCharacter().setDressed_shield(equiped_shield);
-                                        updateCharacterDescription();
-
-                                    }
-                                    break;
-
-                                default:
-                                    break;
                                 }
-                            }
 
-                            removeItemByCoordinates(nodeX, nodeY);
-                            targetGridPane.add(image, x, y, 1, 1);
-                            break;
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                break;
                             case VAMPIRE_CASTLE_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VAMPIRE_CASTLE");
-                                onLoad(newBuilding);
+                                if (!targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VAMPIRE_CASTLE");
+                                    onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             case ZOMBIE_PIT_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "ZOMBIE_PIT");
-                                onLoad(newBuilding);
+                                if (!targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "ZOMBIE_PIT");
+                                    onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             case TOWER_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TOWER");
-                                onLoad(newBuilding);
+                                if (!targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TOWER");
+                                    onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             case VILLAGE_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VILLAGE");
-                                onLoad(newBuilding);
+                                if (targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VILLAGE");
+                                    onLoad(newBuilding); 
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             case BARRACKS_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "BARRACKS");
-                                onLoad(newBuilding);
+                                if (targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "BARRACKS");
+                                    onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             case TRAP_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TRAP");
-                                onLoad(newBuilding);
+                                if (targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TRAP");
+                                    onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             case CAMPFIRE_CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "CAMPFIRE");
-                                onLoad(newBuilding);
+                                if (!targetPosInPath) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "CAMPFIRE");
+                                    onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
                                 break;
                             default:
                                 break;
@@ -888,6 +921,7 @@ public class LoopManiaWorldController {
                         // remove drag event handlers before setting currently dragged image to null
                         currentlyDraggedImage = null;
                         currentlyDraggedType = null;
+
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
@@ -1004,7 +1038,7 @@ public class LoopManiaWorldController {
                 db.setContent(cbContent);
                 view.setVisible(false);
 
-                buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
+                buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane, view);
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
@@ -1061,10 +1095,53 @@ public class LoopManiaWorldController {
                         // dropped in the location, the location shouldn't be highlighted!
                         public void handle(DragEvent event) {
                             if (currentlyDraggedType == draggableType) {
-                                // The drag-and-drop gesture entered the target
-                                // show the user that it is an actual gesture target
+                                Integer cIndex = GridPane.getColumnIndex(n);
+                                Integer rIndex = GridPane.getRowIndex(n);
+                                int targetX = cIndex == null ? 0 : cIndex;
+                                int targetY = rIndex == null ? 0 : rIndex;
+                                Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(targetX), Integer.valueOf(targetY));
+                                boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
+
                                 if (event.getGestureSource() != n && event.getDragboard().hasImage()) {
-                                    n.setOpacity(0.7);
+                                    switch (draggableType) {
+                                        case VAMPIRE_CASTLE_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case ZOMBIE_PIT_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case TOWER_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case VILLAGE_CARD:
+                                            if (targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case BARRACKS_CARD:
+                                            if (targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case TRAP_CARD:
+                                            if (targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case CAMPFIRE_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
                             }
                             event.consume();
@@ -1164,7 +1241,7 @@ public class LoopManiaWorldController {
         this.storeSwitcher = storeSwitcher;
     }
 
-    public void switchToStore() {
+    public void checkStoreVisit() {
         int nthCycle = world.getNthCycle();
         int numStoreVisit = world.getNumStoreVisit();
         boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
