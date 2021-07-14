@@ -14,7 +14,7 @@ public class BasicHelmet extends Helmet {
         setAttack(-2);
         setDefence(2);
 
-        setEnemy_attack_decrease(2);
+        setEnemyAttackDecrease(2);
 
         setPrice(200);
 

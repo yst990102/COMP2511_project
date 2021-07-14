@@ -204,10 +204,10 @@ public class LoopManiaWorld {
         // - Vampire: $200, XP 300
 
         int current_gold = this.character.getGold();
-        this.character.setGold(current_gold + enemy.gold_whenkilled);
+        this.character.setGold(current_gold + enemy.goldWhenKilled);
 
         int current_exp = this.character.getXP();
-        this.character.setXP(current_exp + enemy.exp_whenkilled);
+        this.character.setXP(current_exp + enemy.expWhenKilled);
 
         enemy.destroy();
         enemies.remove(enemy);
@@ -225,7 +225,7 @@ public class LoopManiaWorld {
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
-                FightEnemy(e);
+                fightEnemy(e);
                 if (e.hp <= 0) {
                     defeatedEnemies.add(e);
                 }
@@ -240,7 +240,7 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    public void FightEnemy(Enemy enemy) {
+    public void fightEnemy(Enemy enemy) {
         FileOutputStream writer;
         try {
             writer = new FileOutputStream("fight.txt", true);
@@ -260,29 +260,29 @@ public class LoopManiaWorld {
                 int HPLoss = 0;
                 if (enemy.getClass().equals(Slug.class)) { // slug攻击人物时
                     int damage = 0;
-                    int enemy_attack = 0;
+                    int enemyAttack = 0;
 
-                    if (character.getDressed_helmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
-                        enemy_attack = enemy.getAttack() - character.getDressed_helmet().getEnemy_attack_decrease();
+                    if (character.getDressedHelmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                        enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
                     } else { //当人物不装备helmet时
-                        enemy_attack = enemy.getAttack();
+                        enemyAttack = enemy.getAttack();
                     }
 
-                    damage = enemy_attack - character.getDEF();
+                    damage = enemyAttack - character.getDEF();
 
                     HPLoss = (damage < 0) ? 0 : damage;
 
                 } else if (enemy.getClass().equals(Zombie.class)) { // zombie攻击人物时
                     int damage = 0;
-                    int enemy_attack = 0;
+                    int enemyAttack = 0;
 
-                    if (character.getDressed_helmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
-                        enemy_attack = enemy.getAttack() - character.getDressed_helmet().getEnemy_attack_decrease();
+                    if (character.getDressedHelmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                        enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
                     } else { //当人物不装备helmet时
-                        enemy_attack = enemy.getAttack();
+                        enemyAttack = enemy.getAttack();
                     }
 
-                    damage = enemy_attack - character.getDEF();
+                    damage = enemyAttack - character.getDEF();
 
                     HPLoss = (damage < 0) ? 0 : damage;
 
@@ -293,26 +293,26 @@ public class LoopManiaWorld {
 
                     while (attack_times > 0) {
 
-                        int enemy_attack = 0;
+                        int enemyAttack = 0;
                         int critical_percentage_decrease = 0;
-                        if (character.getDressed_shield() != null) {
-                            critical_percentage_decrease = character.getDressed_shield()
-                                    .getCritical_percentage_decrease();
+                        if (character.getDressedShield() != null) {
+                            critical_percentage_decrease = character.getDressedShield()
+                                    .getCriticalPercentageDecrease();
                         }
 
-                        if (character.getDressed_helmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
-                            enemy_attack = ((Vampire) enemy).getAttack(critical_percentage_decrease)
-                                    - character.getDressed_helmet().getEnemy_attack_decrease();
+                        if (character.getDressedShield() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                            enemyAttack = ((Vampire) enemy).getAttack(critical_percentage_decrease)
+                                    - character.getDressedHelmet().getEnemyAttackDecrease();
                         } else { //当人物不装备helmet时
-                            enemy_attack = ((Vampire) enemy).getAttack(critical_percentage_decrease);
+                            enemyAttack = ((Vampire) enemy).getAttack(critical_percentage_decrease);
                         }
 
-                        if (character.getDressed_armour() != null) {
-                            enemy_attack *= (1 - Double
-                                    .valueOf(character.getDressed_armour().getDamage_reduce_percentage() / 100));
+                        if (character.getDressedShield() != null) {
+                            enemyAttack *= (1 - Double
+                                    .valueOf(character.getDressedArmour().getDamageReducePercentage() / 100));
                         }
 
-                        damage += enemy_attack - character.getDEF();
+                        damage += enemyAttack - character.getDEF();
 
                         attack_times--;
                     }

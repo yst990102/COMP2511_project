@@ -12,7 +12,7 @@ public class BasicShield extends Shield {
         super(x, y);
 
         setDefence(2);
-        setCritical_percentage_decrease(60);
+        setCriticalPercentageDecrease(60);
 
         setPrice(150);
 
