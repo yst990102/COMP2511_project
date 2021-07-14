@@ -177,6 +177,10 @@ public class LoopManiaWorld {
         return cardEntities;
     }
 
+    public List<Building> getBuildingEntities() {
+        return buildingEntities;
+    }
+
     /**
      * spawns enemies if the conditions warrant it, adds to world
      * @return list of the enemies to be displayed on screen
@@ -672,7 +676,7 @@ public class LoopManiaWorld {
 
         // destroy the card
         card.destroy();
-        cardEntities.remove(card);
+        cardEntities.remove(cardNodeX);
         shiftCardsDownFromXCoordinate(cardNodeX);
 
         return newBuilding;
@@ -776,7 +780,6 @@ public class LoopManiaWorld {
                 if (character.getX() == 0 && character.getY() == 0) {
                     Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(zombieBuildingPos);
-                    System.err.println("Adjacent path tile = " + tilePosAdjacentToPath.size());
                     int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
@@ -821,7 +824,7 @@ public class LoopManiaWorld {
     }
 
 
-    public void CheckHeroInTowerRadius() {
+    public void CheckEnemyInTowerRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof TowerBuilding) {
                 TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
@@ -835,13 +838,6 @@ public class LoopManiaWorld {
     }
 
     public void CheckHeroInCampfireRadius() {
-        for (Building b : buildingEntities) {
-            if (b instanceof CampfireBuilding) {
-                CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
-                if (Math.pow((character.getX() - b.getX()), 2) + Math.pow((character.getY() - b.getY()), 2) < Math.pow(campfire.getBattleRadius(), 2)) {
-                    character.setATK(character.getATK());
-                }     
-            }
-        }
+        character.setBuildingEntities(buildingEntities);
     }
 }

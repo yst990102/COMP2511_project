@@ -471,9 +471,10 @@ public class LoopManiaWorldController {
         // framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
-            updateCharacterDescription();
             world.updateNthCycle();
+            updateCharacterDescription();
             checkStoreVisit();
+            
             List<Enemy> defeatedEnemies = world.runBattles();
 
             // refresh character hp after battle
@@ -501,7 +502,7 @@ public class LoopManiaWorldController {
             world.CheckHeroPassVillage();
             world.CheckHeroPassBarracks();
             world.CheckEnemyPassTrap();
-            world.CheckHeroInTowerRadius();
+            world.CheckEnemyInTowerRadius();
             world.CheckHeroInCampfireRadius();
 
             // printThreadingNotes("HANDLED TIMER");
