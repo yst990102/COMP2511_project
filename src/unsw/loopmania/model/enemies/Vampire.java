@@ -10,7 +10,7 @@ import unsw.loopmania.model.PathPosition;
  */
 public class Vampire extends Enemy {
 
-    public int critical_extra_damage = 10; // if critical, make 10 extra damage
+    public int criticalExtraDamage = 10; // if critical, make 10 extra damage
 
     public Vampire(PathPosition position) {
         super(position);
@@ -18,22 +18,22 @@ public class Vampire extends Enemy {
         this.hp = 25;
         this.attack = 20;
         this.speed = 3;
-        this.battle_radius = 5;
-        this.support_radius = 5;
+        this.battleRadius = 5;
+        this.supportRadius = 5;
 
-        this.critical_percentage = 20;
+        this.criticalPercentage = 20;
 
-        this.gold_whenkilled = 200;
-        this.exp_whenkilled = 300;
+        this.goldWhenKilled = 200;
+        this.expWhenKilled = 300;
 
     }
 
     @Override
     public int getAttack() {
         int critical_random = new Random().nextInt(100);
-        if (critical_random < critical_percentage) {
+        if (critical_random < criticalPercentage) {
             // critical bite
-            return attack + critical_extra_damage;
+            return attack + criticalExtraDamage;
         } else {
             return attack;
         }
@@ -41,9 +41,9 @@ public class Vampire extends Enemy {
 
     public int getAttack(int critical_percentage_decrease) {
         int critical_random = new Random().nextInt(100);
-        if (critical_random < (critical_percentage * (1 - Double.valueOf(critical_percentage_decrease) / 100))) {
+        if (critical_random < (criticalPercentage * (1 - Double.valueOf(critical_percentage_decrease) / 100))) {
             // critical bite
-            return attack + critical_extra_damage;
+            return attack + criticalExtraDamage;
         } else {
             return attack;
         }

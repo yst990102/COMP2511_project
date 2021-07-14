@@ -3,6 +3,7 @@ package unsw.loopmania.model;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Weapon extends Equipment {
+    
     private int attack;
 
     public Weapon(SimpleIntegerProperty x, SimpleIntegerProperty y) {
@@ -18,5 +19,4 @@ public class Weapon extends Equipment {
         this.attack = attack;
     }
 
-    
 }

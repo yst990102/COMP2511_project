@@ -10,13 +10,13 @@ public class Enemy extends MovingEntity {
     public int hp;
     public int attack;
     public int speed;
-    public int battle_radius;
-    public int support_radius;
+    public int battleRadius;
+    public int supportRadius;
 
-    public int critical_percentage;
+    public int criticalPercentage;
 
-    public int gold_whenkilled;
-    public int exp_whenkilled;
+    public int goldWhenKilled;
+    public int expWhenKilled;
 
     public Enemy(PathPosition position) {
         super(position);

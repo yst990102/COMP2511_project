@@ -22,10 +22,10 @@ public class Character extends MovingEntity {
     private int atk;
     private int def;
 
-    private Weapon Dressed_weapon;
-    private Armour Dressed_armour;
-    private Shield Dressed_shield;
-    private Helmet Dressed_helmet;
+    private Weapon dressedWeapon;
+    private Armour dressedArmour;
+    private Shield dressedShield;
+    private Helmet dressedHelmet;
 
     private List<Item> Bag;
 
@@ -102,12 +102,12 @@ public class Character extends MovingEntity {
         int weapon_atk = 0;
         int helmet_atk = 0;
 
-        if (Dressed_weapon != null) {
-            weapon_atk = Dressed_weapon.getAttack();
+        if (dressedWeapon != null) {
+            weapon_atk = dressedWeapon.getAttack();
         }
 
-        if (Dressed_helmet != null) {
-            helmet_atk = Dressed_helmet.getAttack();
+        if (dressedHelmet != null) {
+            helmet_atk = dressedHelmet.getAttack();
         }
 
         return atk + weapon_atk + helmet_atk;
@@ -122,16 +122,16 @@ public class Character extends MovingEntity {
         int shield_def = 0;
         int helmet_def = 0;
 
-        if (Dressed_armour != null) {
-            armour_def = Dressed_armour.getDefence();
+        if (dressedArmour != null) {
+            armour_def = dressedArmour.getDefence();
         }
 
-        if (Dressed_shield != null) {
-            shield_def = Dressed_shield.getDefence();
+        if (dressedShield != null) {
+            shield_def = dressedShield.getDefence();
         }
 
-        if (Dressed_helmet != null) {
-            helmet_def = Dressed_helmet.getDefence();
+        if (dressedHelmet != null) {
+            helmet_def = dressedHelmet.getDefence();
         }
 
         return def + armour_def + shield_def + helmet_def;
@@ -143,47 +143,47 @@ public class Character extends MovingEntity {
 
     public void DressUpEquipment(Equipment equipment) {
         if (equipment.getClass().equals(Weapon.class)) {
-            setDressed_weapon((Weapon) equipment);
+            setDressedWeapon((Weapon) equipment);
         } else if (equipment.getClass().equals(Armour.class)) {
-            this.Dressed_armour = (Armour) equipment;
+            this.dressedArmour = (Armour) equipment;
         } else if (equipment.getClass().equals(Shield.class)) {
-            this.Dressed_shield = (Shield) equipment;
+            this.dressedShield = (Shield) equipment;
         } else if (equipment.getClass().equals(Helmet.class)) {
-            this.Dressed_helmet = (Helmet) equipment;
+            this.dressedHelmet = (Helmet) equipment;
         }
 
     }
 
-    public Weapon getDressed_weapon() {
-        return this.Dressed_weapon;
+    public Weapon getDressedWeapon() {
+        return this.dressedWeapon;
     }
 
-    public void setDressed_weapon(Weapon Dressed_weapon) {
-        this.Dressed_weapon = Dressed_weapon;
+    public void setDressedWeapon(Weapon dressedWeapon) {
+        this.dressedWeapon = dressedWeapon;
     }
 
-    public Armour getDressed_armour() {
-        return this.Dressed_armour;
+    public Armour getDressedArmour() {
+        return this.dressedArmour;
     }
 
-    public void setDressed_armour(Armour Dressed_armour) {
-        this.Dressed_armour = Dressed_armour;
+    public void setDressedArmour(Armour dressedArmour) {
+        this.dressedArmour = dressedArmour;
     }
 
-    public Shield getDressed_shield() {
-        return this.Dressed_shield;
+    public Shield getDressedShield() {
+        return this.dressedShield;
     }
 
-    public void setDressed_shield(Shield Dressed_shield) {
-        this.Dressed_shield = Dressed_shield;
+    public void setDressedShield(Shield dressedShield) {
+        this.dressedShield = dressedShield;
     }
 
-    public Helmet getDressed_helmet() {
-        return this.Dressed_helmet;
+    public Helmet getDressedHelmet() {
+        return this.dressedHelmet;
     }
 
-    public void setDressed_helmet(Helmet Dressed_helmet) {
-        this.Dressed_helmet = Dressed_helmet;
+    public void setDressedHelmet(Helmet dressedHelmet) {
+        this.dressedHelmet = dressedHelmet;
     }
 
     public List<Item> getBag() {

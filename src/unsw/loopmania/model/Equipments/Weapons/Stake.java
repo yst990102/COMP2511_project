@@ -8,14 +8,14 @@ import unsw.loopmania.model.Weapon;
  */
 public class Stake extends Weapon {
 
-    private int attack_to_vampire = 8;
+    private int attackToVampire  = 8;
 
     public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 
         setAttack(3);
 
-        this.attack_to_vampire = 8;
+        this.attackToVampire  = 8;
 
         setPrice(150);
 
@@ -27,8 +27,8 @@ public class Stake extends Weapon {
     }
 
 
-    public int getAttack_to_vampire() {
-        return this.attack_to_vampire;
+    public int getAttackToVampire() {
+        return this.attackToVampire ;
     }
 
 }

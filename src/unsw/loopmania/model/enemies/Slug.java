@@ -14,11 +14,11 @@ public class Slug extends Enemy {
         this.hp = 15;
         this.attack = 5;
         this.speed = 5;
-        this.battle_radius = 2;
-        this.support_radius = 2;
+        this.battleRadius = 2;
+        this.supportRadius = 2;
 
-        this.gold_whenkilled = 50;
-        this.exp_whenkilled = 100;
+        this.goldWhenKilled = 50;
+        this.expWhenKilled = 100;
 
     }
 

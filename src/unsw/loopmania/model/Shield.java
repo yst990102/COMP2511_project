@@ -19,11 +19,11 @@ public class Shield extends Equipment {
         this.defence = defence;
     }
 
-    public int getCritical_percentage_decrease() {
+    public int getCriticalPercentageDecrease() {
         return this.critical_percentage_decrease;
     }
 
-    public void setCritical_percentage_decrease(int critical_percentage_decrease) {
+    public void setCriticalPercentageDecrease(int critical_percentage_decrease) {
         this.critical_percentage_decrease = critical_percentage_decrease;
     }
 

@@ -11,7 +11,7 @@ public class BasicArmour extends Armour {
         super(x, y);
 
         setDefence(5);
-        setDamage_reduce_percentage(50);
+        setDamageReducePercentage(50);
 
         setPrice(250);
 

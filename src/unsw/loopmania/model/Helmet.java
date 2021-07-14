@@ -6,7 +6,7 @@ public class Helmet extends Equipment {
     private int attack;
     private int defence;
 
-    private int enemy_attack_decrease;
+    private int enemyAttackDecrease;
 
     public Helmet(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
@@ -29,12 +29,12 @@ public class Helmet extends Equipment {
         this.defence = defence;
     }
 
-    public int getEnemy_attack_decrease() {
-        return this.enemy_attack_decrease;
+    public int getEnemyAttackDecrease() {
+        return this.enemyAttackDecrease;
     }
 
-    public void setEnemy_attack_decrease(int enemy_attack_decrease) {
-        this.enemy_attack_decrease = enemy_attack_decrease;
+    public void setEnemyAttackDecrease(int enemyAttackDecrease) {
+        this.enemyAttackDecrease = enemyAttackDecrease;
     }
     
 }

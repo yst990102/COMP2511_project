@@ -264,6 +264,8 @@ public class LoopManiaWorldController {
     private Image trapBuildingImage;
     private Image campfireBuildingImage;
 
+    private Image equippedSlotBackground;
+
     /**
      * the image currently being dragged, if there is one, otherwise null. Holding
      * the ImageView being dragged allows us to spawn it again in the drop location
@@ -359,6 +361,8 @@ public class LoopManiaWorldController {
         trapBuildingImage = new Image((new File("src/assets/trap.png")).toURI().toString());
         campfireBuildingImage = new Image((new File("src/assets/campfire.png")).toURI().toString());
 
+        equippedSlotBackground = new Image((new File("src/assets/silver_background.png")).toURI().toString());
+
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -439,16 +443,16 @@ public class LoopManiaWorldController {
                 + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getNumSoldier() + "\n\n"
                 + "attack : " + currentPlayer.getATK() + "\n" + "defence : " + currentPlayer.getDEF() + "\n\n"
                 + "Weapon : "
-                + ((currentPlayer.getDressed_weapon() == null) ? " no weapon "
-                        : currentPlayer.getDressed_weapon().getClass().getSimpleName())
+                + ((currentPlayer.getDressedWeapon() == null) ? " no weapon "
+                        : currentPlayer.getDressedWeapon().getClass().getSimpleName())
                 + "\n" + "Armour : "
-                + ((currentPlayer.getDressed_armour() == null) ? " no armour "
-                        : currentPlayer.getDressed_armour().getClass().getSimpleName())
+                + ((currentPlayer.getDressedArmour() == null) ? " no armour "
+                        : currentPlayer.getDressedArmour().getClass().getSimpleName())
                 + "\n" + "Shield : "
-                + ((currentPlayer.getDressed_shield() == null) ? " no shield "
-                        : currentPlayer.getDressed_shield().getClass().getSimpleName())
-                + "\n" + "Helmet : " + ((currentPlayer.getDressed_helmet() == null) ? " no helmet "
-                        : currentPlayer.getDressed_helmet().getClass().getSimpleName())
+                + ((currentPlayer.getDressedShield() == null) ? " no shield "
+                        : currentPlayer.getDressedShield().getClass().getSimpleName())
+                + "\n" + "Helmet : " + ((currentPlayer.getDressedHelmet() == null) ? " no helmet "
+                        : currentPlayer.getDressedHelmet().getClass().getSimpleName())
                 + "\n";
 
         characterdescription.setText(characterProperty);
@@ -764,6 +768,7 @@ public class LoopManiaWorldController {
                         boolean targetPosInShieldSlot = x == 2 && y == 1 ? true : false;
                         // Places at 0,0 - will need to take coordinates once that is implemented
                         ImageView image = new ImageView(db.getImage());
+                        ImageView silverBackground = new ImageView(equippedSlotBackground);
 
                         node.setOpacity(1);
 
@@ -772,81 +777,6 @@ public class LoopManiaWorldController {
                         Building newBuilding;
 
                         switch (draggableType) {
-                            case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "CARD");
-                                onLoad(newBuilding);
-                                break;
-                            case ITEM:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a
-                                // building will help, it is very similar
-                                if (targetGridPane.getId().equals("equippedItems")) {
-                                    switch (node.getId()) {
-                                    case "weaponCell":
-                                        if (currentlyDraggedImage.getImage().equals(swordImage)) {
-
-                                            Sword equiped_weapon = new Sword(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                            world.getCharacter().setDressed_weapon(equiped_weapon);
-                                            updateCharacterDescription();
-
-                                        } else if (currentlyDraggedImage.getImage().equals(staffImage)) {
-                                            Staff equiped_weapon = new Staff(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                            world.getCharacter().setDressed_weapon(equiped_weapon);
-                                            updateCharacterDescription();
-
-                                        } else if (currentlyDraggedImage.getImage().equals(stakeImage)) {
-                                            Stake equiped_weapon = new Stake(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                            world.getCharacter().setDressed_weapon(equiped_weapon);
-                                            updateCharacterDescription();
-
-                                        }
-                                        break;
-
-                                    case "helmetCell":
-                                        if (currentlyDraggedImage.getImage().equals(helmetImage)) {
-
-                                            BasicHelmet equiped_helmet = new BasicHelmet(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                            world.getCharacter().setDressed_helmet(equiped_helmet);
-                                            updateCharacterDescription();
-
-                                        }
-                                        break;
-
-                                    case "armourCell":
-                                        if (currentlyDraggedImage.getImage().equals(armourImage)) {
-
-                                            BasicArmour equiped_armour = new BasicArmour(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                            world.getCharacter().setDressed_armour(equiped_armour);
-                                            updateCharacterDescription();
-
-                                        }
-                                        break;
-
-                                    case "shieldCell":
-                                        if (currentlyDraggedImage.getImage().equals(shieldImage)) {
-
-                                            BasicShield equiped_shield = new BasicShield(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                            world.getCharacter().setDressed_shield(equiped_shield);
-                                            updateCharacterDescription();
-
-                                        }
-                                        break;
-
-                                    default:
-                                        break;
-                                    }
-                                }
-
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(image, x, y, 1, 1);
-                                break;
                             case VAMPIRE_CASTLE_CARD:
                                 if (!targetPosInPath) {
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
@@ -912,48 +842,84 @@ public class LoopManiaWorldController {
                                 break;
                             case SWORD:
                                 if (targetPosInSwordSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    Sword sword = new Sword(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedWeapon(sword);
+                                    updateCharacterDescription();
                                 } else {
                                     view.setVisible(true);
                                 }
                                 break;
                             case STAKE:
                                 if (targetPosInSwordSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    Stake stake = new Stake(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedWeapon(stake);
+                                    updateCharacterDescription();
                                 } else {
                                     view.setVisible(true);
                                 }
                                 break;
                             case STAFF:
                                 if (targetPosInSwordSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    Staff staff = new Staff(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedWeapon(staff);
+                                    updateCharacterDescription();
                                 } else {
                                     view.setVisible(true);
                                 }
                                 break;
                             case ARMOUR:
                                 if (targetPosInArmourSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedArmour(armour);
+                                    updateCharacterDescription();
                                 } else {
                                     view.setVisible(true);
                                 }
                                 break;
                             case SHIELD:
                                 if (targetPosInShieldSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    BasicShield shield = new BasicShield(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedShield(shield);
+                                    updateCharacterDescription();
                                 } else {
                                     view.setVisible(true);
                                 }
                                 break;
                             case HELMET:
                                 if (targetPosInHelmetSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
+                                    Helmet helmet = new Helmet(new SimpleIntegerProperty(0),
+                                                    new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedHelmet(helmet);
+                                    updateCharacterDescription();
                                 } else {
                                     view.setVisible(true);
                                 }
