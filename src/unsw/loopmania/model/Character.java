@@ -51,8 +51,7 @@ public class Character extends MovingEntity {
         Double HPpercentage = Double.valueOf(getHP()) / 300 * 100;
         String HP_percentage = String.format("%.2f", HPpercentage);
 
-        return new SimpleStringProperty(getHP() + "HP");
-        // return new SimpleStringProperty(HP_percentage + "%");
+        return new SimpleStringProperty(HP_percentage + "%");
     }
 
     public int getHP() {
