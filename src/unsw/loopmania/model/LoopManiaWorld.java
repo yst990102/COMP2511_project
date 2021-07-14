@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.lang.Integer;
+import java.lang.Math;
 
 import javax.lang.model.element.ExecutableElement;
 
@@ -723,34 +724,67 @@ public class LoopManiaWorld {
         this.goals.set(goals);
     }
 
-    public Vampire CheckVampireSpawn() {
+    private List<Pair<Integer, Integer>> getTilePosAdjacentToPath(Pair<Integer, Integer> pos) {
+        List<Pair<Integer, Integer>> tilePosAdjacentToPath = new ArrayList<>();
+        
+        Pair<Integer, Integer> up = new Pair<>(pos.getValue0(), Math.floorMod(pos.getValue1() - 1, height));
+        Pair<Integer, Integer> down = new Pair<>(pos.getValue0(), Math.floorMod(pos.getValue1() + 1, height));
+        Pair<Integer, Integer> left = new Pair<>(Math.floorMod(pos.getValue0() - 1, width), pos.getValue1());
+        Pair<Integer, Integer> right = new Pair<>(Math.floorMod(pos.getValue0() + 1, width), pos.getValue1());
+        
+        if (orderedPath.indexOf(up) != -1) {
+            tilePosAdjacentToPath.add(up);
+        }
+        
+        if (orderedPath.indexOf(down) != -1) {
+            tilePosAdjacentToPath.add(down);
+        }
+        
+        if (orderedPath.indexOf(left) != -1) {
+            tilePosAdjacentToPath.add(left);
+        }
+        
+        if (orderedPath.indexOf(right) != -1) {
+            tilePosAdjacentToPath.add(right);
+        }
+
+        return tilePosAdjacentToPath;
+    }
+
+    public List<Vampire> CheckVampireSpawn() {
+        ArrayList<Vampire> vampires = new ArrayList<>();
         for (Building b : buildingEntities) {
             if (b instanceof VampireCastleBuilding) {
                 if ((getNthCycle() + 1) % 5 == 0 && character.getX() == 0 && character.getY() == 0) {
-                    Pair<Integer, Integer> vampirePos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
-                    int indexInPath = orderedPath.indexOf(vampirePos);
+                    Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
+                    List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(vampireBuildingPos);
+                    int randomInt = new Random().nextInt(vampireBuildingPos.getSize());
+                    int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
                     enemies.add(vampire);
-                    return vampire;
+                    vampires.add(vampire);
                 }
             }
         }
-        return null;
+        return vampires;
     }
 
-    public Zombie CheckZombieSpawn() {
+    public List<Zombie> CheckZombieSpawn() {
+        ArrayList<Zombie> zombies = new ArrayList<>();
         for (Building b : buildingEntities) {
             if (b instanceof ZombiePitBuilding) {
                 if (character.getX() == 0 && character.getY() == 0) {
-                    Pair<Integer, Integer> vampirePos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
-                    int indexInPath = orderedPath.indexOf(vampirePos);
+                    Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
+                    List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(zombieBuildingPos);
+                    int randomInt = new Random().nextInt(zombieBuildingPos.getSize());
+                    int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
                     enemies.add(zombie);
-                    return zombie;
+                    zombies.add(zombie);
                 } 
             }
         }
-        return null;
+        return zombies;
     }   
 
     public void CheckHeroPassVillage() {
