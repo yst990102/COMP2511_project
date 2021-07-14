@@ -758,7 +758,7 @@ public class LoopManiaWorld {
                 if ((getNthCycle() + 1) % 5 == 0 && character.getX() == 0 && character.getY() == 0) {
                     Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(vampireBuildingPos);
-                    int randomInt = new Random().nextInt(vampireBuildingPos.getSize());
+                    int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
                     enemies.add(vampire);
@@ -776,7 +776,8 @@ public class LoopManiaWorld {
                 if (character.getX() == 0 && character.getY() == 0) {
                     Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(zombieBuildingPos);
-                    int randomInt = new Random().nextInt(zombieBuildingPos.getSize());
+                    System.err.println("Adjacent path tile = " + tilePosAdjacentToPath.size());
+                    int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
                     enemies.add(zombie);
