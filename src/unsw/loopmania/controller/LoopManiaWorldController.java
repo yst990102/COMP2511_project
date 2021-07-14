@@ -1143,6 +1143,10 @@ public class LoopManiaWorldController {
                                 int targetY = rIndex == null ? 0 : rIndex;
                                 Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(targetX), Integer.valueOf(targetY));
                                 boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
+                                boolean targetPosInHelmetSlot = targetX == 1 && targetY == 0 ? true : false;
+                                boolean targetPosInSwordSlot = targetX == 0 && targetY == 1 ? true : false;
+                                boolean targetPosInArmourSlot = targetX == 1 && targetY == 1 ? true : false;
+                                boolean targetPosInShieldSlot = targetX == 2 && targetY == 1 ? true : false;
 
                                 if (event.getGestureSource() != n && event.getDragboard().hasImage()) {
                                     switch (draggableType) {
@@ -1178,6 +1182,36 @@ public class LoopManiaWorldController {
                                             break;
                                         case CAMPFIRE_CARD:
                                             if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case SWORD:
+                                            if (targetPosInSwordSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case STAKE:
+                                            if (targetPosInSwordSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case STAFF:
+                                            if (targetPosInSwordSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case ARMOUR:
+                                            if (targetPosInArmourSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case SHIELD:
+                                            if (targetPosInShieldSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case HELMET:
+                                            if (targetPosInHelmetSlot) {
                                                 n.setOpacity(0.7);
                                             }
                                             break;
