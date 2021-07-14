@@ -85,7 +85,9 @@ import unsw.loopmania.model.enemies.Zombie;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD
+    CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, 
+    BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD, SWORD, STAKE, STAFF, ARMOUR, SHIELD,
+    HELMET, GOLD, HEALTH_POTION, THE_ONE_RING
 }
 
 /**
@@ -646,21 +648,26 @@ public class LoopManiaWorldController {
 
         if (equipment.getClass().equals(BasicHelmet.class)) {
             view = new ImageView(helmetImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicShield.class)) {
             view = new ImageView(shieldImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicArmour.class)) {
             view = new ImageView(armourImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.ARMOUR, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Sword.class)) {
             view = new ImageView(swordImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.SWORD, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Stake.class)) {
             view = new ImageView(stakeImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Staff.class)) {
             view = new ImageView(staffImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.STAFF, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
         }
 
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
         addEntity(equipment, view);
         unequippedInventory.getChildren().add(view);
     }
@@ -751,7 +758,10 @@ public class LoopManiaWorldController {
                         int y = rIndex == null ? 0 : rIndex;
                         Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(x), Integer.valueOf(y));
                         boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
-                        boolean droppedOnCorrectPosition = false;
+                        boolean targetPosInHelmetSlot = x == 1 && y == 0 ? true : false;
+                        boolean targetPosInSwordSlot = x == 0 && y == 1 ? true : false;
+                        boolean targetPosInArmourSlot = x == 1 && y == 1 ? true : false;
+                        boolean targetPosInShieldSlot = x == 2 && y == 1 ? true : false;
                         // Places at 0,0 - will need to take coordinates once that is implemented
                         ImageView image = new ImageView(db.getImage());
 
@@ -896,6 +906,54 @@ public class LoopManiaWorldController {
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "CAMPFIRE");
                                     onLoad(newBuilding);
+                                } else {
+                                    view.setVisible(true);
+                                }
+                                break;
+                            case SWORD:
+                                if (targetPosInSwordSlot) {
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                } else {
+                                    view.setVisible(true);
+                                }
+                                break;
+                            case STAKE:
+                                if (targetPosInSwordSlot) {
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                } else {
+                                    view.setVisible(true);
+                                }
+                                break;
+                            case STAFF:
+                                if (targetPosInSwordSlot) {
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                } else {
+                                    view.setVisible(true);
+                                }
+                                break;
+                            case ARMOUR:
+                                if (targetPosInArmourSlot) {
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                } else {
+                                    view.setVisible(true);
+                                }
+                                break;
+                            case SHIELD:
+                                if (targetPosInShieldSlot) {
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                } else {
+                                    view.setVisible(true);
+                                }
+                                break;
+                            case HELMET:
+                                if (targetPosInHelmetSlot) {
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(image, x, y, 1, 1);
                                 } else {
                                     view.setVisible(true);
                                 }
@@ -1068,6 +1126,24 @@ public class LoopManiaWorldController {
                         break;
                     case CAMPFIRE_CARD:
                         draggedEntity.setImage(campfireBuildingImage);
+                        break;
+                    case SWORD:
+                        draggedEntity.setImage(swordImage);
+                        break;
+                    case STAKE:
+                        draggedEntity.setImage(stakeImage);
+                        break;
+                    case STAFF:
+                        draggedEntity.setImage(staffImage);
+                        break;
+                    case ARMOUR:
+                        draggedEntity.setImage(armourImage);
+                        break;
+                    case SHIELD:
+                        draggedEntity.setImage(shieldImage);
+                        break;
+                    case HELMET:
+                        draggedEntity.setImage(helmetImage);
                         break;
                     default:
                         break;
