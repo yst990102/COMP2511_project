@@ -938,15 +938,6 @@ public class LoopManiaWorldController {
                             default:
                                 break;
                         }
-                        // System.out.println("drop的image：" + currentlyDraggedImage.getImage().getUrl());
-                        // System.out.println("drop的image type：" + currentlyDraggedType.getClass());
-                        // System.out.println("targetGridPane == " + targetGridPane.getId());
-                        // System.out.println("nodeX == " + nodeX);
-                        // System.out.println("nodeY == " + nodeY);
-                        // System.out.println("x" + x);
-                        // System.out.println("y" + y);
-
-                        // System.out.println(targetGridPane.getChildren());
 
                         System.out.println("After : character ATK == " + world.getCharacter().getATK());
                         System.out.println("After : character DEF == " + world.getCharacter().getDEF());

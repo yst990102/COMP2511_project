@@ -56,7 +56,6 @@ import unsw.loopmania.model.cards.BarracksCard;
 import unsw.loopmania.model.cards.TrapCard;
 import unsw.loopmania.model.cards.CampfireCard;
 
-
 /**
  * A backend world.
  *
@@ -252,24 +251,24 @@ public class LoopManiaWorld {
             writer.write(("Battle between : character ==== " + enemy + "\n").getBytes());
 
             while (true) {
-                // 人物攻击敌人
+                // character attack enemy
                 enemy.hp -= character.getATK();
                 writer.write(("Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
-                // 如果敌人死亡，则break返还
+                // if enemy died, break
                 if (enemy.hp <= 0) {
                     writer.write(("enemy died!!" + "\n").getBytes());
                     break;
                 }
 
-                // 敌人攻击人物时
+                // enemy attack character
                 int HPLoss = 0;
-                if (enemy.getClass().equals(Slug.class)) { // slug攻击人物时
+                if (enemy.getClass().equals(Slug.class)) { // slug attack character
                     int damage = 0;
                     int enemyAttack = 0;
 
-                    if (character.getDressedHelmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                    if (character.getDressedHelmet() != null) {
                         enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
-                    } else { //当人物不装备helmet时
+                    } else {
                         enemyAttack = enemy.getAttack();
                     }
 
@@ -277,13 +276,13 @@ public class LoopManiaWorld {
 
                     HPLoss = (damage < 0) ? 0 : damage;
 
-                } else if (enemy.getClass().equals(Zombie.class)) { // zombie攻击人物时
+                } else if (enemy.getClass().equals(Zombie.class)) { // zombie attack character
                     int damage = 0;
                     int enemyAttack = 0;
 
-                    if (character.getDressedHelmet() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                    if (character.getDressedHelmet() != null) {
                         enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
-                    } else { //当人物不装备helmet时
+                    } else {
                         enemyAttack = enemy.getAttack();
                     }
 
@@ -291,7 +290,7 @@ public class LoopManiaWorld {
 
                     HPLoss = (damage < 0) ? 0 : damage;
 
-                } else if (enemy.getClass().equals(Vampire.class)) { // zombie攻击人物时
+                } else if (enemy.getClass().equals(Vampire.class)) { // vampire attack character
                     int damage = 0;
 
                     int attackTimes = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
@@ -301,20 +300,19 @@ public class LoopManiaWorld {
                         int enemyAttack = 0;
                         int criticalPercentageDecrease = 0;
                         if (character.getDressedShield() != null) {
-                            criticalPercentageDecrease = character.getDressedShield()
-                                    .getCriticalPercentageDecrease();
+                            criticalPercentageDecrease = character.getDressedShield().getCriticalPercentageDecrease();
                         }
 
-                        if (character.getDressedShield() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
+                        if (character.getDressedShield() != null) {
                             enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease)
                                     - character.getDressedHelmet().getEnemyAttackDecrease();
-                        } else { //当人物不装备helmet时
+                        } else {
                             enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease);
                         }
 
                         if (character.getDressedShield() != null) {
-                            enemyAttack *= (1 - Double
-                                    .valueOf(character.getDressedArmour().getDamageReducePercentage() / 100));
+                            enemyAttack *= (1
+                                    - Double.valueOf(character.getDressedArmour().getDamageReducePercentage() / 100));
                         }
 
                         damage += enemyAttack - character.getDEF();
@@ -355,7 +353,8 @@ public class LoopManiaWorld {
 
         if (randomInt < 40) {
             if (randomInt < 6) {
-                card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+                card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()),
+                        new SimpleIntegerProperty(0));
             } else if (randomInt < 12) {
                 card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
             } else if (randomInt < 18) {
@@ -371,7 +370,7 @@ public class LoopManiaWorld {
             }
         }
 
-        if (cardEntities.size() >= getWidth()){
+        if (cardEntities.size() >= getWidth()) {
             removeCard(0);
             character.setGold(character.getGold() + 100);
             character.setXP(character.getXP() + 100);
@@ -630,7 +629,8 @@ public class LoopManiaWorld {
      * @param buildingNodeX x index from 0 to width-1 of building to be added
      * @param buildingNodeY y index from 0 to height-1 of building to be added
      */
-    public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY, String buildingType) {
+    public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
+            int buildingNodeY, String buildingType) {
         // start by getting card
         Card card = null;
         for (Card c : cardEntities) {
@@ -643,30 +643,37 @@ public class LoopManiaWorld {
         // now spawn building
         Building newBuilding = null;
 
-        switch(buildingType) {
-            case "VAMPIRE_CASTLE":
-                newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            case "ZOMBIE_PIT":
-                newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            case "TOWER":
-                newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            case "VILLAGE":
-                newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            case "BARRACKS":
-                newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            case "TRAP":
-                newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            case "CAMPFIRE":
-                newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-                break;
-            default:
-                break;
+        switch (buildingType) {
+        case "VAMPIRE_CASTLE":
+            newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        case "ZOMBIE_PIT":
+            newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        case "TOWER":
+            newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        case "VILLAGE":
+            newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        case "BARRACKS":
+            newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        case "TRAP":
+            newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        case "CAMPFIRE":
+            newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX),
+                    new SimpleIntegerProperty(buildingNodeY));
+            break;
+        default:
+            break;
         }
 
         // VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
@@ -730,24 +737,24 @@ public class LoopManiaWorld {
 
     private List<Pair<Integer, Integer>> getTilePosAdjacentToPath(Pair<Integer, Integer> pos) {
         List<Pair<Integer, Integer>> tilePosAdjacentToPath = new ArrayList<>();
-        
+
         Pair<Integer, Integer> up = new Pair<>(pos.getValue0(), Math.floorMod(pos.getValue1() - 1, height));
         Pair<Integer, Integer> down = new Pair<>(pos.getValue0(), Math.floorMod(pos.getValue1() + 1, height));
         Pair<Integer, Integer> left = new Pair<>(Math.floorMod(pos.getValue0() - 1, width), pos.getValue1());
         Pair<Integer, Integer> right = new Pair<>(Math.floorMod(pos.getValue0() + 1, width), pos.getValue1());
-        
+
         if (orderedPath.indexOf(up) != -1) {
             tilePosAdjacentToPath.add(up);
         }
-        
+
         if (orderedPath.indexOf(down) != -1) {
             tilePosAdjacentToPath.add(down);
         }
-        
+
         if (orderedPath.indexOf(left) != -1) {
             tilePosAdjacentToPath.add(left);
         }
-        
+
         if (orderedPath.indexOf(right) != -1) {
             tilePosAdjacentToPath.add(right);
         }
@@ -760,7 +767,8 @@ public class LoopManiaWorld {
         for (Building b : buildingEntities) {
             if (b instanceof VampireCastleBuilding) {
                 if ((getNthCycle() + 1) % 5 == 0 && character.getX() == 0 && character.getY() == 0) {
-                    Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
+                    Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
+                            Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(vampireBuildingPos);
                     int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
@@ -778,25 +786,26 @@ public class LoopManiaWorld {
         for (Building b : buildingEntities) {
             if (b instanceof ZombiePitBuilding) {
                 if (character.getX() == 0 && character.getY() == 0) {
-                    Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()), Integer.valueOf(b.getY()));
+                    Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
+                            Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getTilePosAdjacentToPath(zombieBuildingPos);
                     int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
                     enemies.add(zombie);
                     zombies.add(zombie);
-                } 
+                }
             }
         }
         return zombies;
-    }   
+    }
 
     public void CheckHeroPassVillage() {
         for (Building b : buildingEntities) {
             if (b instanceof VillageBuilding) {
                 if (character.getX() == b.getX() && character.getY() == b.getY()) {
                     character.setHP(300);
-                } 
+                }
             }
         }
     }
@@ -806,7 +815,7 @@ public class LoopManiaWorld {
             if (b instanceof BarracksBuilding) {
                 if (character.getX() == b.getX() && character.getY() == b.getY()) {
                     character.setNumSoldier(character.getNumSoldier() + 1);
-                } 
+                }
             }
         }
     }
@@ -827,13 +836,15 @@ public class LoopManiaWorld {
     public void CheckEnemyInTowerRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof TowerBuilding) {
-                TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
+                TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()),
+                        new SimpleIntegerProperty(b.getY()));
                 for (Enemy e : enemies) {
-                    if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math.pow(tower.getShootingRadius(), 2)) {
+                    if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math
+                            .pow(tower.getShootingRadius(), 2)) {
                         e.getAttack();
                     }
                 }
-            }  
+            }
         }
     }
 
