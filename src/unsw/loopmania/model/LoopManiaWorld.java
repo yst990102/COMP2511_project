@@ -203,11 +203,11 @@ public class LoopManiaWorld {
         // - Zombie: $100, XP 200
         // - Vampire: $200, XP 300
 
-        int current_gold = this.character.getGold();
-        this.character.setGold(current_gold + enemy.goldWhenKilled);
+        int currentGold = this.character.getGold();
+        this.character.setGold(currentGold + enemy.goldWhenKilled);
 
-        int current_exp = this.character.getXP();
-        this.character.setXP(current_exp + enemy.expWhenKilled);
+        int currentExp = this.character.getXP();
+        this.character.setXP(currentExp + enemy.expWhenKilled);
 
         enemy.destroy();
         enemies.remove(enemy);
@@ -289,22 +289,22 @@ public class LoopManiaWorld {
                 } else if (enemy.getClass().equals(Vampire.class)) { // zombie攻击人物时
                     int damage = 0;
 
-                    int attack_times = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
+                    int attackTimes = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
 
-                    while (attack_times > 0) {
+                    while (attackTimes > 0) {
 
                         int enemyAttack = 0;
-                        int critical_percentage_decrease = 0;
+                        int criticalPercentageDecrease = 0;
                         if (character.getDressedShield() != null) {
-                            critical_percentage_decrease = character.getDressedShield()
+                            criticalPercentageDecrease = character.getDressedShield()
                                     .getCriticalPercentageDecrease();
                         }
 
                         if (character.getDressedShield() != null) { //当人物装备helmet时，enemy attack减去character.enemy_damage_decrease
-                            enemyAttack = ((Vampire) enemy).getAttack(critical_percentage_decrease)
+                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease)
                                     - character.getDressedHelmet().getEnemyAttackDecrease();
                         } else { //当人物不装备helmet时
-                            enemyAttack = ((Vampire) enemy).getAttack(critical_percentage_decrease);
+                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease);
                         }
 
                         if (character.getDressedShield() != null) {
@@ -314,10 +314,10 @@ public class LoopManiaWorld {
 
                         damage += enemyAttack - character.getDEF();
 
-                        attack_times--;
+                        attackTimes--;
                     }
 
-                    HPLoss = ((damage < 0) ? 0 : damage) * attack_times;
+                    HPLoss = ((damage < 0) ? 0 : damage) * attackTimes;
                 }
 
                 character.setHP(character.getHP() - HPLoss);
@@ -539,11 +539,11 @@ public class LoopManiaWorld {
         item.destroy();
 
         // Everytime remove an item, need to increase 100 gold and 100 exp
-        int current_gold = this.character.getGold();
-        int current_exp = this.character.getXP();
+        int currentGold = this.character.getGold();
+        int currentExp = this.character.getXP();
 
-        this.character.setGold(current_gold + 100);
-        this.character.setXP(current_exp + 100);
+        this.character.setGold(currentGold + 100);
+        this.character.setXP(currentExp + 100);
 
         unequippedInventoryItems.remove(index);
     }
