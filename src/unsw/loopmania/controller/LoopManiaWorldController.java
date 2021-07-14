@@ -482,12 +482,22 @@ public class LoopManiaWorldController {
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }
+           
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
-            onLoad(world.CheckVampireSpawn());
-            onLoad(world.CheckZombieSpawn());
+            
+            List<Vampire> vampires = world.CheckVampireSpawn();
+            for (Vampire vampire : vampires) {
+                onLoad(vampire);
+            }
+
+            List<Zombie> zombies = world.CheckZombieSpawn();
+            for (Zombie zombie : zombies) {
+                onLoad(zombie);
+            }
+            
             world.CheckHeroPassVillage();
             world.CheckHeroPassBarracks();
             world.CheckEnemyPassTrap();
