@@ -9,6 +9,9 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import unsw.loopmania.model.buildings.Building;
+import unsw.loopmania.model.buildings.CampfireBuilding;
+
 /**
  * represents the main character in the backend of the game world
  */
@@ -28,6 +31,7 @@ public class Character extends MovingEntity {
     private Helmet dressedHelmet;
 
     private List<Item> Bag;
+    private List<Building> buildingEntities;
 
     public Character(PathPosition position) {
         super(position);
@@ -41,6 +45,7 @@ public class Character extends MovingEntity {
         def = 0;
 
         Bag = new ArrayList<Item>(16);
+        buildingEntities = new ArrayList<Building>();
     }
 
     public IntegerProperty hpProperty() {
@@ -48,10 +53,10 @@ public class Character extends MovingEntity {
     }
 
     public StringProperty hpPercentageProperty() {
-        Double HPpercentage = Double.valueOf(getHP()) / 300 * 100;
-        String HP_percentage = String.format("%.2f", HPpercentage);
+        Double hpPercentage = Double.valueOf(getHP()) / 300 * 100;
+        String formattedHP = String.format("%.2f", hpPercentage);
 
-        return new SimpleStringProperty(HP_percentage + "%");
+        return new SimpleStringProperty(formattedHP + "%");
     }
 
     public int getHP() {
@@ -99,18 +104,22 @@ public class Character extends MovingEntity {
     }
 
     public int getATK() {
-        int weapon_atk = 0;
-        int helmet_atk = 0;
+        int weaponAtk = 0;
+        int helmetAtk = 0;
 
         if (dressedWeapon != null) {
-            weapon_atk = dressedWeapon.getAttack();
+            weaponAtk = dressedWeapon.getAttack();
         }
 
         if (dressedHelmet != null) {
-            helmet_atk = dressedHelmet.getAttack();
+            helmetAtk = dressedHelmet.getAttack();
         }
 
-        return atk + weapon_atk + helmet_atk;
+        if (isInTowerRadius()) {
+            return 2 * (atk + weaponAtk + helmetAtk);
+        }
+
+        return atk + weaponAtk + helmetAtk;
     }
 
     public void setATK(int atk) {
@@ -118,23 +127,23 @@ public class Character extends MovingEntity {
     }
 
     public int getDEF() {
-        int armour_def = 0;
-        int shield_def = 0;
-        int helmet_def = 0;
+        int armourDef = 0;
+        int shieldDef = 0;
+        int helmetDef = 0;
 
         if (dressedArmour != null) {
-            armour_def = dressedArmour.getDefence();
+            armourDef = dressedArmour.getDefence();
         }
 
         if (dressedShield != null) {
-            shield_def = dressedShield.getDefence();
+            shieldDef = dressedShield.getDefence();
         }
 
         if (dressedHelmet != null) {
-            helmet_def = dressedHelmet.getDefence();
+            helmetDef = dressedHelmet.getDefence();
         }
 
-        return def + armour_def + shield_def + helmet_def;
+        return def + armourDef + shieldDef + helmetDef;
     }
 
     public void setDEF(int def) {
@@ -194,4 +203,19 @@ public class Character extends MovingEntity {
         this.Bag = Bag;
     }
 
+    public void setBuildingEntities(List<Building> buildings) {
+        this.buildingEntities = buildings;
+    }
+
+    private boolean isInTowerRadius() {
+        for (Building b : buildingEntities) {
+            if (b instanceof CampfireBuilding) {
+                CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
+                if (Math.pow((getX() - b.getX()), 2) + Math.pow((getY() - b.getY()), 2) < Math.pow(campfire.getBattleRadius(), 2)) {
+                    return true;
+                }     
+            }
+        }
+        return false;
+    }
 }
