@@ -4,7 +4,7 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
 /**
- * A basic form of Enemy in the world
+ * a basic form of enemy in the world
  */
 public class Zombie extends Enemy {
 
@@ -16,9 +16,12 @@ public class Zombie extends Enemy {
         this.speed = 2;
         this.battleRadius = 3;
         this.supportRadius = 3;
+
         this.criticalPercentage = 20;
+
         this.goldWhenKilled = 100;
         this.expWhenKilled = 200;
+
     }
 
 }
