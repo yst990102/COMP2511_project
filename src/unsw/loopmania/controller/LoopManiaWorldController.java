@@ -33,6 +33,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
+import javafx.scene.Cursor;
 import javafx.util.Duration;
 import javafx.beans.binding.Bindings;
 
@@ -241,9 +242,9 @@ public class LoopManiaWorldController {
     private Image campfireCardImage;
     
     // Enemy Images
-    private Image SlugEnemyImage;
-    private Image ZombieEnemyImage;
-    private Image VampireEnemyImage;
+    private Image slugEnemyImage;
+    private Image zombieEnemyImage;
+    private Image vampireEnemyImage;
     
     // Equipment Images
     private Image swordImage;
@@ -254,10 +255,10 @@ public class LoopManiaWorldController {
     private Image armourImage;
     
     // Potions
-    private Image HealthPotionImage;
+    private Image healthPotionImage;
     
     // RareItems
-    private Image TheOneRingImage;
+    private Image theOneRingImage;
     
     // Building Images
     private Image vampireCastleBuildingImage;
@@ -338,9 +339,9 @@ public class LoopManiaWorldController {
         campfireCardImage = new Image((new File("src/assets/campfire_card.png")).toURI().toString());
 
         // Enemies
-        SlugEnemyImage = new Image((new File("src/assets/slug.png")).toURI().toString());
-        ZombieEnemyImage = new Image((new File("src/assets/zombie.png")).toURI().toString());
-        VampireEnemyImage = new Image((new File("src/assets/vampire.png")).toURI().toString());
+        slugEnemyImage = new Image((new File("src/assets/slug.png")).toURI().toString());
+        zombieEnemyImage = new Image((new File("src/assets/zombie.png")).toURI().toString());
+        vampireEnemyImage = new Image((new File("src/assets/vampire.png")).toURI().toString());
 
         // Item - Equipments
         swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
@@ -351,10 +352,10 @@ public class LoopManiaWorldController {
         armourImage = new Image((new File("src/assets/armour.png")).toURI().toString());
 
         // Potions
-        HealthPotionImage = new Image((new File("src/assets/health_potion.png")).toURI().toString());
+        healthPotionImage = new Image((new File("src/assets/health_potion.png")).toURI().toString());
 
         // RareItems
-        TheOneRingImage = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
+        theOneRingImage = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
 
         // Buildings
         vampireCastleBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
@@ -437,7 +438,7 @@ public class LoopManiaWorldController {
 
         // set tip of button
         pauseButtondescription.setText("Game running. Click to pause.");
-        exitButtondescription.setText("Clikc to exit.");
+        exitButtondescription.setText("Click to exit.");
     }
 
     public void updateCharacterDescription() {
@@ -700,10 +701,11 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (item.getClass().equals(HealthPotion.class)) {
-            view = new ImageView(HealthPotionImage);
+            view = new ImageView(healthPotionImage);
+            view.setCursor(Cursor.HAND);
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
         } else if (item.getClass().equals(TheOneRing.class)) {
-            view = new ImageView(TheOneRingImage);
+            view = new ImageView(theOneRingImage);
         } else {
             view = new ImageView();
         }
@@ -721,11 +723,11 @@ public class LoopManiaWorldController {
         ImageView view;
         
         if (enemy instanceof Slug) {
-            view = new ImageView(SlugEnemyImage);
+            view = new ImageView(slugEnemyImage);
         } else if (enemy instanceof Vampire) {
-            view = new ImageView(VampireEnemyImage);
+            view = new ImageView(vampireEnemyImage);
         } else if (enemy instanceof Zombie) {
-            view = new ImageView(ZombieEnemyImage);
+            view = new ImageView(zombieEnemyImage);
         } else {
             return;
         }

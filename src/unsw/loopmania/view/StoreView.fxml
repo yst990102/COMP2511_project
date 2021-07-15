@@ -43,43 +43,6 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowSwordInfo" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../assets/basic_sword.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowStakeInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../../../assets/stake.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowStaffInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
-               <image>
-                  <Image url="@../../../assets/staff.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowArmourInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-               <image>
-                  <Image url="@../../../assets/armour.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowShieldInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
-               <image>
-                  <Image url="@../../../assets/shield.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowHelmetInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
-               <image>
-                  <Image url="@../../../assets/helmet.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ShowPotionInfo" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
-               <image>
-                  <Image url="@../../../assets/health_potion.png" />
-               </image>
-            </ImageView>
-         </children>
       </GridPane>
       <Label layoutX="146.0" layoutY="117.0" text="Description" textFill="WHITE" AnchorPane.topAnchor="117.0">
          <font>
