@@ -202,7 +202,7 @@ public class LoopManiaWorld {
      * @param enemy enemy to be killed
      */
     private void killEnemy(Enemy enemy) {
-        // 杀掉enemy的时候需要增加gold和exp
+        // Gold and XP when killing an enemy
         // - Slug: $50, XP 100
         // - Zombie: $100, XP 200
         // - Vampire: $200, XP 300
