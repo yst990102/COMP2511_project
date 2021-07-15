@@ -433,7 +433,7 @@ public class LoopManiaWorldController {
 
         // set tip of button
         pauseButtondescription.setText("Game running. Click to pause.");
-        exitButtondescription.setText("Clikc to exit.");
+        exitButtondescription.setText("Click to exit.");
     }
 
     public void updateCharacterDescription() {
