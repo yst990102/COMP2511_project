@@ -1,0 +1,4 @@
+添加装备：
+LoopManiaWorld: unequippedInventoryItems.add(equipment)
+LoopManiaWorldController: addEntity(equipment, view)
+                          unequippedInventory.getChildren().add(view)
