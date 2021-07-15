@@ -19,7 +19,6 @@ public class Zombie extends Enemy {
         this.criticalPercentage = 20;
         this.goldWhenKilled = 100;
         this.expWhenKilled = 200;
-
     }
 
 }

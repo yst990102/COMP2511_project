@@ -4,7 +4,7 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
 /**
- * a basic form of enemy in the world
+ * A basic form of Enemy in the world
  */
 public class Slug extends Enemy {
 
@@ -16,10 +16,8 @@ public class Slug extends Enemy {
         this.speed = 5;
         this.battleRadius = 2;
         this.supportRadius = 2;
-
         this.goldWhenKilled = 50;
         this.expWhenKilled = 100;
-
     }
 
 }

@@ -37,6 +37,11 @@ public class Vampire extends Enemy {
         }
     }
 
+    /**
+     * Get Critical Bite Attack
+     * @param critical_percentage_decrease
+     * @return int
+     */
     public int getAttack(int critical_percentage_decrease) {
         int critical_random = new Random().nextInt(100);
         if (critical_random < (criticalPercentage * (1 - Double.valueOf(critical_percentage_decrease) / 100))) {
