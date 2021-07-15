@@ -3,19 +3,18 @@ package unsw.loopmania.model;
 import java.util.Random;
 
 /**
- * A basic form of Enemy in the world
+ * a basic form of enemy in the world
  */
 public class Enemy extends MovingEntity {
     
-    /**
-     * Constructor for Enemy
-     */
     public int hp;
     public int attack;
     public int speed;
     public int battleRadius;
     public int supportRadius;
+
     public int criticalPercentage;
+
     public int goldWhenKilled;
     public int expWhenKilled;
 
@@ -24,9 +23,11 @@ public class Enemy extends MovingEntity {
     }
 
     /**
-     * Move the Enemy
+     * move the enemy
      */
     public void move() {
+        // TODO = modify this, since this implementation doesn't provide the expected enemy behaviour
+        // this basic enemy moves in a random direction... 25% chance up or down, 50% chance not at all...
         int directionChoice = (new Random()).nextInt(2);
         if (directionChoice == 0) {
             moveUpPath();
@@ -35,20 +36,8 @@ public class Enemy extends MovingEntity {
         }
     }
 
-    /**
-     * Get Enemy Attack
-     * @return int
-     */
     public int getAttack() {
         return this.attack;
-    }
-
-    /**
-     * Set Enemy Hp
-     * @param hp
-     */
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
 }

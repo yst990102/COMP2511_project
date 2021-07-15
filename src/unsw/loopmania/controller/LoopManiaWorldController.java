@@ -90,6 +90,10 @@ enum DRAGGABLE_TYPE {
     HELMET, GOLD, HEALTH_POTION, THE_ONE_RING
 }
 
+enum CLICKABLE_TYPE {
+    HEALTH_POTION
+}
+
 /**
  * A JavaFX controller for the world.
  * 
@@ -433,7 +437,7 @@ public class LoopManiaWorldController {
 
         // set tip of button
         pauseButtondescription.setText("Game running. Click to pause.");
-        exitButtondescription.setText("Click to exit.");
+        exitButtondescription.setText("Clikc to exit.");
     }
 
     public void updateCharacterDescription() {
@@ -697,6 +701,7 @@ public class LoopManiaWorldController {
 
         if (item.getClass().equals(HealthPotion.class)) {
             view = new ImageView(HealthPotionImage);
+            addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
         } else if (item.getClass().equals(TheOneRing.class)) {
             view = new ImageView(TheOneRingImage);
         } else {
@@ -1265,6 +1270,25 @@ public class LoopManiaWorldController {
             n.removeEventHandler(DragEvent.DRAG_ENTERED, gridPaneNodeSetOnDragEntered.get(draggableType));
             n.removeEventHandler(DragEvent.DRAG_EXITED, gridPaneNodeSetOnDragExited.get(draggableType));
         }
+    }
+
+
+    private void addClickEventHandlers(ImageView view, CLICKABLE_TYPE clickType) {
+
+         view.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                int nodeX = GridPane.getColumnIndex(view);
+                int nodeY = GridPane.getRowIndex(view);
+                switch (clickType) {
+                    case HEALTH_POTION:
+                        world.getCharacter().useHealthPotion();
+                        removeItemByCoordinates(nodeX, nodeY);
+                        break;
+                    default:
+                        break;
+                }
+            }
+         });  
     }
 
     /**

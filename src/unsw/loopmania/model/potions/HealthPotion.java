@@ -8,6 +8,8 @@ import unsw.loopmania.model.Potion;
  */
 public class HealthPotion extends Potion {
     // TODO = add more weapon/item types
+    private int healthRecovered;
+
     public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 
@@ -15,8 +17,12 @@ public class HealthPotion extends Potion {
          "===== Health Potion =====\n"
         +"+ 50 HP when use";
 
+        this.healthRecovered = 50;
         setDescription(description);
-
         setPrice(200);
-    }    
+    }
+    
+    public int getHealthRecovered() {
+        return healthRecovered;
+    }
 }

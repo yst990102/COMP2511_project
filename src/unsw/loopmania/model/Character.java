@@ -64,7 +64,11 @@ public class Character extends MovingEntity {
     }
 
     public void setHP(int hp) {
-        this.hp.set(hp);
+        if (hp < 300) {
+            this.hp.set(hp);
+        } else {
+            this.hp.set(300);
+        }
     }
 
     public IntegerProperty goldProperty() {
@@ -217,5 +221,9 @@ public class Character extends MovingEntity {
             }
         }
         return false;
+    }
+
+    public void useHealthPotion() {
+        setHP(getHP() + 50);
     }
 }

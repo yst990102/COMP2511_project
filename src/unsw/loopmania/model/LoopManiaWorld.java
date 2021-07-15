@@ -347,41 +347,39 @@ public class LoopManiaWorld {
      * @return a card to be spawned in the controller as a JavaFX node
      */
     public Card loadCard() {
-        int randomInt = new Random().nextInt(100);
-
-        Card card = null;
-
-        if (randomInt < 40) {
-            if (randomInt < 6) {
-                card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()),
-                        new SimpleIntegerProperty(0));
-            } else if (randomInt < 12) {
-                card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-            } else if (randomInt < 18) {
-                card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-            } else if (randomInt < 24) {
-                card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-            } else if (randomInt < 30) {
-                card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-            } else if (randomInt < 36) {
-                card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-            } else {
-                card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-            }
-        }
-
         if (cardEntities.size() >= getWidth()) {
             removeCard(0);
             character.setGold(character.getGold() + 100);
             character.setXP(character.getXP() + 100);
         }
 
+
+        int randomInt = new Random().nextInt(100);
+
+        Card card = null;
+
+        if (randomInt < 6) {
+            card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 12) {
+            card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 18) {
+            card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 24) {
+            card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 30) {
+            card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 36) {
+            card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 42) {
+            card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        }
+    
+
         if (card != null) {
             cardEntities.add(card);
-            return card;
         }
 
-        return null;
+        return card;
     }
 
     /**
@@ -676,15 +674,12 @@ public class LoopManiaWorld {
             break;
         }
 
-        // VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
         if (newBuilding != null) {
             buildingEntities.add(newBuilding);
         }
 
         // destroy the card
-        card.destroy();
-        cardEntities.remove(cardNodeX);
-        shiftCardsDownFromXCoordinate(cardNodeX);
+        removeCard(cardNodeX);
 
         return newBuilding;
     }
