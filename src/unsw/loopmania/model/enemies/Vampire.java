@@ -6,11 +6,12 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
 /**
- * a basic form of enemy in the world
+ * A basic form of Enemy in the world
  */
 public class Vampire extends Enemy {
 
-    public int criticalExtraDamage = 10; // if critical, make 10 extra damage
+    // If critical, make 10 extra damage
+    public int criticalExtraDamage = 10; 
 
     public Vampire(PathPosition position) {
         super(position);
@@ -20,12 +21,9 @@ public class Vampire extends Enemy {
         this.speed = 3;
         this.battleRadius = 5;
         this.supportRadius = 5;
-
         this.criticalPercentage = 20;
-
         this.goldWhenKilled = 200;
         this.expWhenKilled = 300;
-
     }
 
     @Override
