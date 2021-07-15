@@ -554,7 +554,7 @@ public class LoopManiaWorld {
      * get the first pair of x,y coordinates which don't have any items in it in the unequipped inventory
      * @return x,y coordinate pair
      */
-    private Pair<Integer, Integer> getFirstAvailableSlotForItem() {
+    public Pair<Integer, Integer> getFirstAvailableSlotForItem() {
         // first available slot for an item...
         // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
         for (int y = 0; y < unequippedInventoryHeight; y++) {
@@ -845,5 +845,9 @@ public class LoopManiaWorld {
 
     public void CheckHeroInCampfireRadius() {
         character.setBuildingEntities(buildingEntities);
+    }
+
+    public void addItemFromStore(Entity entity) {
+        unequippedInventoryItems.add(entity);
     }
 }

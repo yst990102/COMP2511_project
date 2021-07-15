@@ -1430,6 +1430,21 @@ public class LoopManiaWorldController {
         });
     }
 
+    public Pair<Integer, Integer> getFirstAvailableSlotForItem() {
+        return world.getFirstAvailableSlotForItem();
+    }
+    public void buyItemFromStore(Item item, ImageView view, int price) {
+        addEntity(item, view);
+        world.addItemFromStore(item);
+        unequippedInventory.getChildren().add(view);
+        addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
+        world.getCharacter().setGold(world.getCharacter().getGold() - price);
+    }
+
+    public LoopManiaWorld getWolrd() {
+        return world;
+    }
+
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application

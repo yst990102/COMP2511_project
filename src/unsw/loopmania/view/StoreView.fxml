@@ -126,7 +126,7 @@
       </Label>
       <FlowPane prefHeight="19.0" prefWidth="65.0" AnchorPane.leftAnchor="115.0" AnchorPane.topAnchor="478.0">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="playerTotalGold" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>

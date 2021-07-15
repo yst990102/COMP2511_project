@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.lang.Integer;
 
+import org.javatuples.Pair;
+
 enum ITEM_TYPE {
 	SWORD, HELMET, SHIELD, STAKE, STAFF, ARMOUR, HEALTH_POTION
 }
@@ -52,6 +54,8 @@ public class StoreController {
 
 	private ImageView currentlyClickedImage;
 	private List<ImageView> storeItemViews;
+	private Item currentlySelectedItem;
+	private ITEM_TYPE currentlySelectedItemType;
 
 	boolean isStoreItemClicked;
 	boolean isHeroItemClicked;
@@ -73,6 +77,9 @@ public class StoreController {
 
 	@FXML
 	private Text itemPrice;
+
+	@FXML
+	private Text playerTotalGold;
 
 	@FXML
 	private Button buyButton;
@@ -105,14 +112,79 @@ public class StoreController {
 	@FXML
 	void handleSellButtonClick(ActionEvent event) {
 		if (isHeroItemClicked) {
-
 		}
 	}
 
 	@FXML
 	void handleBuyButtonClick(ActionEvent event) {
-		if (isStoreItemClicked) {
+		if (isStoreItemClicked ) {
+			Pair<Integer, Integer> firstAvailableSlot = mainController.getFirstAvailableSlotForItem();
 
+			Item selectedItem = null;
+			ImageView itemView = null;
+			int price = 0;
+
+			switch(currentlySelectedItemType) {
+				case SWORD:
+					Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = sword;
+					price = sword.getPrice();
+					itemView = new ImageView(swordImage);
+					break;
+				case STAKE:
+					Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = stake;
+					price = stake.getPrice();
+					itemView = new ImageView(stakeImage);
+					break;
+				case STAFF:
+					Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = staff;
+					price = staff.getPrice();
+					itemView = new ImageView(staffImage);
+					break;
+				case SHIELD:
+					BasicShield shield = new BasicShield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = shield;
+					price = shield.getPrice();
+					itemView = new ImageView(shieldImage);
+					break;
+				case ARMOUR:
+					BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = armour;
+					price = armour.getPrice();
+					itemView = new ImageView(armourImage);
+					break;
+				case HELMET:
+					BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = helmet;
+					price = helmet.getPrice();
+					itemView = new ImageView(helmetImage);
+					break;
+				case HEALTH_POTION:
+					HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+					selectedItem = healthPotion;
+					price = healthPotion.getPrice();
+					itemView = new ImageView(healthPotionImage);
+				default:
+					break; 
+			}
+			boolean playerHasEnoughGold = mainController.getWolrd().getCharacter().getGold() - price >= 0;
+
+			if (!playerHasEnoughGold) {
+				description.setText("You do not have enough gold!");
+			}
+
+			if (selectedItem != null && itemView != null && playerHasEnoughGold) {
+				mainController.buyItemFromStore(selectedItem, itemView, price);
+			}
 		}
 	}
 
@@ -151,63 +223,9 @@ public class StoreController {
 
 		buyButton.setCursor(Cursor.HAND);
 		sellButton.setCursor(Cursor.HAND);
+
+		playerTotalGold.textProperty().bind(Bindings.convert(mainController.getWolrd().getCharacter().goldProperty()));
 	}
-
-	// @FXML
-    // void ShowArmourInfo(MouseEvent event) {
-	// 	BasicArmour SelledArmour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledArmour.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledArmour.getPrice())));
-    // }
-
-    // @FXML
-    // void ShowHelmetInfo(MouseEvent event) {
-	// 	BasicHelmet SelledHelmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledHelmet.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledHelmet.getPrice())));
-    // }
-
-    // @FXML
-    // void ShowPotionInfo(MouseEvent event) {
-	// 	HealthPotion SelledPotion = new HealthPotion(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledPotion.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledPotion.getPrice())));
-    // }
-
-    // @FXML
-    // void ShowShieldInfo(MouseEvent event) {
-	// 	BasicShield SelledShield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledShield.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledShield.getPrice())));
-    // }
-
-    // @FXML
-    // void ShowStaffInfo(MouseEvent event) {
-	// 	Staff SelledStaff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledStaff.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledStaff.getPrice())));
-    // }
-
-    // @FXML
-    // void ShowStakeInfo(MouseEvent event) {
-	// 	Stake SelledStake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledStake.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledStake.getPrice())));
-    // }
-
-    // @FXML
-    // void ShowSwordInfo(MouseEvent event) {
-	// 	Sword SelledSword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-
-	// 	description.textProperty().bind(Bindings.convert(new SimpleStringProperty(SelledSword.getDescription())));
-	// 	itemPrice.textProperty().bind(Bindings.convert(new SimpleIntegerProperty(SelledSword.getPrice())));
-    // }
 
 	private ImageView onLoad(Item item) {
         ImageView view;
@@ -246,6 +264,8 @@ public class StoreController {
 
 		view.setOnMouseClicked(new EventHandler<MouseEvent>(){
 			public void handle(MouseEvent event) {
+				currentlySelectedItemType = clickType;
+				currentlyClickedImage = view;
 				
 				if (view.getParent().getId().equals("storeInventory")) {
 					isStoreItemClicked = true;
@@ -264,16 +284,19 @@ public class StoreController {
 				switch(clickType) {
 					case SWORD:
 						Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						currentlySelectedItem = sword;
 						description.setText(sword.getDescription());
 						itemPrice.setText(Integer.toString(sword.getPrice()));
 						break;
 					case STAKE:
 						Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						currentlySelectedItem = stake;
 						description.setText(stake.getDescription());
 						itemPrice.setText(Integer.toString(stake.getPrice()));
 						break;
 					case STAFF:
 						Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						currentlySelectedItem = staff;
 						description.setText(staff.getDescription());
 						itemPrice.setText(Integer.toString(staff.getPrice()));
 						break;
@@ -284,16 +307,19 @@ public class StoreController {
 						break;
 					case ARMOUR:
 						BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						currentlySelectedItem = armour;
 						description.setText(armour.getDescription());
 						itemPrice.setText(Integer.toString(armour.getPrice()));
 						break;
 					case HELMET:
 						BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						currentlySelectedItem = helmet;
 						description.setText(helmet.getDescription());
 						itemPrice.setText(Integer.toString(helmet.getPrice()));
 						break;
 					case HEALTH_POTION:
 						HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						currentlySelectedItem = healthPotion;
 						description.setText(healthPotion.getDescription());
 						itemPrice.setText(Integer.toString(healthPotion.getPrice()));
 					default:
