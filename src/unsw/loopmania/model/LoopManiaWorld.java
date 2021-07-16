@@ -102,7 +102,7 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
 
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
@@ -156,6 +156,7 @@ public class LoopManiaWorld {
      */
     public void setCharacter(Character character) {
         this.character = character;
+        this.character.setBag(unequippedInventoryItems);
     }
 
     public Character getCharacter() {
@@ -353,7 +354,6 @@ public class LoopManiaWorld {
             character.setXP(character.getXP() + 100);
         }
 
-
         int randomInt = new Random().nextInt(100);
 
         Card card = null;
@@ -373,7 +373,6 @@ public class LoopManiaWorld {
         } else if (randomInt < 42) {
             card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         }
-    
 
         if (card != null) {
             cardEntities.add(card);
@@ -827,7 +826,6 @@ public class LoopManiaWorld {
         }
     }
 
-
     public void CheckEnemyInTowerRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof TowerBuilding) {
@@ -847,11 +845,11 @@ public class LoopManiaWorld {
         character.setBuildingEntities(buildingEntities);
     }
 
-    public void addItemFromStore(Entity entity) {
+    public void addItemFromStore(Item entity) {
         unequippedInventoryItems.add(entity);
     }
 
-    public List<Entity> getHeroItems() {
+    public List<Item> getHeroItems() {
         return unequippedInventoryItems;
     }
 }

@@ -86,9 +86,8 @@ import unsw.loopmania.model.enemies.Zombie;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, 
-    BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD, SWORD, STAKE, STAFF, ARMOUR, SHIELD,
-    HELMET, GOLD, HEALTH_POTION, THE_ONE_RING
+    CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD,
+    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING
 }
 
 enum CLICKABLE_TYPE {
@@ -241,12 +240,12 @@ public class LoopManiaWorldController {
     private Image barracksCardImage;
     private Image trapCardImage;
     private Image campfireCardImage;
-    
+
     // Enemy Images
     private Image slugEnemyImage;
     private Image zombieEnemyImage;
     private Image vampireEnemyImage;
-    
+
     // Equipment Images
     private Image swordImage;
     private Image helmetImage;
@@ -254,13 +253,13 @@ public class LoopManiaWorldController {
     private Image stakeImage;
     private Image staffImage;
     private Image armourImage;
-    
+
     // Potions
     private Image healthPotionImage;
-    
+
     // RareItems
     private Image theOneRingImage;
-    
+
     // Building Images
     private Image vampireCastleBuildingImage;
     private Image zombiePitBuildingImage;
@@ -459,7 +458,7 @@ public class LoopManiaWorldController {
                         : currentPlayer.getDressedShield().getClass().getSimpleName())
                 + "\n" + "Helmet : " + ((currentPlayer.getDressedHelmet() == null) ? " no helmet "
                         : currentPlayer.getDressedHelmet().getClass().getSimpleName())
-                + "\n";
+                + "\n" + "Bag : " + world.getCharacter().getBag();
 
         characterdescription.setText(characterProperty);
     }
@@ -480,7 +479,7 @@ public class LoopManiaWorldController {
             world.updateNthCycle();
             updateCharacterDescription();
             checkStoreVisit();
-            
+
             List<Enemy> defeatedEnemies = world.runBattles();
 
             // refresh character hp after battle
@@ -489,12 +488,12 @@ public class LoopManiaWorldController {
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
             }
-           
+
             List<Enemy> newEnemies = world.possiblySpawnEnemies();
             for (Enemy newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
-            
+
             List<Vampire> vampires = world.CheckVampireSpawn();
             for (Vampire vampire : vampires) {
                 onLoad(vampire);
@@ -504,7 +503,7 @@ public class LoopManiaWorldController {
             for (Zombie zombie : zombies) {
                 onLoad(zombie);
             }
-            
+
             world.CheckHeroPassVillage();
             world.CheckHeroPassBarracks();
             world.CheckEnemyPassTrap();
@@ -627,7 +626,7 @@ public class LoopManiaWorldController {
         } else {
             view = new ImageView();
         }
-        
+
         addEntity(card, view);
         cards.getChildren().add(view);
     }
@@ -722,7 +721,7 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Enemy enemy) {
         ImageView view;
-        
+
         if (enemy instanceof Slug) {
             view = new ImageView(slugEnemyImage);
         } else if (enemy instanceof Vampire) {
@@ -796,155 +795,151 @@ public class LoopManiaWorldController {
                         Building newBuilding;
 
                         switch (draggableType) {
-                            case VAMPIRE_CASTLE_CARD:
-                                if (!targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VAMPIRE_CASTLE");
-                                    onLoad(newBuilding);
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case ZOMBIE_PIT_CARD:
-                                if (!targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "ZOMBIE_PIT");
-                                    onLoad(newBuilding);
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case TOWER_CARD:
-                                if (!targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TOWER");
-                                    onLoad(newBuilding);
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case VILLAGE_CARD:
-                                if (targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VILLAGE");
-                                    onLoad(newBuilding); 
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case BARRACKS_CARD:
-                                if (targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "BARRACKS");
-                                    onLoad(newBuilding);
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case TRAP_CARD:
-                                if (targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TRAP");
-                                    onLoad(newBuilding);
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case CAMPFIRE_CARD:
-                                if (!targetPosInPath) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "CAMPFIRE");
-                                    onLoad(newBuilding);
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case SWORD:
-                                if (targetPosInSwordSlot) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
-                                    targetGridPane.add(silverBackground, x, y, 1, 1);
-                                    targetGridPane.add(image, x, y, 1, 1);
-                                    Sword sword = new Sword(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                    world.getCharacter().setDressedWeapon(sword);
-                                    updateCharacterDescription();
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case STAKE:
-                                if (targetPosInSwordSlot) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
-                                    targetGridPane.add(silverBackground, x, y, 1, 1);
-                                    targetGridPane.add(image, x, y, 1, 1);
-                                    Stake stake = new Stake(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                    world.getCharacter().setDressedWeapon(stake);
-                                    updateCharacterDescription();
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case STAFF:
-                                if (targetPosInSwordSlot) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
-                                    targetGridPane.add(silverBackground, x, y, 1, 1);
-                                    targetGridPane.add(image, x, y, 1, 1);
-                                    Staff staff = new Staff(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                    world.getCharacter().setDressedWeapon(staff);
-                                    updateCharacterDescription();
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case ARMOUR:
-                                if (targetPosInArmourSlot) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
-                                    targetGridPane.add(silverBackground, x, y, 1, 1);
-                                    targetGridPane.add(image, x, y, 1, 1);
-                                    BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                    world.getCharacter().setDressedArmour(armour);
-                                    updateCharacterDescription();
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case SHIELD:
-                                if (targetPosInShieldSlot) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
-                                    targetGridPane.add(silverBackground, x, y, 1, 1);
-                                    targetGridPane.add(image, x, y, 1, 1);
-                                    BasicShield shield = new BasicShield(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                    world.getCharacter().setDressedShield(shield);
-                                    updateCharacterDescription();
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            case HELMET:
-                                if (targetPosInHelmetSlot) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                    removeItemByCoordinates(nodeX, nodeY);
-                                    targetGridPane.add(silverBackground, x, y, 1, 1);
-                                    targetGridPane.add(image, x, y, 1, 1);
-                                    Helmet helmet = new Helmet(new SimpleIntegerProperty(0),
-                                                    new SimpleIntegerProperty(0));
-                                    world.getCharacter().setDressedHelmet(helmet);
-                                    updateCharacterDescription();
-                                } else {
-                                    view.setVisible(true);
-                                }
-                                break;
-                            default:
-                                break;
+                        case VAMPIRE_CASTLE_CARD:
+                            if (!targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VAMPIRE_CASTLE");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case ZOMBIE_PIT_CARD:
+                            if (!targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "ZOMBIE_PIT");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case TOWER_CARD:
+                            if (!targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TOWER");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case VILLAGE_CARD:
+                            if (targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "VILLAGE");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case BARRACKS_CARD:
+                            if (targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "BARRACKS");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case TRAP_CARD:
+                            if (targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "TRAP");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case CAMPFIRE_CARD:
+                            if (!targetPosInPath) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y, "CAMPFIRE");
+                                onLoad(newBuilding);
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case SWORD:
+                            if (targetPosInSwordSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedWeapon(sword);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case STAKE:
+                            if (targetPosInSwordSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedWeapon(stake);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case STAFF:
+                            if (targetPosInSwordSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedWeapon(staff);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case ARMOUR:
+                            if (targetPosInArmourSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedArmour(armour);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case SHIELD:
+                            if (targetPosInShieldSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                BasicShield shield = new BasicShield(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedShield(shield);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        case HELMET:
+                            if (targetPosInHelmetSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                Helmet helmet = new Helmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedHelmet(helmet);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+                        default:
+                            break;
                         }
 
                         System.out.println("After : character ATK == " + world.getCharacter().getATK());
@@ -1031,7 +1026,8 @@ public class LoopManiaWorldController {
      */
     private Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX,
             int buildingNodeY, String buildingType) {
-        return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY, buildingType);
+        return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY,
+                buildingType);
     }
 
     /**
@@ -1076,53 +1072,53 @@ public class LoopManiaWorldController {
 
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
-                    case CARD:
-                        draggedEntity.setImage(vampireCastleCardImage);
-                        break;
-                    case ITEM:
-                        draggedEntity.setImage(swordImage);
-                        break;
-                    case VAMPIRE_CASTLE_CARD:
-                        draggedEntity.setImage(vampireCastleBuildingImage);
-                        break;
-                    case ZOMBIE_PIT_CARD:
-                        draggedEntity.setImage(zombiePitBuildingImage);
-                        break;
-                    case TOWER_CARD:
-                        draggedEntity.setImage(towerBuildingImage);
-                        break;
-                    case VILLAGE_CARD:
-                        draggedEntity.setImage(villageBuildingImage);
-                        break;
-                    case BARRACKS_CARD:
-                        draggedEntity.setImage(barracksBuildingImage);
-                        break;
-                    case TRAP_CARD:
-                        draggedEntity.setImage(trapBuildingImage);
-                        break;
-                    case CAMPFIRE_CARD:
-                        draggedEntity.setImage(campfireBuildingImage);
-                        break;
-                    case SWORD:
-                        draggedEntity.setImage(swordImage);
-                        break;
-                    case STAKE:
-                        draggedEntity.setImage(stakeImage);
-                        break;
-                    case STAFF:
-                        draggedEntity.setImage(staffImage);
-                        break;
-                    case ARMOUR:
-                        draggedEntity.setImage(armourImage);
-                        break;
-                    case SHIELD:
-                        draggedEntity.setImage(shieldImage);
-                        break;
-                    case HELMET:
-                        draggedEntity.setImage(helmetImage);
-                        break;
-                    default:
-                        break;
+                case CARD:
+                    draggedEntity.setImage(vampireCastleCardImage);
+                    break;
+                case ITEM:
+                    draggedEntity.setImage(swordImage);
+                    break;
+                case VAMPIRE_CASTLE_CARD:
+                    draggedEntity.setImage(vampireCastleBuildingImage);
+                    break;
+                case ZOMBIE_PIT_CARD:
+                    draggedEntity.setImage(zombiePitBuildingImage);
+                    break;
+                case TOWER_CARD:
+                    draggedEntity.setImage(towerBuildingImage);
+                    break;
+                case VILLAGE_CARD:
+                    draggedEntity.setImage(villageBuildingImage);
+                    break;
+                case BARRACKS_CARD:
+                    draggedEntity.setImage(barracksBuildingImage);
+                    break;
+                case TRAP_CARD:
+                    draggedEntity.setImage(trapBuildingImage);
+                    break;
+                case CAMPFIRE_CARD:
+                    draggedEntity.setImage(campfireBuildingImage);
+                    break;
+                case SWORD:
+                    draggedEntity.setImage(swordImage);
+                    break;
+                case STAKE:
+                    draggedEntity.setImage(stakeImage);
+                    break;
+                case STAFF:
+                    draggedEntity.setImage(staffImage);
+                    break;
+                case ARMOUR:
+                    draggedEntity.setImage(armourImage);
+                    break;
+                case SHIELD:
+                    draggedEntity.setImage(shieldImage);
+                    break;
+                case HELMET:
+                    draggedEntity.setImage(helmetImage);
+                    break;
+                default:
+                    break;
                 }
 
                 draggedEntity.setVisible(true);
@@ -1151,8 +1147,10 @@ public class LoopManiaWorldController {
                                 Integer rIndex = GridPane.getRowIndex(n);
                                 int targetX = cIndex == null ? 0 : cIndex;
                                 int targetY = rIndex == null ? 0 : rIndex;
-                                Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(targetX), Integer.valueOf(targetY));
-                                boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
+                                Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(targetX),
+                                        Integer.valueOf(targetY));
+                                boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true
+                                        : false;
                                 boolean targetPosInHelmetSlot = targetX == 1 && targetY == 0 ? true : false;
                                 boolean targetPosInSwordSlot = targetX == 0 && targetY == 1 ? true : false;
                                 boolean targetPosInArmourSlot = targetX == 1 && targetY == 1 ? true : false;
@@ -1160,73 +1158,73 @@ public class LoopManiaWorldController {
 
                                 if (event.getGestureSource() != n && event.getDragboard().hasImage()) {
                                     switch (draggableType) {
-                                        case VAMPIRE_CASTLE_CARD:
-                                            if (!targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case ZOMBIE_PIT_CARD:
-                                            if (!targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case TOWER_CARD:
-                                            if (!targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case VILLAGE_CARD:
-                                            if (targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case BARRACKS_CARD:
-                                            if (targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case TRAP_CARD:
-                                            if (targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case CAMPFIRE_CARD:
-                                            if (!targetPosInPath) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case SWORD:
-                                            if (targetPosInSwordSlot) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case STAKE:
-                                            if (targetPosInSwordSlot) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case STAFF:
-                                            if (targetPosInSwordSlot) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case ARMOUR:
-                                            if (targetPosInArmourSlot) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case SHIELD:
-                                            if (targetPosInShieldSlot) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        case HELMET:
-                                            if (targetPosInHelmetSlot) {
-                                                n.setOpacity(0.7);
-                                            }
-                                            break;
-                                        default:
-                                            break;
+                                    case VAMPIRE_CASTLE_CARD:
+                                        if (!targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case ZOMBIE_PIT_CARD:
+                                        if (!targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case TOWER_CARD:
+                                        if (!targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case VILLAGE_CARD:
+                                        if (targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case BARRACKS_CARD:
+                                        if (targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case TRAP_CARD:
+                                        if (targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case CAMPFIRE_CARD:
+                                        if (!targetPosInPath) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case SWORD:
+                                        if (targetPosInSwordSlot) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case STAKE:
+                                        if (targetPosInSwordSlot) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case STAFF:
+                                        if (targetPosInSwordSlot) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case ARMOUR:
+                                        if (targetPosInArmourSlot) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case SHIELD:
+                                        if (targetPosInShieldSlot) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    case HELMET:
+                                        if (targetPosInHelmetSlot) {
+                                            n.setOpacity(0.7);
+                                        }
+                                        break;
+                                    default:
+                                        break;
                                     }
                                 }
                             }
@@ -1275,23 +1273,23 @@ public class LoopManiaWorldController {
         }
     }
 
-
     private void addClickEventHandlers(ImageView view, CLICKABLE_TYPE clickType) {
 
-         view.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        view.setOnMouseReleased(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 int nodeX = GridPane.getColumnIndex(view);
                 int nodeY = GridPane.getRowIndex(view);
                 switch (clickType) {
-                    case HEALTH_POTION:
-                        world.getCharacter().useHealthPotion();
-                        removeItemByCoordinates(nodeX, nodeY);
-                        break;
-                    default:
-                        break;
+                case HEALTH_POTION:
+                    world.getCharacter().useHealthPotion();
+                    removeItemByCoordinates(nodeX, nodeY);
+                    updateCharacterDescription();
+                    break;
+                default:
+                    break;
                 }
             }
-         });  
+        });
     }
 
     /**
@@ -1436,7 +1434,7 @@ public class LoopManiaWorldController {
         return world.getFirstAvailableSlotForItem();
     }
 
-    public List<Entity> getHeroItems() {
+    public List<Item> getHeroItems() {
         return world.getHeroItems();
     }
 

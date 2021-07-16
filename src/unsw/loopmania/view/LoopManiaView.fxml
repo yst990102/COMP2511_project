@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -19,7 +25,7 @@
 <!-- TODO = modify and expand the GUI? -->
 <!-- anchorPaneRoot is the background of the main game -->
 
-<AnchorPane id="main-container" fx:id="anchorPaneRoot" maxHeight="630.0" maxWidth="480.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="508.0" prefWidth="387.0" stylesheets="@LoopMania.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="main-container" fx:id="anchorPaneRoot" maxHeight="630.0" maxWidth="480.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="508.0" prefWidth="387.0" stylesheets="@LoopMania.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="24.0" prefWidth="387.0">
          <children>
@@ -163,19 +169,19 @@
                         <!-- swordCell is the cell where a sword intended to be equipped will be dragged by the human player -->
                         <ImageView id="weaponCell" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                            <image>
-                              <Image url="@../../../images/sword_unequipped.png" />
+                              <Image url="@../../../assets/sword_unequipped.png" />
                            </image>
                         </ImageView>
                         <!-- blankCell is an empty cell -->
                         <ImageView id="helmetCell" GridPane.columnIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                            <image>
-                              <Image url="@../../../images/helmet_slot.png" />
+                              <Image url="@../../../assets/helmet_slot.png" />
                            </image>
                         </ImageView>
                         <!-- shieldCell is the cell where a shield intended to be equipped will be dragged by the human player -->
                         <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                            <image>
-                              <Image url="@../../../images/shield_unequipped.png" />
+                              <Image url="@../../../assets/shield_unequipped.png" />
                            </image>
                         </ImageView>
                         <ImageView id="armourCell" GridPane.columnIndex="1" GridPane.rowIndex="1">

@@ -44,11 +44,11 @@ public class StoreController {
 	private LoopManiaWorldController mainController;
 
 	private Image swordImage;
-    private Image helmetImage;
-    private Image shieldImage;
-    private Image stakeImage;
-    private Image staffImage;
-    private Image armourImage;
+	private Image helmetImage;
+	private Image shieldImage;
+	private Image stakeImage;
+	private Image staffImage;
+	private Image armourImage;
 	private Image healthPotionImage;
 	private Image theOneRingImage;
 	private Image inventorySlotImage;
@@ -102,7 +102,7 @@ public class StoreController {
 
 	}
 
-	public void setGameSwitcher(MenuSwitcher gameSwitcher){
+	public void setGameSwitcher(MenuSwitcher gameSwitcher) {
 		this.gameSwitcher = gameSwitcher;
 	}
 
@@ -319,8 +319,8 @@ public class StoreController {
 
 		view.setCursor(Cursor.HAND);
 
-        return view;
-    }
+		return view;
+	}
 
 	private void addClickEventHandlersForItem(ImageView view, ITEM_TYPE clickType, Entity item) {
 		view.setOnMouseClicked(new EventHandler<MouseEvent>() {
