@@ -80,6 +80,7 @@ import unsw.loopmania.model.equipments.weapons.Sword;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.strategy.ModeStrategy;
 
 /**
  * the draggable types. If you add more draggable types, add an enum value here.
@@ -1479,6 +1480,14 @@ public class LoopManiaWorldController {
 
     public void setStoreController(StoreController controller) {
         this.StoreController = controller;
+    }
+
+    public void setModeStrategy(ModeStrategy strategy) {
+        world.setModeStrategy(strategy);
+    }
+
+    public ModeStrategy getModeStrategy() {
+        return world.getModeStrategy();
     }
 
     /**

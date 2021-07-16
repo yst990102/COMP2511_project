@@ -5,6 +5,7 @@ import org.javatuples.Pair;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import unsw.loopmania.model.Item;
 import unsw.loopmania.model.Entity;
@@ -32,12 +33,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.Integer;
 
-
-enum ITEM_TYPE {
-	SWORD, HELMET, SHIELD, STAKE, STAFF, ARMOUR, THE_ONE_RING, HEALTH_POTION
-}
-
 public class StoreController {
+	public enum ITEM_TYPE {
+		SWORD, HELMET, SHIELD, STAKE, STAFF, ARMOUR, THE_ONE_RING, HEALTH_POTION
+	}
+
 	private Store store;
 
 	private MenuSwitcher gameSwitcher;
@@ -62,6 +62,9 @@ public class StoreController {
 
 	private BooleanProperty isStoreShowed;
 
+	private int numHealthPotionBought;
+	private int numProtectiveGearBought;
+
 	@FXML
 	private Button sellButton;
 
@@ -70,6 +73,9 @@ public class StoreController {
 
 	@FXML
 	private GridPane storeInventory;
+
+	@FXML
+	private FlowPane itemPricePane;
 
 	@FXML
 	private Button backButton;
@@ -127,10 +133,20 @@ public class StoreController {
 	void handleBuyButtonClick(ActionEvent event) {
 		if (isStoreItemSelected) {
 			int numHeroItems = mainController.getHeroItems().size();
+			
 			if (numHeroItems >= 16) {
 				description.setText("Your inventory is full!\nPlease sell some items!");
 				return;
 			}
+
+			if (!mainController.getModeStrategy().satisfyItemBuyConstraint(numHealthPotionBought, numProtectiveGearBought, description, currentlySelectedItemType)) {
+				return;
+			}
+
+			// if (numHealthPotionBought >= 1) {
+			// 	description.setText("You can only purchase 1 health potion in survival mode!");
+			// 	return;
+			// }
 
 			Pair<Integer, Integer> firstAvailableSlot = mainController.getFirstAvailableSlotForItem();
 
@@ -161,24 +177,28 @@ public class StoreController {
 					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
 					selectedItem = shield;
 					unequippedtemView = new ImageView(shieldImage);
+					numProtectiveGearBought++;
 					break;
 				case ARMOUR:
 					BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
 					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
 					selectedItem = armour;
 					unequippedtemView = new ImageView(armourImage);
+					numProtectiveGearBought++;
 					break;
 				case HELMET:
 					BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
 					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
 					selectedItem = helmet;
 					unequippedtemView = new ImageView(helmetImage);
+					numProtectiveGearBought++;
 					break;
 				case HEALTH_POTION:
 					HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
 					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
 					selectedItem = healthPotion;
 					unequippedtemView = new ImageView(healthPotionImage);
+					numHealthPotionBought++;
 				default:
 					break; 
 			}
@@ -200,11 +220,14 @@ public class StoreController {
 		gameSwitcher.switchMenu();
 		mainController.startTimer();
 		mainController.updateNumStoreVisit();
-		isStoreShowed.set(false);;
+		isStoreShowed.set(false);
+		numHealthPotionBought = 0;
+		numProtectiveGearBought = 0;
 	}
 
 	@FXML
 	public void initialize() {
+		itemPricePane.setVisible(false);
 
 		isStoreShowed.addListener((observable, oldValue, newValue) -> {
 			if (newValue.booleanValue() == true)
@@ -328,6 +351,7 @@ public class StoreController {
 			public void handle(MouseEvent event) {
 				currentlySelectedItemType = clickType;
 				currentlySelectedItem = item;
+				itemPricePane.setVisible(true);
 				
 				if (view.getParent().getId().equals("storeInventory")) {
 					isStoreItemSelected = true;
@@ -396,6 +420,10 @@ public class StoreController {
 				}
 			}
 		});
+	}
+
+	private void buyItemConstraint() {
+
 	}
 }
 

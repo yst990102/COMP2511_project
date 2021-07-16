@@ -55,6 +55,7 @@ import unsw.loopmania.model.cards.VillageCard;
 import unsw.loopmania.model.cards.BarracksCard;
 import unsw.loopmania.model.cards.TrapCard;
 import unsw.loopmania.model.cards.CampfireCard;
+import unsw.loopmania.strategy.ModeStrategy;
 
 /**
  * A backend world.
@@ -114,6 +115,8 @@ public class LoopManiaWorld {
      */
     private List<Pair<Integer, Integer>> orderedPath;
 
+    private ModeStrategy modeStrategy;
+
     /**
      * create the world (constructor)
      * 
@@ -133,7 +136,6 @@ public class LoopManiaWorld {
         buildingEntities = new ArrayList<>();
         description = new SimpleStringProperty();
         nthCycle = 0;
-        numStoreVisit = 0;
 
         // set goal
         this.goals = new SimpleStringProperty();
@@ -861,6 +863,14 @@ public class LoopManiaWorld {
         return unequippedInventoryItems;
     }
 
+    public void setModeStrategy(ModeStrategy strategy) {
+        modeStrategy = strategy;
+    }
+
+    public ModeStrategy getModeStrategy() {
+        return modeStrategy;
+    }
+    
     public boolean getIsGoalFinished() {
         return this.IsGoalFinished;
     }

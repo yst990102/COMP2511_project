@@ -44,6 +44,7 @@ public class LoopManiaApplication extends Application {
 
         // load the select mode menu
         SelectModeController selectModeController = new SelectModeController();
+        selectModeController.setMainController(mainController);
         FXMLLoader selectModeLoader = new FXMLLoader(getClass().getResource("../view/SelectModeView.fxml"));
         selectModeLoader.setController(selectModeController);
         Parent selectModeRoot = selectModeLoader.load();

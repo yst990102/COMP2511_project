@@ -61,7 +61,7 @@
                   <Font name="Berlin Sans FB Demi Bold" size="12.0" />
                </font>
             </Text>
-            <FlowPane prefHeight="15.0" prefWidth="95.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="2.0">
+            <FlowPane fx:id="itemPricePane" prefHeight="15.0" prefWidth="95.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="2.0">
                <children>
                   <Label text="Price : " textFill="WHITE">
                      <font>
