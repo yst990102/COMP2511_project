@@ -116,9 +116,10 @@ public class StoreController {
 
 	@FXML
 	void handleSellButtonClick(ActionEvent event) {
-		if (isHeroItemSelected) {
+		if (isHeroItemSelected && currentlySelectedItem != null) {
 			mainController.sellItemFromStore(currentlySelectedItem, currentlySelectedItemPrice);
 			addHeroItems();
+			currentlySelectedItem = null;
 		}
 	}
 
