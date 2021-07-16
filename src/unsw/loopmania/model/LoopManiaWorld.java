@@ -94,7 +94,7 @@ public class LoopManiaWorld {
     // goals
     private GoalComposite maingoal;
     private StringProperty goals;
-    private boolean IsGoalFinished;
+    private boolean isGoalFinished;
 
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
@@ -141,11 +141,11 @@ public class LoopManiaWorld {
         this.goals = new SimpleStringProperty();
         this.maingoal = new GoalComposite(goalObject, this);
         setGoals(maingoal.getContent());
-        this.IsGoalFinished = maingoal.getLogicResult();
+        this.isGoalFinished = maingoal.getLogicResult();
     }
 
     public void updateIsGoalFinished(){
-        this.IsGoalFinished = maingoal.getLogicResult();
+        this.isGoalFinished = maingoal.getLogicResult();
     }
 
     public int getWidth() {
@@ -872,7 +872,7 @@ public class LoopManiaWorld {
     }
     
     public boolean getIsGoalFinished() {
-        return this.IsGoalFinished;
+        return this.isGoalFinished;
     }
-
+    
 }

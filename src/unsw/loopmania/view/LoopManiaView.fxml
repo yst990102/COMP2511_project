@@ -34,11 +34,20 @@
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>
             </Label>
-            <Text fx:id="goal" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="200.0" x="60.0" y="15.0">
-               <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="15.0" />
-               </font>
-            </Text>
+            <FlowPane prefHeight="24.0" prefWidth="324.0" prefWrapLength="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="3.0">
+               <children>
+                  <Text fx:id="goal" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" x="60.0" y="15.0">
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="goalIcon">
+                     <image>
+                        <Image url="@../../../assets/cross.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </FlowPane>
          </children>
       </AnchorPane>
       <!-- HBox is used to stack items horizontally left to right -->

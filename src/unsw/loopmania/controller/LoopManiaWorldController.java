@@ -213,6 +213,9 @@ public class LoopManiaWorldController {
     @FXML
     private Text description;
 
+    @FXML
+    private ImageView goalIcon;
+
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -482,6 +485,7 @@ public class LoopManiaWorldController {
             updateCharacterDescription();
             world.updateIsGoalFinished();
             checkStoreVisit();
+            checkGoalComplete();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 
@@ -1362,6 +1366,14 @@ public class LoopManiaWorldController {
 
     public void updateNumStoreVisit() {
         world.updateNumStoreVisit();
+    }
+
+    public void checkGoalComplete() {
+        if (world.getIsGoalFinished()) {
+            goalIcon.setImage(new Image((new File("src/assets/tick.png")).toURI().toString()));
+            pause();
+            world.setDescription("You win!!!");
+        }
     }
 
     /**
