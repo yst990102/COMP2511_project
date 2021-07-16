@@ -794,6 +794,8 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         Building newBuilding;
 
+                        System.out.println(draggableType);
+
                         switch (draggableType) {
                         case VAMPIRE_CASTLE_CARD:
                             if (!targetPosInPath) {
@@ -931,7 +933,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Helmet helmet = new Helmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedHelmet(helmet);
                                 updateCharacterDescription();
                             } else {
@@ -1438,11 +1440,29 @@ public class LoopManiaWorldController {
         return world.getHeroItems();
     }
 
-    public void buyItemFromStore(Item item, ImageView view, int price) {
+    public void buyItemFromStore(Item item, ImageView view, int price) {        
+        if (item.getClass().equals(BasicHelmet.class)) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(BasicShield.class)) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(BasicArmour.class)) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.ARMOUR, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(Sword.class)) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.SWORD, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(Stake.class)) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(Staff.class)) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.STAFF, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(HealthPotion.class)) {
+            addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
+            view.setCursor(Cursor.HAND);
+        } else if (item.getClass().equals(TheOneRing.class)) {
+			addDragEventHandlers(view, DRAGGABLE_TYPE.THE_ONE_RING, unequippedInventory, equippedItems);
+		}
+
         addEntity(item, view);
-        world.addItemFromStore(item);
         unequippedInventory.getChildren().add(view);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
+        world.addItemFromStore(item);
         world.getCharacter().setGold(world.getCharacter().getGold() - price);
     }
 
