@@ -49,11 +49,14 @@ Vampire
 #### 5. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
 
 
-#### 6. There are three ways to win the game
-- Complete 50 cycles
-- Complete 30 cycles AND (amassing 5000 Gold OR obtaining 5000 experience points)
-- Amass 8000 Gold AND obtain 3000 experience points
+#### 6. The goal (How to win the game)
+Three basic goals
+- Complete 30 cycles
+- Amass 88888 Gold
+- Obtain 99999 XP
 
+Combination
+- Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP)
 
 
 ## Items Rules:
