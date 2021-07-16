@@ -458,7 +458,8 @@ public class LoopManiaWorldController {
                         : currentPlayer.getDressedShield().getClass().getSimpleName())
                 + "\n" + "Helmet : " + ((currentPlayer.getDressedHelmet() == null) ? " no helmet "
                         : currentPlayer.getDressedHelmet().getClass().getSimpleName())
-                + "\n" + "Bag : " + world.getCharacter().getBag();
+                + "\n" + "Bag : " + world.getCharacter().getBag()
+                + "\n" + "IsGoalFinished : " + world.getIsGoalFinished();
 
         characterdescription.setText(characterProperty);
     }
@@ -478,6 +479,7 @@ public class LoopManiaWorldController {
             world.runTickMoves();
             world.updateNthCycle();
             updateCharacterDescription();
+            world.updateIsGoalFinished();
             checkStoreVisit();
 
             List<Enemy> defeatedEnemies = world.runBattles();
