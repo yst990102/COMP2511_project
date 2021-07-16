@@ -358,19 +358,19 @@ public class LoopManiaWorld {
 
         Card card = null;
 
-        if (randomInt < 6) {
+        if (randomInt < 5) {
             card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 12) {
+        } else if (randomInt < 10) {
             card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 18) {
+        } else if (randomInt < 15) {
             card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 24) {
+        } else if (randomInt < 20) {
             card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 30) {
+        } else if (randomInt < 25) {
             card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 36) {
+        } else if (randomInt < 30) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 42) {
+        } else if (randomInt < 35) {
             card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         }
 
