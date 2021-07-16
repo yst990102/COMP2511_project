@@ -126,6 +126,8 @@ public class StoreController {
 			mainController.sellItemFromStore(currentlySelectedItem, currentlySelectedItemPrice);
 			addHeroItems();
 			currentlySelectedItem = null;
+			description.setText("");
+			itemPricePane.setVisible(false);
 		}
 	}
 
@@ -142,11 +144,6 @@ public class StoreController {
 			if (!mainController.getModeStrategy().satisfyItemBuyConstraint(numHealthPotionBought, numProtectiveGearBought, description, currentlySelectedItemType)) {
 				return;
 			}
-
-			// if (numHealthPotionBought >= 1) {
-			// 	description.setText("You can only purchase 1 health potion in survival mode!");
-			// 	return;
-			// }
 
 			Pair<Integer, Integer> firstAvailableSlot = mainController.getFirstAvailableSlotForItem();
 
