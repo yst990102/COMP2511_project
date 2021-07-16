@@ -17,5 +17,6 @@ public class TheOneRing extends RareItem {
         +"    If the Character is killed, it respawns with full health up to a single time";
 
         setDescription(description);
+        setPrice(500);
     }    
 }

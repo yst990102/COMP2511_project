@@ -51,6 +51,7 @@ public class LoopManiaApplication extends Application {
         // load the store
         StoreController storeController = new StoreController();
         storeController.setMainController(mainController);
+        mainController.setStoreController(storeController);
         FXMLLoader storeLoader = new FXMLLoader(getClass().getResource("../view/StoreView.fxml"));
         storeLoader.setController(storeController);
         Parent storeRoot =  storeLoader.load();

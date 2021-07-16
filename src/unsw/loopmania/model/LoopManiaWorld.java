@@ -510,7 +510,7 @@ public class LoopManiaWorld {
      * remove an item from the unequipped inventory
      * @param item item to be removed
      */
-    private void removeUnequippedInventoryItem(Entity item) {
+    public void removeUnequippedInventoryItem(Entity item) {
         item.destroy();
         unequippedInventoryItems.remove(item);
     }
@@ -847,5 +847,9 @@ public class LoopManiaWorld {
 
     public void addItemFromStore(Item entity) {
         unequippedInventoryItems.add(entity);
+    }
+
+    public List<Item> getHeroItems() {
+        return unequippedInventoryItems;
     }
 }

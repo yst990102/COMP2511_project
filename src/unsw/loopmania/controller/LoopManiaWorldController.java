@@ -224,6 +224,7 @@ public class LoopManiaWorldController {
 
     private boolean isPaused;
     private LoopManiaWorld world;
+    private StoreController StoreController;
 
     /**
      * runs the periodic game logic - second-by-second moving of character through
@@ -1349,6 +1350,7 @@ public class LoopManiaWorldController {
         boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
         if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
             pause();
+            StoreController.setIsStoreShowed();
             storeSwitcher.switchMenu();
         }
     }
@@ -1432,6 +1434,10 @@ public class LoopManiaWorldController {
         return world.getFirstAvailableSlotForItem();
     }
 
+    public List<Item> getHeroItems() {
+        return world.getHeroItems();
+    }
+
     public void buyItemFromStore(Item item, ImageView view, int price) {
         addEntity(item, view);
         world.addItemFromStore(item);
@@ -1440,8 +1446,17 @@ public class LoopManiaWorldController {
         world.getCharacter().setGold(world.getCharacter().getGold() - price);
     }
 
+    public void sellItemFromStore(Entity item, int price) {
+        world.removeUnequippedInventoryItem(item);
+        world.getCharacter().setGold(world.getCharacter().getGold() + price);
+    }
+
     public LoopManiaWorld getWolrd() {
         return world;
+    }
+
+    public void setStoreController(StoreController controller) {
+        this.StoreController = controller;
     }
 
     /**
