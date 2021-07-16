@@ -59,6 +59,7 @@ Combination
 - Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP)
 
 
+
 ## Items Rules:
 
 
@@ -87,6 +88,7 @@ Helmet
 - Add Defence: 2
 - Decrease Attack (Character): 2
 - Decrease Attack (enemy): 2
+
 
 #### 2. A health potion will heal 50 HP.
 
@@ -147,7 +149,7 @@ Campfire
 ## Selling Rules:
 
 
-#### 1. The price of each equipment is fixed when selling or purchasing.
+#### 1. The price of each item is fixed when selling or purchasing.
 
 - Sword: $150
 
@@ -163,9 +165,11 @@ Campfire
 
 - Health potion: $200
 
+- The One Ring: $500
+
 
 #### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
 
 
-#### 3. When the old equipment is replaced by the new one, the Character receives $100 Gold and 100 XP.
+#### 3. When the old item is replaced by the new one, the Character receives $100 Gold and 100 XP.
 
