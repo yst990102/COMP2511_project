@@ -6,6 +6,6 @@ public class Soldier extends FriendlyForce {
 
     public Soldier() {
         setHp(10);
-        setAttack(4);
+        setAttack(1);
     }
 }
