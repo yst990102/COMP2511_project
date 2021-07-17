@@ -6,15 +6,20 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import unsw.loopmania.controller.StoreController.ITEM_TYPE;
 import unsw.loopmania.model.LoopManiaWorld;
 
 import unsw.loopmania.model.rareItems.TheOneRing;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
 import unsw.loopmania.model.equipments.armours.BasicArmour;
 import unsw.loopmania.model.potions.HealthPotion;
 import unsw.loopmania.model.equipments.shields.BasicShield;
 import unsw.loopmania.model.equipments.helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.weapons.*;
+import unsw.loopmania.strategy.*;
+import unsw.loopmania.controller.*;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -22,6 +27,9 @@ import unsw.loopmania.model.equipments.weapons.*;
  * A clickable "Run Test" link should appear if you have installed the Java Extension Pack properly.
  */
 public class TrivialTest {
+
+    // @FXML
+    // Text description;
 
     @Test
     public void TestTheOneRing() {
@@ -83,5 +91,29 @@ public class TrivialTest {
         assertEquals(b.getAttackToVampire(), 8);
 
     }
+
+    @Test
+    public void TestMode() {
+        SurvivalModeStrategy a = new SurvivalModeStrategy();
+        BerserkerModeStrategy b = new BerserkerModeStrategy();
+        StandardModeStrategy c = new StandardModeStrategy();
+
+        Text description = new Text("");
+
+        assertEquals(a.satisfyItemBuyConstraint(1, 0, description, ITEM_TYPE.HEALTH_POTION), false);
+        assertEquals(a.satisfyItemBuyConstraint(0, 0, description, ITEM_TYPE.HEALTH_POTION), true);
+        assertEquals(a.satisfyItemBuyConstraint(0, 2, description, ITEM_TYPE.ARMOUR), true);
+        
+        assertEquals(b.satisfyItemBuyConstraint(0, 1, description, ITEM_TYPE.SHIELD), false);
+        assertEquals(b.satisfyItemBuyConstraint(0, 1, description, ITEM_TYPE.HELMET), false);
+        assertEquals(b.satisfyItemBuyConstraint(0, 1, description, ITEM_TYPE.ARMOUR), false);
+        assertEquals(b.satisfyItemBuyConstraint(0, 0, description, ITEM_TYPE.ARMOUR), true);
+        assertEquals(b.satisfyItemBuyConstraint(1, 1, description, ITEM_TYPE.HEALTH_POTION), true);
+
+        assertEquals(c.satisfyItemBuyConstraint(1, 1, description, ITEM_TYPE.ARMOUR), true);
+
+
+    }
+
 
 }
