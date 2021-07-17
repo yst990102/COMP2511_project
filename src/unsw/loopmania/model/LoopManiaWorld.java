@@ -240,7 +240,7 @@ public class LoopManiaWorld {
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
-                fightEnemy(e);
+                fight(e);
                 if (e.hp <= 0) {
                     defeatedEnemies.add(e);
                 }
@@ -255,121 +255,153 @@ public class LoopManiaWorld {
         return defeatedEnemies;
     }
 
-    public void fightEnemy(Enemy enemy) {
+    public void CharacterAttackEnemy(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
+        // character attack enemy
+        enemy.hp -= character.getATK();
+        writer.write(("=== Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
+
+    }
+
+    public void EnemyAttackCharacter(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
+        // enemy attack character
+        int beforeHP = character.getHP();
+
+        int HPLoss = 0;
+        if (enemy.getClass().equals(Slug.class)) { // slug attack character
+            writer.write(("=== slug attack character." + "\n").getBytes());
+
+            int damage = 0;
+            int enemyAttack = 0;
+
+            if (character.getDressedHelmet() != null) {
+                enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
+                writer.write(("character have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
+            } else {
+                enemyAttack = enemy.getAttack();
+                writer.write(("character doesn't have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
+            }
+
+            damage = enemyAttack - character.getDEF();
+
+            if (character.getDressedArmour() != null) {
+                damage *= (1 - (Double
+                        .valueOf(Double.valueOf(character.getDressedArmour().getDamageReducePercentage()) / 100)));
+                writer.write(("character have armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+            }
+
+            writer.write(("final damage == " + damage + "\n").getBytes());
+
+            HPLoss = (damage < 0) ? 0 : damage;
+            character.setHP(character.getHP() - HPLoss);
+
+            int afterHP = character.getHP();
+            writer.write(("After slug attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
+
+        } else if (enemy.getClass().equals(Zombie.class)) { // zombie attack character
+            writer.write(("=== zombie attack character." + "\n").getBytes());
+
+            int damage = 0;
+            int enemyAttack = 0;
+
+            if (character.getDressedHelmet() != null) {
+                enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
+                writer.write(("character have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
+            } else {
+                enemyAttack = enemy.getAttack();
+                writer.write(("character doesn't have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
+            }
+
+            damage = enemyAttack - character.getDEF();
+
+            if (character.getDressedArmour() != null) {
+                damage *= (1 - (Double
+                        .valueOf(Double.valueOf(character.getDressedArmour().getDamageReducePercentage()) / 100)));
+                writer.write(("character have armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+            }
+
+            writer.write(("final damage == " + damage + "\n").getBytes());
+
+            HPLoss = (damage < 0) ? 0 : damage;
+            character.setHP(character.getHP() - HPLoss);
+
+            int afterHP = character.getHP();
+            writer.write(("After zombie attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
+
+        } else if (enemy.getClass().equals(Vampire.class)) { // vampire attack character
+            writer.write(("=== vampire attack character." + "\n").getBytes());
+
+            int damage = 0;
+
+            int attackTimes = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
+
+            writer.write(("total attack times == " + attackTimes + "\n").getBytes());
+
+            while (attackTimes > 0) {
+
+                int enemyAttack = 0;
+                int criticalPercentageDecrease = 0;
+
+                if (character.getDressedShield() != null) {
+                    criticalPercentageDecrease = character.getDressedShield().getCriticalPercentageDecrease();
+                    writer.write(("character have shield, critical percentage decrease by " + criticalPercentageDecrease
+                            + "%" + "\n").getBytes());
+                }
+
+                if (character.getDressedHelmet() != null) {
+                    enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease)
+                            - character.getDressedHelmet().getEnemyAttackDecrease();
+                    writer.write(("character have helmet, enemyAttack == " + enemyAttack + "\n").getBytes());
+                } else {
+                    enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease);
+                    writer.write(("character have no armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+                }
+
+                damage = enemyAttack - character.getDEF();
+
+                if (character.getDressedArmour() != null) {
+                    damage *= (1 - (Double
+                            .valueOf(Double.valueOf(character.getDressedArmour().getDamageReducePercentage()) / 100)));
+                    writer.write(("character have armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+                }
+
+                writer.write((attackTimes + "'s time damage == " + damage + "\n").getBytes());
+
+                HPLoss = (damage < 0) ? 0 : damage;
+                character.setHP(character.getHP() - HPLoss);
+                writer.write((attackTimes + "'s time HPLoss == " + HPLoss + "\n").getBytes());
+
+                attackTimes--;
+            }
+
+            int afterHP = character.getHP();
+            writer.write(("After Vampire attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
+
+        }
+    }
+
+    public void fight(Enemy enemy) {
         FileOutputStream writer;
         try {
             writer = new FileOutputStream("fight.txt", true);
             writer.write(("Battle between : character ==== " + enemy + "\n").getBytes());
 
             while (true) {
-                // character attack enemy
-                enemy.hp -= character.getATK();
-                writer.write(("Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
+                // Stage 01 : Character Attack Enemy
+                CharacterAttackEnemy(character, enemy, writer);
                 // if enemy died, break
                 if (enemy.hp <= 0) {
                     writer.write(("enemy died!!" + "\n\n").getBytes());
                     break;
                 }
 
-                // enemy attack character
-                int HPLoss = 0;
-                if (enemy.getClass().equals(Slug.class)) { // slug attack character
-                    writer.write(("slug attack character." + "\n").getBytes());
-
-                    int damage = 0;
-                    int enemyAttack = 0;
-
-                    if (character.getDressedHelmet() != null) {
-                        enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
-                        writer.write(("character have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
-                    } else {
-                        enemyAttack = enemy.getAttack();
-                        writer.write(
-                                ("character doesn't have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
-                    }
-
-                    damage = enemyAttack - character.getDEF();
-                    writer.write(("final damage == " + damage + "\n").getBytes());
-
-                    HPLoss = (damage < 0) ? 0 : damage;
-
-                } else if (enemy.getClass().equals(Zombie.class)) { // zombie attack character
-                    writer.write(("zombie attack character." + "\n").getBytes());
-
-                    int damage = 0;
-                    int enemyAttack = 0;
-
-                    if (character.getDressedHelmet() != null) {
-                        enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
-                        writer.write(("character have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
-                    } else {
-                        enemyAttack = enemy.getAttack();
-                        writer.write(
-                                ("character doesn't have helmet. enemyAttack == " + enemyAttack + "\n").getBytes());
-
-                    }
-
-                    damage = enemyAttack - character.getDEF();
-                    writer.write(("final damage == " + damage + "\n").getBytes());
-
-                    HPLoss = (damage < 0) ? 0 : damage;
-                    writer.write(("final HPLoss == " + HPLoss + "\n").getBytes());
-
-                } else if (enemy.getClass().equals(Vampire.class)) { // vampire attack character
-                    writer.write(("vampire attack character." + "\n").getBytes());
-
-                    int damage = 0;
-
-                    int attackTimes = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
-
-                    writer.write(("total attack times == " + attackTimes + "\n").getBytes());
-
-                    while (attackTimes > 0) {
-
-                        int enemyAttack = 0;
-                        int criticalPercentageDecrease = 0;
-
-                        if (character.getDressedShield() != null) {
-                            criticalPercentageDecrease = character.getDressedShield().getCriticalPercentageDecrease();
-                            writer.write(("character have shield, critical percentage decrease by "
-                                    + criticalPercentageDecrease + "%" + "\n").getBytes());
-                        }
-
-                        if (character.getDressedHelmet() != null) {
-                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease, writer)
-                                    - character.getDressedHelmet().getEnemyAttackDecrease();
-                        } else {
-                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease, writer);
-                        }
-
-                        if (character.getDressedArmour() != null) {
-                            enemyAttack *= (1
-                                    - Double.valueOf(character.getDressedArmour().getDamageReducePercentage() / 100));
-                        }
-
-                        writer.write(("after helmet and armour check , final enemyAttack == " + enemyAttack + "\n")
-                                .getBytes());
-
-                        damage += enemyAttack - character.getDEF();
-
-                        writer.write(("final damage == " + damage + "\n").getBytes());
-
-                        attackTimes--;
-                    }
-
-                    HPLoss = ((damage < 0) ? 0 : damage) * attackTimes;
-                    writer.write(("final HPLoss == " + HPLoss + "\n").getBytes());
-                }
-
-                character.setHP(character.getHP() - HPLoss);
-                writer.write(
-                        (enemy.getClass().getName() + " attack character, character lose " + HPLoss + " HP." + "\n")
-                                .getBytes());
-
+                // Stage 02 : Enemy Attack Character
+                EnemyAttackCharacter(character, enemy, writer);
+                // if character died, break
                 if (character.getHP() <= 0) {
                     writer.write(("Character died!!" + "\n\n").getBytes());
                     break;
                 }
+
             }
 
             writer.close();

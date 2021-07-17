@@ -485,7 +485,7 @@ public class LoopManiaWorldController {
             updateCharacterDescription();
             world.updateIsGoalFinished();
             checkStoreVisit();
-            checkGoalComplete();
+            // checkGoalComplete();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 

@@ -41,11 +41,10 @@ public class Vampire extends Enemy {
         }
     }
 
-    public int getAttack(int critical_percentage_decrease, FileOutputStream writer) throws IOException {
+    public int getAttack(int critical_percentage_decrease) {
         int critical_random = new Random().nextInt(100);
         if (critical_random < (criticalPercentage * (1 - Double.valueOf(critical_percentage_decrease) / 100))) {
             // critical bite
-            writer.write(("vampire critical bite!!!!!").getBytes());
             return attack + criticalExtraDamage;
         } else {
             return attack;
