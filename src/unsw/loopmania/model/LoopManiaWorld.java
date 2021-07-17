@@ -144,7 +144,7 @@ public class LoopManiaWorld {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
-    public void updateIsGoalFinished(){
+    public void updateIsGoalFinished() {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
@@ -274,59 +274,82 @@ public class LoopManiaWorld {
                 // enemy attack character
                 int HPLoss = 0;
                 if (enemy.getClass().equals(Slug.class)) { // slug attack character
+                    writer.write(("slug attack character.").getBytes());
+
                     int damage = 0;
                     int enemyAttack = 0;
 
                     if (character.getDressedHelmet() != null) {
                         enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
+                        writer.write(("character have helmet. enemyAttack == " + enemyAttack).getBytes());
                     } else {
                         enemyAttack = enemy.getAttack();
+                        writer.write(("character doesn't have helmet. enemyAttack == " + enemyAttack).getBytes());
                     }
 
                     damage = enemyAttack - character.getDEF();
+                    writer.write(("final damage == " + damage).getBytes());
 
                     HPLoss = (damage < 0) ? 0 : damage;
 
                 } else if (enemy.getClass().equals(Zombie.class)) { // zombie attack character
+                    writer.write(("zombie attack character.").getBytes());
+
                     int damage = 0;
                     int enemyAttack = 0;
 
                     if (character.getDressedHelmet() != null) {
                         enemyAttack = enemy.getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
+                        writer.write(("character have helmet. enemyAttack == " + enemyAttack).getBytes());
                     } else {
                         enemyAttack = enemy.getAttack();
+                        writer.write(("character doesn't have helmet. enemyAttack == " + enemyAttack).getBytes());
+
                     }
 
                     damage = enemyAttack - character.getDEF();
+                    writer.write(("final damage == " + damage).getBytes());
 
                     HPLoss = (damage < 0) ? 0 : damage;
 
                 } else if (enemy.getClass().equals(Vampire.class)) { // vampire attack character
+                    writer.write(("vampire attack character.").getBytes());
+
                     int damage = 0;
 
                     int attackTimes = ThreadLocalRandom.current().nextInt(1, 4); // attack 1-3 times everytime
+
+                    writer.write(("total attack times == " + attackTimes).getBytes());
 
                     while (attackTimes > 0) {
 
                         int enemyAttack = 0;
                         int criticalPercentageDecrease = 0;
+
                         if (character.getDressedShield() != null) {
                             criticalPercentageDecrease = character.getDressedShield().getCriticalPercentageDecrease();
+                            writer.write(("character have shield, critical percentage decrease by "
+                                    + criticalPercentageDecrease + "%").getBytes());
                         }
 
-                        if (character.getDressedShield() != null) {
-                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease)
+                        if (character.getDressedHelmet() != null) {
+                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease, writer)
                                     - character.getDressedHelmet().getEnemyAttackDecrease();
                         } else {
-                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease);
+                            enemyAttack = ((Vampire) enemy).getAttack(criticalPercentageDecrease, writer);
                         }
 
-                        if (character.getDressedShield() != null) {
+                        if (character.getDressedArmour() != null) {
                             enemyAttack *= (1
                                     - Double.valueOf(character.getDressedArmour().getDamageReducePercentage() / 100));
                         }
 
+                        writer.write(
+                                ("after helmet and armour check , final enemyAttack == " + enemyAttack).getBytes());
+
                         damage += enemyAttack - character.getDEF();
+
+                        writer.write(("final damage == " + damage).getBytes());
 
                         attackTimes--;
                     }
@@ -335,7 +358,10 @@ public class LoopManiaWorld {
                 }
 
                 character.setHP(character.getHP() - HPLoss);
-                writer.write(("Enemy attack character, character lose " + HPLoss + " HP." + "\n").getBytes());
+                writer.write(
+                        (enemy.getClass().getName() + " attack character, character lose " + HPLoss + " HP." + "\n")
+                                .getBytes());
+
                 if (character.getHP() <= 0) {
                     writer.write(("Character died!!" + "\n").getBytes());
                     break;
@@ -870,9 +896,9 @@ public class LoopManiaWorld {
     public ModeStrategy getModeStrategy() {
         return modeStrategy;
     }
-    
+
     public boolean getIsGoalFinished() {
         return this.isGoalFinished;
     }
-    
+
 }
