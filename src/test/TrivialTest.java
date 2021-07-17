@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import unsw.loopmania.model.LoopManiaWorld;
 
+import unsw.loopmania.model.rareItems.TheOneRing;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
  * you should setup additional test classes in a similar fashion, aiming to achieve high coverage.
@@ -25,4 +28,13 @@ public class TrivialTest {
         // assertEquals(d.getWidth(), 1);
         assertEquals("a", "a");
     }
+
+    @Test
+    public void TestTheOneRing() {
+        
+        TheOneRing a = new TheOneRing(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+
+        assertEquals(a.getPrice(), 500);
+    }  
+
 }
