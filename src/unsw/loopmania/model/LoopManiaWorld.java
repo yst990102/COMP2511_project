@@ -267,7 +267,7 @@ public class LoopManiaWorld {
                 writer.write(("Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
                 // if enemy died, break
                 if (enemy.hp <= 0) {
-                    writer.write(("enemy died!!" + "\n").getBytes());
+                    writer.write(("enemy died!!" + "\n\n").getBytes());
                     break;
                 }
 
@@ -313,6 +313,7 @@ public class LoopManiaWorld {
                     writer.write(("final damage == " + damage + "\n").getBytes());
 
                     HPLoss = (damage < 0) ? 0 : damage;
+                    writer.write(("final HPLoss == " + HPLoss + "\n").getBytes());
 
                 } else if (enemy.getClass().equals(Vampire.class)) { // vampire attack character
                     writer.write(("vampire attack character." + "\n").getBytes());
@@ -357,6 +358,7 @@ public class LoopManiaWorld {
                     }
 
                     HPLoss = ((damage < 0) ? 0 : damage) * attackTimes;
+                    writer.write(("final HPLoss == " + HPLoss + "\n").getBytes());
                 }
 
                 character.setHP(character.getHP() - HPLoss);
@@ -365,7 +367,7 @@ public class LoopManiaWorld {
                                 .getBytes());
 
                 if (character.getHP() <= 0) {
-                    writer.write(("Character died!!" + "\n").getBytes());
+                    writer.write(("Character died!!" + "\n\n").getBytes());
                     break;
                 }
             }
