@@ -11,15 +11,19 @@ public class GoalComposite extends GoalComponent {
     GoalComponent rightComponent;
 
     public GoalComposite(JSONObject goal, LoopManiaWorld world) {
-        this.goal = goal.getString("goal");
+        if (goal.has("goal")) {
+            this.goal = goal.getString("goal");
+        }
         this.world = world;
 
         if (goal.has("quantity")) {
             leftComponent = new GoalLeaf(goal, world);
             rightComponent = null;
         } else {
-            leftComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(0), world);
-            rightComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(1), world);
+            if (goal.has("subgoals")) {
+                leftComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(0), world);
+                rightComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(1), world);
+            }
         }
     }
 
@@ -71,6 +75,10 @@ public class GoalComposite extends GoalComponent {
 
     @Override
     public boolean getLogicResult() {
+        if (this.goal == null) {
+            return false;
+        }
+
         boolean leftResult = (leftComponent != null) ? leftComponent.getLogicResult() : true;
         boolean rightResult = (rightComponent != null) ? rightComponent.getLogicResult() : true;
 
