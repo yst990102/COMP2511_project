@@ -12,6 +12,9 @@ import unsw.loopmania.model.rareItems.TheOneRing;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.equipments.armours.BasicArmour;
 import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.equipments.shields.BasicShield;
+import unsw.loopmania.model.equipments.helmets.BasicHelmet;
+import unsw.loopmania.model.equipments.weapons.*;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -19,17 +22,6 @@ import unsw.loopmania.model.potions.HealthPotion;
  * A clickable "Run Test" link should appear if you have installed the Java Extension Pack properly.
  */
 public class TrivialTest {
-    @Test
-    public void blahTest() {
-        assertEquals("a", "a");
-    }
-
-    @Test
-    public void blahTest2() {
-        // LoopManiaWorld d = new LoopManiaWorld(1, 2, new ArrayList<>());
-        // assertEquals(d.getWidth(), 1);
-        assertEquals("a", "a");
-    }
 
     @Test
     public void TestTheOneRing() {
@@ -55,7 +47,41 @@ public class TrivialTest {
 
         assertEquals(a.getPrice(), 200);
         assertEquals(a.getHealthRecovered(), 50);
+    }
 
+    @Test
+    public void TestBasicShield() {
+        
+        BasicShield a = new BasicShield(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+
+        assertEquals(a.getDefence(), 2);
+        assertEquals(a.getCriticalPercentageDecrease(), 60);
+    }
+
+    @Test
+    public void TestBasicHelmet() {
+        
+        BasicHelmet a = new BasicHelmet(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+
+        assertEquals(a.getDefence(), 2);
+        assertEquals(a.getAttack(), -2);
+        assertEquals(a.getEnemyAttackDecrease(), 2);
+    }
+
+    @Test
+    public void TestWeapon() {
+        
+        Staff a = new Staff(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        Stake b = new Stake(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        Sword c = new Sword(new SimpleIntegerProperty(1), new SimpleIntegerProperty(3));
+
+        assertEquals(a.getAttack(), 2);
+        assertEquals(b.getAttack(), 3);
+        assertEquals(b.getAttackToVampire(), 8);
+
+        assertEquals(c.getAttack(), 5);
+        assertEquals(b.getAttackToVampire(), 8);
 
     }
+
 }
