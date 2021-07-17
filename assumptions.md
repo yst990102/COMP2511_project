@@ -59,6 +59,10 @@ Combination
 - Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP)
 
 
+### 7. Default attributes of a soldier are listed below:
+Soldier (produced from Barracks)
+- HP: 10
+- Attack: 1
 
 ## Items Rules:
 
