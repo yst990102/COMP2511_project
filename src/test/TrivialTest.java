@@ -10,6 +10,8 @@ import unsw.loopmania.model.LoopManiaWorld;
 
 import unsw.loopmania.model.rareItems.TheOneRing;
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.model.equipments.armours.BasicArmour;
+import unsw.loopmania.model.potions.HealthPotion;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -35,6 +37,25 @@ public class TrivialTest {
         TheOneRing a = new TheOneRing(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
 
         assertEquals(a.getPrice(), 500);
-    }  
+    }
 
+    @Test
+    public void TestBasicArmour() {
+        
+        BasicArmour a = new BasicArmour(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+
+        assertEquals(a.getDefence(), 5);
+        assertEquals(a.getDamageReducePercentage(), 50);
+    }
+
+    @Test
+    public void TestHealthPotion() {
+        
+        HealthPotion a = new HealthPotion(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+
+        assertEquals(a.getPrice(), 200);
+        assertEquals(a.getHealthRecovered(), 50);
+
+
+    }
 }
