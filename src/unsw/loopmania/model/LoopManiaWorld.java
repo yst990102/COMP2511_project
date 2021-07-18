@@ -442,7 +442,7 @@ public class LoopManiaWorld {
             card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 30) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else {
+        } else if (randomInt < 35) {
             card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         }
 
@@ -900,6 +900,8 @@ public class LoopManiaWorld {
                 for (Enemy e : enemies) {
                     if (b.getX() == e.getX() && b.getY() == e.getY()) {
                         e.setHP(e.getHP() - trap.getTrapAttack());
+                        buildingEntities.remove(b);
+                        b.destroy();
                     }
                 }
             }
