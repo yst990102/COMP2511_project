@@ -16,12 +16,9 @@ public class Zombie extends Enemy {
         this.speed = 2;
         this.battleRadius = 3;
         this.supportRadius = 3;
-
         this.criticalPercentage = 20;
-
         this.goldWhenKilled = 100;
         this.expWhenKilled = 200;
-
     }
 
     @Override
