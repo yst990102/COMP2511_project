@@ -51,4 +51,15 @@ public class Vampire extends Enemy {
         }
     }
 
+    @Override
+    public void setHP(int newHP) {
+        if (newHP > 25) {
+            this.hp = 25;
+        }
+        if (newHP < 0 ) {
+            this.hp = 0;
+        }
+        this.hp = newHP;
+    }
+
 }

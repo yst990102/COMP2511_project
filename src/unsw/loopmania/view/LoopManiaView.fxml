@@ -41,7 +41,7 @@
                         <Font name="Berlin Sans FB Demi Bold" size="15.0" />
                      </font>
                   </Text>
-                  <ImageView fx:id="goalIcon">
+                  <ImageView fx:id="goalIcon" translateX="10.0">
                      <image>
                         <Image url="@../../../assets/cross.png" />
                      </image>
@@ -244,7 +244,7 @@
                      <tooltip>
                         <Tooltip fx:id="pauseButtondescription" text="PauseButtonDescription" />
                      </tooltip></Button>
-                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Exit" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="15.0">
+                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Main Menu" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="15.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>

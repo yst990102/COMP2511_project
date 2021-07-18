@@ -24,4 +24,15 @@ public class Zombie extends Enemy {
 
     }
 
+    @Override
+    public void setHP(int newHP) {
+        if (newHP > 20) {
+            this.hp = 20;
+        }
+        if (newHP < 0 ) {
+            this.hp = 0;
+        }
+        this.hp = newHP;
+    }
+
 }

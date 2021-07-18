@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Iterator;
 import java.lang.Integer;
 import java.lang.Math;
 
@@ -226,6 +227,7 @@ public class LoopManiaWorld {
 
         enemy.destroy();
         enemies.remove(enemy);
+        setDescription("You killed a " + enemy.getClass().getSimpleName().toLowerCase() + ".");
     }
 
     /**
@@ -241,6 +243,7 @@ public class LoopManiaWorld {
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
                 fight(e);
+                setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
                 if (e.hp <= 0) {
                     defeatedEnemies.add(e);
                 }
@@ -442,7 +445,7 @@ public class LoopManiaWorld {
             card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 30) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else {
+        } else if (randomInt < 35) {
             card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         }
 
@@ -778,6 +781,8 @@ public class LoopManiaWorld {
     public void updateNthCycle() {
         if (character.getX() == 0 && character.getY() == 0) {
             nthCycle++;
+            updateVampireCastleCycle();
+            setDescription("You have completed " + nthCycle + (nthCycle > 1 ? " cycles." : " cycle."));
         }
     }
 
@@ -828,23 +833,30 @@ public class LoopManiaWorld {
         return tilePosAdjacentToPath;
     }
 
+    private void updateVampireCastleCycle() {
+        for (int i = 0; i < buildingEntities.size(); i++) {
+            if (buildingEntities.get(i) instanceof VampireCastleBuilding) {
+                VampireCastleBuilding vampireCastle = (VampireCastleBuilding) buildingEntities.get(i);
+                vampireCastle.updateCycle();
+            }
+        }
+    }
+
     public List<Vampire> checkVampireSpawn() {
         ArrayList<Vampire> vampires = new ArrayList<>();
-        for (Building b : buildingEntities) {
-            if (b instanceof VampireCastleBuilding) {
-                if ((getNthCycle() + 1) % 5 == 0 && character.getX() == 0 && character.getY() == 0) {
-                    Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
-                            Integer.valueOf(b.getY()));
+        for (int i = 0; i < buildingEntities.size(); i++) {
+            if (buildingEntities.get(i) instanceof VampireCastleBuilding) {
+                VampireCastleBuilding vampireCastle = (VampireCastleBuilding) buildingEntities.get(i);
+                if (vampireCastle.canSpawnVampire(character)) {
+                    Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(vampireCastle.getX()),
+                    Integer.valueOf(vampireCastle.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(vampireBuildingPos);
                     
-                    for (int i = 0; i < 3; i++) {
-                        int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
-                        int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
-                        Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
-                        enemies.add(vampire);
-                        vampires.add(vampire);
-    
-                    }
+                    int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
+                    int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
+                    Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
+                    enemies.add(vampire);
+                    vampires.add(vampire);              
                 }
             }
         }
@@ -859,11 +871,14 @@ public class LoopManiaWorld {
                     Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
                             Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(zombieBuildingPos);
-                    int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
-                    int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
-                    Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
-                    enemies.add(zombie);
-                    zombies.add(zombie);
+
+                    for (int j = 0; j < 2; j++) {
+                        int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
+                        int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
+                        Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
+                        enemies.add(zombie);
+                        zombies.add(zombie);
+                    }
                 }
             }
         }
@@ -893,13 +908,30 @@ public class LoopManiaWorld {
     }
 
     public void checkEnemyPassTrap() {
-        for (Building b : buildingEntities) {
+        Iterator<Building> buildingIterator = buildingEntities.iterator();
+        Building b;
+        Enemy e;
+
+        while (buildingIterator.hasNext()) {
+            b = buildingIterator.next();
             if (b instanceof TrapBuilding) {
                 TrapBuilding trap = new TrapBuilding(new SimpleIntegerProperty(b.getX()),
                 new SimpleIntegerProperty(b.getY()));
-                for (Enemy e : enemies) {
+                Iterator<Enemy> enemyIterator  = enemies.iterator();
+                while (enemyIterator.hasNext()) {
+                    e = enemyIterator.next();
                     if (b.getX() == e.getX() && b.getY() == e.getY()) {
+                        // enemy is attacked by trap
                         e.setHP(e.getHP() - trap.getTrapAttack());
+                        // if enemy is killed
+                        if (e.getHP() == 0) {
+                            character.setGold(character.getGold()+ e.goldWhenKilled);
+                            character.setXP(character.getXP() + e.expWhenKilled);
+                            e.destroy();
+                            enemyIterator.remove();
+                        }
+                        b.destroy();
+                        buildingIterator.remove();
                     }
                 }
             }
@@ -907,14 +939,29 @@ public class LoopManiaWorld {
     }
 
     public void checkEnemyInTowerRadius() {
-        for (Building b : buildingEntities) {
+        Iterator<Building> buildingIterator = buildingEntities.iterator();
+        Building b;
+        Enemy e;
+
+        while (buildingIterator.hasNext()) {
+            b = buildingIterator.next();
             if (b instanceof TowerBuilding) {
                 TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()),
-                        new SimpleIntegerProperty(b.getY()));
-                for (Enemy e : enemies) {
+                    new SimpleIntegerProperty(b.getY()));
+                Iterator<Enemy> enemyIterator  = enemies.iterator();
+                while (enemyIterator.hasNext()) {
+                    e = enemyIterator.next();
                     if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math
                             .pow(tower.getShootingRadius(), 2)) {
+                        // enemy is attacked by tower
                         e.setHP(e.getHP() - tower.getTowerAttack());
+                        // if enemy is killed
+                        if (e.getHP() == 0) {
+                            character.setGold(character.getGold()+ e.goldWhenKilled);
+                            character.setXP(character.getXP() + e.expWhenKilled);
+                            e.destroy();
+                            enemyIterator.remove();
+                        }
                     }
                 }
             }
@@ -923,6 +970,27 @@ public class LoopManiaWorld {
 
     public void checkHeroInCampfireRadius() {
         character.setBuildingEntities(buildingEntities);
+    }
+
+    public boolean canHeroRevive() {
+        boolean heroHasTheOneRing = false;
+        if (character.getHP() == 0) {
+            for (Item item : unequippedInventoryItems) {
+                if (item instanceof TheOneRing) {      
+                    heroHasTheOneRing = true;         
+                    item.destroy();
+                    unequippedInventoryItems.remove(item);
+                    setDescription("You used a ring to revive!");
+                    character.setHP(300);
+                }
+            }
+            if (heroHasTheOneRing) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void addItemFromStore(Item entity) {

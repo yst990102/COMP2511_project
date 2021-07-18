@@ -67,10 +67,12 @@ public class Character extends MovingEntity {
     }
 
     public void setHP(int hp) {
-        if (hp < 300) {
-            this.hp.set(hp);
-        } else {
+        if (hp > 300) {
             this.hp.set(300);
+        } else if (hp < 0) {
+            this.hp.set(0);
+        } else {
+            this.hp.set(hp);
         }
     }
 

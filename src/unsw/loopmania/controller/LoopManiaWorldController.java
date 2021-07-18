@@ -486,7 +486,7 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
-            checkAlive();
+            checkHeroAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 
@@ -589,7 +589,6 @@ public class LoopManiaWorldController {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
-
     }
 
     /**
@@ -1377,11 +1376,17 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void checkAlive() {
-        Character currentPlayer = world.getCharacter();
-        if (currentPlayer.getHP() <= 0) {
+    public void checkHeroAlive() {
+        if (!world.canHeroRevive()) {
             pause();
-            world.setDescription("You die!");
+            pauseButton.setVisible(false);
+            exitButton.setText("Quit Game");
+            exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    System.exit(0);
+                }
+            });
+            world.setDescription("You die!!!");
         }
     }
 
@@ -1481,9 +1486,7 @@ public class LoopManiaWorldController {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
         }
-
-
-
+        
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
         world.addItemFromStore(item);
