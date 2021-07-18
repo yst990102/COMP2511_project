@@ -794,6 +794,14 @@ public class LoopManiaWorld {
         numStoreVisit++;
     }
 
+    public boolean canVisitStore() {
+        boolean heroAtCastle = character.getX() == 0 && character.getY() == 0;
+        if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
+            return true;
+        }
+        return false;
+    }
+
     public StringProperty getGoalProperty() {
         return goals;
     }
@@ -975,11 +983,14 @@ public class LoopManiaWorld {
     public boolean canHeroRevive() {
         boolean heroHasTheOneRing = false;
         if (character.getHP() == 0) {
-            for (Item item : unequippedInventoryItems) {
+            Iterator<Item> itemIterator = unequippedInventoryItems.iterator();
+            Item item;
+            while (itemIterator.hasNext()) {
+                item = itemIterator.next();
                 if (item instanceof TheOneRing) {      
                     heroHasTheOneRing = true;         
                     item.destroy();
-                    unequippedInventoryItems.remove(item);
+                    itemIterator.remove();
                     setDescription("You used a ring to revive!");
                     character.setHP(300);
                 }
