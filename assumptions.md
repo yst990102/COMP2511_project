@@ -110,13 +110,13 @@ Helmet
 #### 1. functions of each building
 
 Vampire Castle
-- produces 3 vampires every 5 cycles
+- produces 3 vampires every cycles
 
 Zombie Pit
 - produces 1 zombies every cycle
 
 Tower
-- shooting radius: 10
+- shooting radius: 2
 - Attack: 5
 
 Village
