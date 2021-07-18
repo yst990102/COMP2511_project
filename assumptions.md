@@ -110,7 +110,7 @@ Helmet
 #### 1. functions of each building
 
 Vampire Castle
-- produces 3 vampires every 5 cycles
+- produces 1 vampires every cycles
 
 Zombie Pit
 - produces 1 zombies every cycle
@@ -129,7 +129,7 @@ Trap
 - Attack: 10
 
 Campfire
-- battle radius: 5
+- battle radius: 3
 
 
 

@@ -12,9 +12,7 @@ public class Enemy extends MovingEntity {
     public int speed;
     public int battleRadius;
     public int supportRadius;
-
     public int criticalPercentage;
-
     public int goldWhenKilled;
     public int expWhenKilled;
 
@@ -38,6 +36,14 @@ public class Enemy extends MovingEntity {
 
     public int getAttack() {
         return this.attack;
+    }
+
+    public int getHP() {
+        return this.hp;
+    }
+
+    public void setHP(int newHP) {
+        this.hp = newHP;
     }
 
 }

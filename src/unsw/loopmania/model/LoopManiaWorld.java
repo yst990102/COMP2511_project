@@ -873,8 +873,10 @@ public class LoopManiaWorld {
     public void checkHeroPassVillage() {
         for (Building b : buildingEntities) {
             if (b instanceof VillageBuilding) {
+                VillageBuilding village = new VillageBuilding(new SimpleIntegerProperty(b.getX()),
+                new SimpleIntegerProperty(b.getY()));
                 if (character.getX() == b.getX() && character.getY() == b.getY()) {
-                    character.setHP(character.getHP() + 20);
+                    character.setHP(character.getHP() + village.getRegainHp());
                 }
             }
         }
@@ -893,9 +895,11 @@ public class LoopManiaWorld {
     public void checkEnemyPassTrap() {
         for (Building b : buildingEntities) {
             if (b instanceof TrapBuilding) {
+                TrapBuilding trap = new TrapBuilding(new SimpleIntegerProperty(b.getX()),
+                new SimpleIntegerProperty(b.getY()));
                 for (Enemy e : enemies) {
                     if (b.getX() == e.getX() && b.getY() == e.getY()) {
-                        e.getAttack();
+                        e.setHP(e.getHP() - trap.getTrapAttack());
                     }
                 }
             }
@@ -910,7 +914,7 @@ public class LoopManiaWorld {
                 for (Enemy e : enemies) {
                     if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math
                             .pow(tower.getShootingRadius(), 2)) {
-                        e.getAttack();
+                        e.setHP(e.getHP() - tower.getTowerAttack());
                     }
                 }
             }
