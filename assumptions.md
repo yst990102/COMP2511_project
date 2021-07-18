@@ -136,7 +136,7 @@ Campfire
 ## Fighting Rules:
 
 
-#### 1. At least one card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
+#### 1. 5% of a random card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
 
 - Slug: $50, XP 100
 - Zombie: $100, XP 200
