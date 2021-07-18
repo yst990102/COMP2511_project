@@ -110,7 +110,7 @@ Helmet
 #### 1. functions of each building
 
 Vampire Castle
-- produces 3 vampires every cycles
+- produces 1 vampires every cycles
 
 Zombie Pit
 - produces 1 zombies every cycle
