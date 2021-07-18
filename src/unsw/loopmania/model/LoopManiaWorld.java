@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Iterator;
 import java.lang.Integer;
 import java.lang.Math;
 
@@ -430,7 +431,7 @@ public class LoopManiaWorld {
 
         Card card = null;
 
-        if (randomInt < 5) {
+        if (randomInt < 100) {
             card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 10) {
             card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
@@ -843,7 +844,6 @@ public class LoopManiaWorld {
                         Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
                         enemies.add(vampire);
                         vampires.add(vampire);
-    
                     }
                 }
             }
@@ -893,15 +893,30 @@ public class LoopManiaWorld {
     }
 
     public void checkEnemyPassTrap() {
-        for (Building b : buildingEntities) {
+        Iterator<Building> buildingIterator = buildingEntities.iterator();
+        Building b;
+        Enemy e;
+
+        while (buildingIterator.hasNext()) {
+            b = buildingIterator.next();
             if (b instanceof TrapBuilding) {
                 TrapBuilding trap = new TrapBuilding(new SimpleIntegerProperty(b.getX()),
                 new SimpleIntegerProperty(b.getY()));
-                for (Enemy e : enemies) {
+                Iterator<Enemy> enemyIterator  = enemies.iterator();
+                while (enemyIterator.hasNext()) {
+                    e = enemyIterator.next();
                     if (b.getX() == e.getX() && b.getY() == e.getY()) {
+                        // enemy is attacked by trap
                         e.setHP(e.getHP() - trap.getTrapAttack());
-                        buildingEntities.remove(b);
+                        // if enemy is killed
+                        if (e.getHP() == 0) {
+                            character.setGold(character.getGold()+ e.goldWhenKilled);
+                            character.setXP(character.getXP() + e.expWhenKilled);
+                            e.destroy();
+                            enemyIterator.remove();
+                        }
                         b.destroy();
+                        buildingIterator.remove();
                     }
                 }
             }
@@ -909,14 +924,29 @@ public class LoopManiaWorld {
     }
 
     public void checkEnemyInTowerRadius() {
-        for (Building b : buildingEntities) {
+        Iterator<Building> buildingIterator = buildingEntities.iterator();
+        Building b;
+        Enemy e;
+
+        while (buildingIterator.hasNext()) {
+            b = buildingIterator.next();
             if (b instanceof TowerBuilding) {
                 TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()),
-                        new SimpleIntegerProperty(b.getY()));
-                for (Enemy e : enemies) {
+                    new SimpleIntegerProperty(b.getY()));
+                Iterator<Enemy> enemyIterator  = enemies.iterator();
+                while (enemyIterator.hasNext()) {
+                    e = enemyIterator.next();
                     if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math
                             .pow(tower.getShootingRadius(), 2)) {
+                        // enemy is attacked by tower
                         e.setHP(e.getHP() - tower.getTowerAttack());
+                        // if enemy is killed
+                        if (e.getHP() == 0) {
+                            character.setGold(character.getGold()+ e.goldWhenKilled);
+                            character.setXP(character.getXP() + e.expWhenKilled);
+                            e.destroy();
+                            enemyIterator.remove();
+                        }
                     }
                 }
             }

@@ -22,4 +22,15 @@ public class Slug extends Enemy {
 
     }
 
+    @Override
+    public void setHP(int newHP) {
+        if (newHP > 15) {
+            this.hp = 15;
+        }
+        if (newHP < 0 ) {
+            this.hp = 0;
+        }
+        this.hp = newHP;
+    }
+    
 }

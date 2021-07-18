@@ -486,6 +486,7 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
+            checkAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 
@@ -1376,6 +1377,14 @@ public class LoopManiaWorldController {
         }
     }
 
+    public void checkAlive() {
+        Character currentPlayer = world.getCharacter();
+        if (currentPlayer.getHP() <= 0) {
+            pause();
+            world.setDescription("You die!");
+        }
+    }
+
     /**
      * Set a node in a GridPane to have its position track the position of an entity
      * in the world.
@@ -1471,10 +1480,8 @@ public class LoopManiaWorldController {
         } else if (item.getClass().equals(HealthPotion.class)) {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
-        } else if (item.getClass().equals(TheOneRing.class)) {
-			addDragEventHandlers(view, DRAGGABLE_TYPE.THE_ONE_RING, unequippedInventory, equippedItems);
-		}
-
+        }
+        
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
         world.addItemFromStore(item);
