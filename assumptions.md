@@ -116,7 +116,7 @@ Zombie Pit
 - produces 1 zombies every cycle
 
 Tower
-- shooting radius: 10
+- shooting radius: 2
 - Attack: 5
 
 Village

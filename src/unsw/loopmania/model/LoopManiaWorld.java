@@ -442,7 +442,7 @@ public class LoopManiaWorld {
             card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 30) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 35) {
+        } else {
             card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         }
 
@@ -828,7 +828,7 @@ public class LoopManiaWorld {
         return tilePosAdjacentToPath;
     }
 
-    public List<Vampire> CheckVampireSpawn() {
+    public List<Vampire> checkVampireSpawn() {
         ArrayList<Vampire> vampires = new ArrayList<>();
         for (Building b : buildingEntities) {
             if (b instanceof VampireCastleBuilding) {
@@ -836,18 +836,22 @@ public class LoopManiaWorld {
                     Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
                             Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(vampireBuildingPos);
-                    int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
-                    int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
-                    Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
-                    enemies.add(vampire);
-                    vampires.add(vampire);
+                    
+                    for (int i = 0; i < 3; i++) {
+                        int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
+                        int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
+                        Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
+                        enemies.add(vampire);
+                        vampires.add(vampire);
+    
+                    }
                 }
             }
         }
         return vampires;
     }
 
-    public List<Zombie> CheckZombieSpawn() {
+    public List<Zombie> checkZombieSpawn() {
         ArrayList<Zombie> zombies = new ArrayList<>();
         for (Building b : buildingEntities) {
             if (b instanceof ZombiePitBuilding) {
@@ -866,17 +870,17 @@ public class LoopManiaWorld {
         return zombies;
     }
 
-    public void CheckHeroPassVillage() {
+    public void checkHeroPassVillage() {
         for (Building b : buildingEntities) {
             if (b instanceof VillageBuilding) {
                 if (character.getX() == b.getX() && character.getY() == b.getY()) {
-                    character.setHP(300);
+                    character.setHP(character.getHP() + 20);
                 }
             }
         }
     }
 
-    public void CheckHeroPassBarracks() {
+    public void checkHeroPassBarracks() {
         for (Building b : buildingEntities) {
             if (b instanceof BarracksBuilding) {
                 if (character.getX() == b.getX() && character.getY() == b.getY()) {
@@ -886,7 +890,7 @@ public class LoopManiaWorld {
         }
     }
 
-    public void CheckEnemyPassTrap() {
+    public void checkEnemyPassTrap() {
         for (Building b : buildingEntities) {
             if (b instanceof TrapBuilding) {
                 for (Enemy e : enemies) {
@@ -898,7 +902,7 @@ public class LoopManiaWorld {
         }
     }
 
-    public void CheckEnemyInTowerRadius() {
+    public void checkEnemyInTowerRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof TowerBuilding) {
                 TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()),
@@ -913,7 +917,7 @@ public class LoopManiaWorld {
         }
     }
 
-    public void CheckHeroInCampfireRadius() {
+    public void checkHeroInCampfireRadius() {
         character.setBuildingEntities(buildingEntities);
     }
 

@@ -7,7 +7,7 @@ public class TowerBuilding extends Building {
 
     public TowerBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-        this.shootingRadius = 5;
+        this.shootingRadius = 2;
     }
 
     public int getShootingRadius() {
