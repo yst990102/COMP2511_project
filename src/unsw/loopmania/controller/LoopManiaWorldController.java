@@ -486,6 +486,7 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
+            checkAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 
@@ -1373,6 +1374,14 @@ public class LoopManiaWorldController {
             goalIcon.setImage(new Image((new File("src/assets/tick.png")).toURI().toString()));
             pause();
             world.setDescription("You win!!!");
+        }
+    }
+
+    public void checkAlive() {
+        Character currentPlayer = world.getCharacter();
+        if (currentPlayer.getHP() <= 0) {
+            pause();
+            world.setDescription("You die!");
         }
     }
 
