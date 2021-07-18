@@ -19,30 +19,6 @@ public class GoalLeaf extends GoalComponent {
     }
 
     @Override
-    public void addLeft(GoalComponent leftcomponent) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void addRight(GoalComponent rightcomponent) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removeLeft(GoalComponent leftcomponent) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void removeRight(GoalComponent rightcomponet) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public boolean getLogicResult() {
         int current_cycles = this.world.getNthCycle();
         // System.out.println("current_cycles == " + current_cycles);

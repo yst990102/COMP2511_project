@@ -54,26 +54,6 @@ public class GoalComposite extends GoalComponent {
     }
 
     @Override
-    public void addLeft(GoalComponent leftcomponent) {
-        this.leftComponent = leftcomponent;
-    }
-
-    @Override
-    public void addRight(GoalComponent rightcomponent) {
-        this.rightComponent = rightcomponent;
-    }
-
-    @Override
-    public void removeLeft(GoalComponent leftcomponent) {
-        this.leftComponent = null;
-    }
-
-    @Override
-    public void removeRight(GoalComponent rightcomponet) {
-        this.rightComponent = null;
-    }
-
-    @Override
     public boolean getLogicResult() {
         if (this.goal == null) {
             return false;
