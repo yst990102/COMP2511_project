@@ -172,7 +172,7 @@ Campfire
 - The One Ring: $500
 
 
-#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
+#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 100 XP.
 
 
 #### 3. When the old item is replaced by the new one, the Character receives $100 Gold and 100 XP.
