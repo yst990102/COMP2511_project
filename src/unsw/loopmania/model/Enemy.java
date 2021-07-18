@@ -7,6 +7,9 @@ import java.util.Random;
  */
 public class Enemy extends MovingEntity {
     
+    /**
+     * Constructor for Enemy
+     */
     public int hp;
     public int attack;
     public int speed;
@@ -34,14 +37,26 @@ public class Enemy extends MovingEntity {
         }
     }
 
+    /**
+     * Get the Attack
+     * @return int
+     */
     public int getAttack() {
         return this.attack;
     }
 
+    /**
+     * Get the HP
+     * @return int
+     */
     public int getHP() {
         return this.hp;
     }
 
+    /**
+     * Set the HP
+     * @param newHP
+     */
     public void setHP(int newHP) {
         this.hp = newHP;
     }

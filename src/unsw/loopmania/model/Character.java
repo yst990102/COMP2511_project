@@ -20,7 +20,10 @@ import unsw.loopmania.model.equipments.weapons.Stake;
  */
 public class Character extends MovingEntity {
     // TODO = potentially implement relationships between this class and other
-    // classes
+    
+    /**
+     * Constructor for Character 
+     */
     private IntegerProperty hp;
     private IntegerProperty gold;
     private IntegerProperty xp;
@@ -51,10 +54,18 @@ public class Character extends MovingEntity {
         buildingEntities = new ArrayList<Building>();
     }
 
+    /**
+     * Get the HP Property
+     * @return IntegerProperty
+     */
     public IntegerProperty hpProperty() {
         return hp;
     }
 
+    /**
+     * Get the HP Percentage Property
+     * @return StringProperty
+     */
     public StringProperty hpPercentageProperty() {
         Double hpPercentage = Double.valueOf(getHP()) / 300 * 100;
         String formattedHP = String.format("%.2f", hpPercentage);
@@ -62,10 +73,18 @@ public class Character extends MovingEntity {
         return new SimpleStringProperty(formattedHP + "%");
     }
 
+    /**
+     * Get the value of HP
+     * @return int
+     */
     public int getHP() {
         return hp.get();
     }
 
+    /**
+     * Set the value of HP
+     * @param hp
+     */
     public void setHP(int hp) {
         if (hp > 300) {
             this.hp.set(300);
@@ -76,42 +95,82 @@ public class Character extends MovingEntity {
         }
     }
 
+    /**
+     * Get the Gold Property
+     * @return IntegerProperty
+     */
     public IntegerProperty goldProperty() {
         return gold;
     }
 
+    /**
+     * Get the value of Gold
+     * @return int
+     */
     public int getGold() {
         return gold.get();
     }
 
+    /**
+     * Set the value of Gold
+     * @param gold
+     */
     public void setGold(int gold) {
         this.gold.set(gold);
     }
 
+    /**
+     * Get the XP Property
+     * @return IntegerProperty
+     */
     public IntegerProperty xpProperty() {
         return xp;
     }
-
+    
+    /**
+     * Get the value of XP
+     * @return int
+     */
     public int getXP() {
         return xp.get();
     }
 
+    /**
+     * Set the value of XP
+     * @param xp
+     */
     public void setXP(int xp) {
         this.xp.set(xp);
     }
 
+    /**
+     * Get the Soldier Property
+     * @return IntegerProperty
+     */
     public IntegerProperty soldierProperty() {
         return numSoldier;
     }
 
+    /**
+     * Get the num of the Soldier
+     * @return int
+     */
     public int getNumSoldier() {
         return numSoldier.get();
     }
 
+    /**
+     * Set the num of the Soldier
+     * @param numSoldier
+     */
     public void setNumSoldier(int numSoldier) {
         this.numSoldier.set(numSoldier);
     }
 
+    /**
+     * Get the Attack
+     * @return int
+     */
     public int getATK() {
         int weaponAtk = 0;
         int helmetAtk = 0;
@@ -131,6 +190,11 @@ public class Character extends MovingEntity {
         return atk + weaponAtk + helmetAtk;
     }
 
+    /**
+     * Get the Enemy Attack
+     * @param enemy
+     * @return int
+     */
     public int getATK(Enemy enemy) {
         if (enemy.getClass().equals(Slug.class) | enemy.getClass().equals(Zombie.class)) {
             return getATK();
@@ -162,10 +226,18 @@ public class Character extends MovingEntity {
         }
     }
 
+    /**
+     * Set the Attack
+     * @param atk
+     */
     public void setATK(int atk) {
         this.atk = atk;
     }
 
+    /**
+     * Get the Defence
+     * @return int
+     */
     public int getDEF() {
         int armourDef = 0;
         int shieldDef = 0;
@@ -186,10 +258,18 @@ public class Character extends MovingEntity {
         return def + armourDef + shieldDef + helmetDef;
     }
 
+    /**
+     * Set the Defence
+     * @param def
+     */
     public void setDEF(int def) {
         this.def = def;
     }
 
+    /**
+     * Dress up the Equipment
+     * @param equipment
+     */
     public void DressUpEquipment(Equipment equipment) {
         if (equipment.getClass().equals(Weapon.class)) {
             setDressedWeapon((Weapon) equipment);
@@ -203,50 +283,98 @@ public class Character extends MovingEntity {
 
     }
 
+    /**
+     * Get the dressed Weapon
+     * @return Weapon
+     */
     public Weapon getDressedWeapon() {
         return this.dressedWeapon;
     }
 
+    /**
+     * Set the dressed Weapon
+     * @param dressedWeapon
+     */
     public void setDressedWeapon(Weapon dressedWeapon) {
         this.dressedWeapon = dressedWeapon;
     }
 
+    /**
+     * Get the dressed Armour
+     * @return Armour
+     */
     public Armour getDressedArmour() {
         return this.dressedArmour;
     }
 
+    /**
+     * Set the dressed Armour
+     * @param dressedArmour
+     */
     public void setDressedArmour(Armour dressedArmour) {
         this.dressedArmour = dressedArmour;
     }
 
+    /**
+     * Get the dressed Shield
+     * @return Shield
+     */
     public Shield getDressedShield() {
         return this.dressedShield;
     }
 
+    /**
+     * Set the dressed Shield
+     * @param dressedShield
+     */
     public void setDressedShield(Shield dressedShield) {
         this.dressedShield = dressedShield;
     }
 
+    /**
+     * Get the dressed Helmet
+     * @return Helmet
+     */
     public Helmet getDressedHelmet() {
         return this.dressedHelmet;
     }
 
+    /**
+     * Set the dressed Helmet
+     * @param dressedHelmet
+     */
     public void setDressedHelmet(Helmet dressedHelmet) {
         this.dressedHelmet = dressedHelmet;
     }
 
+    /**
+     * Get the Bag
+     * @return List<Item>
+     */
     public List<Item> getBag() {
         return this.Bag;
     }
 
+    /**
+     * Set the Bag
+     * @param Bag
+     */
     public void setBag(List<Item> Bag) {
         this.Bag = Bag;
     }
 
+    /**
+     * Set the Building Entitiy
+     * @param buildings
+     */
     public void setBuildingEntities(List<Building> buildings) {
         this.buildingEntities = buildings;
     }
 
+    /**
+     * Check whether the Character is in the Campfire Radius
+     * @return boolean
+     */
     private boolean isInCampfireRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof CampfireBuilding) {
@@ -261,6 +389,9 @@ public class Character extends MovingEntity {
         return false;
     }
 
+    /**
+     * Use the Health Potion
+     */
     public void useHealthPotion() {
         setHP(getHP() + 50);
     }

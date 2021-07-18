@@ -8,6 +8,10 @@ import unsw.loopmania.model.Character;
  */
 public class VampireCastleBuilding extends Building {
     // TODO = add more types of building, and make sure buildings have effects on entities as required by the spec
+    
+    /**
+     * Constructor for VampireCastleBuilding
+     */
     private int currentCycle;
 
     public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
@@ -15,10 +19,18 @@ public class VampireCastleBuilding extends Building {
         currentCycle = 0;
     }
 
-    public void updateCycle(){
+    /**
+     * Update the Cycle
+     */
+    public void updateCycle() {
         currentCycle++;
     }
 
+    /**
+     * Check whether the Vampire Castle can spawn Vampire
+     * @param c
+     * @return boolean
+     */
     public boolean canSpawnVampire(Character c) {
         if (currentCycle % 5 == 0 && c.getX() == 0 && c.getY() == 0) {
             return true;
