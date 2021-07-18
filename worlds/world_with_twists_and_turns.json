@@ -3,7 +3,7 @@
   "height": 14,
   "rare_items": [],
   "goal-condition": { "goal": "AND", "subgoals":
-    [ { "goal": "cycles", "quantity": 5 },
+    [ { "goal": "cycles", "quantity": 10 },
       { "goal": "OR", "subgoals":
         [ {"goal": "experience", "quantity": 1234 },
           {"goal": "gold", "quantity": 1000 }
