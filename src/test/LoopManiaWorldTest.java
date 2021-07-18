@@ -53,8 +53,6 @@ public class LoopManiaWorldTest {
         while (world.getCardEntities().size() != 8) {
             world.loadCard();
         }
-
-        System.err.println(world.getCardEntities().size());
         
         // test remove oldest card
         Card oldestCard = world.getCardEntities().get(0);
