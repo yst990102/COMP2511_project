@@ -49,12 +49,20 @@ Vampire
 #### 5. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
 
 
-#### 6. There are three ways to win the game
-- Complete 50 cycles
-- Complete 30 cycles AND (amassing 5000 Gold OR obtaining 5000 experience points)
-- Amass 8000 Gold AND obtain 3000 experience points
+#### 6. The goal (How to win the game)
+Three basic goals
+- Complete 30 cycles
+- Amass 88888 Gold
+- Obtain 99999 XP
+
+Combination
+- Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP)
 
 
+### 7. Default attributes of a soldier are listed below:
+Soldier (produced from Barracks)
+- HP: 10
+- Attack: 1
 
 ## Items Rules:
 
@@ -85,6 +93,7 @@ Helmet
 - Decrease Attack (Character): 2
 - Decrease Attack (enemy): 2
 
+
 #### 2. A health potion will heal 50 HP.
 
 
@@ -101,13 +110,13 @@ Helmet
 #### 1. functions of each building
 
 Vampire Castle
-- produces 3 vampires every 5 cycles
+- produces 1 vampire every 5 cycles
 
 Zombie Pit
-- produces 1 zombies every cycle
+- produces 2 zombies every cycle
 
 Tower
-- shooting radius: 10
+- shooting radius: 2
 - Attack: 5
 
 Village
@@ -120,14 +129,14 @@ Trap
 - Attack: 10
 
 Campfire
-- battle radius: 5
+- battle radius: 3
 
 
 
 ## Fighting Rules:
 
 
-#### 1. At least one card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
+#### 1. 5% of a random card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
 
 - Slug: $50, XP 100
 - Zombie: $100, XP 200
@@ -144,7 +153,7 @@ Campfire
 ## Selling Rules:
 
 
-#### 1. The price of each equipment is fixed when selling or purchasing.
+#### 1. The price of each item is fixed when selling or purchasing.
 
 - Sword: $150
 
@@ -160,9 +169,11 @@ Campfire
 
 - Health potion: $200
 
+- The One Ring: $500
 
-#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
+
+#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 100 XP.
 
 
-#### 3. When the old equipment is replaced by the new one, the Character receives $100 Gold and 100 XP.
+#### 3. When the old item is replaced by the new one, the Character receives $100 Gold and 100 XP.
 

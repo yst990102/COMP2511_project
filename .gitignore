@@ -5,3 +5,7 @@ hs_err_pid*
 /lib/
 /build/
 /.gradle/
+.vscode/launch.json
+fight.txt
+test.java
+goal_test.json
