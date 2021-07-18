@@ -8,38 +8,18 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch StartGame",
+            "name": "Launch LoopManiaApplication",
             "request": "launch",
-            "mainClass": "unsw.loopmania.controller.StartGame",
-            "projectName": "21T2-cs2511-project_fea1bc54"
-        },
-        {
-            "type": "java",
-            "name": "Launch StartGame",
-            "request": "launch",
-            "mainClass": "unsw.loopmania.controller.StartGame",
-            "projectName": "21T2-cs2511-project_6d0f4d75"
-        },
-        {
-            "type": "java",
-            "name": "Launch StartGame",
-            "request": "launch",
-            "mainClass": "unsw.loopmania.controller.StartGame",
-            "projectName": "21T2-cs2511-project_2375a448"
-        },
-        {
-            "type": "java",
-            "name": "Launch StartGame",
-            "request": "launch",
-            "mainClass": "unsw.loopmania.controller.StartGame",
+            "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
+            "mainClass": "unsw.loopmania.controller.LoopManiaApplication",
             "projectName": "21T2-cs2511-project_c5760f1f"
         },
         {
             "type": "java",
             "name": "CodeLens (Launch) - LoopManiaApplication",
             "request": "launch",
-            "vmArgs": "--module-path ./lib",
-            "mainClass": "unsw.loopmania.controller.LoopManiaApplication"
+            "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
+            "mainClass": "unsw.loopmania.LoopManiaApplication"
         }
     ]
 }
