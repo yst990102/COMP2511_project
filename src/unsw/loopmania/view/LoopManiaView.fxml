@@ -41,7 +41,7 @@
                         <Font name="Berlin Sans FB Demi Bold" size="15.0" />
                      </font>
                   </Text>
-                  <ImageView fx:id="goalIcon" translateX="10.0">
+                  <ImageView fx:id="goalIcon">
                      <image>
                         <Image url="@../../../assets/cross.png" />
                      </image>

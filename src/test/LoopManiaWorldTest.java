@@ -377,7 +377,7 @@ public class LoopManiaWorldTest {
         Building building = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), zombies.get(0).getX(), zombies.get(0).getY(), "TRAP");
         world.checkEnemyPassTrap();
 
-        // test trap is removed after 
+        // test trap is removed
         assertEquals(-1, world.getBuildingEntities().indexOf(building));
 
         // test enemy is attacked by zombie pit
