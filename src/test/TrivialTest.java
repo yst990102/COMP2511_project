@@ -20,6 +20,7 @@ import unsw.loopmania.model.equipments.helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.weapons.*;
 import unsw.loopmania.strategy.*;
 import unsw.loopmania.controller.*;
+import unsw.loopmania.model.Store;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -115,5 +116,12 @@ public class TrivialTest {
 
     }
 
+    @Test
+    public void TestStore() {
+        
+        Store store = new Store();
 
+        assertEquals(store.getStoreItems().size(), 7);
+        assertEquals(store.getHeroItems().size(), 0);
+    }
 }
