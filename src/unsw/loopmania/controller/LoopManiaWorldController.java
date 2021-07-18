@@ -1480,10 +1480,10 @@ public class LoopManiaWorldController {
         } else if (item.getClass().equals(HealthPotion.class)) {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
-        } else if (item.getClass().equals(TheOneRing.class)) {
-			addDragEventHandlers(view, DRAGGABLE_TYPE.THE_ONE_RING, unequippedInventory, equippedItems);
-		}
+        }
 
+
+        
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
         world.addItemFromStore(item);
