@@ -11,6 +11,9 @@ import javafx.beans.property.SimpleStringProperty;
 
 import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.CampfireBuilding;
+import unsw.loopmania.model.enemies.Slug;
+import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.model.equipments.weapons.Stake;
 
 /**
  * represents the main character in the backend of the game world
@@ -126,6 +129,37 @@ public class Character extends MovingEntity {
         return atk + weaponAtk + helmetAtk;
     }
 
+    public int getATK(Enemy enemy) {
+        if (enemy.getClass().equals(Slug.class) | enemy.getClass().equals(Zombie.class)) {
+            return getATK();
+        } else {
+            if (dressedWeapon == null) {
+                return getATK();
+            } else {
+                if (dressedWeapon.getClass().equals(Stake.class)) {
+                    int weaponAtk = 0;
+                    int helmetAtk = 0;
+
+                    if (dressedWeapon != null) {
+                        weaponAtk = ((Stake) dressedWeapon).getAttackToVampire();
+                    }
+
+                    if (dressedHelmet != null) {
+                        helmetAtk = dressedHelmet.getAttack();
+                    }
+
+                    if (isInTowerRadius()) {
+                        return 2 * (atk + weaponAtk + helmetAtk);
+                    }
+
+                    return atk + weaponAtk + helmetAtk;
+                } else {
+                    return getATK();
+                }
+            }
+        }
+    }
+
     public void setATK(int atk) {
         this.atk = atk;
     }
@@ -214,10 +248,12 @@ public class Character extends MovingEntity {
     private boolean isInTowerRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof CampfireBuilding) {
-                CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()), new SimpleIntegerProperty(b.getY()));
-                if (Math.pow((getX() - b.getX()), 2) + Math.pow((getY() - b.getY()), 2) < Math.pow(campfire.getBattleRadius(), 2)) {
+                CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()),
+                        new SimpleIntegerProperty(b.getY()));
+                if (Math.pow((getX() - b.getX()), 2) + Math.pow((getY() - b.getY()), 2) < Math
+                        .pow(campfire.getBattleRadius(), 2)) {
                     return true;
-                }     
+                }
             }
         }
         return false;
