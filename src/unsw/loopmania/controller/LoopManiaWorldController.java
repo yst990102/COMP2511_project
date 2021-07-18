@@ -501,21 +501,21 @@ public class LoopManiaWorldController {
                 onLoad(newEnemy);
             }
 
-            List<Vampire> vampires = world.CheckVampireSpawn();
+            List<Vampire> vampires = world.checkVampireSpawn();
             for (Vampire vampire : vampires) {
                 onLoad(vampire);
             }
 
-            List<Zombie> zombies = world.CheckZombieSpawn();
+            List<Zombie> zombies = world.checkZombieSpawn();
             for (Zombie zombie : zombies) {
                 onLoad(zombie);
             }
 
-            world.CheckHeroPassVillage();
-            world.CheckHeroPassBarracks();
-            world.CheckEnemyPassTrap();
-            world.CheckEnemyInTowerRadius();
-            world.CheckHeroInCampfireRadius();
+            world.checkHeroPassVillage();
+            world.checkHeroPassBarracks();
+            world.checkEnemyPassTrap();
+            world.checkEnemyInTowerRadius();
+            world.checkHeroInCampfireRadius();
 
             // printThreadingNotes("HANDLED TIMER");
         }));

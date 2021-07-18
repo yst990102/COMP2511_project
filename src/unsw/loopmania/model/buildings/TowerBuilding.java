@@ -8,7 +8,7 @@ public class TowerBuilding extends Building {
 
     public TowerBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-        this.shootingRadius = 10;
+        this.shootingRadius = 2;
         this.towerAttack = 5;
     }
 

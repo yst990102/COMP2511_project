@@ -122,7 +122,7 @@ public class Character extends MovingEntity {
             helmetAtk = dressedHelmet.getAttack();
         }
 
-        if (isInTowerRadius()) {
+        if (isInCampfireRadius()) {
             return 2 * (atk + weaponAtk + helmetAtk);
         }
 
@@ -148,7 +148,7 @@ public class Character extends MovingEntity {
                         helmetAtk = dressedHelmet.getAttack();
                     }
 
-                    if (isInTowerRadius()) {
+                    if (isInCampfireRadius()) {
                         return 2 * (atk + weaponAtk + helmetAtk);
                     }
 
@@ -245,7 +245,7 @@ public class Character extends MovingEntity {
         this.buildingEntities = buildings;
     }
 
-    private boolean isInTowerRadius() {
+    private boolean isInCampfireRadius() {
         for (Building b : buildingEntities) {
             if (b instanceof CampfireBuilding) {
                 CampfireBuilding campfire = new CampfireBuilding(new SimpleIntegerProperty(b.getX()),

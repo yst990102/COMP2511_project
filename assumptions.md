@@ -129,7 +129,7 @@ Trap
 - Attack: 10
 
 Campfire
-- battle radius: 5
+- battle radius: 3
 
 
 
