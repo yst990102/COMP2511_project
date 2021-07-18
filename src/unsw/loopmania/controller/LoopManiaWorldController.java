@@ -462,7 +462,7 @@ public class LoopManiaWorldController {
                         : currentPlayer.getDressedShield().getClass().getSimpleName())
                 + "\n" + "Helmet : " + ((currentPlayer.getDressedHelmet() == null) ? " no helmet "
                         : currentPlayer.getDressedHelmet().getClass().getSimpleName())
-                + "\n" + "Bag : " + world.getCharacter().getBag()
+                // + "\n" + "Bag : " + world.getCharacter().getBag()
                 + "\n" + "IsGoalFinished : " + world.getIsGoalFinished();
 
         characterdescription.setText(characterProperty);
@@ -568,7 +568,7 @@ public class LoopManiaWorldController {
         // TODO = load more types of weapon
         // start by getting first available coordinates
 
-        // 每次随机掉落0-3件装备，0-1个药瓶，5%几率掉落rare item
+        // [0,3] equipment, [0,1] health potion, 5% chance of obtaining a rare item
         int droppedEquipment_amount = new Random().nextInt(4);
         int droppedPotion_amount = new Random().nextInt(2);
         int IfRareItemDropped = new Random().nextInt(20);
@@ -1480,9 +1480,9 @@ public class LoopManiaWorldController {
         } else if (item.getClass().equals(HealthPotion.class)) {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
-        } else if (item.getClass().equals(TheOneRing.class)) {
-			addDragEventHandlers(view, DRAGGABLE_TYPE.THE_ONE_RING, unequippedInventory, equippedItems);
-		}
+        }
+
+
 
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
