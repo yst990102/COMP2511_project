@@ -97,8 +97,6 @@ public class LoopManiaWorld {
     private StringProperty goals;
     private boolean isGoalFinished;
 
-    // TODO = add more lists for other entities, for equipped inventory items, etc...
-
     // TODO = expand the range of enemies
     private List<Enemy> enemies;
 
@@ -145,18 +143,33 @@ public class LoopManiaWorld {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
+    /**
+     * update whether the goal is finished
+     */
     public void updateIsGoalFinished() {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
+    /**
+     * Get the Width
+     * @return int
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Get the Height
+     * @return int
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Get the Ordered Path
+     * @return List<Pair<Integer, Integer>>
+     */
     public List<Pair<Integer, Integer>> getOrderedPath() {
         return orderedPath;
     }
@@ -169,7 +182,11 @@ public class LoopManiaWorld {
         this.character = character;
         this.character.setBag(unequippedInventoryItems);
     }
-
+    
+    /**
+     * Get the Character
+     * @return
+     */
     public Character getCharacter() {
         return character;
     }
@@ -184,10 +201,18 @@ public class LoopManiaWorld {
         nonSpecifiedEntities.add(entity);
     }
 
+    /**
+     * Get the Card Entity
+     * @return List<Card>
+     */
     public List<Card> getCardEntities() {
         return cardEntities;
     }
 
+    /**
+     * Get the Building Entity
+     * @return List<Building>
+     */
     public List<Building> getBuildingEntities() {
         return buildingEntities;
     }
@@ -257,7 +282,14 @@ public class LoopManiaWorld {
         }
         return defeatedEnemies;
     }
-
+    
+    /**
+     * Let Character Attack Enemy
+     * @param character
+     * @param enemy
+     * @param writer
+     * @throws IOException
+     */
     public void CharacterAttackEnemy(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
         // character attack enemy
         enemy.hp -= character.getATK();
@@ -265,6 +297,13 @@ public class LoopManiaWorld {
 
     }
 
+    /**
+     * Let Enemy Attack Character
+     * @param character
+     * @param enemy
+     * @param writer
+     * @throws IOException
+     */
     public void EnemyAttackCharacter(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
         // enemy attack character
         int beforeHP = character.getHP();
@@ -382,6 +421,10 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * The function of a fight 
+     * @param enemy
+     */
     public void fight(Enemy enemy) {
         FileOutputStream writer;
         try {
@@ -758,10 +801,18 @@ public class LoopManiaWorld {
         return newBuilding;
     }
 
+    /**
+     * Get the Description
+     * @return String
+     */
     public String getDescription() {
         return description.get();
     }
 
+    /**
+     * Set the Description
+     * @param description
+     */
     public void setDescription(String description) {
         if (description.length() <= 96) {
             this.description.set(description);
@@ -770,14 +821,25 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Get the DescriptionProperty
+     * @return StringProperty
+     */
     public StringProperty descriptionProperty() {
         return description;
     }
 
+    /**
+     * Get the Nth of Cycle
+     * @return int 
+     */
     public int getNthCycle() {
         return nthCycle;
     }
-
+    
+    /**
+     * Update the Nth of Cycle
+     */
     public void updateNthCycle() {
         if (character.getX() == 0 && character.getY() == 0) {
             nthCycle++;
@@ -785,15 +847,26 @@ public class LoopManiaWorld {
             setDescription("You have completed " + nthCycle + (nthCycle > 1 ? " cycles." : " cycle."));
         }
     }
-
+    
+    /**
+     * Get the NumStoreVisit
+     * @return int
+     */
     public int getNumStoreVisit() {
         return numStoreVisit;
     }
 
+    /**
+     * Update the NumStoreVisit
+     */
     public void updateNumStoreVisit() {
         numStoreVisit++;
     }
 
+    /**
+     * Check whether can visit the store
+     * @return boolean
+     */
     public boolean canVisitStore() {
         boolean heroAtCastle = character.getX() == 0 && character.getY() == 0;
         if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
@@ -802,18 +875,35 @@ public class LoopManiaWorld {
         return false;
     }
 
+    /**
+     * Get the Goal Property
+     * @return StringProperty
+     */
     public StringProperty getGoalProperty() {
         return goals;
     }
 
+    /**
+     * Get the Goals
+     * @return String
+     */
     public String getGoals() {
         return this.goals.get();
     }
 
+    /**
+     * Set the Goals
+     * @param goals
+     */
     public void setGoals(String goals) {
         this.goals.set(goals);
     }
 
+    /**
+     * Get the PathPosAdjacentToGrassTile
+     * @param pos
+     * @return List<Pair<Integer, Integer>>
+     */
     public List<Pair<Integer, Integer>> getPathPosAdjacentToGrassTile(Pair<Integer, Integer> pos) {
         List<Pair<Integer, Integer>> tilePosAdjacentToPath = new ArrayList<>();
 
@@ -841,6 +931,9 @@ public class LoopManiaWorld {
         return tilePosAdjacentToPath;
     }
 
+    /**
+     * Update the Vampire Castle Cycle
+     */
     private void updateVampireCastleCycle() {
         for (int i = 0; i < buildingEntities.size(); i++) {
             if (buildingEntities.get(i) instanceof VampireCastleBuilding) {
@@ -850,6 +943,10 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Check whether the Vampire spawns
+     * @return List<Vampire>
+     */
     public List<Vampire> checkVampireSpawn() {
         ArrayList<Vampire> vampires = new ArrayList<>();
         for (int i = 0; i < buildingEntities.size(); i++) {
@@ -871,6 +968,10 @@ public class LoopManiaWorld {
         return vampires;
     }
 
+    /**
+     * Check whether the Zombie spawns
+     * @return List<Zombie>
+     */
     public List<Zombie> checkZombieSpawn() {
         ArrayList<Zombie> zombies = new ArrayList<>();
         for (Building b : buildingEntities) {
@@ -893,6 +994,9 @@ public class LoopManiaWorld {
         return zombies;
     }
 
+    /**
+     * Check whether the Hero passes the Village
+     */
     public void checkHeroPassVillage() {
         for (Building b : buildingEntities) {
             if (b instanceof VillageBuilding) {
@@ -905,6 +1009,9 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Check whether the Hero passes the Barracks
+     */
     public void checkHeroPassBarracks() {
         for (Building b : buildingEntities) {
             if (b instanceof BarracksBuilding) {
@@ -915,6 +1022,9 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Check whether the Enemy passes the Traps
+     */
     public void checkEnemyPassTrap() {
         Iterator<Building> buildingIterator = buildingEntities.iterator();
         Building b;
@@ -946,6 +1056,9 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Check whether the Enemy is in the Tower Radius
+     */
     public void checkEnemyInTowerRadius() {
         Iterator<Building> buildingIterator = buildingEntities.iterator();
         Building b;
@@ -976,10 +1089,17 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Check whether the Hero is in the Campfire Radius
+     */
     public void checkHeroInCampfireRadius() {
         character.setBuildingEntities(buildingEntities);
     }
 
+    /**
+     * Check whether the Hero can Revive
+     * @return boolean
+     */
     public boolean canHeroRevive() {
         boolean heroHasTheOneRing = false;
         if (character.getHP() == 0) {
@@ -1004,22 +1124,42 @@ public class LoopManiaWorld {
         return true;
     }
 
+    /**
+     * Add Items From the Store
+     * @param entity
+     */
     public void addItemFromStore(Item entity) {
         unequippedInventoryItems.add(entity);
     }
 
+    /**
+     * Get the Hero Items
+     * @return List<Item>
+     */
     public List<Item> getHeroItems() {
         return unequippedInventoryItems;
     }
 
+    /**
+     * Set the ModeStrategy
+     * @param strategy
+     */
     public void setModeStrategy(ModeStrategy strategy) {
         modeStrategy = strategy;
     }
 
+    /**
+     * Get the ModeStrategy
+     * @return ModeStrategy
+     */
     public ModeStrategy getModeStrategy() {
         return modeStrategy;
     }
 
+    /**
+     * Get the symbol of whether the goal is finished
+     * @return boolean
+     */
     public boolean getIsGoalFinished() {
         return this.isGoalFinished;
     }
