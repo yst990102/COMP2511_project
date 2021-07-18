@@ -801,8 +801,6 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         Building newBuilding;
 
-                        System.out.println(draggableType);
-
                         switch (draggableType) {
                         case VAMPIRE_CASTLE_CARD:
                             if (!targetPosInPath) {
@@ -950,9 +948,6 @@ public class LoopManiaWorldController {
                         default:
                             break;
                         }
-
-                        System.out.println("After : character ATK == " + world.getCharacter().getATK());
-                        System.out.println("After : character DEF == " + world.getCharacter().getDEF());
 
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);
