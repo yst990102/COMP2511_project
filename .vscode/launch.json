@@ -13,13 +13,6 @@
             "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
             "mainClass": "unsw.loopmania.controller.LoopManiaApplication",
             "projectName": "21T2-cs2511-project_c5760f1f"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - LoopManiaApplication",
-            "request": "launch",
-            "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
-            "mainClass": "unsw.loopmania.LoopManiaApplication"
         }
     ]
 }
