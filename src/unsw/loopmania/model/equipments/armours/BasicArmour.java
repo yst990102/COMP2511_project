@@ -7,6 +7,7 @@ import unsw.loopmania.model.Armour;
  * represents an equipped or unequipped sword in the backend world
  */
 public class BasicArmour extends Armour {
+    
     public BasicArmour(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 

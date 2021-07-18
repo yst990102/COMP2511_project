@@ -22,6 +22,10 @@ public class HealthPotion extends Potion {
         setPrice(200);
     }
     
+    /**
+     * Get the Health Recovered
+     * @return int 
+     */
     public int getHealthRecovered() {
         return healthRecovered;
     }
