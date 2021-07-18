@@ -1354,10 +1354,7 @@ public class LoopManiaWorldController {
     }
 
     public void checkStoreVisit() {
-        int nthCycle = world.getNthCycle();
-        int numStoreVisit = world.getNumStoreVisit();
-        boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
-        if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
+        if (world.canVisitStore()) {
             pause();
             StoreController.setIsStoreShowed();
             storeSwitcher.switchMenu();

@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import unsw.loopmania.model.LoopManiaWorld;
+import unsw.loopmania.model.Equipment;
+import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Character;
+import unsw.loopmania.model.Potion;
 import unsw.loopmania.model.potions.HealthPotion;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.cards.Card;
@@ -509,11 +512,198 @@ public class LoopManiaWorldTest {
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
+        // test initial world state
         assertEquals(0, world.getHeroItems().size());
 
         world.addItemFromStore(new HealthPotion(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
 
         // test item is added to world
         assertEquals(1, world.getHeroItems().size());
+    }
+
+    @Test
+    public void testGetFirstAvailableSlotForItem() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+
+        // test initial world state
+        assertEquals(new Pair<>(0, 0), world.getFirstAvailableSlotForItem());
+
+        world.addUnequippedEquipment();
+        // test after adding a item into inventory
+        assertEquals(new Pair<>(1, 0), world.getFirstAvailableSlotForItem());
+    }
+
+    @Test
+    public void testRemoveUnequippedInventoryItem() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+
+        // test initial world state
+        assertEquals(0, world.getHeroItems().size());
+
+        Equipment equipment = world.addUnequippedEquipment();
+        assertEquals(1, world.getHeroItems().size());
+        // test remove a item from inventory
+        world.removeUnequippedInventoryItem(equipment);
+        assertEquals(0, world.getHeroItems().size());
+    }
+
+    @Test
+    public void testRemoveUnequippedInventoryItemByCoordinates() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+
+        // test initial world state
+        assertEquals(0, world.getHeroItems().size());
+        assertEquals(new Pair<>(0, 0), world.getFirstAvailableSlotForItem());
+
+        world.addUnequippedEquipment();
+        assertEquals(1, world.getHeroItems().size());
+        // test remove a item from inventory
+        world.removeUnequippedInventoryItemByCoordinates(0, 0);
+        assertEquals(0, world.getHeroItems().size());
+    }
+
+    @Test
+    public void testRunTickMoves() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(0, 1);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 0);
+
+        orderedPath.add(pathPos1);
+        orderedPath.add(pathPos2);
+        
+        // test initial hero state
+        assertEquals(0, character.getX());
+        assertEquals(0, character.getY());
+
+        // test hero move
+        world.runTickMoves();
+        assertEquals(0, character.getX());
+        assertEquals(1, character.getY());
+    }
+
+    @Test
+    public void testUpdateNthCycle() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+        
+        // test initial hero state
+        assertEquals(0, character.getX());
+        assertEquals(0, character.getY());
+
+        for (int i = 0; i < 5; i++) {
+            world.updateNthCycle();
+        }
+        
+        // test update number of cycle
+        assertEquals(5, world.getNthCycle());
+    }
+
+    @Test
+    public void testCanVisitStore() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+        
+        // test initial state
+        assertEquals(false, world.canVisitStore());
+        
+        // test complete 1 cycle
+        world.updateNthCycle();
+        assertEquals(true, world.canVisitStore());
+        world.updateNumStoreVisit();
+
+        // test complete 3 cycles
+        world.updateNthCycle();
+        assertEquals(false, world.canVisitStore());
+        world.updateNthCycle();
+        assertEquals(true, world.canVisitStore());
+        world.updateNumStoreVisit();
+
+        // test complete 6 cycles
+        world.updateNthCycle();
+        assertEquals(false, world.canVisitStore());
+        world.updateNthCycle();
+        assertEquals(false, world.canVisitStore());
+        world.updateNthCycle();
+        assertEquals(true, world.canVisitStore());
+    }
+
+    @Test
+    public void testAddUnequippedEquipment() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        // test initial world state
+        assertEquals(0, world.getHeroItems().size());
+
+        Equipment equipment = world.addUnequippedEquipment();
+        assertEquals(equipment, world.getHeroItems().get(0));
+    }
+
+    @Test
+    public void testAddUnusedPotion() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        // test initial world state
+        assertEquals(0, world.getHeroItems().size());
+
+        Potion potion = world.addUnusedPotion();
+        assertEquals(potion, world.getHeroItems().get(0));
+    }
+
+    @Test
+    public void testAddRareItem() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        // test initial world state
+        assertEquals(0, world.getHeroItems().size());
+
+        RareItem rareItem = world.addRareItem();
+        assertEquals(rareItem, world.getHeroItems().get(0));
     }
 }

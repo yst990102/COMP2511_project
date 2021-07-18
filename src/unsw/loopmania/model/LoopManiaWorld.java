@@ -794,6 +794,14 @@ public class LoopManiaWorld {
         numStoreVisit++;
     }
 
+    public boolean canVisitStore() {
+        boolean heroAtCastle = character.getX() == 0 && character.getY() == 0;
+        if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
+            return true;
+        }
+        return false;
+    }
+
     public StringProperty getGoalProperty() {
         return goals;
     }
