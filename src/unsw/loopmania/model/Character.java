@@ -14,6 +14,7 @@ import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Zombie;
 import unsw.loopmania.model.equipments.weapons.Stake;
+import unsw.loopmania.model.friendlyforces.Soldier;
 
 /**
  * represents the main character in the backend of the game world
@@ -25,6 +26,7 @@ public class Character extends MovingEntity {
     private IntegerProperty gold;
     private IntegerProperty xp;
     private IntegerProperty numSoldier;
+    private List<Soldier> soldiers;
     private int atk;
     private int def;
 
@@ -43,6 +45,7 @@ public class Character extends MovingEntity {
         gold = new SimpleIntegerProperty(100);
         xp = new SimpleIntegerProperty(0);
         numSoldier = new SimpleIntegerProperty(0);
+        soldiers = new ArrayList<Soldier>();
 
         atk = 5;
         def = 0;
@@ -108,6 +111,10 @@ public class Character extends MovingEntity {
 
     public void setNumSoldier(int numSoldier) {
         this.numSoldier.set(numSoldier);
+    }
+
+    public List<Soldier> getSoldiers() {
+        return this.soldiers;
     }
 
     public int getATK() {

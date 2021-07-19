@@ -449,9 +449,9 @@ public class LoopManiaWorldController {
         Character currentPlayer = world.getCharacter();
 
         String characterProperty = "HP : " + currentPlayer.getHP() + "\n" + "Gold : " + currentPlayer.getGold() + "\n"
-                + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getNumSoldier() + "\n\n"
-                + "attack : " + currentPlayer.getATK() + "\n" + "defence : " + currentPlayer.getDEF() + "\n\n"
-                + "Weapon : "
+                + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getNumSoldier() + "\n"
+                + "Soldiers : " + currentPlayer.getSoldiers() + "\n" + "\n" + "attack : " + currentPlayer.getATK()
+                + "\n" + "defence : " + currentPlayer.getDEF() + "\n\n" + "Weapon : "
                 + ((currentPlayer.getDressedWeapon() == null) ? " no weapon "
                         : currentPlayer.getDressedWeapon().getClass().getSimpleName())
                 + "\n" + "Armour : "
@@ -941,7 +941,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedHelmet(helmet);
                                 updateCharacterDescription();
                             } else {
@@ -1464,7 +1465,7 @@ public class LoopManiaWorldController {
         return world.getHeroItems();
     }
 
-    public void buyItemFromStore(Item item, ImageView view, int price) {        
+    public void buyItemFromStore(Item item, ImageView view, int price) {
         if (item.getClass().equals(BasicHelmet.class)) {
             addDragEventHandlers(view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(BasicShield.class)) {
@@ -1481,8 +1482,6 @@ public class LoopManiaWorldController {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
         }
-
-
 
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);

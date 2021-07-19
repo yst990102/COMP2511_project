@@ -4,6 +4,7 @@ public class FriendlyForce {
 
     public int hp;
     public int attack;
+    public int defence;
 
     public int getHp() {
         return this.hp;
