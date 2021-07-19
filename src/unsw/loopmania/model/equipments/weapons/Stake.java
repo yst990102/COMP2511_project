@@ -8,7 +8,10 @@ import unsw.loopmania.model.Weapon;
  */
 public class Stake extends Weapon {
 
-    private int attackToVampire  = 8;
+    /**
+     * Constructor for Stake
+     */
+    private int attackToVampire = 8;
 
     public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
@@ -26,7 +29,10 @@ public class Stake extends Weapon {
        setDescription(description);
     }
 
-
+    /**
+     * Get the Attack to Vampire
+     * @return int 
+     */
     public int getAttackToVampire() {
         return this.attackToVampire ;
     }

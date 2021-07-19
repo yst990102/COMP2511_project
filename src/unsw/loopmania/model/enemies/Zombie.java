@@ -16,12 +16,20 @@ public class Zombie extends Enemy {
         this.speed = 2;
         this.battleRadius = 3;
         this.supportRadius = 3;
-
         this.criticalPercentage = 20;
-
         this.goldWhenKilled = 100;
         this.expWhenKilled = 200;
+    }
 
+    @Override
+    public void setHP(int newHP) {
+        if (newHP > 20) {
+            this.hp = 20;
+        }
+        if (newHP < 0 ) {
+            this.hp = 0;
+        }
+        this.hp = newHP;
     }
 
 }

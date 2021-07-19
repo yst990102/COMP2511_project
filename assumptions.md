@@ -110,10 +110,10 @@ Helmet
 #### 1. functions of each building
 
 Vampire Castle
-- produces 3 vampires every 3 cycles
+- produces 1 vampire every 5 cycles
 
 Zombie Pit
-- produces 1 zombies every cycle
+- produces 2 zombies every cycle
 
 Tower
 - shooting radius: 2
@@ -136,7 +136,7 @@ Campfire
 ## Fighting Rules:
 
 
-#### 1. At least one card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
+#### 1. 5% of a random card; A range of 0 to 3 equipment; 0 or 1 health potion; Gold and XP will depend on the type of enemy.
 
 - Slug: $50, XP 100
 - Zombie: $100, XP 200
@@ -172,7 +172,7 @@ Campfire
 - The One Ring: $500
 
 
-#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 200 XP and one random item (each 12.5% of chance).
+#### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 100 XP.
 
 
 #### 3. When the old item is replaced by the new one, the Character receives $100 Gold and 100 XP.

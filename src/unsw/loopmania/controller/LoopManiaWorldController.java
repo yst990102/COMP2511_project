@@ -486,7 +486,7 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
-            checkAlive();
+            checkHeroAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 
@@ -589,7 +589,6 @@ public class LoopManiaWorldController {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
-
     }
 
     /**
@@ -802,8 +801,6 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         Building newBuilding;
 
-                        System.out.println(draggableType);
-
                         switch (draggableType) {
                         case VAMPIRE_CASTLE_CARD:
                             if (!targetPosInPath) {
@@ -952,9 +949,6 @@ public class LoopManiaWorldController {
                         default:
                             break;
                         }
-
-                        System.out.println("After : character ATK == " + world.getCharacter().getATK());
-                        System.out.println("After : character DEF == " + world.getCharacter().getDEF());
 
                         draggedEntity.setVisible(false);
                         draggedEntity.setMouseTransparent(false);
@@ -1356,10 +1350,7 @@ public class LoopManiaWorldController {
     }
 
     public void checkStoreVisit() {
-        int nthCycle = world.getNthCycle();
-        int numStoreVisit = world.getNumStoreVisit();
-        boolean heroAtCastle = world.getCharacter().getX() == 0 && world.getCharacter().getY() == 0;
-        if (nthCycle == (numStoreVisit + 1) * (numStoreVisit + 2) / 2 && heroAtCastle) {
+        if (world.canVisitStore()) {
             pause();
             StoreController.setIsStoreShowed();
             storeSwitcher.switchMenu();
@@ -1378,11 +1369,17 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void checkAlive() {
-        Character currentPlayer = world.getCharacter();
-        if (currentPlayer.getHP() <= 0) {
+    public void checkHeroAlive() {
+        if (!world.canHeroRevive()) {
             pause();
-            world.setDescription("You die!");
+            pauseButton.setVisible(false);
+            exitButton.setText("Quit Game");
+            exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent event) {
+                    System.exit(0);
+                }
+            });
+            world.setDescription("You die!!!");
         }
     }
 
@@ -1482,7 +1479,6 @@ public class LoopManiaWorldController {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
         }
-
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
         world.addItemFromStore(item);

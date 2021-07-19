@@ -8,6 +8,9 @@ import unsw.loopmania.model.Weapon;
  */
 public class Staff extends Weapon {
 
+    /**
+     * Constructor for Staff
+     */
     int trancePercentage;// unit : %
     int tranceDuration;// unit : second
 

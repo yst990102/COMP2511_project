@@ -16,10 +16,19 @@ public class Slug extends Enemy {
         this.speed = 5;
         this.battleRadius = 2;
         this.supportRadius = 2;
-
         this.goldWhenKilled = 50;
         this.expWhenKilled = 100;
-
     }
 
+    @Override
+    public void setHP(int newHP) {
+        if (newHP > 15) {
+            this.hp = 15;
+        }
+        if (newHP < 0 ) {
+            this.hp = 0;
+        }
+        this.hp = newHP;
+    }
+    
 }
