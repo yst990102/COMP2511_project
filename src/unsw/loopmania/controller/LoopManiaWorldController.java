@@ -435,7 +435,8 @@ public class LoopManiaWorldController {
         hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
         gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
         xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
-        soldier.textProperty().bind(Bindings.convert(world.getCharacter().soldierProperty()));
+        soldier.textProperty()
+                .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
 
         // bind world description to frontend property
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
@@ -449,7 +450,7 @@ public class LoopManiaWorldController {
         Character currentPlayer = world.getCharacter();
 
         String characterProperty = "HP : " + currentPlayer.getHP() + "\n" + "Gold : " + currentPlayer.getGold() + "\n"
-                + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getNumSoldier() + "\n"
+                + "XP : " + currentPlayer.getXP() + "\n" + "numSoldier : " + currentPlayer.getSoldiers().size() + "\n"
                 + "Soldiers : " + currentPlayer.getSoldiers() + "\n" + "\n" + "attack : " + currentPlayer.getATK()
                 + "\n" + "defence : " + currentPlayer.getDEF() + "\n\n" + "Weapon : "
                 + ((currentPlayer.getDressedWeapon() == null) ? " no weapon "
@@ -482,6 +483,7 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
             world.updateNthCycle();
+            updateCharacterInfo();
             updateCharacterDescription();
             world.updateIsGoalFinished();
             checkStoreVisit();
@@ -522,6 +524,14 @@ public class LoopManiaWorldController {
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+
+    public void updateCharacterInfo() {
+        hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+        gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
+        soldier.textProperty()
+                .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
     }
 
     /**

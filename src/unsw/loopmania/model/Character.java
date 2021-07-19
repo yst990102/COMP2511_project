@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -21,14 +22,13 @@ import unsw.loopmania.model.friendlyforces.Soldier;
  */
 public class Character extends MovingEntity {
     // TODO = potentially implement relationships between this class and other
-    
+
     /**
      * Constructor for Character 
      */
     private IntegerProperty hp;
     private IntegerProperty gold;
     private IntegerProperty xp;
-    private IntegerProperty numSoldier;
     private List<Soldier> soldiers;
     private int atk;
     private int def;
@@ -47,7 +47,6 @@ public class Character extends MovingEntity {
         hp = new SimpleIntegerProperty(300);
         gold = new SimpleIntegerProperty(100);
         xp = new SimpleIntegerProperty(0);
-        numSoldier = new SimpleIntegerProperty(0);
         soldiers = new ArrayList<Soldier>();
 
         atk = 5;
@@ -129,7 +128,7 @@ public class Character extends MovingEntity {
     public IntegerProperty xpProperty() {
         return xp;
     }
-    
+
     /**
      * Get the value of XP
      * @return int
@@ -144,30 +143,6 @@ public class Character extends MovingEntity {
      */
     public void setXP(int xp) {
         this.xp.set(xp);
-    }
-
-    /**
-     * Get the Soldier Property
-     * @return IntegerProperty
-     */
-    public IntegerProperty soldierProperty() {
-        return numSoldier;
-    }
-
-    /**
-     * Get the num of the Soldier
-     * @return int
-     */
-    public int getNumSoldier() {
-        return numSoldier.get();
-    }
-
-    /**
-     * Set the num of the Soldier
-     * @param numSoldier
-     */
-    public void setNumSoldier(int numSoldier) {
-        this.numSoldier.set(numSoldier);
     }
 
     public List<Soldier> getSoldiers() {

@@ -1,5 +1,8 @@
 package unsw.loopmania.model.enemies;
 
+import java.util.Random;
+
+import org.javatuples.Pair;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
@@ -7,6 +10,7 @@ import unsw.loopmania.model.PathPosition;
  * a basic form of enemy in the world
  */
 public class Zombie extends Enemy {
+    private int InfectionPercentage = 100;
 
     public Zombie(PathPosition position) {
         super(position);
@@ -21,15 +25,29 @@ public class Zombie extends Enemy {
         this.expWhenKilled = 200;
     }
 
+    public Pair<Integer, Boolean> getAttackByCritical() {
+        int randomInt = new Random().nextInt(100);
+
+        boolean isCriticalBite = false;
+        if (randomInt < criticalPercentage) {
+            isCriticalBite = true;
+        }
+        return new Pair<>(super.getAttack(), isCriticalBite);
+    }
+
     @Override
     public void setHP(int newHP) {
         if (newHP > 20) {
             this.hp = 20;
         }
-        if (newHP < 0 ) {
+        if (newHP < 0) {
             this.hp = 0;
         }
         this.hp = newHP;
+    }
+
+    public int getInfectionPercentage() {
+        return this.InfectionPercentage;
     }
 
 }

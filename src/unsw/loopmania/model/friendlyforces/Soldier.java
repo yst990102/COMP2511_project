@@ -5,7 +5,7 @@ import unsw.loopmania.model.FriendlyForce;
 public class Soldier extends FriendlyForce {
 
     public Soldier() {
-        setHp(10);
-        setAttack(1);
+        setHp(100);
+        setAttack(5);
     }
 }

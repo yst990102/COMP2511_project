@@ -28,6 +28,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import jdk.nashorn.api.tree.ForInLoopTree;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
@@ -183,7 +184,7 @@ public class LoopManiaWorld {
         this.character = character;
         this.character.setBag(unequippedInventoryItems);
     }
-    
+
     /**
      * Get the Character
      * @return
@@ -268,7 +269,7 @@ public class LoopManiaWorld {
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
-                fight(e);
+                fight(e, enemies);
                 setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
                 if (e.hp <= 0) {
                     defeatedEnemies.add(e);
@@ -283,7 +284,7 @@ public class LoopManiaWorld {
         }
         return defeatedEnemies;
     }
-    
+
     /**
      * Let Character Attack Enemy
      * @param character
@@ -426,16 +427,17 @@ public class LoopManiaWorld {
      * The function of a fight 
      * @param enemy
      */
-    public void fight(Enemy enemy) {
+    public void fight(Enemy enemy, List<Enemy> enemies) {
         FileOutputStream writer;
         try {
             writer = new FileOutputStream("fight.txt", true);
-            writer.write(("Battle between : character ==== " + enemy + "\n").getBytes());
 
             while (true) {
                 // Stage 00: Soldiers Attack Fight Enemy
-                SoldierFightEnemy(character.getSoldiers(), enemy, writer);
+                writer.write(("Battle between : soldier ==== " + enemy + "\n").getBytes());
+                SoldiersFightEnemy(character.getSoldiers(), enemy, enemies, writer);
 
+                writer.write(("Battle between : character ==== " + enemy + "\n").getBytes());
                 // Stage 01 : Character Attack Enemy
                 CharacterAttackEnemy(character, enemy, writer);
                 // if enemy died, break
@@ -464,23 +466,86 @@ public class LoopManiaWorld {
         }
     }
 
-    public void SoldierFightEnemy(List<Soldier> soldiers, Enemy enemy, FileOutputStream writer) throws IOException {
+    /**
+     * This is fight between soldiers and enemy
+     * @param soldiers
+     * @param enemy
+     * @param enemies
+     * @param writer
+     * @throws IOException
+     */
+    public void SoldiersFightEnemy(List<Soldier> soldiers, Enemy enemy, List<Enemy> enemies, FileOutputStream writer)
+            throws IOException {
+        List<Soldier> diedSoldiers = new ArrayList<Soldier>();
+
         for (Soldier soldier : soldiers) {
             while (true) {
-                soldier.setHp(soldier.getHp() - enemy.getAttack());
-
-                if (soldier.hp <= 0) {
-                    writer.write(("soldier is died!" + "\n").getBytes());
-                    break;
-                }
-
+                // soldier attack enemy
+                int enemyhpbefore = enemy.getHP();
                 enemy.setHP(enemy.getHP() - soldier.getAttack());
+                int enemyhpafter = enemy.getHP();
+
+                writer.write(("enemy loss " + (enemyhpbefore - enemyhpafter) + "HP. \n").getBytes());
 
                 if (enemy.hp <= 0) {
                     writer.write(("enemy died!!" + "\n\n").getBytes());
                     return;
                 }
+
+                // enemy attack soldier
+                if (enemy.getClass().equals(Zombie.class)) {
+                    Pair<Integer, Boolean> zombieAttack = ((Zombie) enemy).getAttackByCritical();
+
+                    int attack = zombieAttack.getValue0();
+                    boolean isCriticalBite = zombieAttack.getValue1();
+
+                    int randomInfection = new Random().nextInt(100);
+                    if (isCriticalBite && randomInfection < ((Zombie) enemy).getInfectionPercentage()) {
+                        diedSoldiers.add(soldier);
+
+                        for (Building b : buildingEntities) {
+                            if (b instanceof ZombiePitBuilding) {
+                                Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
+                                        Integer.valueOf(b.getY()));
+                                List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
+                                        zombieBuildingPos);
+
+                                int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
+                                int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
+                                Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
+                                enemies.add(zombie);
+                                break;
+                            }
+                        }
+
+                        // enemies.add(new Zombie(new PathPosition(0, orderedPath)));
+                        writer.write(("soldier become a new zombie. !!!!!! \n").getBytes());
+                        break;
+                    } else {
+                        int soldierhpbefore = soldier.getHp();
+                        soldier.setHp(soldier.getHp() - enemy.getAttack());
+                        int soldierhpafter = soldier.getHp();
+
+                        writer.write(("soldier loss " + (soldierhpbefore - soldierhpafter) + "HP. \n").getBytes());
+                    }
+                } else {
+                    int soldierhpbefore = soldier.getHp();
+                    soldier.setHp(soldier.getHp() - enemy.getAttack());
+                    int soldierhpafter = soldier.getHp();
+
+                    writer.write(("soldier loss " + (soldierhpbefore - soldierhpafter) + "HP. \n").getBytes());
+                }
+
+                if (soldier.hp <= 0) {
+                    diedSoldiers.add(soldier);
+                    writer.write(("soldier is died!" + "\n").getBytes());
+                    break;
+                }
             }
+        }
+
+        for (Soldier soldier : diedSoldiers) {
+            soldiers.remove(soldier);
         }
     }
 
@@ -501,17 +566,17 @@ public class LoopManiaWorld {
 
         if (randomInt < 5) {
             card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 10) {
+        } else if (randomInt < 50) {
             card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 15) {
+        } else if (randomInt < 51) {
             card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 20) {
+        } else if (randomInt < 52) {
             card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 85) {
-            card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 90) {
+            card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        } else if (randomInt < 91) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 35) {
+        } else if (randomInt < 95) {
             card = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         }
 
@@ -859,7 +924,7 @@ public class LoopManiaWorld {
     public int getNthCycle() {
         return nthCycle;
     }
-    
+
     /**
      * Update the Nth of Cycle
      */
@@ -870,7 +935,7 @@ public class LoopManiaWorld {
             setDescription("You have completed " + nthCycle + (nthCycle > 1 ? " cycles." : " cycle."));
         }
     }
-    
+
     /**
      * Get the NumStoreVisit
      * @return int
@@ -977,14 +1042,15 @@ public class LoopManiaWorld {
                 VampireCastleBuilding vampireCastle = (VampireCastleBuilding) buildingEntities.get(i);
                 if (vampireCastle.canSpawnVampire(character)) {
                     Pair<Integer, Integer> vampireBuildingPos = new Pair<>(Integer.valueOf(vampireCastle.getX()),
-                    Integer.valueOf(vampireCastle.getY()));
-                    List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(vampireBuildingPos);
-                    
+                            Integer.valueOf(vampireCastle.getY()));
+                    List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
+                            vampireBuildingPos);
+
                     int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
                     enemies.add(vampire);
-                    vampires.add(vampire);              
+                    vampires.add(vampire);
                 }
             }
         }
@@ -1002,7 +1068,8 @@ public class LoopManiaWorld {
                 if (character.getX() == 0 && character.getY() == 0) {
                     Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
                             Integer.valueOf(b.getY()));
-                    List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(zombieBuildingPos);
+                    List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
+                            zombieBuildingPos);
 
                     for (int j = 0; j < 2; j++) {
                         int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
@@ -1039,7 +1106,6 @@ public class LoopManiaWorld {
         for (Building b : buildingEntities) {
             if (b instanceof BarracksBuilding) {
                 if (character.getX() == b.getX() && character.getY() == b.getY()) {
-                    character.setNumSoldier(character.getNumSoldier() + 1);
                     character.getSoldiers().add(new Soldier());
                 }
             }
@@ -1058,8 +1124,8 @@ public class LoopManiaWorld {
             b = buildingIterator.next();
             if (b instanceof TrapBuilding) {
                 TrapBuilding trap = new TrapBuilding(new SimpleIntegerProperty(b.getX()),
-                new SimpleIntegerProperty(b.getY()));
-                Iterator<Enemy> enemyIterator  = enemies.iterator();
+                        new SimpleIntegerProperty(b.getY()));
+                Iterator<Enemy> enemyIterator = enemies.iterator();
                 while (enemyIterator.hasNext()) {
                     e = enemyIterator.next();
                     if (b.getX() == e.getX() && b.getY() == e.getY()) {
@@ -1067,7 +1133,7 @@ public class LoopManiaWorld {
                         e.setHP(e.getHP() - trap.getTrapAttack());
                         // if enemy is killed
                         if (e.getHP() == 0) {
-                            character.setGold(character.getGold()+ e.goldWhenKilled);
+                            character.setGold(character.getGold() + e.goldWhenKilled);
                             character.setXP(character.getXP() + e.expWhenKilled);
                             e.destroy();
                             enemyIterator.remove();
@@ -1092,8 +1158,8 @@ public class LoopManiaWorld {
             b = buildingIterator.next();
             if (b instanceof TowerBuilding) {
                 TowerBuilding tower = new TowerBuilding(new SimpleIntegerProperty(b.getX()),
-                    new SimpleIntegerProperty(b.getY()));
-                Iterator<Enemy> enemyIterator  = enemies.iterator();
+                        new SimpleIntegerProperty(b.getY()));
+                Iterator<Enemy> enemyIterator = enemies.iterator();
                 while (enemyIterator.hasNext()) {
                     e = enemyIterator.next();
                     if (Math.pow((e.getX() - b.getX()), 2) + Math.pow((e.getY() - b.getY()), 2) < Math
@@ -1102,7 +1168,7 @@ public class LoopManiaWorld {
                         e.setHP(e.getHP() - tower.getTowerAttack());
                         // if enemy is killed
                         if (e.getHP() == 0) {
-                            character.setGold(character.getGold()+ e.goldWhenKilled);
+                            character.setGold(character.getGold() + e.goldWhenKilled);
                             character.setXP(character.getXP() + e.expWhenKilled);
                             e.destroy();
                             enemyIterator.remove();
@@ -1131,8 +1197,8 @@ public class LoopManiaWorld {
             Item item;
             while (itemIterator.hasNext()) {
                 item = itemIterator.next();
-                if (item instanceof TheOneRing) {      
-                    heroHasTheOneRing = true;         
+                if (item instanceof TheOneRing) {
+                    heroHasTheOneRing = true;
                     item.destroy();
                     itemIterator.remove();
                     setDescription("You used a ring to revive!");
