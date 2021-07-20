@@ -264,18 +264,26 @@ public class LoopManiaWorld {
     public List<Enemy> runBattles() {
         // TODO = modify this - currently the character automatically wins all battles without any damage!
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
-        for (Enemy e : enemies) {
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
             // Pythagoras: a^2+b^2 < radius^2 to see if within radius
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
+                System.out.println("enemy == " + e + " is in range");
                 fight(e, enemies);
                 setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
                 if (e.hp <= 0) {
                     defeatedEnemies.add(e);
                 }
+
+            } else {
+                System.out.println("enemy == " + e + " is out of range, " + "x1 = " + e.getX() + "y1 = " + e.getY()
+                        + "x2 = " + character.getX() + " y2 = " + character.getY());
             }
         }
+        System.out.println("defeatedEnemies == " + defeatedEnemies);
+
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
             // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
@@ -503,20 +511,14 @@ public class LoopManiaWorld {
                     if (isCriticalBite && randomInfection < ((Zombie) enemy).getInfectionPercentage()) {
                         diedSoldiers.add(soldier);
 
-                        for (Building b : buildingEntities) {
-                            if (b instanceof ZombiePitBuilding) {
-                                Pair<Integer, Integer> zombieBuildingPos = new Pair<>(Integer.valueOf(b.getX()),
-                                        Integer.valueOf(b.getY()));
-                                List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
-                                        zombieBuildingPos);
+                        // born infected soldier zombie on same location with the infector zombie
+                        Zombie zombie = new Zombie(new PathPosition(0, orderedPath));
+                        zombie.x().set(enemy.getX());
+                        zombie.y().set(enemy.getY());
 
-                                int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
-                                int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
-                                Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
-                                enemies.add(zombie);
-                                break;
-                            }
-                        }
+                        writer.write(("enemies == " + enemies + "\n").getBytes());
+                        enemies.add(zombie);
+                        writer.write(("enemies == " + enemies + "\n").getBytes());
 
                         // enemies.add(new Zombie(new PathPosition(0, orderedPath)));
                         writer.write(("soldier become a new zombie. !!!!!! \n").getBytes());
