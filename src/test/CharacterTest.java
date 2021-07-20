@@ -40,7 +40,7 @@ public class CharacterTest {
         assertEquals(character.hpProperty().get(), 300);
         assertEquals(character.goldProperty().get(), 100);
         assertEquals(character.xpProperty().get(), 0);
-        assertEquals(character.soldierProperty().get(), 0);
+        assertEquals(character.getSoldiers().size(), 0);
 
         assertEquals(character.getATK(), 5);
         assertEquals(character.getDEF(), 0);

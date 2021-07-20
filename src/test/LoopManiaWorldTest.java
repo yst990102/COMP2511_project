@@ -35,12 +35,12 @@ import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
 
 public class LoopManiaWorldTest {
-    
+
     @Test
     public void testLoadCard() throws IOException {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
@@ -53,29 +53,29 @@ public class LoopManiaWorldTest {
         while (world.getCardEntities().size() != 8) {
             world.loadCard();
         }
-        
+
         // test remove oldest card
         Card oldestCard = world.getCardEntities().get(0);
         Card secondCard = world.getCardEntities().get(1);
         Card newestCard;
         int gold = world.getCharacter().getGold();
         int xp = world.getCharacter().getXP();
-       
+
         // load a new Card
         while (true) {
             if ((newestCard = world.loadCard()) != null) {
                 break;
             }
         }
-        
+
         // test success
         assertNotEquals(oldestCard, world.getCardEntities().get(0));
         assertEquals(newestCard, world.getCardEntities().get(7));
         assertEquals(7, newestCard.getX());
-        
+
         // test shiftCardsDownFromXCoordinate method
         assertEquals(0, secondCard.getX());
-        
+
         // test experience and gold gain after removing the oldest card
         assertEquals(gold + 100, world.getCharacter().getGold());
         assertEquals(xp + 100, world.getCharacter().getXP());
@@ -85,42 +85,42 @@ public class LoopManiaWorldTest {
     public void testGetTilePosAdjacentToPath() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
-        
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
 
-        Pair<Integer, Integer> aGrassTilePos = new Pair<Integer,Integer>(1, 1);
+        Pair<Integer, Integer> aGrassTilePos = new Pair<Integer, Integer>(1, 1);
 
         List<Pair<Integer, Integer>> pathPosAdjacentToGrassTile = world.getPathPosAdjacentToGrassTile(aGrassTilePos);
 
         assertEquals(4, pathPosAdjacentToGrassTile.size());
         // up path tile
-        assertEquals(new Pair<Integer,Integer>(1, 0), pathPosAdjacentToGrassTile.get(0));
+        assertEquals(new Pair<Integer, Integer>(1, 0), pathPosAdjacentToGrassTile.get(0));
         // down path tile
-        assertEquals(new Pair<Integer,Integer>(1, 2), pathPosAdjacentToGrassTile.get(1));
+        assertEquals(new Pair<Integer, Integer>(1, 2), pathPosAdjacentToGrassTile.get(1));
         // left path tile
-        assertEquals(new Pair<Integer,Integer>(0, 1), pathPosAdjacentToGrassTile.get(2));
+        assertEquals(new Pair<Integer, Integer>(0, 1), pathPosAdjacentToGrassTile.get(2));
         // right path tile
-        assertEquals(new Pair<Integer,Integer>(2, 1), pathPosAdjacentToGrassTile.get(3));
+        assertEquals(new Pair<Integer, Integer>(2, 1), pathPosAdjacentToGrassTile.get(3));
     }
 
     @Test
     public void testconvertCardToBuildingByCoordinates() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
@@ -130,7 +130,7 @@ public class LoopManiaWorldTest {
         Building vampireCastle;
 
         // load a vampire castle card
-        while(true) {
+        while (true) {
             if ((vampireCastleCard = world.loadCard()) instanceof VampireCastleCard) {
                 break;
             }
@@ -141,8 +141,9 @@ public class LoopManiaWorldTest {
         assertNotEquals(-1, world.getCardEntities().indexOf(vampireCastleCard));
 
         // convert card to building
-        vampireCastle = world.convertCardToBuildingByCoordinates(vampireCastleCard.getX(), vampireCastleCard.getY(), 1, 1, "VAMPIRE_CASTLE");
-    
+        vampireCastle = world.convertCardToBuildingByCoordinates(vampireCastleCard.getX(), vampireCastleCard.getY(), 1,
+                1, "VAMPIRE_CASTLE");
+
         // test card is removed
         assertEquals(-1, world.getCardEntities().indexOf(vampireCastleCard));
 
@@ -155,26 +156,26 @@ public class LoopManiaWorldTest {
     public void testCheckVampireSpawn() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card vampireCastleCard;
 
         // load a vampire castle card
-        while(true) {
+        while (true) {
             if ((vampireCastleCard = world.loadCard()) instanceof VampireCastleCard) {
                 break;
             }
@@ -185,8 +186,9 @@ public class LoopManiaWorldTest {
         assertNotEquals(-1, world.getCardEntities().indexOf(vampireCastleCard));
 
         // convert vamprie card to building
-        world.convertCardToBuildingByCoordinates(vampireCastleCard.getX(), vampireCastleCard.getY(), 1, 1, "VAMPIRE_CASTLE");
-        
+        world.convertCardToBuildingByCoordinates(vampireCastleCard.getX(), vampireCastleCard.getY(), 1, 1,
+                "VAMPIRE_CASTLE");
+
         // update number of cycle to 4
         for (int i = 0; i < 5; i++) {
             world.updateNthCycle();
@@ -199,31 +201,31 @@ public class LoopManiaWorldTest {
         // test one vamprie caslte spawn three vampire
         assertEquals(1, vampires.size());
     }
-    
+
     @Test
     public void testCheckZombieSpawn() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card zombiePitCard;
 
         // load a zombie pit card
-        while(true) {
+        while (true) {
             if ((zombiePitCard = world.loadCard()) instanceof ZombiePitCard) {
                 break;
             }
@@ -247,26 +249,26 @@ public class LoopManiaWorldTest {
     public void testCheckHeroPassVillage() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card villageCard;
 
         // load a vampire castle card
-        while(true) {
+        while (true) {
             if ((villageCard = world.loadCard()) instanceof VillageCard) {
                 break;
             }
@@ -278,7 +280,7 @@ public class LoopManiaWorldTest {
 
         // convert vamprie card to building
         world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 0, 0, "VILLAGE");
-        
+
         // set character health
         character.setHP(250);
         int hp = character.getHP();
@@ -292,26 +294,26 @@ public class LoopManiaWorldTest {
     public void testCheckHeroPassBarracks() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card barrackCard;
 
         // load a vampire castle card
-        while(true) {
+        while (true) {
             if ((barrackCard = world.loadCard()) instanceof BarracksCard) {
                 break;
             }
@@ -325,35 +327,35 @@ public class LoopManiaWorldTest {
         world.convertCardToBuildingByCoordinates(barrackCard.getX(), barrackCard.getY(), 0, 0, "BARRACKS");
 
         // test get soldier when pass a barrack
-        assertEquals(0, character.getNumSoldier());
+        assertEquals(0, character.getSoldiers().size());
         world.checkHeroPassBarracks();
-        assertEquals(1, character.getNumSoldier());
+        assertEquals(1, character.getSoldiers().size());
     }
 
     @Test
     public void testCheckEnemyPassTrap() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card trapCard;
         Card zombiePitCard;
 
-        while(true) {
+        while (true) {
             if ((trapCard = world.loadCard()) instanceof BarracksCard) {
                 break;
             }
@@ -364,7 +366,7 @@ public class LoopManiaWorldTest {
         assertNotEquals(-1, world.getCardEntities().indexOf(trapCard));
 
         // spawn enemies
-         while(true) {
+        while (true) {
             if ((zombiePitCard = world.loadCard()) instanceof ZombiePitCard) {
                 break;
             }
@@ -372,9 +374,10 @@ public class LoopManiaWorldTest {
         world.convertCardToBuildingByCoordinates(zombiePitCard.getX(), zombiePitCard.getY(), 1, 1, "ZOMBIE_PIT");
         List<Zombie> zombies = world.checkZombieSpawn();
         int zombieHP = zombies.get(0).getHP();
-        
+
         // convert trap card to building
-        Building building = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), zombies.get(0).getX(), zombies.get(0).getY(), "TRAP");
+        Building building = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(),
+                zombies.get(0).getX(), zombies.get(0).getY(), "TRAP");
         world.checkEnemyPassTrap();
 
         // test trap is removed after 
@@ -389,27 +392,27 @@ public class LoopManiaWorldTest {
     public void testCheckEnemyInTowerRadius() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card towerCard;
         Card zombiePitCard;
 
         // load a tower card
-        while(true) {
+        while (true) {
             if ((towerCard = world.loadCard()) instanceof TowerCard) {
                 break;
             }
@@ -420,7 +423,7 @@ public class LoopManiaWorldTest {
         assertNotEquals(-1, world.getCardEntities().indexOf(towerCard));
 
         // spawn enemies
-        while(true) {
+        while (true) {
             if ((zombiePitCard = world.loadCard()) instanceof ZombiePitCard) {
                 break;
             }
@@ -428,9 +431,10 @@ public class LoopManiaWorldTest {
         world.convertCardToBuildingByCoordinates(zombiePitCard.getX(), zombiePitCard.getY(), 1, 1, "ZOMBIE_PIT");
         List<Zombie> zombies = world.checkZombieSpawn();
         int zombieHP = zombies.get(0).getHP();
-        
+
         // convert tower card to building
-        Building building = world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), zombies.get(0).getX(), zombies.get(0).getY(), "TOWER");
+        Building building = world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(),
+                zombies.get(0).getX(), zombies.get(0).getY(), "TOWER");
         world.checkEnemyInTowerRadius();
 
         // test enemy is attacked by zombie pit
@@ -442,26 +446,26 @@ public class LoopManiaWorldTest {
     public void testCheckHeroInCampfireRadius() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(1, 0);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 2);
-        Pair<Integer, Integer> pathPos3 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos4 = new Pair<Integer,Integer>(2, 1);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 0);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 1);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
         orderedPath.add(pathPos3);
         orderedPath.add(pathPos4);
-                
+
         Card campfireCard;
 
         // load a campfire card
-        while(true) {
+        while (true) {
             if ((campfireCard = world.loadCard()) instanceof CampfireCard) {
                 break;
             }
@@ -484,7 +488,7 @@ public class LoopManiaWorldTest {
     public void testCanHeroRevive() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
@@ -499,12 +503,12 @@ public class LoopManiaWorldTest {
         // test hero can revive wit the one ring
         assertEquals(true, world.canHeroRevive());
     }
-    
+
     @Test
     public void testAddItemFromStore() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
@@ -523,7 +527,7 @@ public class LoopManiaWorldTest {
     public void testGetFirstAvailableSlotForItem() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
 
@@ -539,7 +543,7 @@ public class LoopManiaWorldTest {
     public void testRemoveUnequippedInventoryItem() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
 
@@ -557,7 +561,7 @@ public class LoopManiaWorldTest {
     public void testRemoveUnequippedInventoryItemByCoordinates() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
 
@@ -576,18 +580,18 @@ public class LoopManiaWorldTest {
     public void testRunTickMoves() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
 
-        Pair<Integer, Integer> pathPos1 = new Pair<Integer,Integer>(0, 1);
-        Pair<Integer, Integer> pathPos2 = new Pair<Integer,Integer>(1, 0);
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(0, 1);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 0);
 
         orderedPath.add(pathPos1);
         orderedPath.add(pathPos2);
-        
+
         // test initial hero state
         assertEquals(0, character.getX());
         assertEquals(0, character.getY());
@@ -602,12 +606,12 @@ public class LoopManiaWorldTest {
     public void testUpdateNthCycle() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
-        
+
         // test initial hero state
         assertEquals(0, character.getX());
         assertEquals(0, character.getY());
@@ -615,7 +619,7 @@ public class LoopManiaWorldTest {
         for (int i = 0; i < 5; i++) {
             world.updateNthCycle();
         }
-        
+
         // test update number of cycle
         assertEquals(5, world.getNthCycle());
     }
@@ -624,15 +628,15 @@ public class LoopManiaWorldTest {
     public void testCanVisitStore() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
         world.setCharacter(character);
-        
+
         // test initial state
         assertEquals(false, world.canVisitStore());
-        
+
         // test complete 1 cycle
         world.updateNthCycle();
         assertEquals(true, world.canVisitStore());
@@ -658,7 +662,7 @@ public class LoopManiaWorldTest {
     public void testAddUnequippedEquipment() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
@@ -675,7 +679,7 @@ public class LoopManiaWorldTest {
     public void testAddUnusedPotion() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
@@ -692,7 +696,7 @@ public class LoopManiaWorldTest {
     public void testAddRareItem() {
         // initialize world
         List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
-        orderedPath.add(new Pair<Integer,Integer>(0, 0));
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
         JSONObject goalObject = new JSONObject();
         LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
         Character character = new Character(new PathPosition(0, orderedPath));
