@@ -484,9 +484,8 @@ public class LoopManiaWorld {
      */
     public void SoldiersFightEnemy(List<Soldier> soldiers, Enemy enemy, List<Enemy> enemies, FileOutputStream writer)
             throws IOException {
-        List<Soldier> diedSoldiers = new ArrayList<Soldier>();
-
-        for (Soldier soldier : soldiers) {
+        for (int i = 0; i < soldiers.size(); i++) {
+            Soldier soldier = soldiers.get(i);
             while (true) {
                 // soldier attack enemy
                 int enemyhpbefore = enemy.getHP();
@@ -509,7 +508,7 @@ public class LoopManiaWorld {
 
                     int randomInfection = new Random().nextInt(100);
                     if (isCriticalBite && randomInfection < ((Zombie) enemy).getInfectionPercentage()) {
-                        diedSoldiers.add(soldier);
+                        soldiers.remove(i);
 
                         // born infected soldier zombie on same location with the infector zombie
                         Zombie zombie = new Zombie(new PathPosition(0, orderedPath));
@@ -539,15 +538,11 @@ public class LoopManiaWorld {
                 }
 
                 if (soldier.hp <= 0) {
-                    diedSoldiers.add(soldier);
+                    soldiers.remove(i);
                     writer.write(("soldier is died!" + "\n").getBytes());
                     break;
                 }
             }
-        }
-
-        for (Soldier soldier : diedSoldiers) {
-            soldiers.remove(soldier);
         }
     }
 
