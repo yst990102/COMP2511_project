@@ -4,11 +4,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Item extends StaticEntity {
 
+    private String description;
+    private int price;
+
     /**
      * Constructor for Item
      */
-    private String description;
-
     public Item(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
@@ -27,6 +28,22 @@ public class Item extends StaticEntity {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Get the Price
+     * @return int 
+     */
+    public int getPrice() {
+        return this.price;
+    }
+
+    /**
+     * Set the Price
+     * @param price
+     */
+    public void setPrice(int price) {
+        this.price = price;
     }
 
 }

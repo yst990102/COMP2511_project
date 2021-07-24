@@ -14,6 +14,7 @@
 
 ### 2. Default attributes of different types of enemy are listed below:
 
+================= Common Enemy ==================
 Slug
 - HP: 15
 - Attack: 5
@@ -38,6 +39,24 @@ Vampire
 - chance of critical bite: 20%
 - additional number of attacks: (1,3)
 - additional damage of a critical bite: 10
+
+================= BOSS ==================
+Doggie
+- HP: 75
+- Attack: 20
+- Speed: 5
+- battle radius: 2
+- support radius: 2
+- Stun percentage : 20%
+- Stun Round : 2
+
+ElanMuske
+- HP: 150
+- Attack: 35
+- Speed: 5
+- battle radius: 2
+- support radius: 2
+- treatment_amount: 10
 
 
 ### 3. There will be 5 slugs spawned randomly on path tiles each turn.
@@ -92,6 +111,14 @@ Helmet
 - Add Defence: 2
 - Decrease Attack (Character): 2
 - Decrease Attack (enemy): 2
+
+Anduril
+- Add Attack: 5 
+- Add Attack When Attacking Boss: 8
+
+TreeStump
+- Add Defence: 5 
+- Add Defence When Defending Boss: 8
 
 
 #### 2. A health potion will heal 50 HP.
@@ -170,6 +197,13 @@ Campfire
 - Health potion: $200
 
 - The One Ring: $500
+
+- Anduril: $500
+
+- TreeStump: $500
+
+- DoggieCoin: $50-$100 when Muske Dead
+              $200-$300 when Muske Alive
 
 
 #### 2. When the old card is replaced by the new one, the Character receives $100 Gold, 100 XP.
