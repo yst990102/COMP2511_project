@@ -1,16 +1,16 @@
 package unsw.loopmania.model.equipments.weapons;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Weapon;
 
 /**
  * represents an equipped or unequipped sword in the backend world
  */
-public class Staff extends Weapon {
+public class Staff extends Equipment implements Weapon {
 
-    /**
-     * Constructor for Staff
-     */
+    private int attack;
+
     int trancePercentage;// unit : %
     int tranceDuration;// unit : second
 
@@ -24,12 +24,19 @@ public class Staff extends Weapon {
 
         setPrice(200);
 
-        String description = 
-        "===== Staff =====\n"
-       +"+ 2 attack\n\n"
-       +"----Skill:\n"
-       +"    a random chance of inflicting a trance, which transforms the attacked enemy into an allied soldier temporarily";
+        String description = "===== Staff =====\n" + "+ 2 attack\n\n" + "----Skill:\n"
+                + "    a random chance of inflicting a trance, which transforms the attacked enemy into an allied soldier temporarily";
 
-       setDescription(description);
+        setDescription(description);
+    }
+
+    @Override
+    public int getAttack() {
+        return this.attack;
+    }
+
+    @Override
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 }
