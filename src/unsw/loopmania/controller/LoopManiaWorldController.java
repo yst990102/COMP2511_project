@@ -65,7 +65,9 @@ import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.cards.VampireCastleCard;
 import unsw.loopmania.model.cards.ZombiePitCard;
 import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.rareItems.Anduril;
 import unsw.loopmania.model.rareItems.TheOneRing;
+import unsw.loopmania.model.rareItems.TreeStump;
 import unsw.loopmania.model.cards.TowerCard;
 import unsw.loopmania.model.cards.VillageCard;
 import unsw.loopmania.model.cards.BarracksCard;
@@ -88,7 +90,7 @@ import unsw.loopmania.strategy.ModeStrategy;
  */
 enum DRAGGABLE_TYPE {
     CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD,
-    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING
+    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING, ANDURIL, TREESTUMP
 }
 
 enum CLICKABLE_TYPE {
@@ -649,6 +651,12 @@ public class LoopManiaWorldController {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
         } else if (item.getClass().equals(TheOneRing.class)) {
             view = new ImageView(TheOneRing.image);
+        } else if (item.getClass().equals(Anduril.class)) {
+            view = new ImageView(Anduril.image);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.ANDURIL, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(TreeStump.class)) {
+            view = new ImageView(TreeStump.image);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.TREESTUMP, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
         }
@@ -724,7 +732,7 @@ public class LoopManiaWorldController {
                         Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(x), Integer.valueOf(y));
                         boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
                         boolean targetPosInHelmetSlot = x == 1 && y == 0 ? true : false;
-                        boolean targetPosInSwordSlot = x == 0 && y == 1 ? true : false;
+                        boolean targetPosInWeaponSlot = x == 0 && y == 1 ? true : false;
                         boolean targetPosInArmourSlot = x == 1 && y == 1 ? true : false;
                         boolean targetPosInShieldSlot = x == 2 && y == 1 ? true : false;
                         // Places at 0,0 - will need to take coordinates once that is implemented
@@ -802,7 +810,7 @@ public class LoopManiaWorldController {
                             }
                             break;
                         case SWORD:
-                            if (targetPosInSwordSlot) {
+                            if (targetPosInWeaponSlot) {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -815,7 +823,7 @@ public class LoopManiaWorldController {
                             }
                             break;
                         case STAKE:
-                            if (targetPosInSwordSlot) {
+                            if (targetPosInWeaponSlot) {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -828,7 +836,7 @@ public class LoopManiaWorldController {
                             }
                             break;
                         case STAFF:
-                            if (targetPosInSwordSlot) {
+                            if (targetPosInWeaponSlot) {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -846,7 +854,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                Armour armour = new BasicArmour(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedArmour(armour);
                                 updateCharacterDescription();
@@ -860,7 +868,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                BasicShield shield = new BasicShield(new SimpleIntegerProperty(0),
+                                Shield shield = new BasicShield(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedShield(shield);
                                 updateCharacterDescription();
@@ -877,6 +885,36 @@ public class LoopManiaWorldController {
                                 Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedHelmet(helmet);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+
+                        case ANDURIL:
+                            if (targetPosInWeaponSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedWeapon(anduril);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+
+                        case TREESTUMP:
+                            if (targetPosInShieldSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedShield(treeStump);
                                 updateCharacterDescription();
                             } else {
                                 view.setVisible(true);
