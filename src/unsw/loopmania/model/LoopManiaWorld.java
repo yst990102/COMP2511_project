@@ -223,10 +223,10 @@ public class LoopManiaWorld {
      * spawns enemies if the conditions warrant it, adds to world
      * @return list of the enemies to be displayed on screen
      */
-    public List<Enemy> possiblySpawnEnemies() {
+    public List<Slug> checkSlugSpawn() {
         // TODO = expand this very basic version
         Pair<Integer, Integer> pos = possiblyGetBasicEnemySpawnPosition();
-        List<Enemy> spawningEnemies = new ArrayList<>();
+        List<Slug> spawningEnemies = new ArrayList<>();
         if (pos != null) {
             int indexInPath = orderedPath.indexOf(pos);
             Slug enemy = new Slug(new PathPosition(indexInPath, orderedPath));
