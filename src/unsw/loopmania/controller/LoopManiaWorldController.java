@@ -1324,14 +1324,6 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
-        case LEFT:
-            decreaseGameSpeed();
-            System.out.println(gameSpeed);
-            break;
-        case RIGHT:
-            increaseGameSpeed();
-            System.out.println(gameSpeed);
-            break;
         default:
             break;
         }
@@ -1527,20 +1519,12 @@ public class LoopManiaWorldController {
     public void increaseGameSpeed() {
         if (gameSpeed - 0.03 > 0.028) {
             gameSpeed -= 0.03;
-            if (timeline != null) {
-                timeline.stop();
-                startTimer();
-            }
         }
     }
 
     public void decreaseGameSpeed() {
         if (gameSpeed + 0.03 < 0.31) {
             gameSpeed += 0.03;
-            if (timeline != null) {
-                timeline.stop();
-                startTimer();
-            }
         }
     }
 
