@@ -8,10 +8,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch StartGame",
+            "request": "launch",
+            "mainClass": "unsw.loopmania.controller.StartGame",
+            "projectName": "21T2-cs2511-project_c5760f1f"
+        },
+        {
+            "type": "java",
             "name": "Launch LoopManiaApplication",
             "request": "launch",
             "mainClass": "unsw.loopmania.controller.LoopManiaApplication",
-            "vmArgs": "--module-path ./lib/symlink_javafx --add-modules javafx.controls,javafx.fxml -enableassertions",
+            "vmArgs": "--module-path ./lib --add-modules javafx.controls,javafx.fxml -enableassertions",
             "projectName": "21T2-cs2511-project_c5760f1f"
         }
     ]
