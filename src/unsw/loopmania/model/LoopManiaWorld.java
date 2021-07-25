@@ -41,7 +41,9 @@ import unsw.loopmania.model.equipments.weapons.Sword;
 import unsw.loopmania.model.friendlyforces.Soldier;
 import unsw.loopmania.model.goal.GoalComposite;
 import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.rareItems.Anduril;
 import unsw.loopmania.model.rareItems.TheOneRing;
+import unsw.loopmania.model.rareItems.TreeStump;
 import unsw.loopmania.model.buildings.BarracksBuilding;
 import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.CampfireBuilding;
@@ -702,10 +704,28 @@ public class LoopManiaWorld {
 
         // now we insert the new rareitem
 
-        RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(the_one_ring);
-        return the_one_ring;
+        int randint = new Random(System.currentTimeMillis()).nextInt(2);
+
+        RareItem dropped_item;
+
+        switch (randint) {
+        case 1:
+            dropped_item = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            break;
+        case 0:
+            dropped_item = new Anduril(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            break;
+
+        default:
+            dropped_item = new TreeStump(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            break;
+        }
+
+        unequippedInventoryItems.add(dropped_item);
+        return dropped_item;
 
     }
 
