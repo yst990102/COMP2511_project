@@ -233,7 +233,7 @@ public class LoopManiaWorldController {
 
     private boolean isPaused;
     private LoopManiaWorld world;
-    private StoreController StoreController;
+    private StoreController storeController;
 
     private SettingController settingController;
 
@@ -331,15 +331,7 @@ public class LoopManiaWorldController {
 
     private MenuSwitcher storeSwitcher;
 
-    private MenuSwitcher settingSwitcher;
-
-    @FXML
-    private Button setting;
-
-    /** 
-     * bgm of the game
-    */
-    private MediaPlayer bgm;
+    private double gameSpeed;
 
     /**
      * @param world           world object loaded from file
@@ -348,6 +340,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        gameSpeed = 0.3;
         entityImages = new ArrayList<>(initialEntities);
 
         // Cards
@@ -497,7 +490,7 @@ public class LoopManiaWorldController {
         pauseButtondescription.setText("Game running. Click to pause.");
         // trigger adding code to process main game logic to queue. JavaFX will target
         // framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(gameSpeed), event -> {
             world.runTickMoves();
             world.updateNthCycle();
             updateCharacterInfo();
@@ -508,9 +501,6 @@ public class LoopManiaWorldController {
             checkHeroAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
-
-            // refresh character hp after battle
-            hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
 
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
@@ -1397,7 +1387,7 @@ public class LoopManiaWorldController {
     public void checkStoreVisit() {
         if (world.canVisitStore()) {
             pause();
-            StoreController.setIsStoreShowed();
+            storeController.setIsStoreShowed();
             storeSwitcher.switchMenu();
         }
     }
@@ -1540,7 +1530,7 @@ public class LoopManiaWorldController {
     }
 
     public void setStoreController(StoreController controller) {
-        this.StoreController = controller;
+        this.storeController = controller;
     }
 
     public void setSettingController(SettingController controller) {
@@ -1553,6 +1543,18 @@ public class LoopManiaWorldController {
 
     public ModeStrategy getModeStrategy() {
         return world.getModeStrategy();
+    }
+
+    public void increaseGameSpeed() {
+        if (gameSpeed - 0.03 > 0.028) {
+            gameSpeed -= 0.03;
+        }
+    }
+
+    public void decreaseGameSpeed() {
+        if (gameSpeed + 0.03 < 0.31) {
+            gameSpeed += 0.03;
+        }
     }
 
     /**
