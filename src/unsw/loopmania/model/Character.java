@@ -9,8 +9,6 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Zombie;

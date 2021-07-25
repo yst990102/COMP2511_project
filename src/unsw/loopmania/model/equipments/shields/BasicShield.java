@@ -1,6 +1,9 @@
 package unsw.loopmania.model.equipments.shields;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Shield;
 
@@ -8,6 +11,9 @@ import unsw.loopmania.model.Shield;
  * represents an equipped or unequipped sword in the backend world
  */
 public class BasicShield extends Equipment implements Shield {
+
+    public static Image image = new Image((new File("src/assets/shield.png")).toURI().toString());
+
     private int defence;
     private int critical_percentage_decrease; // decrease 60% chance of critical bite from enemy
 

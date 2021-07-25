@@ -1,8 +1,11 @@
 package unsw.loopmania.model.enemies;
 
+import java.io.File;
 import java.util.Random;
 
 import org.javatuples.Pair;
+
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
@@ -10,6 +13,8 @@ import unsw.loopmania.model.PathPosition;
  * a basic form of enemy in the world
  */
 public class Zombie extends Enemy {
+    public static Image image = new Image((new File("src/assets/zombie.png")).toURI().toString());
+
     private int InfectionPercentage = 100;
 
     public Zombie(PathPosition position) {

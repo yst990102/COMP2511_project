@@ -1,6 +1,5 @@
-package unsw.loopmania.model.buildings;
+package unsw.loopmania.model;
 
-import unsw.loopmania.model.StaticEntity;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Building extends StaticEntity {

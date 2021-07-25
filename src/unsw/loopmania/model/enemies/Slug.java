@@ -1,5 +1,8 @@
 package unsw.loopmania.model.enemies;
 
+import java.io.File;
+
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
@@ -7,6 +10,8 @@ import unsw.loopmania.model.PathPosition;
  * a basic form of enemy in the world
  */
 public class Slug extends Enemy {
+
+    public static Image image = new Image((new File("src/assets/slug.png")).toURI().toString());
 
     public Slug(PathPosition position) {
         super(position);
