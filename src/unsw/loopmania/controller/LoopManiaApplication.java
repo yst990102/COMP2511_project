@@ -30,7 +30,8 @@ public class LoopManiaApplication extends Application {
         primaryStage.setResizable(false);
 
         // load the main game
-        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader(
+                "world_with_twists_and_turns.json");
         mainController = loopManiaLoader.loadController();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("../view/LoopManiaView.fxml"));
         gameLoader.setController(mainController);
@@ -55,25 +56,48 @@ public class LoopManiaApplication extends Application {
         mainController.setStoreController(storeController);
         FXMLLoader storeLoader = new FXMLLoader(getClass().getResource("../view/StoreView.fxml"));
         storeLoader.setController(storeController);
-        Parent storeRoot =  storeLoader.load();
+        Parent storeRoot = storeLoader.load();
+
+        // load the setting
+        SettingController settingController = new SettingController();
+        settingController.setMainController(mainController);
+        settingController.setBgm();
+        mainController.setSettingController(settingController);
+        FXMLLoader settingLoader = new FXMLLoader(getClass().getResource("../view/Settings.fxml"));
+        settingLoader.setController(settingController);
+        Parent settingRoot = settingLoader.load();
 
         // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
-        
+
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu   
-        mainMenuController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
+        mainMenuController.setModeSwitcher(() -> {
+            switchToRoot(scene, selectModeRoot, primaryStage);
+        });
 
         selectModeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
         });
 
-        mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
-        mainController.setStoreSwitcher(() -> {switchToRoot(scene, storeRoot, primaryStage);});
+        mainController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
+        mainController.setStoreSwitcher(() -> {
+            switchToRoot(scene, storeRoot, primaryStage);
+        });
+        mainController.setSettingSwitcher(() -> {
+            switchToRoot(scene, settingRoot, primaryStage);
+        });
 
-        storeController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
-        
+        storeController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+        });
+        settingController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+        });
+
         // deploy the main onto the stage
         gameRoot.requestFocus();
         primaryStage.setScene(scene);
@@ -81,7 +105,7 @@ public class LoopManiaApplication extends Application {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         // wrap up activities when exit program
         mainController.terminate();
     }
@@ -89,7 +113,7 @@ public class LoopManiaApplication extends Application {
     /**
      * switch to a different Root
      */
-    private void switchToRoot(Scene scene, Parent root, Stage stage){
+    private void switchToRoot(Scene scene, Parent root, Stage stage) {
         scene.setRoot(root);
         root.requestFocus();
         stage.setScene(scene);

@@ -37,9 +37,14 @@ import javafx.scene.Cursor;
 import javafx.util.Duration;
 import javafx.beans.binding.Bindings;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.beans.property.DoubleProperty;
+
 import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import unsw.loopmania.model.Character;
 import unsw.loopmania.model.LoopManiaWorld;
@@ -230,6 +235,8 @@ public class LoopManiaWorldController {
     private LoopManiaWorld world;
     private StoreController StoreController;
 
+    private SettingController settingController;
+
     /**
      * runs the periodic game logic - second-by-second moving of character through
      * maze, as well as enemies, and running of battles
@@ -323,6 +330,16 @@ public class LoopManiaWorldController {
     private MenuSwitcher mainMenuSwitcher;
 
     private MenuSwitcher storeSwitcher;
+
+    private MenuSwitcher settingSwitcher;
+
+    @FXML
+    private Button setting;
+
+    /** 
+     * bgm of the game
+    */
+    private MediaPlayer bgm;
 
     /**
      * @param world           world object loaded from file
@@ -1355,8 +1372,26 @@ public class LoopManiaWorldController {
         mainMenuSwitcher.switchMenu();
     }
 
+    @FXML
+    void switchToSetting(MouseEvent event) {
+        pause();
+        settingSwitcher.switchMenu();
+    }
+
     public void setStoreSwitcher(MenuSwitcher storeSwitcher) {
         this.storeSwitcher = storeSwitcher;
+    }
+
+    public void setSettingSwitcher(MenuSwitcher settingSwitcher) {
+        this.settingSwitcher = settingSwitcher;
+    }
+
+    public MediaPlayer getBgm() {
+        return this.bgm;
+    }
+
+    public void setBgm(MediaPlayer bgm) {
+        this.bgm = bgm;
     }
 
     public void checkStoreVisit() {
@@ -1506,6 +1541,10 @@ public class LoopManiaWorldController {
 
     public void setStoreController(StoreController controller) {
         this.StoreController = controller;
+    }
+
+    public void setSettingController(SettingController controller) {
+        this.settingController = controller;
     }
 
     public void setModeStrategy(ModeStrategy strategy) {
