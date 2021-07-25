@@ -390,7 +390,7 @@ public class LoopManiaWorldController {
     public void initialize() {
         // TODO = load more images/entities during initialization
 
-        Image pathTilesImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
+        Image pathTilesImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
         Image inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Image cardSlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
