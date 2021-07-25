@@ -264,25 +264,43 @@ public class LoopManiaWorld {
     public List<Enemy> runBattles() {
         // TODO = modify this - currently the character automatically wins all battles without any damage!
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy e = enemies.get(i);
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
-                // fight...
-                // System.out.println("enemy == " + e + " is in range");
-                fight(e, enemies);
-                setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
-                if (e.hp <= 0) {
-                    defeatedEnemies.add(e);
-                }
 
-            } else {
-                // System.out.println("enemy == " + e + " is out of range, " + "x1 = " + e.getX() + "y1 = " + e.getY()
-                //         + "x2 = " + character.getX() + " y2 = " + character.getY());
+        // check if there is enemy in battle radius
+        List<Enemy> enemies_battled = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
+            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) <= Math
+                    .pow(e.battleRadius, 2)) {
+                enemies_battled.add(e);
             }
         }
-        // System.out.println("defeatedEnemies == " + defeatedEnemies);
+
+        if (enemies_battled.isEmpty()) {
+            return defeatedEnemies;
+        } else {
+            for (Enemy e : enemies) {
+                if (enemies_battled.contains(e)) {
+                    continue;
+                } else {
+                    if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) <= Math
+                            .pow(e.supportRadius, 2)) {
+                        enemies_battled.add(e);
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < enemies_battled.size(); i++) {
+            Enemy e = enemies_battled.get(i);
+
+            // fight...
+            // System.out.println("enemy == " + e + " is in range");
+            fight(e, enemies);
+            setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
+            if (e.hp <= 0) {
+                defeatedEnemies.add(e);
+            }
+
+        }
 
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list

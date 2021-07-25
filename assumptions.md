@@ -19,23 +19,23 @@ Slug
 - HP: 15
 - Attack: 5
 - Speed: 5
-- battle radius: 2
-- support radius: 2
+- battle radius: 1
+- support radius: 1
 
 Zombie
 - HP: 20
 - Attack: 10
 - Speed: 2
-- battle radius: 3
-- support radius: 3
+- battle radius: 2
+- support radius: 2
 - chance of critical bite: 20%
 
 Vampire
 - HP: 25
 - Attack: 20
 - Speed: 3
-- battle radius: 5
-- support radius: 5
+- battle radius: 2
+- support radius: 3
 - chance of critical bite: 20%
 - additional number of attacks: (1,3)
 - additional damage of a critical bite: 10
@@ -45,8 +45,8 @@ Doggie
 - HP: 75
 - Attack: 20
 - Speed: 5
-- battle radius: 2
-- support radius: 2
+- battle radius: 1
+- support radius: 1
 - Stun percentage : 20%
 - Stun Round : 2
 
@@ -54,8 +54,8 @@ ElanMuske
 - HP: 150
 - Attack: 35
 - Speed: 5
-- battle radius: 2
-- support radius: 2
+- battle radius: 1
+- support radius: 1
 - treatment_amount: 10
 
 

@@ -28,8 +28,8 @@ public class Doggie extends Boss {
         this.hp = 75;
         this.attack = 20;
         this.speed = 5;
-        this.battleRadius = 2;
-        this.supportRadius = 2;
+        this.battleRadius = 1;
+        this.supportRadius = 1;
 
     }
 

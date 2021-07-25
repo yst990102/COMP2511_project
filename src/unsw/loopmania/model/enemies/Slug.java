@@ -14,8 +14,8 @@ public class Slug extends Enemy {
         this.hp = 15;
         this.attack = 5;
         this.speed = 5;
-        this.battleRadius = 2;
-        this.supportRadius = 2;
+        this.battleRadius = 1;
+        this.supportRadius = 1;
         this.criticalPercentage = 0;
         this.goldWhenKilled = 50;
         this.expWhenKilled = 100;
