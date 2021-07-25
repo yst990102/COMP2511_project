@@ -76,6 +76,7 @@ public class SettingController {
     }
 
     @FXML
+<<<<<<< HEAD
     private void handlePlusButtonClick() {
         if (speed < 10) {
             speed++;
@@ -117,4 +118,40 @@ public class SettingController {
         this.gameController = controller;
     }
     
+=======
+    void NextSong(MouseEvent event) {
+
+    }
+
+    @FXML
+    void PreviousSong(MouseEvent event) {
+
+    }
+
+    public void setMainController(LoopManiaWorldController controller) {
+        this.mainController = controller;
+    }
+
+    public void setGameSwitcher(MenuSwitcher gameSwitcher) {
+        this.gameSwitcher = gameSwitcher;
+    }
+
+    public void setBgm() {
+        // bgm
+        String bgmPath = "src/unsw/loopmania/bgm/bgm01_RISE.mp3";
+        Media media = new Media(Paths.get(bgmPath).toUri().toString());
+
+        MediaPlayer bgm = new MediaPlayer(media);
+
+        mainController.setBgm(bgm);
+
+        bgm.setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                bgm.volumeProperty().bind(bgmVolume.valueProperty());
+                bgm.play();
+            }
+        });
+    }
+>>>>>>> 5ea36d02ea9a27653f4d6f2261155dfadc89f747
 }

@@ -237,6 +237,8 @@ public class LoopManiaWorldController {
 
     private SettingController settingController;
 
+    private SettingController settingController;
+
     /**
      * runs the periodic game logic - second-by-second moving of character through
      * maze, as well as enemies, and running of battles
@@ -1531,6 +1533,10 @@ public class LoopManiaWorldController {
 
     public void setStoreController(StoreController controller) {
         this.storeController = controller;
+    }
+
+    public void setSettingController(SettingController controller) {
+        this.settingController = controller;
     }
 
     public void setSettingController(SettingController controller) {
