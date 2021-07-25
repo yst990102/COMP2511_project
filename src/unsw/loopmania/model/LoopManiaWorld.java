@@ -714,11 +714,13 @@ public class LoopManiaWorld {
         case 0:
             dropped_item = new Anduril(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                     new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(dropped_item);
             break;
 
         default:
             dropped_item = new TreeStump(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
                     new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            unequippedInventoryItems.add(dropped_item);
             break;
         }
 
