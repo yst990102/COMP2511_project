@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
 <Pane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="387.0" stylesheets="@MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button id="start-game-button" fx:id="startGameButton" layoutX="137.0" layoutY="239.0" mnemonicParsing="false" onAction="#switchToGame" prefHeight="30.0" prefWidth="124.0" />
+      <Button id="start-game-button" fx:id="startGameButton" layoutX="124.0" layoutY="214.0" mnemonicParsing="false" onAction="#switchToGame" prefHeight="31.0" prefWidth="139.0" text="Start Game" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button id="start-game-button" fx:id="settingButton" layoutX="124.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleSettingButtonClick" prefHeight="31.0" prefWidth="139.0" text="Settings" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button id="start-game-button" fx:id="quitGameButton" layoutX="124.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleQuitGameButtonClick" prefHeight="31.0" prefWidth="139.0" text="Quit Game" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="17.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

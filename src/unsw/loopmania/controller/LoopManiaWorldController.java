@@ -228,7 +228,7 @@ public class LoopManiaWorldController {
 
     private boolean isPaused;
     private LoopManiaWorld world;
-    private StoreController StoreController;
+    private StoreController storeController;
 
     /**
      * runs the periodic game logic - second-by-second moving of character through
@@ -491,9 +491,6 @@ public class LoopManiaWorldController {
             checkHeroAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
-
-            // refresh character hp after battle
-            hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
 
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
@@ -1362,7 +1359,7 @@ public class LoopManiaWorldController {
     public void checkStoreVisit() {
         if (world.canVisitStore()) {
             pause();
-            StoreController.setIsStoreShowed();
+            storeController.setIsStoreShowed();
             storeSwitcher.switchMenu();
         }
     }
@@ -1505,7 +1502,7 @@ public class LoopManiaWorldController {
     }
 
     public void setStoreController(StoreController controller) {
-        this.StoreController = controller;
+        this.storeController = controller;
     }
 
     public void setModeStrategy(ModeStrategy strategy) {
