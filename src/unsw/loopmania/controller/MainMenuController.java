@@ -3,7 +3,6 @@ package unsw.loopmania.controller;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-
 /**
  * controller for the main menu.
  * TODO = you could extend this, for example with a settings menu, or a menu to load particular maps.

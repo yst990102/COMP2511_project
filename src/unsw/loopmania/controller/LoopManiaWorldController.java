@@ -324,6 +324,8 @@ public class LoopManiaWorldController {
 
     private MenuSwitcher storeSwitcher;
 
+    private double gameSpeed;
+
     /**
      * @param world           world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be
@@ -331,6 +333,7 @@ public class LoopManiaWorldController {
      */
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
+        gameSpeed = 0.3;
         entityImages = new ArrayList<>(initialEntities);
 
         // Cards
@@ -480,7 +483,7 @@ public class LoopManiaWorldController {
         pauseButtondescription.setText("Game running. Click to pause.");
         // trigger adding code to process main game logic to queue. JavaFX will target
         // framerate of 0.3 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(gameSpeed), event -> {
             world.runTickMoves();
             world.updateNthCycle();
             updateCharacterInfo();
@@ -1321,6 +1324,14 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
+        case LEFT:
+            decreaseGameSpeed();
+            System.out.println(gameSpeed);
+            break;
+        case RIGHT:
+            increaseGameSpeed();
+            System.out.println(gameSpeed);
+            break;
         default:
             break;
         }
@@ -1511,6 +1522,22 @@ public class LoopManiaWorldController {
 
     public ModeStrategy getModeStrategy() {
         return world.getModeStrategy();
+    }
+
+    public void increaseGameSpeed() {
+        if (gameSpeed / 2 > 0.02) {
+            gameSpeed /= 2;
+            timeline.stop();
+            startTimer();
+        }
+    }
+
+    public void decreaseGameSpeed() {
+        if (gameSpeed * 2 < 1) {
+            gameSpeed *= 2;
+            timeline.stop();
+            startTimer();
+        }
     }
 
     /**
