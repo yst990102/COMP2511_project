@@ -80,8 +80,8 @@ Combination
 
 ### 7. Default attributes of a soldier are listed below:
 Soldier (produced from Barracks)
-- HP: 10
-- Attack: 1
+- HP: 50
+- Attack: 5
 
 ## Items Rules:
 
