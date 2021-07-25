@@ -1,15 +1,12 @@
 package unsw.loopmania.controller;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 /**
  * the main application
@@ -22,7 +19,6 @@ public class LoopManiaApplication extends Application {
      * the controller for the game. Stored as a field so can terminate it when click exit button
      */
     private LoopManiaWorldController mainController;
-    private MediaPlayer bgmPlayer;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -45,6 +41,13 @@ public class LoopManiaApplication extends Application {
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("../view/MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
+
+        // load the setting menu
+        SettingController settingController = new SettingController();
+        settingController.setGameController(mainController);
+        FXMLLoader settingLoader = new FXMLLoader(getClass().getResource("../view/SettingView.fxml"));
+        settingLoader.setController(settingController);
+        Parent settingRoot = settingLoader.load();
 
         // load the select mode menu
         SelectModeController selectModeController = new SelectModeController();
@@ -69,6 +72,9 @@ public class LoopManiaApplication extends Application {
         // e.g. from main menu to start the game, or from the game to return to main menu   
         mainMenuController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
         mainMenuController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
+        mainMenuController.setSettingSwitcher(() -> {switchToRoot(scene, settingRoot, primaryStage);});
+
+        settingController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
 
         selectModeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
@@ -80,7 +86,6 @@ public class LoopManiaApplication extends Application {
 
         storeController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
         
-        music();
         // deploy the main onto the stage
         gameRoot.requestFocus();
         primaryStage.setScene(scene);
@@ -102,13 +107,6 @@ public class LoopManiaApplication extends Application {
         stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
-    }
-
-    private void music() {
-        String bgmPath = "src/assets/bgm.mp3";
-        Media bgm = new Media(Paths.get(bgmPath).toUri().toString());
-        bgmPlayer = new MediaPlayer(bgm);
-        bgmPlayer.play();
     }
 
     public static void main(String[] args) {

@@ -1525,18 +1525,22 @@ public class LoopManiaWorldController {
     }
 
     public void increaseGameSpeed() {
-        if (gameSpeed / 2 > 0.02) {
-            gameSpeed /= 2;
-            timeline.stop();
-            startTimer();
+        if (gameSpeed - 0.03 > 0.028) {
+            gameSpeed -= 0.03;
+            if (timeline != null) {
+                timeline.stop();
+                startTimer();
+            }
         }
     }
 
     public void decreaseGameSpeed() {
-        if (gameSpeed * 2 < 1) {
-            gameSpeed *= 2;
-            timeline.stop();
-            startTimer();
+        if (gameSpeed + 0.03 < 0.31) {
+            gameSpeed += 0.03;
+            if (timeline != null) {
+                timeline.stop();
+                startTimer();
+            }
         }
     }
 

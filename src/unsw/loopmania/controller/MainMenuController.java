@@ -42,7 +42,7 @@ public class MainMenuController {
 
     @FXML
     public void handleSettingButtonClick() {
-
+        settingSwitcher.switchMenu();
     }
 
     @FXML
