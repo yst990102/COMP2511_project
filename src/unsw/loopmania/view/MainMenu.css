@@ -3,7 +3,7 @@
 }
 
 #start-game-button {
-  -fx-background-image: url("../../../assets/start_game_button.png");
+  -fx-background-image: url("../../../assets/mud_button.png");
   -fx-background-repeat: no-repeat;
   -fx-background-color: transparent;
 }

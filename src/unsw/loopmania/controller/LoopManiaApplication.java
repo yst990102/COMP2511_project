@@ -42,9 +42,17 @@ public class LoopManiaApplication extends Application {
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
+        // load the setting menu
+        SettingController settingController = new SettingController();
+        settingController.setGameController(mainController);
+        FXMLLoader settingLoader = new FXMLLoader(getClass().getResource("../view/SettingView.fxml"));
+        settingLoader.setController(settingController);
+        Parent settingRoot = settingLoader.load();
+
         // load the select mode menu
         SelectModeController selectModeController = new SelectModeController();
         selectModeController.setMainController(mainController);
+        selectModeController.setMainMenuController(mainMenuController);
         FXMLLoader selectModeLoader = new FXMLLoader(getClass().getResource("../view/SelectModeView.fxml"));
         selectModeLoader.setController(selectModeController);
         Parent selectModeRoot = selectModeLoader.load();
@@ -63,6 +71,10 @@ public class LoopManiaApplication extends Application {
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu   
         mainMenuController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
+        mainMenuController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
+        mainMenuController.setSettingSwitcher(() -> {switchToRoot(scene, settingRoot, primaryStage);});
+
+        settingController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
 
         selectModeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);

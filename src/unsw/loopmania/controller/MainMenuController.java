@@ -2,21 +2,52 @@ package unsw.loopmania.controller;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
-
+import javafx.scene.control.Button;
 /**
  * controller for the main menu.
  * TODO = you could extend this, for example with a settings menu, or a menu to load particular maps.
  */
 public class MainMenuController {
-    /**
-     * facilitates switching to main game
-     */
+
+    private MenuSwitcher modeSwitcher;
     private MenuSwitcher gameSwitcher;
+    private MenuSwitcher settingSwitcher;
+    private boolean isGameStarted;
 
-    //startGameButton
+    @FXML
+    private Button startGameButton;
 
-    public void setModeSwitcher(MenuSwitcher gameSwitcher){
+    @FXML
+    private Button settingButton;
+
+    @FXML
+    private Button quitGameButton;
+
+    public void setModeSwitcher(MenuSwitcher modeSwitcher){
+        this.modeSwitcher = modeSwitcher;
+    }
+
+    public void setGameSwitcher(MenuSwitcher gameSwitcher) {
         this.gameSwitcher = gameSwitcher;
+    }
+
+    public void setSettingSwitcher(MenuSwitcher settingSwitcher) {
+        this.settingSwitcher = settingSwitcher;
+    }
+
+    public void setIsGameStarted(boolean status) {
+        isGameStarted = status;
+        startGameButton.setText("Continue");
+    }
+
+    @FXML
+    public void handleSettingButtonClick() {
+        settingSwitcher.switchMenu();
+    }
+
+    @FXML
+    public void handleQuitGameButtonClick() {
+        System.exit(0);
     }
 
     /**
@@ -25,6 +56,11 @@ public class MainMenuController {
      */
     @FXML
     private void switchToGame() throws IOException {
-        gameSwitcher.switchMenu();
+        if (isGameStarted) {
+            gameSwitcher.switchMenu();
+        } else {
+            modeSwitcher.switchMenu();
+        }
     }
+
 }

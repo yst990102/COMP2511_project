@@ -12,6 +12,7 @@ public class SelectModeController {
 
 	private MenuSwitcher gameSwitcher;
     private LoopManiaWorldController mainController;
+    private MainMenuController mainMenuController;
 
     @FXML
     private Button berserkerModeButton;
@@ -23,29 +24,36 @@ public class SelectModeController {
     private Button standardModeButton;
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
-    	this.gameSwitcher = gameSwitcher;
+    this.gameSwitcher = gameSwitcher;
     }
 
     @FXML
     void handleStandardModeButtonClick(ActionEvent event) throws IOException {
 		gameSwitcher.switchMenu();
 		mainController.setModeStrategy(new StandardModeStrategy());
+		mainMenuController.setIsGameStarted(true);
     }
 
     @FXML
     void handleBerserkerModeButtonClick(ActionEvent event) throws IOException {
 		gameSwitcher.switchMenu();
 		mainController.setModeStrategy(new BerserkerModeStrategy());
+		mainMenuController.setIsGameStarted(true);
     }
 
     @FXML
     void handleSurvivalModeButtonClick(ActionEvent event) throws IOException {
 		gameSwitcher.switchMenu();
 		mainController.setModeStrategy(new SurvivalModeStrategy());
+		mainMenuController.setIsGameStarted(true);
     }
 	
     public void setMainController(LoopManiaWorldController controller) {
-      mainController = controller;
+    	mainController = controller;
+    }
+
+    public void setMainMenuController(MainMenuController controller) {
+    	mainMenuController = controller;
     }
 
 }

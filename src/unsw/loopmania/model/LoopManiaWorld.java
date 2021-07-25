@@ -270,7 +270,7 @@ public class LoopManiaWorld {
             // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
             if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
                 // fight...
-                System.out.println("enemy == " + e + " is in range");
+                // System.out.println("enemy == " + e + " is in range");
                 fight(e, enemies);
                 setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
                 if (e.hp <= 0) {
@@ -278,11 +278,11 @@ public class LoopManiaWorld {
                 }
 
             } else {
-                System.out.println("enemy == " + e + " is out of range, " + "x1 = " + e.getX() + "y1 = " + e.getY()
-                        + "x2 = " + character.getX() + " y2 = " + character.getY());
+                // System.out.println("enemy == " + e + " is out of range, " + "x1 = " + e.getX() + "y1 = " + e.getY()
+                //         + "x2 = " + character.getX() + " y2 = " + character.getY());
             }
         }
-        System.out.println("defeatedEnemies == " + defeatedEnemies);
+        // System.out.println("defeatedEnemies == " + defeatedEnemies);
 
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
