@@ -582,13 +582,13 @@ public class LoopManiaWorld {
 
         if (randomInt < 5) {
             card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 50) {
+        } else if (randomInt < 10) {
             card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 51) {
+        } else if (randomInt < 15) {
             card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 52) {
+        } else if (randomInt < 20) {
             card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 90) {
+        } else if (randomInt < 25) {
             card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 91) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
@@ -1166,7 +1166,7 @@ public class LoopManiaWorld {
                         // enemy is attacked by trap
                         e.setHP(e.getHP() - trap.getTrapAttack());
                         // if enemy is killed
-                        if (e.getHP() == 0) {
+                        if (e.getHP() <= 0) {
                             character.setGold(character.getGold() + e.goldWhenKilled);
                             character.setXP(character.getXP() + e.expWhenKilled);
                             e.destroy();
