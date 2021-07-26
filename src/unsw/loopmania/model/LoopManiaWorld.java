@@ -309,6 +309,23 @@ public class LoopManiaWorld {
      */
     public void CharacterAttackEnemy(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
         // character attack enemy
+        if (character.getDressedWeapon() != null) {
+            if (character.getDressedWeapon().getClass().equals(Staff.class)) {
+                int trancePercentage = ((Staff) character.getDressedWeapon()).trancePercentage;
+                int randint = new Random(System.currentTimeMillis()).nextInt(100);
+
+                if (randint < trancePercentage) {
+                    enemy.setHP(0);
+
+                    Soldier newsoSoldier = new Soldier();
+                    character.getSoldiers().add(newsoSoldier);
+
+                    writer.write(("enemy converted into a soldier!!!!").getBytes());
+                    return;
+                }
+            }
+        }
+
         enemy.hp -= character.getATK(enemy);
 
         writer.write(("=== Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());

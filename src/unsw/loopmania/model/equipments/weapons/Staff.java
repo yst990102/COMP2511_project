@@ -15,8 +15,8 @@ public class Staff extends Equipment implements Weapon {
 
     private int attack;
 
-    int trancePercentage;// unit : %
-    int tranceDuration;// unit : second
+    public int trancePercentage;// unit : %
+    public int tranceDuration;// unit : second
 
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
