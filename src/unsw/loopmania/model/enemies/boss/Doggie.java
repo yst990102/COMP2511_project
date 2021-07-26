@@ -20,8 +20,8 @@ import unsw.loopmania.model.enemies.Boss;
  * Spawns after 20 cycles
  */
 public class Doggie extends Boss {
-    
-    private double stun_percentage = 0.2;
+
+    private int stun_percentage = 20;
     private int stun_round = 2;
 
     public Doggie(PathPosition position) {
@@ -44,11 +44,11 @@ public class Doggie extends Boss {
         }
     }
 
-    public double getStun_percentage() {
+    public int getStun_percentage() {
         return this.stun_percentage;
     }
 
-    public void setStun_percentage(double stun_percentage) {
+    public void setStun_percentage(int stun_percentage) {
         this.stun_percentage = stun_percentage;
     }
 

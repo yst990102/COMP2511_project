@@ -221,6 +221,30 @@ public class Character extends MovingEntity {
     }
 
     /**
+    * Get the Defence
+    * @return int
+    */
+    public int getDEF(Enemy enemy) {
+        int armourDef = 0;
+        int shieldDef = 0;
+        int helmetDef = 0;
+
+        if (dressedArmour != null) {
+            armourDef = dressedArmour.getDefence(enemy);
+        }
+
+        if (dressedShield != null) {
+            shieldDef = dressedShield.getDefence(enemy);
+        }
+
+        if (dressedHelmet != null) {
+            helmetDef = dressedHelmet.getDefence(enemy);
+        }
+
+        return def + armourDef + shieldDef + helmetDef;
+    }
+
+    /**
      * Set the Defence
      * @param def
      */

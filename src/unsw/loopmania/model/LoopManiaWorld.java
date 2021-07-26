@@ -433,10 +433,54 @@ public class LoopManiaWorld {
                 attackTimes--;
             }
 
-            int afterHP = character.getHP();
-            writer.write(("After Vampire attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
+        } else if (enemy.getClass().equals(Doggie.class)) {
+            writer.write(("=== doggie attack character." + "\n").getBytes());
+
+            int damage = 0;
+
+            int attackTimes = 1;
+
+            int counter = 0;
+            while (counter < attackTimes) {
+                int enemyAttack = 0;
+
+                if (character.getDressedHelmet() != null) {
+                    enemyAttack = ((Doggie) enemy).getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
+                    writer.write(("character have helmet, enemyAttack == " + enemyAttack + "\n").getBytes());
+                } else {
+                    enemyAttack = ((Doggie) enemy).getAttack();
+                    writer.write(("character have no armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+                }
+
+                damage = enemyAttack - character.getDEF();
+
+                if (character.getDressedArmour() != null) {
+                    damage *= (1 - (Double
+                            .valueOf(Double.valueOf(character.getDressedArmour().getDamageReducePercentage()) / 100)));
+                    writer.write(("character have armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+                }
+
+                writer.write((attackTimes + "'s time damage == " + damage + "\n").getBytes());
+
+                HPLoss = (damage < 0) ? 0 : damage;
+                character.setHP(character.getHP() - HPLoss);
+                writer.write((attackTimes + "'s time HPLoss == " + HPLoss + "\n").getBytes());
+
+                // add attack times when stunned
+                int randint = new Random(System.currentTimeMillis()).nextInt(100);
+                if (randint < ((Doggie) enemy).getStun_percentage()) {
+                    attackTimes += ((Doggie) enemy).getStun_round();
+                }
+
+                counter++;
+            }
+
+        } else if (enemy.getClass().equals(ElanMuske.class)) {
 
         }
+
+        int afterHP = character.getHP();
+        writer.write(("After Vampire attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
     }
 
     /**
