@@ -1,13 +1,19 @@
 package unsw.loopmania.model.equipments.armours;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Armour;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 
 /**
  * represents an equipped or unequipped sword in the backend world
  */
 public class BasicArmour extends Equipment implements Armour {
+
+    public static Image image = new Image((new File("src/assets/armour.png")).toURI().toString());
 
     private int defence;
     private int damageReducePercentage;
@@ -32,6 +38,11 @@ public class BasicArmour extends Equipment implements Armour {
     }
 
     @Override
+    public int getDefence(Enemy enemy) {
+        return this.defence;
+    }
+
+    @Override
     public void setDefence(int defence) {
         this.defence = defence;
     }
@@ -45,4 +56,5 @@ public class BasicArmour extends Equipment implements Armour {
     public void setDamageReducePercentage(int damageReducePercentage) {
         this.damageReducePercentage = damageReducePercentage;
     }
+
 }

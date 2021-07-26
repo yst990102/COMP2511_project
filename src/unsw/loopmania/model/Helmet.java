@@ -8,6 +8,8 @@ public interface Helmet {
      */
     public int getAttack();
 
+    public int getAttack(Enemy enemy);
+
     /**
      * Set the Attack
      * @param attack
@@ -19,6 +21,8 @@ public interface Helmet {
      * @return int 
      */
     public int getDefence();
+
+    public int getDefence(Enemy enemy);
 
     /**
      * Set the Defence

@@ -1,14 +1,18 @@
 package unsw.loopmania.model.rareItems;
 
-import java.net.PortUnreachableException;
+import java.io.File;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Shield;
 import unsw.loopmania.model.enemies.Boss;
 
 public class TreeStump extends RareItem implements Shield {
+
+    public static Image image = new Image((new File("src/assets/tree_stump.png")).toURI().toString());
+
     private int defence;
     private int Boss_damage_multiplier;
 
@@ -29,7 +33,8 @@ public class TreeStump extends RareItem implements Shield {
         return this.defence;
     }
 
-    public int getDefenceByEnemy(Enemy enemy) {
+    @Override
+    public int getDefence(Enemy enemy) {
         if (enemy instanceof Boss) {
             return this.defence * Boss_damage_multiplier;
         } else {

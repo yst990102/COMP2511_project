@@ -1,6 +1,10 @@
 package unsw.loopmania.model.equipments.helmets;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Helmet;
 
@@ -8,6 +12,8 @@ import unsw.loopmania.model.Helmet;
  * represents an equipped or unequipped sword in the backend world
  */
 public class BasicHelmet extends Equipment implements Helmet {
+
+    public static Image image = new Image((new File("src/assets/helmet.png")).toURI().toString());
 
     private int attack;
     private int defence;
@@ -34,12 +40,22 @@ public class BasicHelmet extends Equipment implements Helmet {
     }
 
     @Override
+    public int getAttack(Enemy enemy) {
+        return this.attack;
+    }
+
+    @Override
     public void setAttack(int attack) {
         this.attack = attack;
     }
 
     @Override
     public int getDefence() {
+        return this.defence;
+    }
+
+    @Override
+    public int getDefence(Enemy enemy) {
         return this.defence;
     }
 
