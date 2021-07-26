@@ -33,7 +33,8 @@ public class Anduril extends RareItem implements Weapon {
         return this.attack;
     }
 
-    public int getAttackByEnemy(Enemy enemy) {
+    @Override
+    public int getAttack(Enemy enemy) {
         if (enemy instanceof Boss) {
             return this.attack * Boss_damage_multiplier;
         } else {
@@ -45,4 +46,5 @@ public class Anduril extends RareItem implements Weapon {
     public void setAttack(int attack) {
         this.attack = attack;
     }
+
 }

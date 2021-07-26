@@ -33,7 +33,8 @@ public class TreeStump extends RareItem implements Shield {
         return this.defence;
     }
 
-    public int getDefenceByEnemy(Enemy enemy) {
+    @Override
+    public int getDefence(Enemy enemy) {
         if (enemy instanceof Boss) {
             return this.defence * Boss_damage_multiplier;
         } else {

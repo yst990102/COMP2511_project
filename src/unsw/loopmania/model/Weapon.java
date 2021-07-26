@@ -8,6 +8,8 @@ public interface Weapon {
     */
     public int getAttack();
 
+    public int getAttack(Enemy enemy);
+
     /**
      * Set the Attack
      * @param attack

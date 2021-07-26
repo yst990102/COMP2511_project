@@ -320,7 +320,8 @@ public class LoopManiaWorld {
      */
     public void CharacterAttackEnemy(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
         // character attack enemy
-        enemy.hp -= character.getATK();
+        enemy.hp -= character.getATK(enemy);
+
         writer.write(("=== Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
 
     }

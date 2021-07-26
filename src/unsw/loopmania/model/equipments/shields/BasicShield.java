@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Shield;
 
@@ -32,6 +33,11 @@ public class BasicShield extends Equipment implements Shield {
 
     @Override
     public int getDefence() {
+        return this.defence;
+    }
+
+    @Override
+    public int getDefence(Enemy enemy) {
         return this.defence;
     }
 

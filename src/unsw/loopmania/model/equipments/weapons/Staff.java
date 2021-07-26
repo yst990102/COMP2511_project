@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Weapon;
 
@@ -37,6 +38,11 @@ public class Staff extends Equipment implements Weapon {
 
     @Override
     public int getAttack() {
+        return this.attack;
+    }
+
+    @Override
+    public int getAttack(Enemy enemy) {
         return this.attack;
     }
 
