@@ -1166,7 +1166,7 @@ public class LoopManiaWorld {
                         // enemy is attacked by trap
                         e.setHP(e.getHP() - trap.getTrapAttack());
                         // if enemy is killed
-                        if (e.getHP() <= 0) {
+                        if (e.getHP() == 0) {
                             character.setGold(character.getGold() + e.goldWhenKilled);
                             character.setXP(character.getXP() + e.expWhenKilled);
                             e.destroy();

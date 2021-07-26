@@ -55,11 +55,12 @@ public class Vampire extends Enemy {
     public void setHP(int newHP) {
         if (newHP > 25) {
             this.hp = 25;
-        }
-        if (newHP < 0) {
+        } else if (newHP < 0) {
             this.hp = 0;
+        } else {
+            this.hp = newHP;
         }
-        this.hp = newHP;
+        return;
     }
 
 }

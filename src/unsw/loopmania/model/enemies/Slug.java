@@ -30,11 +30,12 @@ public class Slug extends Enemy {
     public void setHP(int newHP) {
         if (newHP > 15) {
             this.hp = 15;
-        }
-        if (newHP < 0) {
+        } else if (newHP < 0) {
             this.hp = 0;
+        } else {
+            this.hp = newHP;
         }
-        this.hp = newHP;
+        return;
     }
 
 }

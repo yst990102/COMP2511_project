@@ -44,11 +44,12 @@ public class Zombie extends Enemy {
     public void setHP(int newHP) {
         if (newHP > 20) {
             this.hp = 20;
-        }
-        if (newHP < 0) {
+        } else if (newHP < 0) {
             this.hp = 0;
+        } else {
+            this.hp = newHP;
         }
-        this.hp = newHP;
+        return;
     }
 
     public int getInfectionPercentage() {
