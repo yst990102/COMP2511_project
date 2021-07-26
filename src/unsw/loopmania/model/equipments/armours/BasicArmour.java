@@ -13,8 +13,6 @@ import unsw.loopmania.model.Equipment;
  */
 public class BasicArmour extends Equipment implements Armour {
 
-    public static Image image = new Image((new File("src/assets/armour.png")).toURI().toString());
-
     private int defence;
     private int damageReducePercentage;
 

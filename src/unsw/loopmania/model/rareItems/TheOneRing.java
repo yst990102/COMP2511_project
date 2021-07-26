@@ -12,8 +12,6 @@ import unsw.loopmania.model.RareItem;
 
 public class TheOneRing extends RareItem {
 
-    public static Image image = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
-
     public TheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 

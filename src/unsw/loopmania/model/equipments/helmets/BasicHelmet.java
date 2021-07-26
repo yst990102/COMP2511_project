@@ -13,8 +13,6 @@ import unsw.loopmania.model.Helmet;
  */
 public class BasicHelmet extends Equipment implements Helmet {
 
-    public static Image image = new Image((new File("src/assets/helmet.png")).toURI().toString());
-
     private int attack;
     private int defence;
     private int enemyAttackDecrease;

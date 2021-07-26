@@ -8,8 +8,6 @@ import unsw.loopmania.model.Building;
 
 public class VillageBuilding extends Building {
 
-    public static Image image = new Image((new File("src/assets/village.png")).toURI().toString());
-
     /**
      * Constructor for VillageBuilding
      */

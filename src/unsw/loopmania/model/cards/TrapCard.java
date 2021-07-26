@@ -8,8 +8,6 @@ import unsw.loopmania.model.Card;
 
 public class TrapCard extends Card {
 
-    public static Image image = new Image((new File("src/assets/trap_card.png")).toURI().toString());
-
     public TrapCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

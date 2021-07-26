@@ -12,8 +12,6 @@ import unsw.loopmania.model.PathPosition;
  */
 public class Vampire extends Enemy {
 
-    public static Image image = new Image((new File("src/assets/vampire.png")).toURI().toString());
-
     // if critical, make 10 extra damage
     public int criticalExtraDamage = 10;
 

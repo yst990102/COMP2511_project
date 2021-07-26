@@ -12,8 +12,6 @@ import unsw.loopmania.model.Character;
  */
 public class VampireCastleBuilding extends Building {
 
-    public static Image image = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
-
     /**
      * Constructor for VampireCastleBuilding
      */

@@ -11,8 +11,6 @@ import unsw.loopmania.model.enemies.Boss;
 
 public class TreeStump extends RareItem implements Shield {
 
-    public static Image image = new Image((new File("src/assets/tree_stump.png")).toURI().toString());
-
     private int defence;
     private int Boss_damage_multiplier;
 

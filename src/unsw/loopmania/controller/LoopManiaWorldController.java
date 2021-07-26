@@ -242,6 +242,50 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
+    // Card Images
+    private Image vampireCastleCardImage;
+    private Image zombiePitCardImage;
+    private Image towerCardImage;
+    private Image villageCardImage;
+    private Image barracksCardImage;
+    private Image trapCardImage;
+    private Image campfireCardImage;
+
+    // Enemy Images
+    private Image slugEnemyImage;
+    private Image zombieEnemyImage;
+    private Image vampireEnemyImage;
+    private Image doggieEnemyImage;
+    private Image elanMuskeEnemyImage;
+
+    // Equipment Images
+    private Image swordImage;
+    private Image helmetImage;
+    private Image shieldImage;
+    private Image stakeImage;
+    private Image staffImage;
+    private Image armourImage;
+
+    // Potions
+    private Image healthPotionImage;
+
+    // RareItems
+    private Image theOneRingImage;
+    private Image andurilImage;
+    private Image treeStumpImage;
+
+    // Building Images
+    private Image vampireCastleBuildingImage;
+    private Image zombiePitBuildingImage;
+    private Image towerBuildingImage;
+    private Image villageBuildingImage;
+    private Image barracksBuildingImage;
+    private Image trapBuildingImage;
+    private Image campfireBuildingImage;
+
+    // coins
+    private Image doggieCoinImage;
+
     private Image equippedSlotBackground;
 
     /**
@@ -304,6 +348,50 @@ public class LoopManiaWorldController {
         this.world = world;
         gameSpeed = 0.3;
         entityImages = new ArrayList<>(initialEntities);
+
+        // Cards
+        vampireCastleCardImage = new Image((new File("src/assets/vampire_castle_card.png")).toURI().toString());
+        zombiePitCardImage = new Image((new File("src/assets/zombie_pit_card.png")).toURI().toString());
+        towerCardImage = new Image((new File("src/assets/tower_card.png")).toURI().toString());
+        villageCardImage = new Image((new File("src/assets/village_card.png")).toURI().toString());
+        barracksCardImage = new Image((new File("src/assets/barracks_card.png")).toURI().toString());
+        trapCardImage = new Image((new File("src/assets/trap_card.png")).toURI().toString());
+        campfireCardImage = new Image((new File("src/assets/campfire_card.png")).toURI().toString());
+
+        // Enemies
+        slugEnemyImage = new Image((new File("src/assets/slug.png")).toURI().toString());
+        zombieEnemyImage = new Image((new File("src/assets/zombie.png")).toURI().toString());
+        vampireEnemyImage = new Image((new File("src/assets/vampire.png")).toURI().toString());
+        doggieEnemyImage = new Image((new File("src/assets/doggie.png")).toURI().toString());
+        elanMuskeEnemyImage = new Image((new File("src/assets/ElanMuske.png")).toURI().toString());
+
+        // Item - Equipments
+        swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
+        helmetImage = new Image((new File("src/assets/helmet.png")).toURI().toString());
+        shieldImage = new Image((new File("src/assets/shield.png")).toURI().toString());
+        stakeImage = new Image((new File("src/assets/stake.png")).toURI().toString());
+        staffImage = new Image((new File("src/assets/staff.png")).toURI().toString());
+        armourImage = new Image((new File("src/assets/armour.png")).toURI().toString());
+
+        // Potions
+        healthPotionImage = new Image((new File("src/assets/health_potion.png")).toURI().toString());
+
+        // RareItems
+        theOneRingImage = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
+        andurilImage = new Image((new File("src/assets/anduril_flame_of_the_west.png")).toURI().toString());
+        treeStumpImage = new Image((new File("src/assets/tree_stump.png")).toURI().toString());
+
+        // Buildings
+        vampireCastleBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
+        zombiePitBuildingImage = new Image((new File("src/assets/zombie_pit.png")).toURI().toString());
+        towerBuildingImage = new Image((new File("src/assets/tower.png")).toURI().toString());
+        villageBuildingImage = new Image((new File("src/assets/village.png")).toURI().toString());
+        barracksBuildingImage = new Image((new File("src/assets/barracks.png")).toURI().toString());
+        trapBuildingImage = new Image((new File("src/assets/trap.png")).toURI().toString());
+        campfireBuildingImage = new Image((new File("src/assets/campfire.png")).toURI().toString());
+
+        // Coins
+        doggieCoinImage = new Image((new File("src/assets/doggiecoin.png")).toURI().toString());
 
         equippedSlotBackground = new Image((new File("src/assets/silver_background.png")).toURI().toString());
 
@@ -571,25 +659,25 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (card.getClass().equals(VampireCastleCard.class)) {
-            view = new ImageView(VampireCastleCard.image);
+            view = new ImageView(vampireCastleCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.VAMPIRE_CASTLE_CARD, cards, squares);
         } else if (card.getClass().equals(ZombiePitCard.class)) {
-            view = new ImageView(ZombiePitCard.image);
+            view = new ImageView(zombiePitCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.ZOMBIE_PIT_CARD, cards, squares);
         } else if (card.getClass().equals(TowerCard.class)) {
-            view = new ImageView(TowerCard.image);
+            view = new ImageView(towerCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.TOWER_CARD, cards, squares);
         } else if (card.getClass().equals(VillageCard.class)) {
-            view = new ImageView(VillageCard.image);
+            view = new ImageView(villageCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.VILLAGE_CARD, cards, squares);
         } else if (card.getClass().equals(BarracksCard.class)) {
-            view = new ImageView(BarracksCard.image);
+            view = new ImageView(barracksCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.BARRACKS_CARD, cards, squares);
         } else if (card.getClass().equals(TrapCard.class)) {
-            view = new ImageView(TrapCard.image);
+            view = new ImageView(trapCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.TRAP_CARD, cards, squares);
         } else if (card.getClass().equals(CampfireCard.class)) {
-            view = new ImageView(CampfireCard.image);
+            view = new ImageView(campfireCardImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.CAMPFIRE_CARD, cards, squares);
         } else {
             view = new ImageView();
@@ -603,19 +691,19 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (building.getClass().equals(VampireCastleBuilding.class)) {
-            view = new ImageView(VampireCastleBuilding.image);
+            view = new ImageView(vampireCastleBuildingImage);
         } else if (building.getClass().equals(ZombiePitBuilding.class)) {
-            view = new ImageView(ZombiePitBuilding.image);
+            view = new ImageView(zombiePitBuildingImage);
         } else if (building.getClass().equals(TowerBuilding.class)) {
-            view = new ImageView(TowerBuilding.image);
+            view = new ImageView(towerBuildingImage);
         } else if (building.getClass().equals(VillageBuilding.class)) {
-            view = new ImageView(VillageCard.image);
+            view = new ImageView(villageBuildingImage);
         } else if (building.getClass().equals(BarracksBuilding.class)) {
-            view = new ImageView(BarracksBuilding.image);
+            view = new ImageView(barracksBuildingImage);
         } else if (building.getClass().equals(TrapBuilding.class)) {
-            view = new ImageView(TrapCard.image);
+            view = new ImageView(trapBuildingImage);
         } else if (building.getClass().equals(CampfireBuilding.class)) {
-            view = new ImageView(CampfireBuilding.image);
+            view = new ImageView(campfireBuildingImage);
         } else {
             view = new ImageView();
         }
@@ -635,22 +723,22 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (equipment.getClass().equals(BasicHelmet.class)) {
-            view = new ImageView(BasicHelmet.image);
+            view = new ImageView(helmetImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicShield.class)) {
-            view = new ImageView(BasicShield.image);
+            view = new ImageView(shieldImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicArmour.class)) {
-            view = new ImageView(BasicArmour.image);
+            view = new ImageView(armourImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.ARMOUR, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Sword.class)) {
-            view = new ImageView(Sword.image);
+            view = new ImageView(swordImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.SWORD, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Stake.class)) {
-            view = new ImageView(Stake.image);
+            view = new ImageView(stakeImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Staff.class)) {
-            view = new ImageView(Staff.image);
+            view = new ImageView(staffImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.STAFF, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
@@ -669,19 +757,19 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (item.getClass().equals(HealthPotion.class)) {
-            view = new ImageView(HealthPotion.image);
+            view = new ImageView(healthPotionImage);
             view.setCursor(Cursor.HAND);
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
         } else if (item.getClass().equals(TheOneRing.class)) {
-            view = new ImageView(TheOneRing.image);
+            view = new ImageView(theOneRingImage);
         } else if (item.getClass().equals(Anduril.class)) {
-            view = new ImageView(Anduril.image);
+            view = new ImageView(andurilImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.ANDURIL, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(TreeStump.class)) {
-            view = new ImageView(TreeStump.image);
+            view = new ImageView(treeStumpImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.TREESTUMP, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(DoggieCoin.class)) {
-            view = new ImageView(DoggieCoin.image);
+            view = new ImageView(doggieCoinImage);
             addDragEventHandlers(view, DRAGGABLE_TYPE.DOGGIECOIN, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
@@ -700,15 +788,15 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (enemy instanceof Slug) {
-            view = new ImageView(Slug.image);
+            view = new ImageView(slugEnemyImage);
         } else if (enemy instanceof Vampire) {
-            view = new ImageView(Vampire.image);
+            view = new ImageView(vampireEnemyImage);
         } else if (enemy instanceof Zombie) {
-            view = new ImageView(Zombie.image);
+            view = new ImageView(zombieEnemyImage);
         } else if (enemy instanceof Doggie) {
-            view = new ImageView(Doggie.image);
+            view = new ImageView(doggieEnemyImage);
         } else if (enemy instanceof ElanMuske) {
-            view = new ImageView(ElanMuske.image);
+            view = new ImageView(elanMuskeEnemyImage);
         } else {
             return;
         }
@@ -1082,49 +1170,49 @@ public class LoopManiaWorldController {
                 draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                 switch (draggableType) {
                 case CARD:
-                    draggedEntity.setImage(VampireCastleCard.image);
+                    draggedEntity.setImage(vampireCastleCardImage);
                     break;
                 case ITEM:
-                    draggedEntity.setImage(Sword.image);
+                    draggedEntity.setImage(swordImage);
                     break;
                 case VAMPIRE_CASTLE_CARD:
-                    draggedEntity.setImage(VampireCastleBuilding.image);
+                    draggedEntity.setImage(vampireCastleCardImage);
                     break;
                 case ZOMBIE_PIT_CARD:
-                    draggedEntity.setImage(ZombiePitBuilding.image);
+                    draggedEntity.setImage(zombiePitCardImage);
                     break;
                 case TOWER_CARD:
-                    draggedEntity.setImage(TowerBuilding.image);
+                    draggedEntity.setImage(towerCardImage);
                     break;
                 case VILLAGE_CARD:
-                    draggedEntity.setImage(VillageCard.image);
+                    draggedEntity.setImage(villageCardImage);
                     break;
                 case BARRACKS_CARD:
-                    draggedEntity.setImage(BarracksBuilding.image);
+                    draggedEntity.setImage(barracksCardImage);
                     break;
                 case TRAP_CARD:
-                    draggedEntity.setImage(TrapCard.image);
+                    draggedEntity.setImage(trapCardImage);
                     break;
                 case CAMPFIRE_CARD:
-                    draggedEntity.setImage(CampfireBuilding.image);
+                    draggedEntity.setImage(campfireCardImage);
                     break;
                 case SWORD:
-                    draggedEntity.setImage(Sword.image);
+                    draggedEntity.setImage(swordImage);
                     break;
                 case STAKE:
-                    draggedEntity.setImage(Stake.image);
+                    draggedEntity.setImage(stakeImage);
                     break;
                 case STAFF:
-                    draggedEntity.setImage(Staff.image);
+                    draggedEntity.setImage(staffImage);
                     break;
                 case ARMOUR:
-                    draggedEntity.setImage(BasicArmour.image);
+                    draggedEntity.setImage(armourImage);
                     break;
                 case SHIELD:
-                    draggedEntity.setImage(BasicShield.image);
+                    draggedEntity.setImage(shieldImage);
                     break;
                 case HELMET:
-                    draggedEntity.setImage(BasicHelmet.image);
+                    draggedEntity.setImage(helmetImage);
                     break;
                 default:
                     break;

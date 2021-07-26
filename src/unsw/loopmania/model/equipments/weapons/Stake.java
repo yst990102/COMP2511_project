@@ -14,8 +14,6 @@ import unsw.loopmania.model.enemies.Vampire;
  */
 public class Stake extends Equipment implements Weapon {
 
-    public static Image image = new Image((new File("src/assets/stake.png")).toURI().toString());
-
     private int attack;
     private int attackToVampire;
 

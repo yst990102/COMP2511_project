@@ -13,8 +13,6 @@ import unsw.loopmania.model.Weapon;
  */
 public class Staff extends Equipment implements Weapon {
 
-    public static Image image = new Image((new File("src/assets/staff.png")).toURI().toString());
-
     private int attack;
 
     int trancePercentage;// unit : %

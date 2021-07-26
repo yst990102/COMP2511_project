@@ -19,8 +19,6 @@ import unsw.loopmania.model.enemies.Boss;
 
 public class ElanMuske extends Boss {
 
-    public static Image image = new Image((new File("src/assets/ElanMuske.png")).toURI().toString());
-
     private int treatment_amout = 10;
 
     public ElanMuske(PathPosition position) {

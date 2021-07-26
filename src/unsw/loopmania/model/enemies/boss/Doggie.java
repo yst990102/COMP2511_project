@@ -20,8 +20,6 @@ import unsw.loopmania.model.enemies.Boss;
  * Spawns after 20 cycles
  */
 public class Doggie extends Boss {
-
-    public static Image image = new Image((new File("src/assets/doggie.png")).toURI().toString());
     
     private double stun_percentage = 0.2;
     private int stun_round = 2;

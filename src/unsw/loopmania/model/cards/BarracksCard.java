@@ -7,8 +7,6 @@ import javafx.scene.image.Image;
 import unsw.loopmania.model.Card;
 
 public class BarracksCard extends Card {
-    public static Image image = new Image((new File("src/assets/barracks_card.png")).toURI().toString());
-
     public BarracksCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

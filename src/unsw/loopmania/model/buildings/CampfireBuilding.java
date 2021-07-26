@@ -7,9 +7,7 @@ import javafx.scene.image.Image;
 import unsw.loopmania.model.Building;
 
 public class CampfireBuilding extends Building {
-
-    public static Image image = new Image((new File("src/assets/campfire.png")).toURI().toString());
-
+    
     /**
      * Constructor for CampfireBuilding
      */

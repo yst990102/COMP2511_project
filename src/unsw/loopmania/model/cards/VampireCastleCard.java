@@ -11,8 +11,6 @@ import unsw.loopmania.model.Card;
  */
 public class VampireCastleCard extends Card {
 
-    public static Image image = new Image((new File("src/assets/vampire_castle_card.png")).toURI().toString());
-
     public VampireCastleCard(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

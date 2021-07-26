@@ -11,8 +11,6 @@ import unsw.loopmania.model.enemies.Boss;
 
 public class Anduril extends RareItem implements Weapon {
 
-    public static Image image = new Image((new File("src/assets/anduril_flame_of_the_west.png")).toURI().toString());
-
     private int attack;
     private int Boss_damage_multiplier;
 

@@ -8,8 +8,6 @@ import unsw.loopmania.model.Building;
 
 public class BarracksBuilding extends Building {
 
-    public static Image image = new Image((new File("src/assets/barracks.png")).toURI().toString());
-
     public BarracksBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

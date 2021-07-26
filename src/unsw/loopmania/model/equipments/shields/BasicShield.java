@@ -13,8 +13,6 @@ import unsw.loopmania.model.Shield;
  */
 public class BasicShield extends Equipment implements Shield {
 
-    public static Image image = new Image((new File("src/assets/shield.png")).toURI().toString());
-
     private int defence;
     private int critical_percentage_decrease; // decrease 60% chance of critical bite from enemy
 

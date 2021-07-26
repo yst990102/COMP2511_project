@@ -8,8 +8,6 @@ import unsw.loopmania.model.Building;
 
 public class TrapBuilding extends Building {
 
-    public static Image image = new Image((new File("src/assets/trap.png")).toURI().toString());
-
     /**
      * Constructor for TrapBuilding
      */

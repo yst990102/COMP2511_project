@@ -8,8 +8,6 @@ import unsw.loopmania.model.Building;
 
 public class ZombiePitBuilding extends Building {
 
-    public static Image image = new Image((new File("src/assets/zombie_pit.png")).toURI().toString());
-
     public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

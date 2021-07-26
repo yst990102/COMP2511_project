@@ -11,8 +11,6 @@ import unsw.loopmania.model.PathPosition;
  */
 public class Slug extends Enemy {
 
-    public static Image image = new Image((new File("src/assets/slug.png")).toURI().toString());
-
     public Slug(PathPosition position) {
         super(position);
 

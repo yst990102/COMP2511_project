@@ -13,8 +13,6 @@ import unsw.loopmania.model.Weapon;
  */
 public class Sword extends Equipment implements Weapon {
 
-    public static Image image = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
-
     private int attack;
 
     public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y) {

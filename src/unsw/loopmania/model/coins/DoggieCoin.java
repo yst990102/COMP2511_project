@@ -18,8 +18,6 @@ import unsw.loopmania.model.Item;
  */
 public class DoggieCoin extends Item {
 
-    public static Image image = new Image((new File("src/assets/doggiecoin.png")).toURI().toString());
-
     public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y, boolean hasMuskeSpawn) {
         super(x, y);
 
