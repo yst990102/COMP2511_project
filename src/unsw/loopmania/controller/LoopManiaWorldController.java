@@ -64,6 +64,7 @@ import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.cards.VampireCastleCard;
 import unsw.loopmania.model.cards.ZombiePitCard;
+import unsw.loopmania.model.coins.DoggieCoin;
 import unsw.loopmania.model.potions.HealthPotion;
 import unsw.loopmania.model.rareItems.Anduril;
 import unsw.loopmania.model.rareItems.TheOneRing;
@@ -79,9 +80,12 @@ import unsw.loopmania.model.equipments.shields.BasicShield;
 import unsw.loopmania.model.equipments.weapons.Staff;
 import unsw.loopmania.model.equipments.weapons.Stake;
 import unsw.loopmania.model.equipments.weapons.Sword;
+import unsw.loopmania.model.enemies.Boss;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.model.enemies.boss.Doggie;
+import unsw.loopmania.model.enemies.boss.ElanMuske;
 import unsw.loopmania.strategy.ModeStrategy;
 
 /**
@@ -90,7 +94,7 @@ import unsw.loopmania.strategy.ModeStrategy;
  */
 enum DRAGGABLE_TYPE {
     CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD,
-    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING, ANDURIL, TREESTUMP
+    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING, ANDURIL, TREESTUMP, DOGGIECOIN
 }
 
 enum CLICKABLE_TYPE {
@@ -442,6 +446,16 @@ public class LoopManiaWorldController {
                 onLoad(zombie);
             }
 
+            ElanMuske elanMuske = world.checkMuskeSpawn();
+            if (elanMuske != null) {
+                onLoad(elanMuske);
+            }
+
+            Doggie doggie = world.checkDoggieSpawn();
+            if (doggie != null) {
+                onLoad(doggie);
+            }
+
             world.checkHeroPassVillage();
             world.checkHeroPassBarracks();
             world.checkEnemyPassTrap();
@@ -502,7 +516,7 @@ public class LoopManiaWorldController {
     /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadDroppedEquipments() {
+    private void loadDroppedEquipments(Enemy enemy) {
         // TODO = load more types of weapon
         // start by getting first available coordinates
 
@@ -527,6 +541,15 @@ public class LoopManiaWorldController {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
+
+        if (enemy instanceof Doggie) {
+            int droppedDoggieCoin_amount = new Random().nextInt(2);
+            while (droppedDoggieCoin_amount > 0) {
+                DoggieCoin droppedDoggieCoin = world.addUnsoldCoins();
+                onLoad(droppedDoggieCoin);
+                droppedDoggieCoin_amount--;
+            }
+        }
     }
 
     /**
@@ -540,7 +563,7 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
-        loadDroppedEquipments();
+        loadDroppedEquipments(enemy);
         loadDroppedCard();
     }
 
@@ -657,6 +680,9 @@ public class LoopManiaWorldController {
         } else if (item.getClass().equals(TreeStump.class)) {
             view = new ImageView(TreeStump.image);
             addDragEventHandlers(view, DRAGGABLE_TYPE.TREESTUMP, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(DoggieCoin.class)) {
+            view = new ImageView(DoggieCoin.image);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.DOGGIECOIN, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
         }
@@ -679,6 +705,10 @@ public class LoopManiaWorldController {
             view = new ImageView(Vampire.image);
         } else if (enemy instanceof Zombie) {
             view = new ImageView(Zombie.image);
+        } else if (enemy instanceof Doggie) {
+            view = new ImageView(Doggie.image);
+        } else if (enemy instanceof ElanMuske) {
+            view = new ImageView(ElanMuske.image);
         } else {
             return;
         }

@@ -1,5 +1,8 @@
 package unsw.loopmania.model.enemies.boss;
 
+import java.io.File;
+
+import javafx.scene.image.Image;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.enemies.Boss;
 
@@ -15,6 +18,8 @@ import unsw.loopmania.model.enemies.Boss;
  */
 
 public class ElanMuske extends Boss {
+
+    public static Image image = new Image((new File("src/assets/ElanMuske.png")).toURI().toString());
 
     private int treatment_amout = 10;
 
