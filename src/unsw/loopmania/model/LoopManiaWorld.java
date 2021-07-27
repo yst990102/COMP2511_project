@@ -1047,6 +1047,10 @@ public class LoopManiaWorld {
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
                             vampireBuildingPos);
 
+                    if (tilePosAdjacentToPath.size() <= 0) {
+                        continue;
+                    }
+
                     int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
@@ -1071,6 +1075,10 @@ public class LoopManiaWorld {
                             Integer.valueOf(b.getY()));
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
                             zombieBuildingPos);
+
+                    if (tilePosAdjacentToPath.size() <= 0) {
+                        continue;
+                    }
 
                     for (int j = 0; j < 2; j++) {
                         int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
