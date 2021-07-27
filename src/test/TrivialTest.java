@@ -91,6 +91,9 @@ public class TrivialTest {
         Zombie zombie = new Zombie(null);
 
         assertEquals(a.getAttack(), 2);
+        assertEquals(a.getAttack(slug), 2);
+        assertEquals(a.getAttack(vampire), 2);
+        assertEquals(a.getAttack(zombie), 2);
         assertEquals(b.getAttack(), 3);
         assertEquals(b.getAttack(vampire), 8);
         assertEquals(b.getAttack(slug), 3);
