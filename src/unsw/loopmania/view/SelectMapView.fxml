@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="387.0" stylesheets="@SelectMap.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button id="forest-btn" fx:id="forestButton" layoutX="104.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#handleForestButtonClick" prefHeight="120.0" prefWidth="180.0" />
+      <Button id="iceworld-btn" fx:id="iceworldButton" layoutX="104.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#handleIceworldButtonClick" prefHeight="120.0" prefWidth="180.0" />
+      <Button id="desert-btn" fx:id="desertButton" layoutX="104.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#handleDesertButtonClick" prefHeight="120.0" prefWidth="180.0" />
+   </children>
+</AnchorPane>

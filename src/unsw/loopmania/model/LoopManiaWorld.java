@@ -137,7 +137,7 @@ public class LoopManiaWorld {
         buildingEntities = new ArrayList<>();
         description = new SimpleStringProperty();
         nthCycle = 0;
-
+        
         // set goal
         this.goals = new SimpleStringProperty();
         this.maingoal = new GoalComposite(goalObject, this);
@@ -166,6 +166,10 @@ public class LoopManiaWorld {
      */
     public int getHeight() {
         return height;
+    }
+
+    public void setOrderedPath(List<Pair<Integer, Integer>> path) {
+        this.orderedPath = path;
     }
 
     /**

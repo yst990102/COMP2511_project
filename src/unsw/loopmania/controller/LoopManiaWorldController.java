@@ -7,6 +7,8 @@ import java.util.Random;
 import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
 import org.javatuples.Pair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -39,6 +41,7 @@ import javafx.beans.binding.Bindings;
 
 import java.util.EnumMap;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import unsw.loopmania.model.Character;
@@ -81,6 +84,7 @@ import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
 import unsw.loopmania.strategy.ModeStrategy;
+import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 
 /**
  * the draggable types. If you add more draggable types, add an enum value here.
@@ -272,8 +276,12 @@ public class LoopManiaWorldController {
     private Image barracksBuildingImage;
     private Image trapBuildingImage;
     private Image campfireBuildingImage;
-
     private Image equippedSlotBackground;
+
+    // Tile Image
+    private Image forestTileImage;
+    private Image iceTileImage;
+    private Image desertTileImage;
 
     /**
      * the image currently being dragged, if there is one, otherwise null. Holding
@@ -375,6 +383,11 @@ public class LoopManiaWorldController {
 
         equippedSlotBackground = new Image((new File("src/assets/silver_background.png")).toURI().toString());
 
+        // Tiles
+        forestTileImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
+        iceTileImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
+        desertTileImage = new Image((new File("src/assets/32x32SandAndStonePath.png")).toURI().toString());
+
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -397,18 +410,18 @@ public class LoopManiaWorldController {
 
         // Add the ground first so it is below all other entities (inculding all the
         // twists and turns)
-        for (int x = 0; x < world.getWidth(); x++) {
-            for (int y = 0; y < world.getHeight(); y++) {
-                ImageView groundView = new ImageView(pathTilesImage);
-                groundView.setViewport(imagePart);
-                squares.add(groundView, x, y);
-            }
-        }
+        // for (int x = 0; x < world.getWidth(); x++) {
+        //     for (int y = 0; y < world.getHeight(); y++) {
+        //         ImageView groundView = new ImageView(pathTilesImage);
+        //         groundView.setViewport(imagePart);
+        //         squares.add(groundView, x, y);
+        //     }
+        // }
 
-        // load entities loaded from the file in the loader into the squares gridpane
-        for (ImageView entity : entityImages) {
-            squares.getChildren().add(entity);
-        }
+        // // load entities loaded from the file in the loader into the squares gridpane
+        // for (ImageView entity : entityImages) {
+        //     squares.getChildren().add(entity);
+        // }
 
         // add the ground underneath the cards
         for (int x = 0; x < world.getWidth(); x++) {
@@ -435,11 +448,11 @@ public class LoopManiaWorldController {
         goal.textProperty().bind(Bindings.convert(world.getGoalProperty()));
 
         // bind character status to frontend property
-        hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
-        gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
-        xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
-        soldier.textProperty()
-                .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
+        // hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+        // gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
+        // xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
+        // soldier.textProperty()
+        //         .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
 
         // bind world description to frontend property
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
@@ -1324,6 +1337,14 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
+        case LEFT:
+            try {
+                LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_1.json");
+                world = loader.load();
+            } catch(FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
         default:
             break;
         }
@@ -1526,6 +1547,62 @@ public class LoopManiaWorldController {
         if (gameSpeed + 0.03 < 0.31) {
             gameSpeed += 0.03;
         }
+    }
+
+    public void loadPath(JSONObject path, MAP_TYPE type) throws FileNotFoundException {
+        LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+        world.setOrderedPath(loader.loadPathTiles(path, world.getWidth(), world.getHeight(), type, entityImages));
+        
+        Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
+        Image pathTilesImage = null;
+
+        // check map type
+        switch(type) {
+            case FOREST:
+                pathTilesImage = forestTileImage;
+                break;
+            case ICEWORLD:
+                pathTilesImage = iceTileImage;
+                break;
+            case DESERT:
+                pathTilesImage = desertTileImage;
+                break;
+            default:
+                break;
+        }
+
+        // load ground image
+        for (int x = 0; x < world.getWidth(); x++) {
+            for (int y = 0; y < world.getHeight(); y++) {
+                ImageView groundView = new ImageView(pathTilesImage);
+                groundView.setViewport(imagePart);
+                squares.add(groundView, x, y);
+            }
+        }
+    }
+
+    public void loadInitialEntities(JSONArray jsonEntities) throws FileNotFoundException {
+        LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+       
+        // load initialy non-path entities
+        for (int i = 0; i < jsonEntities.length(); i++) {
+            loader.loadEntity(world, jsonEntities.getJSONObject(i), world.getOrderedPath(), entityImages);
+        }
+
+        // load entities image
+        for (ImageView entity : entityImages) {
+            squares.getChildren().add(entity);
+        }
+
+        // bind character status to frontend
+        hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+        gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
+        soldier.textProperty()
+                .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
+
+        // bind player total gold to frontend
+        storeController.bindPlayerGold(world.getCharacter());
     }
 
     /**

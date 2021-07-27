@@ -12,6 +12,7 @@ public class MainMenuController {
     private MenuSwitcher modeSwitcher;
     private MenuSwitcher gameSwitcher;
     private MenuSwitcher settingSwitcher;
+    private MenuSwitcher mapSwitcher;
     private boolean isGameStarted;
 
     @FXML
@@ -40,6 +41,10 @@ public class MainMenuController {
         startGameButton.setText("Continue");
     }
 
+    public void setMapSwitcher(MenuSwitcher mapSwitcher) {
+        this.mapSwitcher = mapSwitcher;
+    }
+
     @FXML
     public void handleSettingButtonClick() {
         settingSwitcher.switchMenu();
@@ -59,7 +64,8 @@ public class MainMenuController {
         if (isGameStarted) {
             gameSwitcher.switchMenu();
         } else {
-            modeSwitcher.switchMenu();
+            // modeSwitcher.switchMenu();
+            mapSwitcher.switchMenu();
         }
     }
 

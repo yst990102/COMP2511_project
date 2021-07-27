@@ -1,0 +1,25 @@
+#main-container {
+    -fx-background-image: url("../../../assets/select_mode_background.jpg");
+}
+
+#forest-btn {
+    -fx-background-image: url("../../../assets/forest.png");
+}
+  
+#iceworld-btn {
+    -fx-background-image: url("../../../assets/iceworld.png");
+}
+
+#desert-btn {
+    -fx-background-image: url("../../../assets/desert.png");
+}
+
+.button {
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+}
+  
+.button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.7;
+}

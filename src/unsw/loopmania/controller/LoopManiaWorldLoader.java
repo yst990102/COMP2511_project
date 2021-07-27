@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.List;
 
@@ -33,11 +35,17 @@ import unsw.loopmania.model.Character;
  * spawning of enemies/cards must be handled by the controller.
  */
 public abstract class LoopManiaWorldLoader {
+    public enum MAP_TYPE {
+        FOREST, ICEWORLD, DESERT
+    }
+
     private JSONObject json;
 
     public LoopManiaWorldLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("worlds/" + filename)));
     }
+
+    public LoopManiaWorldLoader() {}
 
     /**
      * Parses the JSON to create a world.
@@ -46,19 +54,12 @@ public abstract class LoopManiaWorldLoader {
         int width = json.getInt("width");
         int height = json.getInt("height");
 
-        // path variable is collection of coordinates with directions of path taken...
-        List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
+        // initial path is empty, path will be loaded after selecting map
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
 
         JSONObject goalObject = json.getJSONObject("goal-condition");
 
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath, goalObject);
-
-        JSONArray jsonEntities = json.getJSONArray("entities");
-
-        // load non-path entities later so that they're shown on-top
-        for (int i = 0; i < jsonEntities.length(); i++) {
-            loadEntity(world, jsonEntities.getJSONObject(i), orderedPath);
-        }
 
         return world;
     }
@@ -69,7 +70,7 @@ public abstract class LoopManiaWorldLoader {
      * @param json a JSON object to parse (different from the )
      * @param orderedPath list of pairs of x, y cell coordinates representing game path
      */
-    private void loadEntity(LoopManiaWorld world, JSONObject currentJson, List<Pair<Integer, Integer>> orderedPath) {
+    public void loadEntity(LoopManiaWorld world, JSONObject currentJson, List<Pair<Integer, Integer>> orderedPath, List<ImageView> entityImages) {
         String type = currentJson.getString("type");
         int x = currentJson.getInt("x");
         int y = currentJson.getInt("y");
@@ -81,8 +82,8 @@ public abstract class LoopManiaWorldLoader {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));
             HeroCastle heroCastle = new HeroCastle(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
-            onLoad(character);
-            onLoad(heroCastle);
+            onLoad(character, entityImages);
+            onLoad(heroCastle, entityImages);
             world.setCharacter(character);
             world.addEntity(character);
             world.addEntity(heroCastle);
@@ -101,7 +102,8 @@ public abstract class LoopManiaWorldLoader {
      * @param height height in number of cells
      * @return list of x, y cell coordinate pairs representing game path
      */
-    private List<Pair<Integer, Integer>> loadPathTiles(JSONObject path, int width, int height) {
+    public List<Pair<Integer, Integer>> loadPathTiles(JSONObject path, int width, int height, MAP_TYPE type, List<ImageView> entityImages) {
+
         if (!path.getString("type").equals("path_tile")) {
             // ... possible extension
             throw new RuntimeException(
@@ -145,7 +147,7 @@ public abstract class LoopManiaWorldLoader {
             if (orderedPath.contains(Pair.with(x, y)) && !(x == starting.getX() && y == starting.getY())) {
                 throw new IllegalArgumentException("Path crosses itself at direction index " + i + " (" + dir + ")");
             }
-            onLoad(tile, connections.get(i - 1), dir);
+            onLoad(tile, connections.get(i - 1), dir, type, entityImages);
         }
         // we should connect back to the starting point
         if (x != starting.getX() || y != starting.getY()) {
@@ -153,14 +155,15 @@ public abstract class LoopManiaWorldLoader {
                     "Path must loop back around on itself, this path doesn't finish where it began, it finishes at %d, %d.",
                     x, y));
         }
-        onLoad(starting, connections.get(connections.size() - 1), connections.get(0));
+        onLoad(starting, connections.get(connections.size() - 1), connections.get(0), type, entityImages);
+
         return orderedPath;
     }
 
-    public abstract void onLoad(Character character);
-    public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
+    public abstract void onLoad(Character character, List<ImageView> entityImages);
+    public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out, MAP_TYPE type, List<ImageView> entityImages);
 
     // TODO Create additional abstract methods for the other entities
-    public abstract void onLoad(HeroCastle heroCastle);
+    public abstract void onLoad(HeroCastle heroCastle, List<ImageView> entityImages);
 
 }

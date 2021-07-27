@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
+import unsw.loopmania.model.Character;
 import unsw.loopmania.model.Item;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.equipments.armours.BasicArmour;
@@ -237,8 +238,10 @@ public class StoreController {
 		buyButton.setCursor(Cursor.HAND);
 		sellButton.setCursor(Cursor.HAND);
 		backButton.setCursor(Cursor.HAND);
+	}
 
-		playerTotalGold.textProperty().bind(Bindings.convert(mainController.getWolrd().getCharacter().goldProperty()));
+	public void bindPlayerGold(Character character) {
+		playerTotalGold.textProperty().bind(Bindings.convert(character.goldProperty()));
 	}
 
 	private void initStoreInventory() {
@@ -419,9 +422,6 @@ public class StoreController {
 		});
 	}
 
-	private void buyItemConstraint() {
-
-	}
 }
 
 

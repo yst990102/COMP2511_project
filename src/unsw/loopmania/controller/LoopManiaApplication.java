@@ -1,5 +1,6 @@
 package unsw.loopmania.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -49,6 +50,13 @@ public class LoopManiaApplication extends Application {
         settingLoader.setController(settingController);
         Parent settingRoot = settingLoader.load();
 
+        // laod the select map view
+        SelectMapController selectMapController = new SelectMapController();
+        selectMapController.setGameController(mainController);
+        FXMLLoader selectMapLoader = new FXMLLoader(getClass().getResource("../view/SelectMapView.fxml"));
+        selectMapLoader.setController(selectMapController);
+        Parent selectMapRoot = selectMapLoader.load();
+
         // load the select mode menu
         SelectModeController selectModeController = new SelectModeController();
         selectModeController.setMainController(mainController);
@@ -70,11 +78,14 @@ public class LoopManiaApplication extends Application {
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu   
+        mainMenuController.setMapSwitcher(() -> {switchToRoot(scene, selectMapRoot, primaryStage);});
         mainMenuController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
         mainMenuController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
         mainMenuController.setSettingSwitcher(() -> {switchToRoot(scene, settingRoot, primaryStage);});
 
         settingController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+
+        selectMapController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
 
         selectModeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
