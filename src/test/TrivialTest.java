@@ -21,6 +21,9 @@ import unsw.loopmania.model.equipments.weapons.*;
 import unsw.loopmania.strategy.*;
 import unsw.loopmania.controller.*;
 import unsw.loopmania.model.Store;
+import unsw.loopmania.model.enemies.Vampire;
+import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.model.enemies.Slug;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -83,13 +86,21 @@ public class TrivialTest {
         Staff a = new Staff(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
         Stake b = new Stake(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
         Sword c = new Sword(new SimpleIntegerProperty(1), new SimpleIntegerProperty(3));
+        Vampire vampire = new Vampire(null);
+        Slug slug = new Slug(null);
+        Zombie zombie = new Zombie(null);
 
         assertEquals(a.getAttack(), 2);
+        assertEquals(a.getAttack(slug), 2);
+        assertEquals(a.getAttack(vampire), 2);
+        assertEquals(a.getAttack(zombie), 2);
         assertEquals(b.getAttack(), 3);
-        assertEquals(b.getAttackToVampire(), 8);
+        assertEquals(b.getAttack(vampire), 8);
+        assertEquals(b.getAttack(slug), 3);
+        assertEquals(b.getAttack(zombie), 3);
 
         assertEquals(c.getAttack(), 5);
-        assertEquals(b.getAttackToVampire(), 8);
+        
 
     }
 

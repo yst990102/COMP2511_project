@@ -1,14 +1,17 @@
 package unsw.loopmania.model.buildings;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
+import unsw.loopmania.model.Building;
 import unsw.loopmania.model.Character;
 
 /**
  * a basic form of building in the world
  */
 public class VampireCastleBuilding extends Building {
-    // TODO = add more types of building, and make sure buildings have effects on entities as required by the spec
-    
+
     /**
      * Constructor for VampireCastleBuilding
      */

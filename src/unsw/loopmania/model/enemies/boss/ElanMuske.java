@@ -1,5 +1,8 @@
 package unsw.loopmania.model.enemies.boss;
 
+import java.io.File;
+
+import javafx.scene.image.Image;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.enemies.Boss;
 
@@ -24,8 +27,8 @@ public class ElanMuske extends Boss {
         this.hp = 150;
         this.attack = 35;
         this.speed = 5;
-        this.battleRadius = 2;
-        this.supportRadius = 2;
+        this.battleRadius = 1;
+        this.supportRadius = 1;
     }
 
 }

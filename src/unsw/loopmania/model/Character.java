@@ -9,8 +9,6 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
-import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Zombie;
@@ -21,11 +19,7 @@ import unsw.loopmania.model.friendlyforces.Soldier;
  * represents the main character in the backend of the game world
  */
 public class Character extends MovingEntity {
-    // TODO = potentially implement relationships between this class and other
 
-    /**
-     * Constructor for Character 
-     */
     private IntegerProperty hp;
     private IntegerProperty gold;
     private IntegerProperty xp;
@@ -174,34 +168,24 @@ public class Character extends MovingEntity {
      * @return int
      */
     public int getATK(Enemy enemy) {
-        if (enemy.getClass().equals(Slug.class) | enemy.getClass().equals(Zombie.class)) {
-            return getATK();
-        } else {
-            if (dressedWeapon == null) {
-                return getATK();
-            } else {
-                if (dressedWeapon.getClass().equals(Stake.class)) {
-                    int weaponAtk = 0;
-                    int helmetAtk = 0;
 
-                    if (dressedWeapon != null) {
-                        weaponAtk = ((Stake) dressedWeapon).getAttackToVampire();
-                    }
+        int weaponAtk = 0;
+        int helmetAtk = 0;
 
-                    if (dressedHelmet != null) {
-                        helmetAtk = dressedHelmet.getAttack();
-                    }
-
-                    if (isInCampfireRadius()) {
-                        return 2 * (atk + weaponAtk + helmetAtk);
-                    }
-
-                    return atk + weaponAtk + helmetAtk;
-                } else {
-                    return getATK();
-                }
-            }
+        if (dressedWeapon != null) {
+            weaponAtk = dressedWeapon.getAttack(enemy);
         }
+
+        if (dressedHelmet != null) {
+            helmetAtk = dressedHelmet.getAttack(enemy);
+        }
+
+        if (isInCampfireRadius()) {
+            return 2 * (atk + weaponAtk + helmetAtk);
+        }
+
+        return atk + weaponAtk + helmetAtk;
+
     }
 
     /**
@@ -231,6 +215,30 @@ public class Character extends MovingEntity {
 
         if (dressedHelmet != null) {
             helmetDef = dressedHelmet.getDefence();
+        }
+
+        return def + armourDef + shieldDef + helmetDef;
+    }
+
+    /**
+    * Get the Defence
+    * @return int
+    */
+    public int getDEF(Enemy enemy) {
+        int armourDef = 0;
+        int shieldDef = 0;
+        int helmetDef = 0;
+
+        if (dressedArmour != null) {
+            armourDef = dressedArmour.getDefence(enemy);
+        }
+
+        if (dressedShield != null) {
+            shieldDef = dressedShield.getDefence(enemy);
+        }
+
+        if (dressedHelmet != null) {
+            helmetDef = dressedHelmet.getDefence(enemy);
         }
 
         return def + armourDef + shieldDef + helmetDef;

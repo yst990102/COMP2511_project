@@ -1,7 +1,9 @@
 package unsw.loopmania.model.enemies.boss;
 
+import java.io.File;
 import java.util.Random;
 
+import javafx.scene.image.Image;
 import javafx.util.Pair;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.enemies.Boss;
@@ -19,7 +21,7 @@ import unsw.loopmania.model.enemies.Boss;
  */
 public class Doggie extends Boss {
 
-    private double stun_percentage = 0.2;
+    private int stun_percentage = 20;
     private int stun_round = 2;
 
     public Doggie(PathPosition position) {
@@ -28,8 +30,8 @@ public class Doggie extends Boss {
         this.hp = 75;
         this.attack = 20;
         this.speed = 5;
-        this.battleRadius = 2;
-        this.supportRadius = 2;
+        this.battleRadius = 1;
+        this.supportRadius = 1;
 
     }
 
@@ -42,11 +44,11 @@ public class Doggie extends Boss {
         }
     }
 
-    public double getStun_percentage() {
+    public int getStun_percentage() {
         return this.stun_percentage;
     }
 
-    public void setStun_percentage(double stun_percentage) {
+    public void setStun_percentage(int stun_percentage) {
         this.stun_percentage = stun_percentage;
     }
 

@@ -1,14 +1,16 @@
 package unsw.loopmania.model.rareItems;
 
-import org.hamcrest.core.IsInstanceOf;
+import java.io.File;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Weapon;
 import unsw.loopmania.model.enemies.Boss;
 
 public class Anduril extends RareItem implements Weapon {
+
     private int attack;
     private int Boss_damage_multiplier;
 
@@ -29,7 +31,8 @@ public class Anduril extends RareItem implements Weapon {
         return this.attack;
     }
 
-    public int getAttackByEnemy(Enemy enemy) {
+    @Override
+    public int getAttack(Enemy enemy) {
         if (enemy instanceof Boss) {
             return this.attack * Boss_damage_multiplier;
         } else {
@@ -41,4 +44,5 @@ public class Anduril extends RareItem implements Weapon {
     public void setAttack(int attack) {
         this.attack = attack;
     }
+
 }

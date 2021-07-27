@@ -15,6 +15,13 @@
         },
         {
             "type": "java",
+            "name": "CodeLens (Launch) - LoopManiaApplication",
+            "request": "launch",
+            "vmArgs": "--module-path ./lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media -enableassertions",
+            "mainClass": "unsw.loopmania.controller.LoopManiaApplication"
+        },
+        {
+            "type": "java",
             "name": "Launch LoopManiaApplication",
             "request": "launch",
             "mainClass": "unsw.loopmania.controller.LoopManiaApplication",

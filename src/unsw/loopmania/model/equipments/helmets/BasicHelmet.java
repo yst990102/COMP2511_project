@@ -1,6 +1,10 @@
 package unsw.loopmania.model.equipments.helmets;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Helmet;
 
@@ -34,12 +38,22 @@ public class BasicHelmet extends Equipment implements Helmet {
     }
 
     @Override
+    public int getAttack(Enemy enemy) {
+        return this.attack;
+    }
+
+    @Override
     public void setAttack(int attack) {
         this.attack = attack;
     }
 
     @Override
     public int getDefence() {
+        return this.defence;
+    }
+
+    @Override
+    public int getDefence(Enemy enemy) {
         return this.defence;
     }
 

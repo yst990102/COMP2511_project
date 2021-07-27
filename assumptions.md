@@ -15,38 +15,40 @@
 ### 2. Default attributes of different types of enemy are listed below:
 
 ================= Common Enemy ==================
+
 Slug
 - HP: 15
 - Attack: 5
 - Speed: 5
-- battle radius: 2
-- support radius: 2
+- battle radius: 1
+- support radius: 1
 
 Zombie
 - HP: 20
 - Attack: 10
 - Speed: 2
-- battle radius: 3
-- support radius: 3
+- battle radius: 2
+- support radius: 2
 - chance of critical bite: 20%
 
 Vampire
 - HP: 25
 - Attack: 20
 - Speed: 3
-- battle radius: 5
-- support radius: 5
+- battle radius: 2
+- support radius: 3
 - chance of critical bite: 20%
 - additional number of attacks: (1,3)
 - additional damage of a critical bite: 10
 
 ================= BOSS ==================
+
 Doggie
 - HP: 75
 - Attack: 20
 - Speed: 5
-- battle radius: 2
-- support radius: 2
+- battle radius: 1
+- support radius: 1
 - Stun percentage : 20%
 - Stun Round : 2
 
@@ -54,34 +56,43 @@ ElanMuske
 - HP: 150
 - Attack: 35
 - Speed: 5
-- battle radius: 2
-- support radius: 2
+- battle radius: 1
+- support radius: 1
 - treatment_amount: 10
 
 
-### 3. There will be 5 slugs spawned randomly on path tiles each turn.
+#### 3. There will be 5 slugs spawned randomly on path tiles each turn.
 
 
-#### 4. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
+#### 4. The Doggie will be spawned after 20 cycles
 
 
-#### 5. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
+#### 5. Elan Muske will be spawned after 40 cycles if the playe also has reached 10000 XP
 
 
-#### 6. The goal (How to win the game)
-Three basic goals
+#### 6. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
+
+
+#### 7. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
+
+
+#### 8. The goal (How to win the game)
+Four basic goals
 - Complete 30 cycles
 - Amass 88888 Gold
 - Obtain 99999 XP
+- Kill all bosses
 
 Combination
-- Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP)
+- Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP OR killing all bosses)
 
 
-### 7. Default attributes of a soldier are listed below:
+### 9. Default attributes of a soldier are listed below:
 Soldier (produced from Barracks)
-- HP: 10
-- Attack: 1
+- HP: 50
+- Attack: 5
+
+
 
 ## Items Rules:
 
@@ -113,12 +124,12 @@ Helmet
 - Decrease Attack (enemy): 2
 
 Anduril
-- Add Attack: 5 
-- Add Attack When Attacking Boss: 8
+- Add Attack: 8
+- Tripe Attack When Attacking Boss
 
 TreeStump
-- Add Defence: 5 
-- Add Defence When Defending Boss: 8
+- Add Defence: 8
+- Add Defence When Defending Boss: 12
 
 
 #### 2. A health potion will heal 50 HP.
@@ -168,6 +179,8 @@ Campfire
 - Slug: $50, XP 100
 - Zombie: $100, XP 200
 - Vampire: $200, XP 300
+- Doggie: $1000, XP 1000, (1, 5) DoggieCoins
+- Elan Muske: $1500, XP 1500
 
 
 #### 2. When a battle starts, the Character will attack first in each turn by default.
@@ -196,13 +209,13 @@ Campfire
 
 - Health potion: $200
 
-- The One Ring: $500
+- The One Ring: $500 (sale only)
 
-- Anduril: $500
+- Anduril: $500 (sale only)
 
-- TreeStump: $500
+- TreeStump: $500 (sale only)
 
-- DoggieCoin: $50-$100 when Muske Dead
+- DoggieCoin: $50-$100 when Muske Dead;  
               $200-$300 when Muske Alive
 
 
