@@ -41,6 +41,7 @@ public class SelectMapController {
         modeSwitcher.switchMenu();
         gameController.loadPath(json.getJSONObject("path"), MAP_TYPE.FOREST);
         gameController.loadInitialEntities(json.getJSONArray("entities"));
+        gameController.setMapType(MAP_TYPE.FOREST);
     }
 
     @FXML
@@ -48,6 +49,7 @@ public class SelectMapController {
         modeSwitcher.switchMenu();
         gameController.loadPath(iceworld.getJSONObject("path"), MAP_TYPE.ICEWORLD);
         gameController.loadInitialEntities(iceworld.getJSONArray("entities"));
+        gameController.setMapType(MAP_TYPE.ICEWORLD);
     }
 
     @FXML
@@ -55,6 +57,7 @@ public class SelectMapController {
         modeSwitcher.switchMenu();
         gameController.loadPath(desert.getJSONObject("path"), MAP_TYPE.DESERT);
         gameController.loadInitialEntities(desert.getJSONArray("entities"));
+        gameController.setMapType(MAP_TYPE.DESERT);
     }
 
     public void setModeSwitcher(MenuSwitcher modeSwitcher) {

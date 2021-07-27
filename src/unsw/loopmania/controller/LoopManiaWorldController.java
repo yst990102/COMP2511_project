@@ -261,6 +261,11 @@ public class LoopManiaWorldController {
     private Image vampireEnemyImage;
     private Image doggieEnemyImage;
     private Image elanMuskeEnemyImage;
+    private Image christmasSlugEnemyImage;
+    private Image christmasZombieEnemyImage;
+    private Image christmasVampireEnemyImage;
+    private Image christmasDoggieEnemyImage;
+
 
     // Equipment Images
     private Image swordImage;
@@ -348,6 +353,8 @@ public class LoopManiaWorldController {
 
     private double gameSpeed;
 
+    private MAP_TYPE mapType;
+
     /**
      * @param world           world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be
@@ -373,6 +380,10 @@ public class LoopManiaWorldController {
         vampireEnemyImage = new Image((new File("src/assets/vampire.png")).toURI().toString());
         doggieEnemyImage = new Image((new File("src/assets/doggie.png")).toURI().toString());
         elanMuskeEnemyImage = new Image((new File("src/assets/ElanMuske.png")).toURI().toString());
+        christmasSlugEnemyImage = new Image((new File("src/assets/christmas_slug.png")).toURI().toString());
+        christmasZombieEnemyImage = new Image((new File("src/assets/christmas_zombie.png")).toURI().toString());
+        christmasVampireEnemyImage = new Image((new File("src/assets/christmas_vampire.png")).toURI().toString());
+        christmasDoggieEnemyImage = new Image((new File("src/assets/christmas_doggie.png")).toURI().toString());
 
         // Item - Equipments
         swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
@@ -802,13 +813,29 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (enemy instanceof Slug) {
-            view = new ImageView(slugEnemyImage);
+            if (mapType == MAP_TYPE.ICEWORLD) {
+                view = new ImageView(christmasSlugEnemyImage);
+            } else {
+                view = new ImageView(slugEnemyImage);
+            }
         } else if (enemy instanceof Vampire) {
-            view = new ImageView(vampireEnemyImage);
+            if (mapType == MAP_TYPE.ICEWORLD) {
+                view = new ImageView(christmasVampireEnemyImage);
+            } else {
+                view = new ImageView(vampireEnemyImage);
+            }
         } else if (enemy instanceof Zombie) {
-            view = new ImageView(zombieEnemyImage);
+            if (mapType == MAP_TYPE.ICEWORLD) {
+                view = new ImageView(christmasZombieEnemyImage);
+            } else {
+                view = new ImageView(zombieEnemyImage);
+            }
         } else if (enemy instanceof Doggie) {
-            view = new ImageView(doggieEnemyImage);
+            if (mapType == MAP_TYPE.ICEWORLD) {
+                view = new ImageView(christmasDoggieEnemyImage); 
+            } else {
+                view = new ImageView(doggieEnemyImage); 
+            }
         } else if (enemy instanceof ElanMuske) {
             view = new ImageView(elanMuskeEnemyImage);
         } else {
@@ -1686,6 +1713,14 @@ public class LoopManiaWorldController {
 
         // bind player total gold to frontend
         storeController.bindPlayerGold(world.getCharacter());
+    }
+
+    public void setMapType(MAP_TYPE type) {
+        this.mapType = type;
+    }
+
+    public MAP_TYPE getMapType() {
+        return mapType;
     }
 
     /**
