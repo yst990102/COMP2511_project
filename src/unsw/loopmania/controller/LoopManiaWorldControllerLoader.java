@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.File;
 
@@ -36,26 +38,33 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
     private Image characterImage;
     private Image pathTilesImage;
     private Image heroCastleImage;
+    private Image forestTileImage;
+    private Image iceTileImage;
+    private Image desertTileImage;
+
 
     public LoopManiaWorldControllerLoader(String filename) throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
         characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
-        pathTilesImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
+        pathTilesImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
         heroCastleImage = new Image((new File("src/assets/hero_castle.png")).toURI().toString());
+        forestTileImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
+        iceTileImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
+        desertTileImage = new Image((new File("src/assets/32x32SandAndStonePath.png")).toURI().toString());
     }
 
     // TODO = load more entity types from the file
     @Override
-    public void onLoad(HeroCastle heroCastle) {
+    public void onLoad(HeroCastle heroCastle, List<ImageView> entityImages) {
         ImageView view = new ImageView(heroCastleImage);
-        addEntity(heroCastle, view);
+        addEntity(heroCastle, view, entityImages);
     }
 
     @Override
-    public void onLoad(Character character) {
+    public void onLoad(Character character, List<ImageView> entityImages) {
         ImageView view = new ImageView(characterImage);
-        addEntity(character, view);
+        addEntity(character, view, entityImages);
     }
 
     /**
@@ -65,11 +74,25 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
      * the top-left of the pathTilesImage
      */
     @Override
-    public void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out) {
+    public void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out, MAP_TYPE type, List<ImageView> entityImages) {
         // note https://stackoverflow.com/a/58041962
         // we need to find the offset within the rectangle, we can do this from
         // adjacencies
         ImageView view = new ImageView(pathTilesImage);
+        switch (type) {
+            case FOREST:
+                view = new ImageView(forestTileImage);
+                break;
+            case ICEWORLD:
+                view = new ImageView(iceTileImage);
+                break;
+            case DESERT:
+                view = new ImageView(desertTileImage);
+                break;
+            default:
+                break;
+        }
+
         int x;
         int y;
 
@@ -106,7 +129,7 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
         }
         Rectangle2D imagePart = new Rectangle2D(x, y, 32, 32);
         view.setViewport(imagePart);
-        addEntity(pathTile, view);
+        addEntity(pathTile, view, entityImages);
     }
 
     /**
@@ -116,9 +139,9 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
      * @param entity backend entity
      * @param view   frontend image to be paired with the backend entity
      */
-    private void addEntity(Entity entity, ImageView view) {
+    private void addEntity(Entity entity, ImageView view, List<ImageView> entityImages) {
         trackPositionOfNonSpawningEntities(entity, view);
-        entities.add(view);
+        entityImages.add(view);
     }
 
     /**
