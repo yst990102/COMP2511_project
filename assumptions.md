@@ -69,13 +69,14 @@ ElanMuske
 
 
 #### 6. The goal (How to win the game)
-Three basic goals
+Four basic goals
 - Complete 30 cycles
 - Amass 88888 Gold
 - Obtain 99999 XP
+- Kill all bosses
 
 Combination
-- Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP)
+- Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP OR killing all bosses)
 
 
 ### 7. Default attributes of a soldier are listed below:
