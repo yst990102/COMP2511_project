@@ -1,7 +1,5 @@
 package unsw.loopmania.model;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 public interface Armour {
 
     /**
@@ -9,6 +7,8 @@ public interface Armour {
      * @return int 
      */
     public int getDefence();
+
+    public int getDefence(Enemy enemy);
 
     /**
      * Set the Defence

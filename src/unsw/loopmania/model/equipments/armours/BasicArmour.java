@@ -1,7 +1,11 @@
 package unsw.loopmania.model.equipments.armours;
 
+import java.io.File;
+
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Armour;
+import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 
 /**
@@ -32,6 +36,11 @@ public class BasicArmour extends Equipment implements Armour {
     }
 
     @Override
+    public int getDefence(Enemy enemy) {
+        return this.defence;
+    }
+
+    @Override
     public void setDefence(int defence) {
         this.defence = defence;
     }
@@ -45,4 +54,5 @@ public class BasicArmour extends Equipment implements Armour {
     public void setDamageReducePercentage(int damageReducePercentage) {
         this.damageReducePercentage = damageReducePercentage;
     }
+
 }

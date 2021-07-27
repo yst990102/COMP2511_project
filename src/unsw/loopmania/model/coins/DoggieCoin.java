@@ -1,8 +1,10 @@
 package unsw.loopmania.model.coins;
 
+import java.io.File;
 import java.util.Random;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Item;
 
 /**
@@ -16,7 +18,7 @@ import unsw.loopmania.model.Item;
  */
 public class DoggieCoin extends Item {
 
-    public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y, boolean isMuskeAlive) {
+    public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y, boolean hasMuskeSpawn) {
         super(x, y);
 
         String description = "===== DoggieCoin =====\n" + "A revolutionary asset type.\nCan sell at shop🐶\n";
@@ -24,7 +26,7 @@ public class DoggieCoin extends Item {
         setDescription(description);
 
         int price = 0;
-        if (isMuskeAlive) {
+        if (hasMuskeSpawn) {
             price = 200 + new Random(System.currentTimeMillis()).nextInt(100);
         } else {
             price = 50 + new Random(System.currentTimeMillis()).nextInt(50);

@@ -1,9 +1,9 @@
 package unsw.loopmania.model.enemies;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.File;
 import java.util.Random;
 
+import javafx.scene.image.Image;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
@@ -13,7 +13,7 @@ import unsw.loopmania.model.PathPosition;
 public class Vampire extends Enemy {
 
     // if critical, make 10 extra damage
-    public int criticalExtraDamage = 10; 
+    public int criticalExtraDamage = 10;
 
     public Vampire(PathPosition position) {
         super(position);
@@ -21,8 +21,8 @@ public class Vampire extends Enemy {
         this.hp = 25;
         this.attack = 20;
         this.speed = 3;
-        this.battleRadius = 5;
-        this.supportRadius = 5;
+        this.battleRadius = 2;
+        this.supportRadius = 3;
         this.criticalPercentage = 20;
         this.goldWhenKilled = 200;
         this.expWhenKilled = 300;
@@ -53,11 +53,12 @@ public class Vampire extends Enemy {
     public void setHP(int newHP) {
         if (newHP > 25) {
             this.hp = 25;
-        }
-        if (newHP < 0 ) {
+        } else if (newHP < 0) {
             this.hp = 0;
+        } else {
+            this.hp = newHP;
         }
-        this.hp = newHP;
+        return;
     }
 
 }

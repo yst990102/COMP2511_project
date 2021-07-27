@@ -8,6 +8,8 @@ public interface Shield {
      */
     public int getDefence();
 
+    public int getDefence(Enemy enemy);
+
     /**
      * Set the Defence
      * @param defence

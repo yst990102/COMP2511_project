@@ -53,10 +53,11 @@ import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Armour;
+import unsw.loopmania.model.Building;
+import unsw.loopmania.model.Card;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Helmet;
 import unsw.loopmania.model.Item;
-import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.VampireCastleBuilding;
 import unsw.loopmania.model.buildings.ZombiePitBuilding;
 import unsw.loopmania.model.buildings.TowerBuilding;
@@ -64,11 +65,13 @@ import unsw.loopmania.model.buildings.VillageBuilding;
 import unsw.loopmania.model.buildings.BarracksBuilding;
 import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.CampfireBuilding;
-import unsw.loopmania.model.cards.Card;
 import unsw.loopmania.model.cards.VampireCastleCard;
 import unsw.loopmania.model.cards.ZombiePitCard;
+import unsw.loopmania.model.coins.DoggieCoin;
 import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.rareItems.Anduril;
 import unsw.loopmania.model.rareItems.TheOneRing;
+import unsw.loopmania.model.rareItems.TreeStump;
 import unsw.loopmania.model.cards.TowerCard;
 import unsw.loopmania.model.cards.VillageCard;
 import unsw.loopmania.model.cards.BarracksCard;
@@ -80,9 +83,12 @@ import unsw.loopmania.model.equipments.shields.BasicShield;
 import unsw.loopmania.model.equipments.weapons.Staff;
 import unsw.loopmania.model.equipments.weapons.Stake;
 import unsw.loopmania.model.equipments.weapons.Sword;
+import unsw.loopmania.model.enemies.Boss;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.model.enemies.boss.Doggie;
+import unsw.loopmania.model.enemies.boss.ElanMuske;
 import unsw.loopmania.strategy.ModeStrategy;
 import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 
@@ -92,7 +98,7 @@ import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
  */
 enum DRAGGABLE_TYPE {
     CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD,
-    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING
+    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING, ANDURIL, TREESTUMP, DOGGIECOIN
 }
 
 enum CLICKABLE_TYPE {
@@ -253,6 +259,8 @@ public class LoopManiaWorldController {
     private Image slugEnemyImage;
     private Image zombieEnemyImage;
     private Image vampireEnemyImage;
+    private Image doggieEnemyImage;
+    private Image elanMuskeEnemyImage;
 
     // Equipment Images
     private Image swordImage;
@@ -267,6 +275,8 @@ public class LoopManiaWorldController {
 
     // RareItems
     private Image theOneRingImage;
+    private Image andurilImage;
+    private Image treeStumpImage;
 
     // Building Images
     private Image vampireCastleBuildingImage;
@@ -276,6 +286,10 @@ public class LoopManiaWorldController {
     private Image barracksBuildingImage;
     private Image trapBuildingImage;
     private Image campfireBuildingImage;
+
+    // coins
+    private Image doggieCoinImage;
+
     private Image equippedSlotBackground;
 
     // Tile Image
@@ -357,6 +371,8 @@ public class LoopManiaWorldController {
         slugEnemyImage = new Image((new File("src/assets/slug.png")).toURI().toString());
         zombieEnemyImage = new Image((new File("src/assets/zombie.png")).toURI().toString());
         vampireEnemyImage = new Image((new File("src/assets/vampire.png")).toURI().toString());
+        doggieEnemyImage = new Image((new File("src/assets/doggie.png")).toURI().toString());
+        elanMuskeEnemyImage = new Image((new File("src/assets/ElanMuske.png")).toURI().toString());
 
         // Item - Equipments
         swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
@@ -371,6 +387,8 @@ public class LoopManiaWorldController {
 
         // RareItems
         theOneRingImage = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
+        andurilImage = new Image((new File("src/assets/anduril_flame_of_the_west.png")).toURI().toString());
+        treeStumpImage = new Image((new File("src/assets/tree_stump.png")).toURI().toString());
 
         // Buildings
         vampireCastleBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
@@ -380,6 +398,9 @@ public class LoopManiaWorldController {
         barracksBuildingImage = new Image((new File("src/assets/barracks.png")).toURI().toString());
         trapBuildingImage = new Image((new File("src/assets/trap.png")).toURI().toString());
         campfireBuildingImage = new Image((new File("src/assets/campfire.png")).toURI().toString());
+
+        // Coins
+        doggieCoinImage = new Image((new File("src/assets/doggiecoin.png")).toURI().toString());
 
         equippedSlotBackground = new Image((new File("src/assets/silver_background.png")).toURI().toString());
 
@@ -512,8 +533,8 @@ public class LoopManiaWorldController {
                 reactToEnemyDefeat(e);
             }
 
-            List<Enemy> newEnemies = world.possiblySpawnEnemies();
-            for (Enemy newEnemy : newEnemies) {
+            List<Slug> newEnemies = world.checkSlugSpawn();
+            for (Slug newEnemy : newEnemies) {
                 onLoad(newEnemy);
             }
 
@@ -525,6 +546,16 @@ public class LoopManiaWorldController {
             List<Zombie> zombies = world.checkZombieSpawn();
             for (Zombie zombie : zombies) {
                 onLoad(zombie);
+            }
+
+            ElanMuske elanMuske = world.checkMuskeSpawn();
+            if (elanMuske != null) {
+                onLoad(elanMuske);
+            }
+
+            Doggie doggie = world.checkDoggieSpawn();
+            if (doggie != null) {
+                onLoad(doggie);
             }
 
             world.checkHeroPassVillage();
@@ -587,7 +618,7 @@ public class LoopManiaWorldController {
     /**
      * load a sword from the world, and pair it with an image in the GUI
      */
-    private void loadDroppedEquipments() {
+    private void loadDroppedEquipments(Enemy enemy) {
         // TODO = load more types of weapon
         // start by getting first available coordinates
 
@@ -612,6 +643,15 @@ public class LoopManiaWorldController {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
+
+        if (enemy instanceof Doggie) {
+            int droppedDoggieCoin_amount = new Random().nextInt(2);
+            while (droppedDoggieCoin_amount > 0) {
+                DoggieCoin droppedDoggieCoin = world.addUnsoldCoins();
+                onLoad(droppedDoggieCoin);
+                droppedDoggieCoin_amount--;
+            }
+        }
     }
 
     /**
@@ -625,7 +665,7 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of
         // enemy
-        loadDroppedEquipments();
+        loadDroppedEquipments(enemy);
         loadDroppedCard();
     }
 
@@ -736,6 +776,15 @@ public class LoopManiaWorldController {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
         } else if (item.getClass().equals(TheOneRing.class)) {
             view = new ImageView(theOneRingImage);
+        } else if (item.getClass().equals(Anduril.class)) {
+            view = new ImageView(andurilImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.ANDURIL, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(TreeStump.class)) {
+            view = new ImageView(treeStumpImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.TREESTUMP, unequippedInventory, equippedItems);
+        } else if (item.getClass().equals(DoggieCoin.class)) {
+            view = new ImageView(doggieCoinImage);
+            addDragEventHandlers(view, DRAGGABLE_TYPE.DOGGIECOIN, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
         }
@@ -758,6 +807,10 @@ public class LoopManiaWorldController {
             view = new ImageView(vampireEnemyImage);
         } else if (enemy instanceof Zombie) {
             view = new ImageView(zombieEnemyImage);
+        } else if (enemy instanceof Doggie) {
+            view = new ImageView(doggieEnemyImage);
+        } else if (enemy instanceof ElanMuske) {
+            view = new ImageView(elanMuskeEnemyImage);
         } else {
             return;
         }
@@ -811,7 +864,7 @@ public class LoopManiaWorldController {
                         Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(x), Integer.valueOf(y));
                         boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true : false;
                         boolean targetPosInHelmetSlot = x == 1 && y == 0 ? true : false;
-                        boolean targetPosInSwordSlot = x == 0 && y == 1 ? true : false;
+                        boolean targetPosInWeaponSlot = x == 0 && y == 1 ? true : false;
                         boolean targetPosInArmourSlot = x == 1 && y == 1 ? true : false;
                         boolean targetPosInShieldSlot = x == 2 && y == 1 ? true : false;
                         // Places at 0,0 - will need to take coordinates once that is implemented
@@ -889,7 +942,7 @@ public class LoopManiaWorldController {
                             }
                             break;
                         case SWORD:
-                            if (targetPosInSwordSlot) {
+                            if (targetPosInWeaponSlot) {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -902,7 +955,7 @@ public class LoopManiaWorldController {
                             }
                             break;
                         case STAKE:
-                            if (targetPosInSwordSlot) {
+                            if (targetPosInWeaponSlot) {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -915,7 +968,7 @@ public class LoopManiaWorldController {
                             }
                             break;
                         case STAFF:
-                            if (targetPosInSwordSlot) {
+                            if (targetPosInWeaponSlot) {
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -933,7 +986,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                Armour armour = new BasicArmour(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedArmour(armour);
                                 updateCharacterDescription();
@@ -947,7 +1000,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                BasicShield shield = new BasicShield(new SimpleIntegerProperty(0),
+                                Shield shield = new BasicShield(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedShield(shield);
                                 updateCharacterDescription();
@@ -964,6 +1017,36 @@ public class LoopManiaWorldController {
                                 Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedHelmet(helmet);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+
+                        case ANDURIL:
+                            if (targetPosInWeaponSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedWeapon(anduril);
+                                updateCharacterDescription();
+                            } else {
+                                view.setVisible(true);
+                            }
+                            break;
+
+                        case TREESTUMP:
+                            if (targetPosInShieldSlot) {
+                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                removeItemByCoordinates(nodeX, nodeY);
+                                targetGridPane.add(silverBackground, x, y, 1, 1);
+                                targetGridPane.add(image, x, y, 1, 1);
+                                TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
+                                world.getCharacter().setDressedShield(treeStump);
                                 updateCharacterDescription();
                             } else {
                                 view.setVisible(true);
@@ -1107,25 +1190,25 @@ public class LoopManiaWorldController {
                     draggedEntity.setImage(swordImage);
                     break;
                 case VAMPIRE_CASTLE_CARD:
-                    draggedEntity.setImage(vampireCastleBuildingImage);
+                    draggedEntity.setImage(vampireCastleCardImage);
                     break;
                 case ZOMBIE_PIT_CARD:
-                    draggedEntity.setImage(zombiePitBuildingImage);
+                    draggedEntity.setImage(zombiePitCardImage);
                     break;
                 case TOWER_CARD:
-                    draggedEntity.setImage(towerBuildingImage);
+                    draggedEntity.setImage(towerCardImage);
                     break;
                 case VILLAGE_CARD:
-                    draggedEntity.setImage(villageBuildingImage);
+                    draggedEntity.setImage(villageCardImage);
                     break;
                 case BARRACKS_CARD:
-                    draggedEntity.setImage(barracksBuildingImage);
+                    draggedEntity.setImage(barracksCardImage);
                     break;
                 case TRAP_CARD:
-                    draggedEntity.setImage(trapBuildingImage);
+                    draggedEntity.setImage(trapCardImage);
                     break;
                 case CAMPFIRE_CARD:
-                    draggedEntity.setImage(campfireBuildingImage);
+                    draggedEntity.setImage(campfireCardImage);
                     break;
                 case SWORD:
                     draggedEntity.setImage(swordImage);

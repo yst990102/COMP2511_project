@@ -32,6 +32,8 @@ import jdk.nashorn.api.tree.ForInLoopTree;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.model.enemies.boss.Doggie;
+import unsw.loopmania.model.enemies.boss.ElanMuske;
 import unsw.loopmania.model.equipments.armours.BasicArmour;
 import unsw.loopmania.model.equipments.helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.shields.BasicShield;
@@ -41,18 +43,19 @@ import unsw.loopmania.model.equipments.weapons.Sword;
 import unsw.loopmania.model.friendlyforces.Soldier;
 import unsw.loopmania.model.goal.GoalComposite;
 import unsw.loopmania.model.potions.HealthPotion;
+import unsw.loopmania.model.rareItems.Anduril;
 import unsw.loopmania.model.rareItems.TheOneRing;
+import unsw.loopmania.model.rareItems.TreeStump;
 import unsw.loopmania.model.buildings.BarracksBuilding;
-import unsw.loopmania.model.buildings.Building;
 import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.buildings.TowerBuilding;
 import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.VampireCastleBuilding;
 import unsw.loopmania.model.buildings.VillageBuilding;
 import unsw.loopmania.model.buildings.ZombiePitBuilding;
-import unsw.loopmania.model.cards.Card;
 import unsw.loopmania.model.cards.VampireCastleCard;
 import unsw.loopmania.model.cards.ZombiePitCard;
+import unsw.loopmania.model.coins.DoggieCoin;
 import unsw.loopmania.model.cards.TowerCard;
 import unsw.loopmania.model.cards.VillageCard;
 import unsw.loopmania.model.cards.BarracksCard;
@@ -99,17 +102,20 @@ public class LoopManiaWorld {
     private StringProperty goals;
     private boolean isGoalFinished;
 
-    // TODO = expand the range of enemies
+    // enemies
     private List<Enemy> enemies;
 
-    // TODO = expand the range of cards
+    // cards
     private List<Card> cardEntities;
 
-    // TODO = expand the range of items
+    // items
     private List<Item> unequippedInventoryItems;
 
-    // TODO = expand the range of buildings
+    // buildings
     private List<Building> buildingEntities;
+
+    // has elanmuske been spawn
+    private boolean hasMuskeSpawn = false;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -224,23 +230,6 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawns enemies if the conditions warrant it, adds to world
-     * @return list of the enemies to be displayed on screen
-     */
-    public List<Enemy> possiblySpawnEnemies() {
-        // TODO = expand this very basic version
-        Pair<Integer, Integer> pos = possiblyGetBasicEnemySpawnPosition();
-        List<Enemy> spawningEnemies = new ArrayList<>();
-        if (pos != null) {
-            int indexInPath = orderedPath.indexOf(pos);
-            Slug enemy = new Slug(new PathPosition(indexInPath, orderedPath));
-            enemies.add(enemy);
-            spawningEnemies.add(enemy);
-        }
-        return spawningEnemies;
-    }
-
-    /**
      * kill an enemy
      * @param enemy enemy to be killed
      */
@@ -268,25 +257,43 @@ public class LoopManiaWorld {
     public List<Enemy> runBattles() {
         // TODO = modify this - currently the character automatically wins all battles without any damage!
         List<Enemy> defeatedEnemies = new ArrayList<Enemy>();
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy e = enemies.get(i);
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) < 4) {
-                // fight...
-                // System.out.println("enemy == " + e + " is in range");
-                fight(e, enemies);
-                setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
-                if (e.hp <= 0) {
-                    defeatedEnemies.add(e);
-                }
 
-            } else {
-                // System.out.println("enemy == " + e + " is out of range, " + "x1 = " + e.getX() + "y1 = " + e.getY()
-                //         + "x2 = " + character.getX() + " y2 = " + character.getY());
+        // check if there is enemy in battle radius
+        List<Enemy> enemies_battled = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
+            if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) <= Math
+                    .pow(e.battleRadius, 2)) {
+                enemies_battled.add(e);
             }
         }
-        // System.out.println("defeatedEnemies == " + defeatedEnemies);
+
+        if (enemies_battled.isEmpty()) {
+            return defeatedEnemies;
+        } else {
+            for (Enemy e : enemies) {
+                if (enemies_battled.contains(e)) {
+                    continue;
+                } else {
+                    if (Math.pow((character.getX() - e.getX()), 2) + Math.pow((character.getY() - e.getY()), 2) <= Math
+                            .pow(e.supportRadius, 2)) {
+                        enemies_battled.add(e);
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < enemies_battled.size(); i++) {
+            Enemy e = enemies_battled.get(i);
+
+            // fight...
+            // System.out.println("enemy == " + e + " is in range");
+            fight(e, enemies);
+            setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
+            if (e.hp <= 0) {
+                defeatedEnemies.add(e);
+            }
+
+        }
 
         for (Enemy e : defeatedEnemies) {
             // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
@@ -306,7 +313,25 @@ public class LoopManiaWorld {
      */
     public void CharacterAttackEnemy(Character character, Enemy enemy, FileOutputStream writer) throws IOException {
         // character attack enemy
-        enemy.hp -= character.getATK();
+        if (character.getDressedWeapon() != null) {
+            if (character.getDressedWeapon().getClass().equals(Staff.class)) {
+                int trancePercentage = ((Staff) character.getDressedWeapon()).trancePercentage;
+                int randint = new Random(System.currentTimeMillis()).nextInt(100);
+
+                if (randint < trancePercentage) {
+                    enemy.setHP(0);
+
+                    Soldier newsoSoldier = new Soldier();
+                    character.getSoldiers().add(newsoSoldier);
+
+                    writer.write(("enemy converted into a soldier!!!!").getBytes());
+                    return;
+                }
+            }
+        }
+
+        enemy.hp -= character.getATK(enemy);
+
         writer.write(("=== Character attack enemy, enemy lose " + character.getATK() + " HP." + "\n").getBytes());
 
     }
@@ -429,10 +454,54 @@ public class LoopManiaWorld {
                 attackTimes--;
             }
 
-            int afterHP = character.getHP();
-            writer.write(("After Vampire attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
+        } else if (enemy.getClass().equals(Doggie.class)) {
+            writer.write(("=== doggie attack character." + "\n").getBytes());
+
+            int damage = 0;
+
+            int attackTimes = 1;
+
+            int counter = 0;
+            while (counter < attackTimes) {
+                int enemyAttack = 0;
+
+                if (character.getDressedHelmet() != null) {
+                    enemyAttack = ((Doggie) enemy).getAttack() - character.getDressedHelmet().getEnemyAttackDecrease();
+                    writer.write(("character have helmet, enemyAttack == " + enemyAttack + "\n").getBytes());
+                } else {
+                    enemyAttack = ((Doggie) enemy).getAttack();
+                    writer.write(("character have no armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+                }
+
+                damage = enemyAttack - character.getDEF();
+
+                if (character.getDressedArmour() != null) {
+                    damage *= (1 - (Double
+                            .valueOf(Double.valueOf(character.getDressedArmour().getDamageReducePercentage()) / 100)));
+                    writer.write(("character have armour, enemyAttack == " + enemyAttack + "\n").getBytes());
+                }
+
+                writer.write((attackTimes + "'s time damage == " + damage + "\n").getBytes());
+
+                HPLoss = (damage < 0) ? 0 : damage;
+                character.setHP(character.getHP() - HPLoss);
+                writer.write((attackTimes + "'s time HPLoss == " + HPLoss + "\n").getBytes());
+
+                // add attack times when stunned
+                int randint = new Random(System.currentTimeMillis()).nextInt(100);
+                if (randint < ((Doggie) enemy).getStun_percentage()) {
+                    attackTimes += ((Doggie) enemy).getStun_round();
+                }
+
+                counter++;
+            }
+
+        } else if (enemy.getClass().equals(ElanMuske.class)) {
 
         }
+
+        int afterHP = character.getHP();
+        writer.write(("After Vampire attack, Character HP LOSS === " + (beforeHP - afterHP) + "\n").getBytes());
     }
 
     /**
@@ -510,7 +579,7 @@ public class LoopManiaWorld {
                     int attack = zombieAttack.getValue0();
                     boolean isCriticalBite = zombieAttack.getValue1();
 
-                    int randomInfection = new Random().nextInt(100);
+                    int randomInfection = new Random(System.currentTimeMillis()).nextInt(100);
                     if (isCriticalBite && randomInfection < ((Zombie) enemy).getInfectionPercentage()) {
                         soldiers.remove(i);
 
@@ -561,19 +630,19 @@ public class LoopManiaWorld {
             character.setXP(character.getXP() + 100);
         }
 
-        int randomInt = new Random().nextInt(100);
+        int randomInt = new Random(System.currentTimeMillis()).nextInt(100);
 
         Card card = null;
 
         if (randomInt < 5) {
             card = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 50) {
+        } else if (randomInt < 10) {
             card = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 51) {
+        } else if (randomInt < 15) {
             card = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 52) {
+        } else if (randomInt < 20) {
             card = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        } else if (randomInt < 90) {
+        } else if (randomInt < 25) {
             card = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         } else if (randomInt < 91) {
             card = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
@@ -615,7 +684,7 @@ public class LoopManiaWorld {
         }
 
         // now we insert the new equipment, as we know we have at least made a slot available...
-        int randomInt = new Random().nextInt(6);
+        int randomInt = new Random(System.currentTimeMillis()).nextInt(6);
 
         if (randomInt == 0) {
             BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
@@ -673,6 +742,28 @@ public class LoopManiaWorld {
     }
 
     /**
+    * spawn a potion in the world and return the potion entity
+    * @return a potion to be spawned in the controller as a JavaFX node
+    */
+    public DoggieCoin addUnsoldCoins() {
+        // TODO = expand this - we would like to be able to add multiple types of items, apart from equipments
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            // eject the oldest unequipped potion and replace it... oldest potion is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest equipment
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+
+        // now we insert the new equipment, as we know we have at least made a slot available...
+
+        DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()), hasMuskeSpawn);
+        unequippedInventoryItems.add(doggieCoin);
+        return doggieCoin;
+    }
+
+    /**
      * spawn a RareItem in the world and return the RareItem entity
      * @return a RareItem to be spawned in the controller as a JavaFX node
      */
@@ -688,10 +779,28 @@ public class LoopManiaWorld {
 
         // now we insert the new rareitem
 
-        RareItem the_one_ring = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(the_one_ring);
-        return the_one_ring;
+        int randint = new Random(System.currentTimeMillis()).nextInt(3);
+
+        RareItem dropped_item;
+
+        switch (randint) {
+        case 1:
+            dropped_item = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            break;
+        case 0:
+            dropped_item = new Anduril(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            break;
+
+        default:
+            dropped_item = new TreeStump(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                    new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+            break;
+        }
+
+        unequippedInventoryItems.add(dropped_item);
+        return dropped_item;
 
     }
 
@@ -803,7 +912,7 @@ public class LoopManiaWorld {
         // TODO = modify this
 
         // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
-        Random rand = new Random();
+        Random rand = new Random(System.currentTimeMillis());
         int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
         // TODO = change based on spec
         if ((choice == 0) && (enemies.size() < 2)) {
@@ -1033,6 +1142,23 @@ public class LoopManiaWorld {
     }
 
     /**
+    * spawns enemies if the conditions warrant it, adds to world
+    * @return list of the enemies to be displayed on screen
+    */
+    public List<Slug> checkSlugSpawn() {
+        // TODO = expand this very basic version
+        Pair<Integer, Integer> pos = possiblyGetBasicEnemySpawnPosition();
+        List<Slug> spawningEnemies = new ArrayList<>();
+        if (pos != null) {
+            int indexInPath = orderedPath.indexOf(pos);
+            Slug enemy = new Slug(new PathPosition(indexInPath, orderedPath));
+            enemies.add(enemy);
+            spawningEnemies.add(enemy);
+        }
+        return spawningEnemies;
+    }
+
+    /**
      * Check whether the Vampire spawns
      * @return List<Vampire>
      */
@@ -1047,7 +1173,7 @@ public class LoopManiaWorld {
                     List<Pair<Integer, Integer>> tilePosAdjacentToPath = getPathPosAdjacentToGrassTile(
                             vampireBuildingPos);
 
-                    int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
+                    int randomInt = new Random(System.currentTimeMillis()).nextInt(tilePosAdjacentToPath.size());
                     int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                     Vampire vampire = new Vampire(new PathPosition(indexInPath, orderedPath));
                     enemies.add(vampire);
@@ -1073,7 +1199,7 @@ public class LoopManiaWorld {
                             zombieBuildingPos);
 
                     for (int j = 0; j < 2; j++) {
-                        int randomInt = new Random().nextInt(tilePosAdjacentToPath.size());
+                        int randomInt = new Random(System.currentTimeMillis()).nextInt(tilePosAdjacentToPath.size());
                         int indexInPath = orderedPath.indexOf(tilePosAdjacentToPath.get(randomInt));
                         Zombie zombie = new Zombie(new PathPosition(indexInPath, orderedPath));
                         enemies.add(zombie);
@@ -1083,6 +1209,60 @@ public class LoopManiaWorld {
             }
         }
         return zombies;
+    }
+
+    public ElanMuske checkMuskeSpawn() {
+        if (hasMuskeSpawn == true) {
+            return null;
+        }
+
+        if (nthCycle >= 40 && getCharacter().getXP() >= 10000) {
+            int randint = new Random(System.currentTimeMillis()).nextInt(enemies.size());
+
+            int x = enemies.get(randint).getX();
+            int y = enemies.get(randint).getY();
+            int indexInPath = orderedPath.indexOf(new Pair<Integer, Integer>(x, y));
+
+            ElanMuske elanmuske = new ElanMuske(new PathPosition(indexInPath, orderedPath));
+            enemies.add(elanmuske);
+
+            hasMuskeSpawn = true;
+
+            return elanmuske;
+        } else {
+            return null;
+        }
+    }
+
+    public Doggie checkDoggieSpawn() {
+        if (nthCycle >= 20) {
+
+            if (enemies.size() <= 1) {
+                return null;
+            }
+
+            int doggiecount = 0;
+            for (Enemy e : enemies) {
+                if (e instanceof Doggie) {
+                    doggiecount++;
+                }
+            }
+            if (doggiecount >= 3) {
+                return null;
+            }
+
+            Enemy randenemy = enemies.get(new Random(System.currentTimeMillis()).nextInt(enemies.size()));
+            int x = randenemy.getX();
+            int y = randenemy.getY();
+            int indexInPath = orderedPath.indexOf(new Pair<Integer, Integer>(x, y));
+
+            Doggie doggie = new Doggie(new PathPosition(indexInPath, orderedPath));
+            enemies.add(doggie);
+
+            return doggie;
+        } else {
+            return null;
+        }
     }
 
     /**
