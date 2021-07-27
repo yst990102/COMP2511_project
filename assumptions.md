@@ -64,6 +64,12 @@ ElanMuske
 ### 3. There will be 5 slugs spawned randomly on path tiles each turn.
 
 
+### 4. The Doggie will be spawned after 20 cycles
+
+
+### 5. Elan Muske will be spawned after 40 cycles if the playe also has reached 10000 XP
+
+
 #### 4. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
 
 
