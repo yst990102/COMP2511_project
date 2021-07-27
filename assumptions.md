@@ -15,6 +15,7 @@
 ### 2. Default attributes of different types of enemy are listed below:
 
 ================= Common Enemy ==================
+
 Slug
 - HP: 15
 - Attack: 5
@@ -41,6 +42,7 @@ Vampire
 - additional damage of a critical bite: 10
 
 ================= BOSS ==================
+
 Doggie
 - HP: 75
 - Attack: 20
@@ -197,13 +199,13 @@ Campfire
 
 - Health potion: $200
 
-- The One Ring: $500
+- The One Ring: $500 (sale only)
 
-- Anduril: $500
+- Anduril: $500 (sale only)
 
-- TreeStump: $500
+- TreeStump: $500 (sale only)
 
-- DoggieCoin: $50-$100 when Muske Dead
+- DoggieCoin: $50-$100 when Muske Dead;  
               $200-$300 when Muske Alive
 
 
