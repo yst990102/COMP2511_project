@@ -61,22 +61,22 @@ ElanMuske
 - treatment_amount: 10
 
 
-### 3. There will be 5 slugs spawned randomly on path tiles each turn.
+#### 3. There will be 5 slugs spawned randomly on path tiles each turn.
 
 
-### 4. The Doggie will be spawned after 20 cycles
+#### 4. The Doggie will be spawned after 20 cycles
 
 
-### 5. Elan Muske will be spawned after 40 cycles if the playe also has reached 10000 XP
+#### 5. Elan Muske will be spawned after 40 cycles if the playe also has reached 10000 XP
 
 
-#### 4. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
+#### 6. Two Gold of $100 will appear on the ground randomly every time the Character completes a cycle of the path.
 
 
-#### 5. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
+#### 7. One health potion will appear on the ground randomly every 2 cycles of the path completed by the Character.
 
 
-#### 6. The goal (How to win the game)
+#### 8. The goal (How to win the game)
 Four basic goals
 - Complete 30 cycles
 - Amass 88888 Gold
@@ -87,10 +87,12 @@ Combination
 - Complete 30 cycles AND (amasing 88888 Gold OR obtaining 99999 XP OR killing all bosses)
 
 
-### 7. Default attributes of a soldier are listed below:
+### 9. Default attributes of a soldier are listed below:
 Soldier (produced from Barracks)
 - HP: 50
 - Attack: 5
+
+
 
 ## Items Rules:
 
@@ -122,12 +124,12 @@ Helmet
 - Decrease Attack (enemy): 2
 
 Anduril
-- Add Attack: 5 
-- Add Attack When Attacking Boss: 8
+- Add Attack: 8
+- Tripe Attack When Attacking Boss
 
 TreeStump
-- Add Defence: 5 
-- Add Defence When Defending Boss: 8
+- Add Defence: 8
+- Add Defence When Defending Boss: 12
 
 
 #### 2. A health potion will heal 50 HP.
@@ -177,6 +179,8 @@ Campfire
 - Slug: $50, XP 100
 - Zombie: $100, XP 200
 - Vampire: $200, XP 300
+- Doggie: $1000, XP 1000, (1, 5) DoggieCoins
+- Elan Muske: $1500, XP 1500
 
 
 #### 2. When a battle starts, the Character will attack first in each turn by default.
