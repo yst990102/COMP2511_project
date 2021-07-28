@@ -63,6 +63,7 @@ public class SettingController {
         minusButton.setCursor(Cursor.HAND);
         plusButton.setCursor(Cursor.HAND);
         backButton.setCursor(Cursor.HAND);
+        volumeslider.setValue(20);
     }
 
     @FXML
