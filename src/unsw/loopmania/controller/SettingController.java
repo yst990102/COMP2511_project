@@ -8,8 +8,10 @@ import java.lang.Integer;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Cursor;
@@ -17,9 +19,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-
 public class SettingController {
-    
+
     private boolean isMuscOn;
     private int speed;
     private Image onButtonImage;
@@ -29,12 +30,11 @@ public class SettingController {
     private Media bgm;
     private LoopManiaWorldController gameController;
 
-
     public SettingController() {
         isMuscOn = true;
         speed = 1;
         onButtonImage = new Image((new File("src/assets/on_button.png")).toURI().toString());
-        offButtonImage= new Image((new File("src/assets/off_button.png")).toURI().toString());
+        offButtonImage = new Image((new File("src/assets/off_button.png")).toURI().toString());
         playBGM();
     }
 
@@ -52,6 +52,9 @@ public class SettingController {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private Slider volumeslider;
 
     @FXML
     private void initialize() {
@@ -93,28 +96,29 @@ public class SettingController {
         }
     }
 
-    @FXML 
+    @FXML
     private void handleBackButtonClick() throws IOException {
         mainMenuSwitcher.switchMenu();
     }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
-		this.mainMenuSwitcher = mainMenuSwitcher;
-	}
+        this.mainMenuSwitcher = mainMenuSwitcher;
+    }
 
     private void playBGM() {
         bgm = new Media(Paths.get("src/assets/bgm.mp3").toUri().toString());
         bgmPlayer = new MediaPlayer(bgm);
-        bgmPlayer.setOnEndOfMedia(new Runnable() {
+        bgmPlayer.setOnReady(new Runnable() {
             public void run() {
-              bgmPlayer.seek(Duration.ZERO);
+                bgmPlayer.volumeProperty().bind(volumeslider.valueProperty().divide(100));
+                bgmPlayer.play();
             }
         });
-        bgmPlayer.play();
+
     }
 
     public void setGameController(LoopManiaWorldController controller) {
         this.gameController = controller;
     }
-    
+
 }
