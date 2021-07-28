@@ -1,6 +1,8 @@
 package unsw.loopmania.controller;
 
 import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 /**
@@ -13,6 +15,8 @@ public class MainMenuController {
     private MenuSwitcher gameSwitcher;
     private MenuSwitcher settingSwitcher;
     private MenuSwitcher mapSwitcher;
+    private MenuSwitcher GameSavedSwitcher;
+
     private boolean isGameStarted;
 
     @FXML
@@ -23,6 +27,9 @@ public class MainMenuController {
 
     @FXML
     private Button quitGameButton;
+
+    @FXML
+    private Button loadButton;
 
     public void setModeSwitcher(MenuSwitcher modeSwitcher){
         this.modeSwitcher = modeSwitcher;
@@ -36,13 +43,17 @@ public class MainMenuController {
         this.settingSwitcher = settingSwitcher;
     }
 
+    public void setMapSwitcher(MenuSwitcher mapSwitcher) {
+        this.mapSwitcher = mapSwitcher;
+    }
+
+    public void setGameSavedSwitcher(MenuSwitcher GameSavedSwitcher) {
+        this.GameSavedSwitcher = GameSavedSwitcher;
+    }
+
     public void setIsGameStarted(boolean status) {
         isGameStarted = status;
         startGameButton.setText("Continue");
-    }
-
-    public void setMapSwitcher(MenuSwitcher mapSwitcher) {
-        this.mapSwitcher = mapSwitcher;
     }
 
     @FXML
@@ -67,6 +78,11 @@ public class MainMenuController {
             // modeSwitcher.switchMenu();
             mapSwitcher.switchMenu();
         }
+    }
+
+    @FXML
+    void switchToSavedGame() {
+        GameSavedSwitcher.switchMenu();
     }
 
 }
