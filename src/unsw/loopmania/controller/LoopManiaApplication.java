@@ -105,6 +105,13 @@ public class LoopManiaApplication extends Application {
         storeLoader.setController(storeController);
         this.storeRoot = storeLoader.load();
 
+        // load the saved game menu
+        GameSavedController gamesavedController = new GameSavedController();
+        gamesavedController.setMainMenuController(mainMenuController);
+        FXMLLoader gamesaveLoader = new FXMLLoader(getClass().getResource("../view/GameSavedView.fxml"));
+        gamesaveLoader.setController(gamesavedController);
+        Parent gamesavedRoot = gamesaveLoader.load();
+
         // create new scene with the main menu (so we start with the main menu)
         this.scene = new Scene(mainMenuRoot);
 
@@ -121,6 +128,9 @@ public class LoopManiaApplication extends Application {
         });
         mainMenuController.setSettingSwitcher(() -> {
             switchToRoot(scene, settingRoot, primaryStage);
+        });
+        mainMenuController.setGameSavedSwitcher(() -> {
+            switchToRoot(scene, gamesavedRoot, primaryStage);
         });
 
         settingController.setMainMenuSwitcher(() -> {
@@ -145,6 +155,14 @@ public class LoopManiaApplication extends Application {
 
         storeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
+        });
+
+        storeController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+        });
+
+        gamesavedController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
         });
 
         // deploy the main onto the stage
