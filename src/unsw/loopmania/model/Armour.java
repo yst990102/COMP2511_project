@@ -1,5 +1,7 @@
 package unsw.loopmania.model;
 
+import org.json.JSONObject;
+
 public interface Armour {
 
     /**
@@ -27,5 +29,7 @@ public interface Armour {
      * @param damageReducePercentage
      */
     public void setDamageReducePercentage(int damageReducePercentage);
+
+    public JSONObject toJson();
 
 }

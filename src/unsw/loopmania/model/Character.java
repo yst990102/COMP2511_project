@@ -3,16 +3,14 @@ package unsw.loopmania.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import unsw.loopmania.model.buildings.CampfireBuilding;
-import unsw.loopmania.model.enemies.Slug;
-import unsw.loopmania.model.enemies.Zombie;
-import unsw.loopmania.model.equipments.weapons.Stake;
 import unsw.loopmania.model.friendlyforces.Soldier;
 
 /**
@@ -48,6 +46,43 @@ public class Character extends MovingEntity {
 
         Bag = new ArrayList<Item>(16);
         buildingEntities = new ArrayList<Building>();
+    }
+
+    public JSONObject toJson() {
+        JSONObject characterInfo = new JSONObject();
+        characterInfo.put("hp", hp.get());
+        characterInfo.put("gold", gold.get());
+        characterInfo.put("xp", xp.get());
+
+        JSONArray soldiersInfo = new JSONArray();
+        for (Soldier s : soldiers) {
+            soldiersInfo.put(s.toJson());
+        }
+        characterInfo.put("soldiers", soldiersInfo);
+
+        characterInfo.put("atk", atk);
+        characterInfo.put("def", def);
+
+        JSONObject DressedEquipments = new JSONObject();
+        DressedEquipments.put("Weapon", dressedWeapon.toJson());
+        DressedEquipments.put("Armour", dressedArmour.toJson());
+        DressedEquipments.put("Shield", dressedShield.toJson());
+        DressedEquipments.put("Helmet", dressedHelmet.toJson());
+        characterInfo.put("equipments", DressedEquipments);
+
+        // JSONArray bagInfo = new JSONArray();
+        // for (Item i : Bag) {
+        //     bagInfo.put(i.toJson());
+        // }
+        // characterInfo.put("Bag", bagInfo);
+
+        // JSONArray buildingInfo = new JSONArray();
+        // for (Building b : buildingEntities) {
+        //     buildingInfo.put(b.toJson());
+        // }
+        // characterInfo.put("buildingEntities", buildingEntities);
+
+        return characterInfo;
     }
 
     /**

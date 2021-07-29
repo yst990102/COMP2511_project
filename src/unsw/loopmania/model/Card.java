@@ -1,5 +1,7 @@
 package unsw.loopmania.model;
 
+import org.json.JSONObject;
+
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -7,8 +9,17 @@ import javafx.beans.property.SimpleIntegerProperty;
  * which doesn't move
  */
 public abstract class Card extends StaticEntity {
-    // TODO = implement other varieties of card than VampireCastleCard
+
     public Card(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
+    }
+
+    public JSONObject toJson() {
+        JSONObject Info = new JSONObject();
+        Info.put("x", this.getX());
+        Info.put("y", this.getY());
+        Info.put("type", this.getClass().getSimpleName());
+
+        return Info;
     }
 }

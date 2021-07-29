@@ -108,6 +108,7 @@ public class LoopManiaApplication extends Application {
         // load the saved game menu
         GameSavedController gamesavedController = new GameSavedController();
         gamesavedController.setMainMenuController(mainMenuController);
+        gamesavedController.setMainWorldController(mainController);
         FXMLLoader gamesaveLoader = new FXMLLoader(getClass().getResource("../view/GameSavedView.fxml"));
         gamesaveLoader.setController(gamesavedController);
         Parent gamesavedRoot = gamesaveLoader.load();

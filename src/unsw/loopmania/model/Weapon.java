@@ -1,5 +1,9 @@
 package unsw.loopmania.model;
 
+import java.util.Collection;
+
+import org.json.JSONObject;
+
 public interface Weapon {
 
     /**
@@ -15,4 +19,6 @@ public interface Weapon {
      * @param attack
      */
     public void setAttack(int attack);
+
+    public JSONObject toJson();
 }
