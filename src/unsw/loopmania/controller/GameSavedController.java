@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.text.Text;
 
 public class GameSavedController {
 
@@ -19,72 +21,124 @@ public class GameSavedController {
     private LoopManiaWorldController mainWorldController;
 
     @FXML
-    private Button savedgame01;
+    private CheckBox selection1;
 
     @FXML
-    private Button savedgame02;
+    private Button savebutton;
 
     @FXML
-    private Button savedgame03;
+    private CheckBox selection3;
+
+    @FXML
+    private CheckBox selection2;
+
+    @FXML
+    private Button loadbutton;
 
     @FXML
     private Button backbutton;
 
     @FXML
-    void SaveProcessToRecord01() throws IOException {
-        Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = df.format(date);
-        savedgame01.setText(currentTime);
+    private Text saved01;
 
-        File json1 = new File("worlds/savedRecord01.json");
-        if (!json1.exists()) {
-            json1.createNewFile();
+    @FXML
+    private Text saved02;
+
+    @FXML
+    private Text saved03;
+
+    @FXML
+    void selectrecord01() {
+        if (selection1.isSelected()) {
+            return;
+        } else {
+            selection1.selectedProperty().set(true);
+            selection2.selectedProperty().set(false);
+            selection3.selectedProperty().set(false);
         }
-        FileWriter fileWriter = new FileWriter("worlds/savedRecord01.json");
-        JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
-
-        WriteJsonObjectTOFile(fileWriter, currentworldInfo);
-
-        fileWriter.close();
     }
 
     @FXML
-    void SaveProcessToRecord02() throws IOException {
-        Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = df.format(date);
-        savedgame02.setText(currentTime);
-
-        File json2 = new File("worlds/savedRecord02.json");
-        if (!json2.exists()) {
-            json2.createNewFile();
+    void selectrecord02() {
+        if (selection2.isSelected()) {
+            return;
+        } else {
+            selection1.selectedProperty().set(false);
+            selection2.selectedProperty().set(true);
+            selection3.selectedProperty().set(false);
         }
-        FileWriter fileWriter = new FileWriter("worlds/savedRecord02.json");
-        JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
-
-        WriteJsonObjectTOFile(fileWriter, currentworldInfo);
-
-        fileWriter.close();
     }
 
     @FXML
-    void SaveProcessToRecord03() throws IOException {
+    void selectrecord03() {
+        if (selection3.isSelected()) {
+            return;
+        } else {
+            selection1.selectedProperty().set(false);
+            selection2.selectedProperty().set(false);
+            selection3.selectedProperty().set(true);
+        }
+    }
+
+    @FXML
+    void save() throws IOException {
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = df.format(date);
-        savedgame03.setText(currentTime);
 
-        File json3 = new File("worlds/savedRecord03.json");
-        if (!json3.exists()) {
-            json3.createNewFile();
+        File json;
+        FileWriter fileWriter;
+
+        if (selection1.isSelected()) {
+            saved01.textProperty().set(currentTime);
+
+            json = new File("worlds/savedRecord01.json");
+            if (!json.exists()) {
+                json.createNewFile();
+            }
+            fileWriter = new FileWriter("worlds/savedRecord01.json");
+
+            JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+
+            WriteJsonObjectTOFile(fileWriter, currentworldInfo);
+
+            fileWriter.close();
+
+        } else if (selection2.isSelected()) {
+            saved02.textProperty().set(currentTime);
+
+            json = new File("worlds/savedRecord02.json");
+            if (!json.exists()) {
+                json.createNewFile();
+            }
+            fileWriter = new FileWriter("worlds/savedRecord02.json");
+
+            JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+
+            WriteJsonObjectTOFile(fileWriter, currentworldInfo);
+
+            fileWriter.close();
+
+        } else if (selection3.isSelected()) {
+            saved03.textProperty().set(currentTime);
+
+            json = new File("worlds/savedRecord03.json");
+            if (!json.exists()) {
+                json.createNewFile();
+            }
+            fileWriter = new FileWriter("worlds/savedRecord03.json");
+
+            JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+
+            WriteJsonObjectTOFile(fileWriter, currentworldInfo);
+
+            fileWriter.close();
         }
-        FileWriter fileWriter = new FileWriter("worlds/savedRecord03.json");
-        JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+    }
 
-        WriteJsonObjectTOFile(fileWriter, currentworldInfo);
+    @FXML
+    void load() {
 
-        fileWriter.close();
     }
 
     @FXML
@@ -107,5 +161,4 @@ public class GameSavedController {
     public void WriteJsonObjectTOFile(FileWriter fileWriter, JSONObject jsonObject) throws IOException {
         fileWriter.write(jsonObject.toString());
     }
-
 }
