@@ -64,10 +64,22 @@ public class Character extends MovingEntity {
         characterInfo.put("def", def);
 
         JSONObject DressedEquipments = new JSONObject();
-        DressedEquipments.put("Weapon", dressedWeapon.toJson());
-        DressedEquipments.put("Armour", dressedArmour.toJson());
-        DressedEquipments.put("Shield", dressedShield.toJson());
-        DressedEquipments.put("Helmet", dressedHelmet.toJson());
+        if (dressedWeapon != null) {
+            DressedEquipments.put("Weapon", dressedWeapon.toJson());
+        }
+
+        if (dressedArmour != null) {
+            DressedEquipments.put("Armour", dressedArmour.toJson());
+        }
+
+        if (dressedShield != null) {
+            DressedEquipments.put("Shield", dressedShield.toJson());
+        }
+
+        if (dressedHelmet != null) {
+            DressedEquipments.put("Helmet", dressedHelmet.toJson());
+        }
+
         characterInfo.put("equipments", DressedEquipments);
 
         // JSONArray bagInfo = new JSONArray();

@@ -40,6 +40,11 @@ public class SelectMapController {
         modeSwitcher.switchMenu();
         gameController.loadPath(json.getJSONObject("path"), MAP_TYPE.FOREST);
         gameController.loadInitialEntities(json.getJSONArray("entities"), MAP_TYPE.FOREST);
+        if (json.has("character_info")) {
+            gameController.loadCharacter(json.getJSONObject("character_info"), MAP_TYPE.FOREST);
+        } else {
+            gameController.bornnewcharacter(MAP_TYPE.FOREST);
+        }
         gameController.setMapType(MAP_TYPE.FOREST);
     }
 
@@ -48,6 +53,11 @@ public class SelectMapController {
         modeSwitcher.switchMenu();
         gameController.loadPath(iceworld.getJSONObject("path"), MAP_TYPE.ICEWORLD);
         gameController.loadInitialEntities(iceworld.getJSONArray("entities"), MAP_TYPE.ICEWORLD);
+        if (iceworld.has("character_info")) {
+            gameController.loadCharacter(iceworld.getJSONObject("character_info"), MAP_TYPE.ICEWORLD);
+        } else {
+            gameController.bornnewcharacter(MAP_TYPE.ICEWORLD);
+        }
         gameController.setMapType(MAP_TYPE.ICEWORLD);
     }
 
@@ -56,6 +66,11 @@ public class SelectMapController {
         modeSwitcher.switchMenu();
         gameController.loadPath(desert.getJSONObject("path"), MAP_TYPE.DESERT);
         gameController.loadInitialEntities(desert.getJSONArray("entities"), MAP_TYPE.DESERT);
+        if (desert.has("character_info")) {
+            gameController.loadCharacter(desert.getJSONObject("character_info"), MAP_TYPE.DESERT);
+        } else {
+            gameController.bornnewcharacter(MAP_TYPE.DESERT);
+        }
         gameController.setMapType(MAP_TYPE.DESERT);
     }
 

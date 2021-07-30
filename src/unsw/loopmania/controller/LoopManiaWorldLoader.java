@@ -18,8 +18,16 @@ import java.util.List;
 import unsw.loopmania.model.LoopManiaWorld;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.PathTile;
+import unsw.loopmania.model.buildings.BarracksBuilding;
+import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.buildings.HeroCastle;
+import unsw.loopmania.model.buildings.TowerBuilding;
+import unsw.loopmania.model.buildings.TrapBuilding;
+import unsw.loopmania.model.buildings.VampireCastleBuilding;
+import unsw.loopmania.model.buildings.VillageBuilding;
+import unsw.loopmania.model.buildings.ZombiePitBuilding;
 import unsw.loopmania.model.PathPosition;
+import unsw.loopmania.model.Building;
 import unsw.loopmania.model.Character;
 
 /**
@@ -79,20 +87,55 @@ public abstract class LoopManiaWorldLoader {
         int indexInPath = orderedPath.indexOf(new Pair<Integer, Integer>(x, y));
         assert indexInPath != -1;
 
-        // TODO = load more entity types from the file
         switch (type) {
         case "HeroCastle":
-            Character character = new Character(new PathPosition(indexInPath, orderedPath));
             HeroCastle heroCastle = new HeroCastle(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
-            onLoad(character, entityImages);
             onLoad(heroCastle, entityImages);
-            world.setCharacter(character);
-            world.addEntity(character);
             world.addEntity(heroCastle);
             break;
+        case "BarracksBuilding":
+            BarracksBuilding barracksBuilding = new BarracksBuilding(new SimpleIntegerProperty(x),
+                    new SimpleIntegerProperty(y));
+            onLoad(barracksBuilding, entityImages);
+            world.addEntity(barracksBuilding);
+            break;
+        case "CampfireBuilding":
+            CampfireBuilding CampfireBuilding = new CampfireBuilding(new SimpleIntegerProperty(x),
+                    new SimpleIntegerProperty(y));
+            onLoad(CampfireBuilding, entityImages);
+            world.addEntity(CampfireBuilding);
+            break;
+        case "TowerBuilding":
+            TowerBuilding towerBuilding = new TowerBuilding(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+            onLoad(towerBuilding, entityImages);
+            world.addEntity(towerBuilding);
+            break;
+        case "TrapBuilding":
+            TrapBuilding trapBuilding = new TrapBuilding(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+            onLoad(trapBuilding, entityImages);
+            world.addEntity(trapBuilding);
+            break;
+        case "VampireCastleBuilding":
+            VampireCastleBuilding vampireCastle = new VampireCastleBuilding(new SimpleIntegerProperty(x),
+                    new SimpleIntegerProperty(y));
+            onLoad(vampireCastle, entityImages);
+            world.addEntity(vampireCastle);
+            break;
+        case "VillageBuilding":
+            VillageBuilding villageBuilding = new VillageBuilding(new SimpleIntegerProperty(x),
+                    new SimpleIntegerProperty(y));
+            onLoad(villageBuilding, entityImages);
+            world.addEntity(villageBuilding);
+            break;
+        case "ZombiePitBuilding":
+            ZombiePitBuilding zombiePitBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(x),
+                    new SimpleIntegerProperty(y));
+            onLoad(zombiePitBuilding, entityImages);
+            world.addEntity(zombiePitBuilding);
+            break;
+
         case "path_tile":
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
-        // TODO Handle other possible entities
         }
 
     }
@@ -170,7 +213,6 @@ public abstract class LoopManiaWorldLoader {
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out, MAP_TYPE type,
             List<ImageView> entityImages);
 
-    // TODO Create additional abstract methods for the other entities
-    public abstract void onLoad(HeroCastle heroCastle, List<ImageView> entityImages);
+    public abstract void onLoad(Building building, List<ImageView> entityImages);
 
 }

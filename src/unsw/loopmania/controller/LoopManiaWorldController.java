@@ -46,9 +46,11 @@ import java.io.IOException;
 
 import unsw.loopmania.model.Character;
 import unsw.loopmania.model.LoopManiaWorld;
+import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.Potion;
 import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Shield;
+import unsw.loopmania.model.Weapon;
 import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.DragIcon;
 import unsw.loopmania.model.Enemy;
@@ -83,6 +85,7 @@ import unsw.loopmania.model.equipments.shields.BasicShield;
 import unsw.loopmania.model.equipments.weapons.Staff;
 import unsw.loopmania.model.equipments.weapons.Stake;
 import unsw.loopmania.model.equipments.weapons.Sword;
+import unsw.loopmania.model.friendlyforces.Soldier;
 import unsw.loopmania.model.enemies.Boss;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
@@ -1735,6 +1738,80 @@ public class LoopManiaWorldController {
             squares.getChildren().add(entity);
         }
 
+    }
+
+    public void loadCharacter(JSONObject character_info, MAP_TYPE type) throws FileNotFoundException {
+        LoopManiaWorldControllerLoader loader;
+
+        switch (type) {
+        case FOREST:
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        case ICEWORLD:
+            loader = new LoopManiaWorldControllerLoader("iceworld.json");
+            break;
+        case DESERT:
+            loader = new LoopManiaWorldControllerLoader("desert.json");
+            break;
+        default:
+            // set forest as default selection
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        }
+
+        int x = character_info.getInt("x");
+        int y = character_info.getInt("y");
+        int indexInPath = world.getOrderedPath().indexOf(new Pair<Integer, Integer>(x, y));
+        Character character = new Character(new PathPosition(indexInPath, world.getOrderedPath()));
+
+        character.setHP(character_info.getInt("hp"));
+        character.setGold(character_info.getInt("gold"));
+        character.setXP(character_info.getInt("xp"));
+
+        character.setATK(character_info.getInt("atk"));
+        character.setDEF(character_info.getInt("def"));
+
+        if (character_info.getJSONObject("equipments").has("Weapon")) {
+            String weapontype = character_info.getJSONObject("equipments").getJSONObject("Weapon").getString("type");
+            Item weapon = switchEquipmentTypeToClass(weapontype);
+            character.setDressedWeapon((Weapon) weapon);
+        }
+
+        if (character_info.getJSONObject("equipments").has("Armour")) {
+            String armourtype = character_info.getJSONObject("equipments").getJSONObject("Armour").getString("type");
+            Item armour = switchEquipmentTypeToClass(armourtype);
+            character.setDressedArmour((Armour) armour);
+        }
+
+        if (character_info.getJSONObject("equipments").has("Shield")) {
+            String shieldtype = character_info.getJSONObject("equipments").getJSONObject("Shield").getString("type");
+            Item shield = switchEquipmentTypeToClass(shieldtype);
+            character.setDressedShield((Shield) shield);
+        }
+
+        if (character_info.getJSONObject("equipments").has("Helmet")) {
+            String helmettype = character_info.getJSONObject("equipments").getJSONObject("Helmet").getString("type");
+            Item helmet = switchEquipmentTypeToClass(helmettype);
+            character.setDressedHelmet((Helmet) helmet);
+        }
+
+        for (int i = 0; i < character_info.getJSONArray("soldiers").length(); i++) {
+            JSONObject soldier = (JSONObject) character_info.getJSONArray("soldiers").get(i);
+
+            int hp = soldier.getInt("hp");
+            int attack = soldier.getInt("attack");
+
+            Soldier newsoldier = new Soldier();
+            newsoldier.setHp(hp);
+            newsoldier.setAttack(attack);
+
+            character.getSoldiers().add(newsoldier);
+        }
+
+        loader.onLoad(character, entityImages);
+        world.setCharacter(character);
+        world.addEntity(character);
+
         // bind character status to frontend
         hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
         gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
@@ -1744,6 +1821,68 @@ public class LoopManiaWorldController {
 
         // bind player total gold to frontend
         storeController.bindPlayerGold(world.getCharacter());
+    }
+
+    public void bornnewcharacter(MAP_TYPE type) throws FileNotFoundException {
+
+        LoopManiaWorldControllerLoader loader;
+
+        switch (type) {
+        case FOREST:
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        case ICEWORLD:
+            loader = new LoopManiaWorldControllerLoader("iceworld.json");
+            break;
+        case DESERT:
+            loader = new LoopManiaWorldControllerLoader("desert.json");
+            break;
+        default:
+            // set forest as default selection
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        }
+
+        int x = 0;
+        int y = 0;
+        int indexInPath = world.getOrderedPath().indexOf(new Pair<Integer, Integer>(x, y));
+        Character character = new Character(new PathPosition(indexInPath, world.getOrderedPath()));
+
+        loader.onLoad(character, entityImages);
+        world.setCharacter(character);
+        world.addEntity(character);
+
+        // bind character status to frontend
+        hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
+        gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
+        xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
+        soldier.textProperty()
+                .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
+
+        // bind player total gold to frontend
+        storeController.bindPlayerGold(world.getCharacter());
+    }
+
+    public Item switchEquipmentTypeToClass(String type) {
+        if (type.equals("BasicArmour")) {
+            return new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("BasicHelmet")) {
+            return new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("BasicShield")) {
+            return new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("Sword")) {
+            return new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("Stake")) {
+            return new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("Staff")) {
+            return new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("Anduril")) {
+            return new Anduril(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else if (type.equals("TreeStump")) {
+            return new TreeStump(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        } else {
+            return null;
+        }
     }
 
     public void setMapType(MAP_TYPE type) {

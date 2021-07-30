@@ -17,9 +17,17 @@ import javafx.scene.image.ImageView;
 
 import java.io.File;
 
+import unsw.loopmania.model.Building;
 import unsw.loopmania.model.Character;
 import unsw.loopmania.model.PathTile;
+import unsw.loopmania.model.buildings.BarracksBuilding;
+import unsw.loopmania.model.buildings.CampfireBuilding;
 import unsw.loopmania.model.buildings.HeroCastle;
+import unsw.loopmania.model.buildings.TowerBuilding;
+import unsw.loopmania.model.buildings.TrapBuilding;
+import unsw.loopmania.model.buildings.VampireCastleBuilding;
+import unsw.loopmania.model.buildings.VillageBuilding;
+import unsw.loopmania.model.buildings.ZombiePitBuilding;
 import unsw.loopmania.model.Entity;
 
 /**
@@ -36,29 +44,71 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
 
     // Images
     private Image characterImage;
+
     private Image pathTilesImage;
+
+    // Building Images
+    private Image vampireCastleBuildingImage;
+    private Image zombiePitBuildingImage;
+    private Image towerBuildingImage;
+    private Image villageBuildingImage;
+    private Image barracksBuildingImage;
+    private Image trapBuildingImage;
+    private Image campfireBuildingImage;
     private Image heroCastleImage;
+
     private Image forestTileImage;
     private Image iceTileImage;
     private Image desertTileImage;
 
-
     public LoopManiaWorldControllerLoader(String filename) throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
+
         characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
+
         pathTilesImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
+
         heroCastleImage = new Image((new File("src/assets/hero_castle.png")).toURI().toString());
+        vampireCastleBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
+        zombiePitBuildingImage = new Image((new File("src/assets/zombie_pit.png")).toURI().toString());
+        towerBuildingImage = new Image((new File("src/assets/tower.png")).toURI().toString());
+        villageBuildingImage = new Image((new File("src/assets/village.png")).toURI().toString());
+        barracksBuildingImage = new Image((new File("src/assets/barracks.png")).toURI().toString());
+        trapBuildingImage = new Image((new File("src/assets/trap.png")).toURI().toString());
+        campfireBuildingImage = new Image((new File("src/assets/campfire.png")).toURI().toString());
+
         forestTileImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
         iceTileImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
         desertTileImage = new Image((new File("src/assets/32x32SandAndStonePath.png")).toURI().toString());
     }
 
-    // TODO = load more entity types from the file
     @Override
-    public void onLoad(HeroCastle heroCastle, List<ImageView> entityImages) {
-        ImageView view = new ImageView(heroCastleImage);
-        addEntity(heroCastle, view, entityImages);
+    public void onLoad(Building building, List<ImageView> entityImages) {
+
+        ImageView view;
+
+        if (building.getClass().equals(HeroCastle.class)) {
+            view = new ImageView(heroCastleImage);
+        } else if (building.getClass().equals(VampireCastleBuilding.class)) {
+            view = new ImageView(vampireCastleBuildingImage);
+        } else if (building.getClass().equals(ZombiePitBuilding.class)) {
+            view = new ImageView(zombiePitBuildingImage);
+        } else if (building.getClass().equals(TowerBuilding.class)) {
+            view = new ImageView(towerBuildingImage);
+        } else if (building.getClass().equals(VillageBuilding.class)) {
+            view = new ImageView(villageBuildingImage);
+        } else if (building.getClass().equals(BarracksBuilding.class)) {
+            view = new ImageView(barracksBuildingImage);
+        } else if (building.getClass().equals(TrapBuilding.class)) {
+            view = new ImageView(trapBuildingImage);
+        } else if (building.getClass().equals(CampfireBuilding.class)) {
+            view = new ImageView(campfireBuildingImage);
+        } else {
+            view = new ImageView();
+        }
+
+        addEntity(building, view, entityImages);
     }
 
     @Override
@@ -74,23 +124,24 @@ public class LoopManiaWorldControllerLoader extends LoopManiaWorldLoader {
      * the top-left of the pathTilesImage
      */
     @Override
-    public void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out, MAP_TYPE type, List<ImageView> entityImages) {
+    public void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out, MAP_TYPE type,
+            List<ImageView> entityImages) {
         // note https://stackoverflow.com/a/58041962
         // we need to find the offset within the rectangle, we can do this from
         // adjacencies
         ImageView view = new ImageView(pathTilesImage);
         switch (type) {
-            case FOREST:
-                view = new ImageView(forestTileImage);
-                break;
-            case ICEWORLD:
-                view = new ImageView(iceTileImage);
-                break;
-            case DESERT:
-                view = new ImageView(desertTileImage);
-                break;
-            default:
-                break;
+        case FOREST:
+            view = new ImageView(forestTileImage);
+            break;
+        case ICEWORLD:
+            view = new ImageView(iceTileImage);
+            break;
+        case DESERT:
+            view = new ImageView(desertTileImage);
+            break;
+        default:
+            break;
         }
 
         int x;
