@@ -1,0 +1,9 @@
+#main-container {
+    -fx-background-image: url("../../../assets/select_mode_background.jpg");
+}
+
+#map {
+    -fx-border-style: solid  solid  solid  solid;
+    -fx-border-color: #000 #000 #000 #000;
+    -fx-border-width: 3;
+}

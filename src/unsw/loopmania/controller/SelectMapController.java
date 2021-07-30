@@ -17,6 +17,7 @@ public class SelectMapController {
     private JSONObject json;
     private JSONObject iceworld;
     private JSONObject desert;
+    private JSONObject path;
     private MenuSwitcher modeSwitcher;
     private LoopManiaWorldController gameController;
 
@@ -24,6 +25,7 @@ public class SelectMapController {
         json = new JSONObject(new JSONTokener(new FileReader("worlds/" + "world_with_twists_and_turns.json")));
         iceworld = new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json")));
         desert = new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json")));
+        path = new JSONObject(new JSONTokener(new FileReader("worlds/" + "path1.json")));
     }
 
     @FXML
@@ -38,7 +40,7 @@ public class SelectMapController {
     @FXML
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
-        gameController.loadPath(json.getJSONObject("path"), MAP_TYPE.FOREST);
+        gameController.loadPath(path.getJSONObject("path"), MAP_TYPE.FOREST);
         gameController.loadInitialEntities(json.getJSONArray("entities"), MAP_TYPE.FOREST);
         if (json.has("character_info")) {
             gameController.loadCharacter(json.getJSONObject("character_info"), MAP_TYPE.FOREST);

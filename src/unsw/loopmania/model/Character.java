@@ -33,6 +33,8 @@ public class Character extends MovingEntity {
     private List<Item> Bag;
     private List<Building> buildingEntities;
 
+    private boolean isFighting;
+
     public Character(PathPosition position) {
         super(position);
 
@@ -428,4 +430,13 @@ public class Character extends MovingEntity {
     public void useHealthPotion() {
         setHP(getHP() + 50);
     }
+
+    public void setIsFighting(boolean status) {
+        isFighting = status;
+    }
+
+    public boolean isFighting() {
+        return isFighting;
+    }
+
 }
