@@ -5,18 +5,15 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 import org.javatuples.Pair;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
 import unsw.loopmania.model.LoopManiaWorld;
-import unsw.loopmania.model.Entity;
 import unsw.loopmania.model.PathTile;
 import unsw.loopmania.model.buildings.BarracksBuilding;
 import unsw.loopmania.model.buildings.CampfireBuilding;
@@ -26,7 +23,6 @@ import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.VampireCastleBuilding;
 import unsw.loopmania.model.buildings.VillageBuilding;
 import unsw.loopmania.model.buildings.ZombiePitBuilding;
-import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.Building;
 import unsw.loopmania.model.Character;
 

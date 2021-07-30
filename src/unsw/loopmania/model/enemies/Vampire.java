@@ -1,9 +1,7 @@
 package unsw.loopmania.model.enemies;
 
-import java.io.File;
 import java.util.Random;
 
-import javafx.scene.image.Image;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 

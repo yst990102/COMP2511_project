@@ -1,7 +1,6 @@
 package unsw.loopmania.controller;
 
 import org.javatuples.Pair;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.fxml.FXML;

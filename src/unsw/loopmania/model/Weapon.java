@@ -1,7 +1,5 @@
 package unsw.loopmania.model;
 
-import java.util.Collection;
-
 import org.json.JSONObject;
 
 public interface Weapon {

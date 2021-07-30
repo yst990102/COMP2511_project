@@ -1,10 +1,8 @@
 package unsw.loopmania.model.coins;
 
-import java.io.File;
 import java.util.Random;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
 import unsw.loopmania.model.Item;
 
 /**

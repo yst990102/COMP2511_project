@@ -1,8 +1,5 @@
 package unsw.loopmania.model.enemies.boss;
 
-import java.io.File;
-
-import javafx.scene.image.Image;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.enemies.Boss;
 

@@ -3,7 +3,6 @@ package unsw.loopmania.model;
 import org.json.JSONObject;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
 
 /**
  * represents an equipped or unequipped sword in the backend world

@@ -1,13 +1,8 @@
 package unsw.loopmania.model;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,19 +11,13 @@ import java.util.Iterator;
 import java.lang.Integer;
 import java.lang.Math;
 
-import javax.lang.model.element.ExecutableElement;
-
-import javax.swing.SwingUtilities;
-
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javafx.animation.Timeline;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import jdk.nashorn.api.tree.ForInLoopTree;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
@@ -48,7 +37,6 @@ import unsw.loopmania.model.rareItems.TheOneRing;
 import unsw.loopmania.model.rareItems.TreeStump;
 import unsw.loopmania.model.buildings.BarracksBuilding;
 import unsw.loopmania.model.buildings.CampfireBuilding;
-import unsw.loopmania.model.buildings.HeroCastle;
 import unsw.loopmania.model.buildings.TowerBuilding;
 import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.VampireCastleBuilding;

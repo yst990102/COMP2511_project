@@ -1,9 +1,7 @@
 package unsw.loopmania.model.equipments.armours;
 
-import java.io.File;
-
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.image.Image;
+
 import unsw.loopmania.model.Armour;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;

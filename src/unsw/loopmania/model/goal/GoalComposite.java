@@ -2,7 +2,6 @@ package unsw.loopmania.model.goal;
 
 import org.json.JSONObject;
 
-import unsw.loopmania.model.Character;
 import unsw.loopmania.model.LoopManiaWorld;
 
 public class GoalComposite extends GoalComponent {
