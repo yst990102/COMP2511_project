@@ -52,8 +52,16 @@ public class SelectMapController {
             gameController.loadCards(forest.getJSONArray("cards"));
         }
 
+        if (forest.has("rareitems")) {
+            gameController.loadRareItems(forest.getJSONArray("rareitems"));
+        }
+
         if (forest.has("unequippedequipments")) {
             gameController.loadUnequippedEquipment(forest.getJSONArray("unequippedequipments"));
+        }
+
+        if (forest.has("potions")) {
+            gameController.loadPotions(forest.getJSONArray("potions"));
         }
 
         if (forest.has("enemies")) {
@@ -78,8 +86,16 @@ public class SelectMapController {
             gameController.loadCards(iceworld.getJSONArray("cards"));
         }
 
+        if (iceworld.has("rareitems")) {
+            gameController.loadRareItems(iceworld.getJSONArray("rareitems"));
+        }
+
         if (iceworld.has("unequippedequipments")) {
             gameController.loadUnequippedEquipment(iceworld.getJSONArray("unequippedequipments"));
+        }
+
+        if (iceworld.has("potions")) {
+            gameController.loadPotions(iceworld.getJSONArray("potions"));
         }
 
         if (iceworld.has("enemies")) {
@@ -104,8 +120,16 @@ public class SelectMapController {
             gameController.loadCards(desert.getJSONArray("cards"));
         }
 
+        if (desert.has("rareitems")) {
+            gameController.loadRareItems(desert.getJSONArray("rareitems"));
+        }
+
         if (desert.has("unequippedequipments")) {
             gameController.loadUnequippedEquipment(desert.getJSONArray("unequippedequipments"));
+        }
+
+        if (desert.has("potions")) {
+            gameController.loadPotions(desert.getJSONArray("potions"));
         }
 
         if (desert.has("enemies")) {

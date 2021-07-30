@@ -1722,6 +1722,22 @@ public class LoopManiaWorldController {
         }
     }
 
+    public void loadPotions(JSONArray potions) {
+        for (int i = 0; i < potions.length(); i++) {
+            JSONObject potion = (JSONObject) (potions.get(i));
+
+            String type = potion.getString("type");
+            int x = potion.getInt("x");
+            int y = potion.getInt("y");
+
+            Potion newpotion = switchPotionTypeToPotion(type, x, y);
+            world.getUnequippedInventoryItems().add(newpotion);
+
+            onLoad(newpotion);
+            world.addEntity(newpotion);
+        }
+    }
+
     public void loadUnequippedEquipment(JSONArray unequippedequipments) {
         for (int i = 0; i < unequippedequipments.length(); i++) {
             JSONObject unequippedequipment = (JSONObject) (unequippedequipments.get(i));
@@ -1735,6 +1751,23 @@ public class LoopManiaWorldController {
 
             onLoad(newequipment);
             world.addEntity(newequipment);
+
+        }
+    }
+
+    public void loadRareItems(JSONArray rareitems) {
+        for (int i = 0; i < rareitems.length(); i++) {
+            JSONObject rareitem = (JSONObject) (rareitems.get(i));
+
+            String type = rareitem.getString("type");
+            int x = rareitem.getInt("x");
+            int y = rareitem.getInt("y");
+
+            RareItem newrareitem = switchRareItemTypeToRareItem(type, x, y);
+            world.getUnequippedInventoryItems().add(newrareitem);
+
+            onLoad(newrareitem);
+            world.addEntity(newrareitem);
 
         }
     }
@@ -1988,6 +2021,14 @@ public class LoopManiaWorldController {
             return new TreeStump(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
         } else if (type.equals(TheOneRing.class.getSimpleName())) {
             return new TheOneRing(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public Potion switchPotionTypeToPotion(String type, int x, int y) {
+        if (type.equals(HealthPotion.class.getSimpleName())) {
+            return new HealthPotion(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
         } else {
             return null;
         }
