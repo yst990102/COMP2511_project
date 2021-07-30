@@ -14,7 +14,7 @@ import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 
 public class SelectMapController {
 
-    private JSONObject json;
+    private JSONObject forest;
     private JSONObject iceworld;
     private JSONObject desert;
     private JSONObject path;
@@ -22,7 +22,7 @@ public class SelectMapController {
     private LoopManiaWorldController gameController;
 
     public SelectMapController() throws FileNotFoundException {
-        json = new JSONObject(new JSONTokener(new FileReader("worlds/" + "world_with_twists_and_turns.json")));
+        forest = new JSONObject(new JSONTokener(new FileReader("worlds/" + "world_with_twists_and_turns.json")));
         iceworld = new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json")));
         desert = new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json")));
         path = new JSONObject(new JSONTokener(new FileReader("worlds/" + "path1.json")));
@@ -41,9 +41,9 @@ public class SelectMapController {
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(path.getJSONObject("path"), MAP_TYPE.FOREST);
-        gameController.loadInitialEntities(json.getJSONArray("entities"), MAP_TYPE.FOREST);
-        if (json.has("character_info")) {
-            gameController.loadCharacter(json.getJSONObject("character_info"), MAP_TYPE.FOREST);
+        gameController.loadInitialEntities(forest.getJSONArray("entities"), MAP_TYPE.FOREST);
+        if (forest.has("character_info")) {
+            gameController.loadCharacter(forest.getJSONObject("character_info"), MAP_TYPE.FOREST);
         } else {
             gameController.bornnewcharacter(MAP_TYPE.FOREST);
         }
