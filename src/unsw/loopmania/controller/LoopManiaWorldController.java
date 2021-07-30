@@ -1722,6 +1722,41 @@ public class LoopManiaWorldController {
         }
     }
 
+    public void loadUnequippedEquipment(JSONArray unequippedequipments) {
+        for (int i = 0; i < unequippedequipments.length(); i++) {
+            JSONObject unequippedequipment = (JSONObject) (unequippedequipments.get(i));
+
+            String type = unequippedequipment.getString("type");
+            int x = unequippedequipment.getInt("x");
+            int y = unequippedequipment.getInt("y");
+
+            Equipment newEquipment = switchEquipmentTypeToEquipment(type, x, y);
+            world.getUnequippedInventoryItems().add(newEquipment);
+
+            onLoad(newEquipment);
+            world.addEntity(newEquipment);
+
+        }
+    }
+
+    public void loadCards(JSONArray cards) {
+        for (int i = 0; i < cards.length(); i++) {
+            JSONObject card = (JSONObject) (cards.get(i));
+
+            String type = card.getString("type");
+            int x = card.getInt("x");
+            int y = card.getInt("y");
+
+            Card newcard = switchCardTypeToCard(type, x, y);
+            world.getCardEntities().add(newcard);
+
+            onLoad(newcard);
+            world.addEntity(newcard);
+        }
+
+        System.out.println(world.getCardEntities());
+    }
+
     public void loadInitialEntities(JSONArray jsonEntities, MAP_TYPE type) throws FileNotFoundException {
         LoopManiaWorldControllerLoader loader;
 
@@ -1771,26 +1806,34 @@ public class LoopManiaWorldController {
     public void loadCharacterEquipped(JSONObject character_info, Character character) {
         if (character_info.getJSONObject("equipments").has("Weapon")) {
             String weapontype = character_info.getJSONObject("equipments").getJSONObject("Weapon").getString("type");
-            Item weapon = switchEquipmentTypeToClass(weapontype);
-            character.setDressedWeapon((Weapon) weapon);
+            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            Weapon weapon = switchWeaponTypeToWeapon(weapontype, x, y);
+            character.setDressedWeapon(weapon);
         }
 
         if (character_info.getJSONObject("equipments").has("Armour")) {
             String armourtype = character_info.getJSONObject("equipments").getJSONObject("Armour").getString("type");
-            Item armour = switchEquipmentTypeToClass(armourtype);
-            character.setDressedArmour((Armour) armour);
+            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            Armour armour = switchArmourTypeToArmour(armourtype, x, y);
+            character.setDressedArmour(armour);
         }
 
         if (character_info.getJSONObject("equipments").has("Shield")) {
             String shieldtype = character_info.getJSONObject("equipments").getJSONObject("Shield").getString("type");
-            Item shield = switchEquipmentTypeToClass(shieldtype);
-            character.setDressedShield((Shield) shield);
+            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            Shield shield = switchShieldTypeToShield(shieldtype, x, y);
+            character.setDressedShield(shield);
         }
 
         if (character_info.getJSONObject("equipments").has("Helmet")) {
             String helmettype = character_info.getJSONObject("equipments").getJSONObject("Helmet").getString("type");
-            Item helmet = switchEquipmentTypeToClass(helmettype);
-            character.setDressedHelmet((Helmet) helmet);
+            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            Helmet helmet = switchHelmetTypeToHelmet(helmettype, x, y);
+            character.setDressedHelmet(helmet);
         }
     }
 
@@ -1848,23 +1891,91 @@ public class LoopManiaWorldController {
         storeController.bindPlayerGold(world.getCharacter());
     }
 
-    public Item switchEquipmentTypeToClass(String type) {
-        if (type.equals("BasicArmour")) {
-            return new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("BasicHelmet")) {
-            return new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("BasicShield")) {
-            return new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("Sword")) {
-            return new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("Stake")) {
-            return new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("Staff")) {
-            return new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("Anduril")) {
-            return new Anduril(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        } else if (type.equals("TreeStump")) {
-            return new TreeStump(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+    public Equipment switchEquipmentTypeToEquipment(String type, int x, int y) {
+        if (type.equals(Sword.class.getSimpleName())) {
+            return new Sword(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(Stake.class.getSimpleName())) {
+            return new Stake(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(Staff.class.getSimpleName())) {
+            return new Staff(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(BasicHelmet.class.getSimpleName())) {
+            return new BasicHelmet(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(BasicShield.class.getSimpleName())) {
+            return new BasicShield(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(BasicArmour.class.getSimpleName())) {
+            return new BasicArmour(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public Weapon switchWeaponTypeToWeapon(String type, int x, int y) {
+        if (type.equals(Sword.class.getSimpleName())) {
+            return new Sword(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(Stake.class.getSimpleName())) {
+            return new Stake(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(Staff.class.getSimpleName())) {
+            return new Staff(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(Anduril.class.getSimpleName())) {
+            return new Anduril(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public Helmet switchHelmetTypeToHelmet(String type, int x, int y) {
+        if (type.equals(BasicHelmet.class.getSimpleName())) {
+            return new BasicHelmet(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public Shield switchShieldTypeToShield(String type, int x, int y) {
+        if (type.equals(BasicShield.class.getSimpleName())) {
+            return new BasicShield(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(TreeStump.class.getSimpleName())) {
+            return new TreeStump(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public Armour switchArmourTypeToArmour(String type, int x, int y) {
+        if (type.equals(BasicArmour.class.getSimpleName())) {
+            return new BasicArmour(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public RareItem switchRareItemTypeToRareItem(String type, int x, int y) {
+        if (type.equals(Anduril.class.getSimpleName())) {
+            return new Anduril(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(TreeStump.class.getSimpleName())) {
+            return new TreeStump(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(TheOneRing.class.getSimpleName())) {
+            return new TheOneRing(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else {
+            return null;
+        }
+    }
+
+    public Card switchCardTypeToCard(String type, int x, int y) {
+        if (type.equals(BarracksCard.class.getSimpleName())) {
+            return new BarracksCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(CampfireCard.class.getSimpleName())) {
+            return new CampfireCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(TowerCard.class.getSimpleName())) {
+            return new TowerCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(TrapCard.class.getSimpleName())) {
+            return new TrapCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(VampireCastleCard.class.getSimpleName())) {
+            return new VampireCastleCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(VillageCard.class.getSimpleName())) {
+            return new VillageCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        } else if (type.equals(ZombiePitCard.class.getSimpleName())) {
+            return new ZombiePitCard(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
         } else {
             return null;
         }

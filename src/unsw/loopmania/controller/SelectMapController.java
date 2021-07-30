@@ -47,6 +47,15 @@ public class SelectMapController {
         } else {
             gameController.bornnewcharacter();
         }
+
+        if (forest.has("cards")) {
+            gameController.loadCards(forest.getJSONArray("cards"));
+        }
+
+        if (forest.has("unequippedequipments")) {
+            gameController.loadUnequippedEquipment(forest.getJSONArray("unequippedequipments"));
+        }
+
         gameController.setMapType(MAP_TYPE.FOREST);
     }
 
@@ -60,6 +69,15 @@ public class SelectMapController {
         } else {
             gameController.bornnewcharacter();
         }
+
+        if (iceworld.has("cards")) {
+            gameController.loadCards(iceworld.getJSONArray("cards"));
+        }
+
+        if (iceworld.has("unequippedequipments")) {
+            gameController.loadUnequippedEquipment(iceworld.getJSONArray("unequippedequipments"));
+        }
+
         gameController.setMapType(MAP_TYPE.ICEWORLD);
     }
 
@@ -73,6 +91,15 @@ public class SelectMapController {
         } else {
             gameController.bornnewcharacter();
         }
+
+        if (desert.has("cards")) {
+            gameController.loadCards(desert.getJSONArray("cards"));
+        }
+
+        if (desert.has("unequippedequipments")) {
+            gameController.loadUnequippedEquipment(desert.getJSONArray("unequippedequipments"));
+        }
+
         gameController.setMapType(MAP_TYPE.DESERT);
     }
 

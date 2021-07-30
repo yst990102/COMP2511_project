@@ -272,6 +272,10 @@ public class LoopManiaWorld {
         return cardEntities;
     }
 
+    public List<Item> getUnequippedInventoryItems() {
+        return unequippedInventoryItems;
+    }
+
     /**
      * Get the Building Entity
      * @return List<Building>
