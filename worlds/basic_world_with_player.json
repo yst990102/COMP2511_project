@@ -1,10 +1,10 @@
 {
   "width": 3,
   "height": 3,
-  "rare_items": [],
+  "rareitems": [],
   "goal-condition": {"goal": "experience", "quantity": 123456 },
   "entities": [
-    {"x": 0, "y": 0, "type": "hero_castle"}
+    {"x": 0, "y": 0, "type": "HeroCastle"}
   ],
   "path": {
     "type": "path_tile",

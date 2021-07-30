@@ -266,7 +266,6 @@ public class LoopManiaWorldController {
     private Image christmasVampireEnemyImage;
     private Image christmasDoggieEnemyImage;
 
-
     // Equipment Images
     private Image swordImage;
     private Image helmetImage;
@@ -832,9 +831,9 @@ public class LoopManiaWorldController {
             }
         } else if (enemy instanceof Doggie) {
             if (mapType == MAP_TYPE.ICEWORLD) {
-                view = new ImageView(christmasDoggieEnemyImage); 
+                view = new ImageView(christmasDoggieEnemyImage);
             } else {
-                view = new ImageView(doggieEnemyImage); 
+                view = new ImageView(doggieEnemyImage);
             }
         } else if (enemy instanceof ElanMuske) {
             view = new ImageView(elanMuskeEnemyImage);
@@ -1451,7 +1450,7 @@ public class LoopManiaWorldController {
             try {
                 LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_1.json");
                 world = loader.load();
-            } catch(FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
 
@@ -1470,7 +1469,6 @@ public class LoopManiaWorldController {
     }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
-        // TODO = possibly set other menu switchers
         this.mainMenuSwitcher = mainMenuSwitcher;
     }
 
@@ -1660,25 +1658,42 @@ public class LoopManiaWorldController {
     }
 
     public void loadPath(JSONObject path, MAP_TYPE type) throws FileNotFoundException {
-        LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+        LoopManiaWorldControllerLoader loader;
+
+        switch (type) {
+        case FOREST:
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        case ICEWORLD:
+            loader = new LoopManiaWorldControllerLoader("iceworld.json");
+            break;
+        case DESERT:
+            loader = new LoopManiaWorldControllerLoader("desert.json");
+            break;
+        default:
+            // set forest as default selection
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        }
+
         world.setOrderedPath(loader.loadPathTiles(path, world.getWidth(), world.getHeight(), type, entityImages));
-        
+
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
         Image pathTilesImage = null;
 
         // check map type
-        switch(type) {
-            case FOREST:
-                pathTilesImage = forestTileImage;
-                break;
-            case ICEWORLD:
-                pathTilesImage = iceTileImage;
-                break;
-            case DESERT:
-                pathTilesImage = desertTileImage;
-                break;
-            default:
-                break;
+        switch (type) {
+        case FOREST:
+            pathTilesImage = forestTileImage;
+            break;
+        case ICEWORLD:
+            pathTilesImage = iceTileImage;
+            break;
+        case DESERT:
+            pathTilesImage = desertTileImage;
+            break;
+        default:
+            break;
         }
 
         // load ground image
@@ -1691,9 +1706,25 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void loadInitialEntities(JSONArray jsonEntities) throws FileNotFoundException {
-        LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
-       
+    public void loadInitialEntities(JSONArray jsonEntities, MAP_TYPE type) throws FileNotFoundException {
+        LoopManiaWorldControllerLoader loader;
+
+        switch (type) {
+        case FOREST:
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        case ICEWORLD:
+            loader = new LoopManiaWorldControllerLoader("iceworld.json");
+            break;
+        case DESERT:
+            loader = new LoopManiaWorldControllerLoader("desert.json");
+            break;
+        default:
+            // set forest as default selection
+            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            break;
+        }
+
         // load initialy non-path entities
         for (int i = 0; i < jsonEntities.length(); i++) {
             loader.loadEntity(world, jsonEntities.getJSONObject(i), world.getOrderedPath(), entityImages);

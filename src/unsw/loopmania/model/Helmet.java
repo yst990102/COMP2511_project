@@ -1,5 +1,7 @@
 package unsw.loopmania.model;
 
+import org.json.JSONObject;
+
 public interface Helmet {
 
     /**
@@ -41,5 +43,7 @@ public interface Helmet {
      * @param enemyAttackDecrease
      */
     public void setEnemyAttackDecrease(int enemyAttackDecrease);
+
+    public JSONObject toJson();
 
 }

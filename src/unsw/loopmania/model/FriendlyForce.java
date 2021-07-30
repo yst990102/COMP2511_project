@@ -1,10 +1,11 @@
 package unsw.loopmania.model;
 
+import org.json.JSONObject;
+
 public class FriendlyForce {
 
     public int hp;
     public int attack;
-    public int defence;
 
     public int getHp() {
         return this.hp;
@@ -20,6 +21,14 @@ public class FriendlyForce {
 
     public void setAttack(int attack) {
         this.attack = attack;
+    }
+
+    public JSONObject toJson() {
+        JSONObject Info = new JSONObject();
+        Info.put("hp", this.hp);
+        Info.put("attack", this.attack);
+
+        return Info;
     }
 
 }

@@ -21,8 +21,40 @@ public class LoopManiaApplication extends Application {
      */
     private LoopManiaWorldController mainController;
 
+    // Stage
+    private Stage primaryStage;
+
+    // Controller Loader
+    private LoopManiaWorldControllerLoader loopManiaLoader;
+    private MainMenuController mainMenuController;
+    private SettingController settingController;
+    private SelectMapController selectMapController;
+    private SelectModeController selectModeController;
+    private StoreController storeController;
+
+    // FXMLLoader
+    private FXMLLoader gameLoader;
+    private FXMLLoader menuLoader;
+    private FXMLLoader settingLoader;
+    private FXMLLoader selectMapLoader;
+    private FXMLLoader selectModeLoader;
+    private FXMLLoader storeLoader;
+
+    // Roots
+    private Parent gameRoot;
+    private Parent mainMenuRoot;
+    private Parent settingRoot;
+    private Parent selectMapRoot;
+    private Parent selectModeRoot;
+    private Parent storeRoot;
+
+    // scene
+    private Scene scene;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
+        this.primaryStage = primaryStage;
+
         // set title on top of window bar
         primaryStage.setTitle("Loop Mania");
 
@@ -31,72 +63,109 @@ public class LoopManiaApplication extends Application {
         primaryStage.setResizable(false);
 
         // load the main game
-        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+        this.loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
         mainController = loopManiaLoader.loadController();
-        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("../view/LoopManiaView.fxml"));
+        this.gameLoader = new FXMLLoader(getClass().getResource("../view/LoopManiaView.fxml"));
         gameLoader.setController(mainController);
-        Parent gameRoot = gameLoader.load();
+        this.gameRoot = gameLoader.load();
 
         // load the main menu
-        MainMenuController mainMenuController = new MainMenuController();
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("../view/MainMenuView.fxml"));
+        this.mainMenuController = new MainMenuController();
+        this.menuLoader = new FXMLLoader(getClass().getResource("../view/MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
         // load the setting menu
-        SettingController settingController = new SettingController();
+        this.settingController = new SettingController();
         settingController.setGameController(mainController);
-        FXMLLoader settingLoader = new FXMLLoader(getClass().getResource("../view/SettingView.fxml"));
+        this.settingLoader = new FXMLLoader(getClass().getResource("../view/SettingView.fxml"));
         settingLoader.setController(settingController);
-        Parent settingRoot = settingLoader.load();
+        this.settingRoot = settingLoader.load();
 
         // laod the select map view
-        SelectMapController selectMapController = new SelectMapController();
+        this.selectMapController = new SelectMapController();
         selectMapController.setGameController(mainController);
-        FXMLLoader selectMapLoader = new FXMLLoader(getClass().getResource("../view/SelectMapView.fxml"));
+        this.selectMapLoader = new FXMLLoader(getClass().getResource("../view/SelectMapView.fxml"));
         selectMapLoader.setController(selectMapController);
-        Parent selectMapRoot = selectMapLoader.load();
+        this.selectMapRoot = selectMapLoader.load();
 
         // load the select mode menu
-        SelectModeController selectModeController = new SelectModeController();
+        this.selectModeController = new SelectModeController();
         selectModeController.setMainController(mainController);
         selectModeController.setMainMenuController(mainMenuController);
-        FXMLLoader selectModeLoader = new FXMLLoader(getClass().getResource("../view/SelectModeView.fxml"));
+        this.selectModeLoader = new FXMLLoader(getClass().getResource("../view/SelectModeView.fxml"));
         selectModeLoader.setController(selectModeController);
-        Parent selectModeRoot = selectModeLoader.load();
+        this.selectModeRoot = selectModeLoader.load();
 
         // load the store
-        StoreController storeController = new StoreController();
+        this.storeController = new StoreController();
         storeController.setMainController(mainController);
         mainController.setStoreController(storeController);
-        FXMLLoader storeLoader = new FXMLLoader(getClass().getResource("../view/StoreView.fxml"));
+        this.storeLoader = new FXMLLoader(getClass().getResource("../view/StoreView.fxml"));
         storeLoader.setController(storeController);
-        Parent storeRoot =  storeLoader.load();
+        this.storeRoot = storeLoader.load();
+
+        // load the saved game menu
+        GameSavedController gamesavedController = new GameSavedController();
+        gamesavedController.setMainMenuController(mainMenuController);
+        gamesavedController.setMainWorldController(mainController);
+        FXMLLoader gamesaveLoader = new FXMLLoader(getClass().getResource("../view/GameSavedView.fxml"));
+        gamesaveLoader.setController(gamesavedController);
+        Parent gamesavedRoot = gamesaveLoader.load();
 
         // create new scene with the main menu (so we start with the main menu)
-        Scene scene = new Scene(mainMenuRoot);
-        
+        this.scene = new Scene(mainMenuRoot);
+
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu   
-        mainMenuController.setMapSwitcher(() -> {switchToRoot(scene, selectMapRoot, primaryStage);});
-        mainMenuController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
-        mainMenuController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
-        mainMenuController.setSettingSwitcher(() -> {switchToRoot(scene, settingRoot, primaryStage);});
+        mainMenuController.setMapSwitcher(() -> {
+            switchToRoot(scene, selectMapRoot, primaryStage);
+        });
+        mainMenuController.setModeSwitcher(() -> {
+            switchToRoot(scene, selectModeRoot, primaryStage);
+        });
+        mainMenuController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+        });
+        mainMenuController.setSettingSwitcher(() -> {
+            switchToRoot(scene, settingRoot, primaryStage);
+        });
+        mainMenuController.setGameSavedSwitcher(() -> {
+            switchToRoot(scene, gamesavedRoot, primaryStage);
+        });
 
-        settingController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+        settingController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
 
-        selectMapController.setModeSwitcher(() -> {switchToRoot(scene, selectModeRoot, primaryStage);});
+        selectMapController.setModeSwitcher(() -> {
+            switchToRoot(scene, selectModeRoot, primaryStage);
+        });
 
         selectModeController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
         });
 
-        mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
-        mainController.setStoreSwitcher(() -> {switchToRoot(scene, storeRoot, primaryStage);});
+        mainController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
+        mainController.setStoreSwitcher(() -> {
+            switchToRoot(scene, storeRoot, primaryStage);
+        });
 
-        storeController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
-        
+        storeController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+        });
+
+        storeController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+        });
+
+        gamesavedController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
+
         // deploy the main onto the stage
         gameRoot.requestFocus();
         primaryStage.setScene(scene);
@@ -104,7 +173,7 @@ public class LoopManiaApplication extends Application {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         // wrap up activities when exit program
         mainController.terminate();
     }
@@ -112,7 +181,7 @@ public class LoopManiaApplication extends Application {
     /**
      * switch to a different Root
      */
-    private void switchToRoot(Scene scene, Parent root, Stage stage){
+    private void switchToRoot(Scene scene, Parent root, Stage stage) {
         scene.setRoot(root);
         root.requestFocus();
         stage.setScene(scene);

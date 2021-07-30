@@ -25,7 +25,6 @@ public class SelectMapController {
         iceworld = new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json")));
         desert = new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json")));
     }
-    
 
     @FXML
     private Button iceworldButton;
@@ -40,7 +39,7 @@ public class SelectMapController {
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(json.getJSONObject("path"), MAP_TYPE.FOREST);
-        gameController.loadInitialEntities(json.getJSONArray("entities"));
+        gameController.loadInitialEntities(json.getJSONArray("entities"), MAP_TYPE.FOREST);
         gameController.setMapType(MAP_TYPE.FOREST);
     }
 
@@ -48,7 +47,7 @@ public class SelectMapController {
     void handleIceworldButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(iceworld.getJSONObject("path"), MAP_TYPE.ICEWORLD);
-        gameController.loadInitialEntities(iceworld.getJSONArray("entities"));
+        gameController.loadInitialEntities(iceworld.getJSONArray("entities"), MAP_TYPE.ICEWORLD);
         gameController.setMapType(MAP_TYPE.ICEWORLD);
     }
 
@@ -56,7 +55,7 @@ public class SelectMapController {
     void handleDesertButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(desert.getJSONObject("path"), MAP_TYPE.DESERT);
-        gameController.loadInitialEntities(desert.getJSONArray("entities"));
+        gameController.loadInitialEntities(desert.getJSONArray("entities"), MAP_TYPE.DESERT);
         gameController.setMapType(MAP_TYPE.DESERT);
     }
 

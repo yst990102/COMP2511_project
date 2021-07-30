@@ -8,6 +8,12 @@
   -fx-background-color: transparent;
 }
 
+#load-game-button {
+  -fx-background-image: url("../../../assets/mud_button.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-color: transparent;
+}
+
 #start-game-button:hover {
   -fx-cursor: hand;
 }

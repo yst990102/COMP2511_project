@@ -48,6 +48,7 @@ import unsw.loopmania.model.rareItems.TheOneRing;
 import unsw.loopmania.model.rareItems.TreeStump;
 import unsw.loopmania.model.buildings.BarracksBuilding;
 import unsw.loopmania.model.buildings.CampfireBuilding;
+import unsw.loopmania.model.buildings.HeroCastle;
 import unsw.loopmania.model.buildings.TowerBuilding;
 import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.VampireCastleBuilding;
@@ -90,6 +91,10 @@ public class LoopManiaWorld {
      */
     private int height;
 
+    // save initial jsonobject
+    private JSONObject initialpath;
+    private JSONArray initialentities;
+
     /**
      * generic entitites - i.e. those which don't have dedicated fields
      */
@@ -98,6 +103,7 @@ public class LoopManiaWorld {
     private Character character;
 
     // goals
+    private JSONObject goalObject;
     private GoalComposite maingoal;
     private StringProperty goals;
     private boolean isGoalFinished;
@@ -143,12 +149,63 @@ public class LoopManiaWorld {
         buildingEntities = new ArrayList<>();
         description = new SimpleStringProperty();
         nthCycle = 0;
-        
+
         // set goal
+        this.goalObject = goalObject;
         this.goals = new SimpleStringProperty();
         this.maingoal = new GoalComposite(goalObject, this);
         setGoals(maingoal.getContent());
         this.isGoalFinished = maingoal.getLogicResult();
+    }
+
+    public JSONObject SaveCurrentProcess() {
+        JSONObject current_process = new JSONObject();
+
+        // width
+        current_process.put("width", this.width);
+        // height
+        current_process.put("height", this.height);
+        // rareitems & equipments in bag
+        JSONArray rareItems = new JSONArray();
+        JSONArray unequippedequipments = new JSONArray();
+        JSONArray potions = new JSONArray();
+        for (Item i : unequippedInventoryItems) {
+            if (i instanceof RareItem) {
+                rareItems.put(((RareItem) i).toJson());
+            }
+            if (i instanceof Equipment) {
+                unequippedequipments.put(((Equipment) i).toJson());
+            }
+            if (i instanceof Potion) {
+                potions.put(((Potion) i).toJson());
+            }
+        }
+        current_process.put("rareitems", rareItems);
+        current_process.put("unequippedequipments", unequippedequipments);
+        current_process.put("potions", potions);
+        // goal-condition
+        current_process.put("goal-condition", goalObject);
+        // building entities
+        JSONArray entities = initialentities;
+        for (Building b : buildingEntities) {
+            entities.put(b.toJson());
+        }
+        current_process.put("entities", entities);
+        // path
+        current_process.put("path", initialpath);
+        // character_info
+        JSONObject characterInfo = getCharacter().toJson();
+        current_process.put("character_info", characterInfo);
+
+        return current_process;
+    }
+
+    public void setInitialPath(JSONObject initialpath) {
+        this.initialpath = initialpath;
+    }
+
+    public void setInitialEntities(JSONArray initialentities) {
+        this.initialentities = initialentities;
     }
 
     /**

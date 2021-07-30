@@ -1,5 +1,7 @@
 package unsw.loopmania.model;
 
+import org.json.JSONObject;
+
 public interface Shield {
 
     /**
@@ -27,5 +29,7 @@ public interface Shield {
      * @param critical_percentage_decrease
      */
     public void setCriticalPercentageDecrease(int critical_percentage_decrease);
+
+    public JSONObject toJson();
 
 }

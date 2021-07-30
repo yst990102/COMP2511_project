@@ -1,7 +1,7 @@
 {
     "width": 8,
     "height": 14,
-    "rare_items": [],
+    "rareitems": [],
     "goal-condition": { "goal": "AND", "subgoals":
       [ { "goal": "cycles", "quantity": 10 },
         { "goal": "OR", "subgoals":
@@ -13,7 +13,7 @@
     }
     ,
     "entities": [
-      {"x": 0, "y": 0, "type": "hero_castle"}
+      {"x": 0, "y": 0, "type": "HeroCastle"}
     ],
     "path": {
       "type": "path_tile",
