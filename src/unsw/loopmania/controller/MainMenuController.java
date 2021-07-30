@@ -16,6 +16,7 @@ public class MainMenuController {
     private MenuSwitcher settingSwitcher;
     private MenuSwitcher mapSwitcher;
     private MenuSwitcher GameSavedSwitcher;
+    private MenuSwitcher mapBuilderSwitcher;
 
     private boolean isGameStarted;
 
@@ -30,6 +31,9 @@ public class MainMenuController {
 
     @FXML
     private Button loadButton;
+
+    @FXML
+    private Button mapBuilderButton;
 
     public void setModeSwitcher(MenuSwitcher modeSwitcher){
         this.modeSwitcher = modeSwitcher;
@@ -49,6 +53,10 @@ public class MainMenuController {
 
     public void setGameSavedSwitcher(MenuSwitcher GameSavedSwitcher) {
         this.GameSavedSwitcher = GameSavedSwitcher;
+    }
+
+    public void setMapBuilderSwitcher(MenuSwitcher mapBuilderSwitcher) {
+        this.mapBuilderSwitcher = mapBuilderSwitcher;
     }
 
     public void setIsGameStarted(boolean status) {
@@ -83,6 +91,11 @@ public class MainMenuController {
     @FXML
     void switchToSavedGame() {
         GameSavedSwitcher.switchMenu();
+    }
+
+    @FXML
+    public void handleMapBuilderButtonClick() {
+        mapBuilderSwitcher.switchMenu();
     }
 
 }
