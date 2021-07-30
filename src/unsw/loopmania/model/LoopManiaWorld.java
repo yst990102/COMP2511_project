@@ -151,8 +151,10 @@ public class LoopManiaWorld {
 
         // width
         current_process.put("width", this.width);
+
         // height
         current_process.put("height", this.height);
+
         // rareitems & equipments in bag
         JSONArray rareItems = new JSONArray();
         JSONArray unequippedequipments = new JSONArray();
@@ -171,25 +173,37 @@ public class LoopManiaWorld {
         current_process.put("rareitems", rareItems);
         current_process.put("unequippedequipments", unequippedequipments);
         current_process.put("potions", potions);
+
         // goal-condition
         current_process.put("goal-condition", goalObject);
+
         // building entities
         JSONArray entities = initialentities;
-        for (Building b : buildingEntities) {
+        for (Building b : this.buildingEntities) {
             entities.put(b.toJson());
         }
         current_process.put("BuildingEntities", entities);
+
         // path
         current_process.put("path", initialpath);
+
         // character_info
         JSONObject characterInfo = getCharacter().toJson();
         current_process.put("character_info", characterInfo);
+
         // cards
         JSONArray cards = new JSONArray();
-        for (Card c : cardEntities) {
+        for (Card c : this.cardEntities) {
             cards.put(c.toJson());
         }
         current_process.put("cards", cards);
+
+        // enemies
+        JSONArray enemies = new JSONArray();
+        for (Enemy e : this.enemies) {
+            enemies.put(e.toJson());
+        }
+        current_process.put("enemies", enemies);
 
         return current_process;
     }
@@ -274,6 +288,10 @@ public class LoopManiaWorld {
 
     public List<Item> getUnequippedInventoryItems() {
         return unequippedInventoryItems;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 
     /**

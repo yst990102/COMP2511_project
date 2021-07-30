@@ -56,6 +56,10 @@ public class SelectMapController {
             gameController.loadUnequippedEquipment(forest.getJSONArray("unequippedequipments"));
         }
 
+        if (forest.has("enemies")) {
+            gameController.loadEnemies(forest.getJSONArray("enemies"));
+        }
+
         gameController.setMapType(MAP_TYPE.FOREST);
     }
 
@@ -78,6 +82,10 @@ public class SelectMapController {
             gameController.loadUnequippedEquipment(iceworld.getJSONArray("unequippedequipments"));
         }
 
+        if (iceworld.has("enemies")) {
+            gameController.loadEnemies(iceworld.getJSONArray("enemies"));
+        }
+
         gameController.setMapType(MAP_TYPE.ICEWORLD);
     }
 
@@ -98,6 +106,10 @@ public class SelectMapController {
 
         if (desert.has("unequippedequipments")) {
             gameController.loadUnequippedEquipment(desert.getJSONArray("unequippedequipments"));
+        }
+
+        if (desert.has("enemies")) {
+            gameController.loadEnemies(desert.getJSONArray("enemies"));
         }
 
         gameController.setMapType(MAP_TYPE.DESERT);

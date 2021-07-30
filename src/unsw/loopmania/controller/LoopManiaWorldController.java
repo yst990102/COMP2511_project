@@ -1730,11 +1730,11 @@ public class LoopManiaWorldController {
             int x = unequippedequipment.getInt("x");
             int y = unequippedequipment.getInt("y");
 
-            Equipment newEquipment = switchEquipmentTypeToEquipment(type, x, y);
-            world.getUnequippedInventoryItems().add(newEquipment);
+            Equipment newequipment = switchEquipmentTypeToEquipment(type, x, y);
+            world.getUnequippedInventoryItems().add(newequipment);
 
-            onLoad(newEquipment);
-            world.addEntity(newEquipment);
+            onLoad(newequipment);
+            world.addEntity(newequipment);
 
         }
     }
@@ -1753,8 +1753,22 @@ public class LoopManiaWorldController {
             onLoad(newcard);
             world.addEntity(newcard);
         }
+    }
 
-        System.out.println(world.getCardEntities());
+    public void loadEnemies(JSONArray enemies) {
+        for (int i = 0; i < enemies.length(); i++) {
+            JSONObject enemy = (JSONObject) (enemies.get(i));
+
+            String type = enemy.getString("type");
+            int x = enemy.getInt("x");
+            int y = enemy.getInt("y");
+
+            Enemy newenemy = switchEnemyTypeToEnemy(type, x, y);
+            world.getEnemies().add(newenemy);
+
+            onLoad(newenemy);
+            world.addEntity(newenemy);
+        }
     }
 
     public void loadInitialEntities(JSONArray jsonEntities, MAP_TYPE type) throws FileNotFoundException {
@@ -1889,6 +1903,24 @@ public class LoopManiaWorldController {
 
         // bind player total gold to frontend
         storeController.bindPlayerGold(world.getCharacter());
+    }
+
+    public Enemy switchEnemyTypeToEnemy(String type, int x, int y) {
+        int indexInPath = world.getOrderedPath().indexOf(new Pair<Integer, Integer>(x, y));
+
+        if (type.equals(Slug.class.getSimpleName())) {
+            return new Slug(new PathPosition(indexInPath, world.getOrderedPath()));
+        } else if (type.equals(Zombie.class.getSimpleName())) {
+            return new Zombie(new PathPosition(indexInPath, world.getOrderedPath()));
+        } else if (type.equals(Vampire.class.getSimpleName())) {
+            return new Vampire(new PathPosition(indexInPath, world.getOrderedPath()));
+        } else if (type.equals(Doggie.class.getSimpleName())) {
+            return new Doggie(new PathPosition(indexInPath, world.getOrderedPath()));
+        } else if (type.equals(ElanMuske.class.getSimpleName())) {
+            return new ElanMuske(new PathPosition(indexInPath, world.getOrderedPath()));
+        } else {
+            return null;
+        }
     }
 
     public Equipment switchEquipmentTypeToEquipment(String type, int x, int y) {

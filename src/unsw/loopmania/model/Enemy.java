@@ -2,11 +2,13 @@ package unsw.loopmania.model;
 
 import java.util.Random;
 
+import org.json.JSONObject;
+
 /**
  * a basic form of enemy in the world
  */
 public class Enemy extends MovingEntity {
-    
+
     /**
      * Constructor for Enemy
      */
@@ -59,6 +61,15 @@ public class Enemy extends MovingEntity {
      */
     public void setHP(int newHP) {
         this.hp = newHP;
+    }
+
+    public JSONObject toJson() {
+        JSONObject Info = new JSONObject();
+        Info.put("x", this.getX());
+        Info.put("y", this.getY());
+        Info.put("type", this.getClass().getSimpleName());
+
+        return Info;
     }
 
 }
