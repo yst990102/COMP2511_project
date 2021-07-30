@@ -146,6 +146,33 @@ public class LoopManiaWorld {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
+    public void ResetWorldData(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goalObject) {
+        nonSpecifiedEntities.clear();
+
+        character.destroy();
+        int indexInPath = this.getOrderedPath().indexOf(new Pair<Integer, Integer>(0, 0));
+        character = new Character(new PathPosition(indexInPath, this.getOrderedPath()));
+
+        for (Enemy e : enemies) {
+            e.destroy();
+        }
+        enemies.clear();
+
+        cardEntities.clear();
+        unequippedInventoryItems.clear();
+        buildingEntities.clear();
+
+        description = new SimpleStringProperty();
+        nthCycle = 0;
+
+        this.goalObject = goalObject;
+        this.goals = new SimpleStringProperty();
+        this.maingoal = new GoalComposite(goalObject, this);
+        setGoals(maingoal.getContent());
+        this.isGoalFinished = maingoal.getLogicResult();
+
+    }
+
     public JSONObject SaveCurrentProcess() {
         JSONObject current_process = new JSONObject();
 
@@ -1169,6 +1196,10 @@ public class LoopManiaWorld {
      */
     public void setGoals(String goals) {
         this.goals.set(goals);
+    }
+
+    public JSONObject getGoalObject() {
+        return this.goalObject;
     }
 
     /**

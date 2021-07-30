@@ -229,6 +229,9 @@ public class LoopManiaWorldController {
     @FXML
     private ImageView goalIcon;
 
+    @FXML
+    private Button resetbutton;
+
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
@@ -442,6 +445,18 @@ public class LoopManiaWorldController {
     }
 
     @FXML
+    void resetworlddata() {
+
+        this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
+                this.world.getGoalObject());
+
+        onLoad(this.world.getCharacter());
+
+        this.initialize();
+
+    }
+
+    @FXML
     public void initialize() {
         // TODO = load more images/entities during initialization
 
@@ -449,21 +464,6 @@ public class LoopManiaWorldController {
         Image inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Image cardSlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
-
-        // Add the ground first so it is below all other entities (inculding all the
-        // twists and turns)
-        // for (int x = 0; x < world.getWidth(); x++) {
-        //     for (int y = 0; y < world.getHeight(); y++) {
-        //         ImageView groundView = new ImageView(pathTilesImage);
-        //         groundView.setViewport(imagePart);
-        //         squares.add(groundView, x, y);
-        //     }
-        // }
-
-        // // load entities loaded from the file in the loader into the squares gridpane
-        // for (ImageView entity : entityImages) {
-        //     squares.getChildren().add(entity);
-        // }
 
         // add the ground underneath the cards
         for (int x = 0; x < world.getWidth(); x++) {
@@ -488,13 +488,6 @@ public class LoopManiaWorldController {
 
         // set goal
         goal.textProperty().bind(Bindings.convert(world.getGoalProperty()));
-
-        // bind character status to frontend property
-        // hp.textProperty().bind(Bindings.convert(world.getCharacter().hpPercentageProperty()));
-        // gold.textProperty().bind(Bindings.convert(world.getCharacter().goldProperty()));
-        // xp.textProperty().bind(Bindings.convert(world.getCharacter().xpProperty()));
-        // soldier.textProperty()
-        //         .bind(Bindings.convert(new SimpleIntegerProperty(world.getCharacter().getSoldiers().size())));
 
         // bind world description to frontend property
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));

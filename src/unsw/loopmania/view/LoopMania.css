@@ -19,6 +19,10 @@
   -fx-background-image: url("../../../assets/button_background.png");
 }
 
+#resetbutton {
+  -fx-background-image: url("../../../assets/button_background.png");
+}
+
 #description-box {
   -fx-background-image: url("../../../assets/description_box.png");
 }

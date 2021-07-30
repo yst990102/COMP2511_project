@@ -215,6 +215,11 @@
                         <RowConstraints />
                      </rowConstraints>
                   </GridPane>
+                  <Button fx:id="resetbutton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#resetworlddata" prefHeight="23.0" prefWidth="100.0" text="Reset" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Button>
                   <Label text="Description" textFill="WHITE" translateX="24.0" translateY="5.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
@@ -248,12 +253,12 @@
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
                      <tooltip>
                         <Tooltip fx:id="exitButtondescription" text="ExitButtonDescription" />
-                     </tooltip></Button>
+                     </tooltip>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding></Button>
                </children>
             </VBox>
          </children>
