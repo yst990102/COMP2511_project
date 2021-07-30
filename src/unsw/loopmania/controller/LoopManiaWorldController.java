@@ -1741,6 +1741,47 @@ public class LoopManiaWorldController {
 
     }
 
+    public void loadCharacterSoldiers(JSONObject character_info, Character character) {
+        for (int i = 0; i < character_info.getJSONArray("soldiers").length(); i++) {
+            JSONObject soldier = (JSONObject) character_info.getJSONArray("soldiers").get(i);
+
+            int hp = soldier.getInt("hp");
+            int attack = soldier.getInt("attack");
+
+            Soldier newsoldier = new Soldier();
+            newsoldier.setHp(hp);
+            newsoldier.setAttack(attack);
+
+            character.getSoldiers().add(newsoldier);
+        }
+    }
+
+    public void loadCharacterEquipped(JSONObject character_info, Character character) {
+        if (character_info.getJSONObject("equipments").has("Weapon")) {
+            String weapontype = character_info.getJSONObject("equipments").getJSONObject("Weapon").getString("type");
+            Item weapon = switchEquipmentTypeToClass(weapontype);
+            character.setDressedWeapon((Weapon) weapon);
+        }
+
+        if (character_info.getJSONObject("equipments").has("Armour")) {
+            String armourtype = character_info.getJSONObject("equipments").getJSONObject("Armour").getString("type");
+            Item armour = switchEquipmentTypeToClass(armourtype);
+            character.setDressedArmour((Armour) armour);
+        }
+
+        if (character_info.getJSONObject("equipments").has("Shield")) {
+            String shieldtype = character_info.getJSONObject("equipments").getJSONObject("Shield").getString("type");
+            Item shield = switchEquipmentTypeToClass(shieldtype);
+            character.setDressedShield((Shield) shield);
+        }
+
+        if (character_info.getJSONObject("equipments").has("Helmet")) {
+            String helmettype = character_info.getJSONObject("equipments").getJSONObject("Helmet").getString("type");
+            Item helmet = switchEquipmentTypeToClass(helmettype);
+            character.setDressedHelmet((Helmet) helmet);
+        }
+    }
+
     public void loadCharacter(JSONObject character_info, MAP_TYPE type) throws FileNotFoundException {
         LoopManiaWorldControllerLoader loader;
 
@@ -1772,42 +1813,8 @@ public class LoopManiaWorldController {
         character.setATK(character_info.getInt("atk"));
         character.setDEF(character_info.getInt("def"));
 
-        if (character_info.getJSONObject("equipments").has("Weapon")) {
-            String weapontype = character_info.getJSONObject("equipments").getJSONObject("Weapon").getString("type");
-            Item weapon = switchEquipmentTypeToClass(weapontype);
-            character.setDressedWeapon((Weapon) weapon);
-        }
-
-        if (character_info.getJSONObject("equipments").has("Armour")) {
-            String armourtype = character_info.getJSONObject("equipments").getJSONObject("Armour").getString("type");
-            Item armour = switchEquipmentTypeToClass(armourtype);
-            character.setDressedArmour((Armour) armour);
-        }
-
-        if (character_info.getJSONObject("equipments").has("Shield")) {
-            String shieldtype = character_info.getJSONObject("equipments").getJSONObject("Shield").getString("type");
-            Item shield = switchEquipmentTypeToClass(shieldtype);
-            character.setDressedShield((Shield) shield);
-        }
-
-        if (character_info.getJSONObject("equipments").has("Helmet")) {
-            String helmettype = character_info.getJSONObject("equipments").getJSONObject("Helmet").getString("type");
-            Item helmet = switchEquipmentTypeToClass(helmettype);
-            character.setDressedHelmet((Helmet) helmet);
-        }
-
-        for (int i = 0; i < character_info.getJSONArray("soldiers").length(); i++) {
-            JSONObject soldier = (JSONObject) character_info.getJSONArray("soldiers").get(i);
-
-            int hp = soldier.getInt("hp");
-            int attack = soldier.getInt("attack");
-
-            Soldier newsoldier = new Soldier();
-            newsoldier.setHp(hp);
-            newsoldier.setAttack(attack);
-
-            character.getSoldiers().add(newsoldier);
-        }
+        loadCharacterEquipped(character_info, character);
+        loadCharacterSoldiers(character_info, character);
 
         loader.onLoad(character, entityImages);
         world.setCharacter(character);
