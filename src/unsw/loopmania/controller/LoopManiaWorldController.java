@@ -1794,24 +1794,7 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void loadCharacter(JSONObject character_info, MAP_TYPE type) throws FileNotFoundException {
-        LoopManiaWorldControllerLoader loader;
-
-        switch (type) {
-        case FOREST:
-            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
-            break;
-        case ICEWORLD:
-            loader = new LoopManiaWorldControllerLoader("iceworld.json");
-            break;
-        case DESERT:
-            loader = new LoopManiaWorldControllerLoader("desert.json");
-            break;
-        default:
-            // set forest as default selection
-            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
-            break;
-        }
+    public void loadCharacter(JSONObject character_info) throws FileNotFoundException {
 
         int x = character_info.getInt("x");
         int y = character_info.getInt("y");
@@ -1843,25 +1826,7 @@ public class LoopManiaWorldController {
         storeController.bindPlayerGold(world.getCharacter());
     }
 
-    public void bornnewcharacter(MAP_TYPE type) throws FileNotFoundException {
-
-        LoopManiaWorldControllerLoader loader;
-
-        switch (type) {
-        case FOREST:
-            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
-            break;
-        case ICEWORLD:
-            loader = new LoopManiaWorldControllerLoader("iceworld.json");
-            break;
-        case DESERT:
-            loader = new LoopManiaWorldControllerLoader("desert.json");
-            break;
-        default:
-            // set forest as default selection
-            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
-            break;
-        }
+    public void bornnewcharacter() throws FileNotFoundException {
 
         int x = 0;
         int y = 0;
