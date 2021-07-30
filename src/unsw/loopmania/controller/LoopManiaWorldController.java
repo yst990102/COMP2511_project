@@ -249,6 +249,9 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
+    // Character
+    private Image characterImage;
+
     // Card Images
     private Image heroCastleImage;
     private Image vampireCastleCardImage;
@@ -367,6 +370,9 @@ public class LoopManiaWorldController {
         this.world = world;
         gameSpeed = 0.3;
         entityImages = new ArrayList<>(initialEntities);
+
+        // Character
+        characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
 
         // Cards
         vampireCastleCardImage = new Image((new File("src/assets/vampire_castle_card.png")).toURI().toString());
@@ -774,6 +780,11 @@ public class LoopManiaWorldController {
 
         addEntity(equipment, view);
         unequippedInventory.getChildren().add(view);
+    }
+
+    private void onLoad(Character character) {
+        ImageView view = new ImageView(characterImage);
+        addEntity(character, view);
     }
 
     /**
@@ -1817,6 +1828,7 @@ public class LoopManiaWorldController {
         loadCharacterSoldiers(character_info, character);
 
         loader.onLoad(character, entityImages);
+        onLoad(character);
         world.setCharacter(character);
         world.addEntity(character);
 
@@ -1857,6 +1869,7 @@ public class LoopManiaWorldController {
         Character character = new Character(new PathPosition(indexInPath, world.getOrderedPath()));
 
         loader.onLoad(character, entityImages);
+        onLoad(character);
         world.setCharacter(character);
         world.addEntity(character);
 
