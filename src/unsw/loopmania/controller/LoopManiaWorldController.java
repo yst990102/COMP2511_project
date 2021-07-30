@@ -785,6 +785,7 @@ public class LoopManiaWorldController {
     private void onLoad(Character character) {
         ImageView view = new ImageView(characterImage);
         addEntity(character, view);
+        squares.getChildren().add(view);
     }
 
     /**
@@ -1827,7 +1828,6 @@ public class LoopManiaWorldController {
         loadCharacterEquipped(character_info, character);
         loadCharacterSoldiers(character_info, character);
 
-        loader.onLoad(character, entityImages);
         onLoad(character);
         world.setCharacter(character);
         world.addEntity(character);
@@ -1868,7 +1868,6 @@ public class LoopManiaWorldController {
         int indexInPath = world.getOrderedPath().indexOf(new Pair<Integer, Integer>(x, y));
         Character character = new Character(new PathPosition(indexInPath, world.getOrderedPath()));
 
-        loader.onLoad(character, entityImages);
         onLoad(character);
         world.setCharacter(character);
         world.addEntity(character);
