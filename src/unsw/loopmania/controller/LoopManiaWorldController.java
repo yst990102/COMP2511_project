@@ -250,6 +250,7 @@ public class LoopManiaWorldController {
     private Timeline timeline;
 
     // Card Images
+    private Image heroCastleImage;
     private Image vampireCastleCardImage;
     private Image zombiePitCardImage;
     private Image towerCardImage;
@@ -404,6 +405,7 @@ public class LoopManiaWorldController {
         treeStumpImage = new Image((new File("src/assets/tree_stump.png")).toURI().toString());
 
         // Buildings
+        heroCastleImage = new Image((new File("src/assets/hero_castle.png")).toURI().toString());
         vampireCastleBuildingImage = new Image((new File("src/assets/vampire_castle.png")).toURI().toString());
         zombiePitBuildingImage = new Image((new File("src/assets/zombie_pit.png")).toURI().toString());
         towerBuildingImage = new Image((new File("src/assets/tower.png")).toURI().toString());
@@ -632,7 +634,6 @@ public class LoopManiaWorldController {
      * load a sword from the world, and pair it with an image in the GUI
      */
     private void loadDroppedEquipments(Enemy enemy) {
-        // TODO = load more types of weapon
         // start by getting first available coordinates
 
         // [0,3] equipment, [0,1] health potion, 5% chance of obtaining a rare item
@@ -1894,7 +1895,7 @@ public class LoopManiaWorldController {
     }
 
     public void spawnFightEffect() {
-        
+
     }
 
     /**
