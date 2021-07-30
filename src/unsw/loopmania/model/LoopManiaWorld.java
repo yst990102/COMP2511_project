@@ -289,6 +289,7 @@ public class LoopManiaWorld {
             // System.out.println("enemy == " + e + " is in range");
             fight(e, enemies);
             setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
+            character.setIsFighting(true);
             if (e.hp <= 0) {
                 defeatedEnemies.add(e);
             }
