@@ -31,6 +31,7 @@ public class LoopManiaApplication extends Application {
     private SelectMapController selectMapController;
     private SelectModeController selectModeController;
     private StoreController storeController;
+    private MapBuilderController mapBuilderController;
 
     // FXMLLoader
     private FXMLLoader gameLoader;
@@ -39,6 +40,7 @@ public class LoopManiaApplication extends Application {
     private FXMLLoader selectMapLoader;
     private FXMLLoader selectModeLoader;
     private FXMLLoader storeLoader;
+    private FXMLLoader mapBuilderLoader;
 
     // Roots
     private Parent gameRoot;
@@ -47,6 +49,7 @@ public class LoopManiaApplication extends Application {
     private Parent selectMapRoot;
     private Parent selectModeRoot;
     private Parent storeRoot;
+    private Parent mapBuilderRoot;
 
     // scene
     private Scene scene;
@@ -113,6 +116,12 @@ public class LoopManiaApplication extends Application {
         gamesaveLoader.setController(gamesavedController);
         Parent gamesavedRoot = gamesaveLoader.load();
 
+        // load the map builder view
+        this.mapBuilderController = new MapBuilderController();
+        this.mapBuilderLoader = new FXMLLoader(getClass().getResource("../view/MapBuilderView.fxml"));
+        this.mapBuilderLoader.setController(mapBuilderController);
+        this.mapBuilderRoot = mapBuilderLoader.load();
+
         // create new scene with the main menu (so we start with the main menu)
         this.scene = new Scene(mainMenuRoot);
 
@@ -133,6 +142,10 @@ public class LoopManiaApplication extends Application {
         mainMenuController.setGameSavedSwitcher(() -> {
             switchToRoot(scene, gamesavedRoot, primaryStage);
         });
+        mainMenuController.setMapBuilderSwitcher(() -> {
+            switchToRoot(scene, mapBuilderRoot, primaryStage);
+        });
+
 
         settingController.setMainMenuSwitcher(() -> {
             switchToRoot(scene, mainMenuRoot, primaryStage);
@@ -163,6 +176,10 @@ public class LoopManiaApplication extends Application {
         });
 
         gamesavedController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
+
+        mapBuilderController.setMainMenuSwitcher(() -> {
             switchToRoot(scene, mainMenuRoot, primaryStage);
         });
 

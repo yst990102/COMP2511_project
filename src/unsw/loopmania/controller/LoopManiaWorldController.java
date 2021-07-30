@@ -1754,6 +1754,10 @@ public class LoopManiaWorldController {
         return mapType;
     }
 
+    public void spawnFightEffect() {
+        
+    }
+
     /**
      * we added this method to help with debugging so you could check your code is
      * running on the application thread. By running everything on the application
