@@ -109,8 +109,13 @@ public class MapBuilderController {
     private void handleUndoButtonClick() {
         if (paths.size() > 0) {
             paths.remove(paths.size() - 1);
-            directions.remove(directions.size() - 1);
+            if (directions.size() > 0) {
+                directions.remove(directions.size() - 1);
+            }
             map.getChildren().remove(map.getChildren().size() - 1);
+            if (paths.size() == 0) {
+                isStartingPointEntered = false;
+            }
         }
     }
 
@@ -231,6 +236,33 @@ public class MapBuilderController {
             renderPath();
             
         }
+    }
+
+    @FXML
+    private void handleKeyPress(KeyEvent event) {
+        System.out.println(event.getCode());
+        switch (event.getCode()) {
+            case W:
+                handleUpButtonClick();
+                break;
+            case S:
+                handleDownButtonClick();
+                break;
+            case A:
+                handleLeftButtonClick();
+                break;
+            case D:
+                handleRightButtonClick();
+                break;
+            case BACK_SPACE:
+                handleUndoButtonClick();
+                break;
+            case DELETE:
+                handleResetButtonClick();
+                break;
+            default:
+                break;
+            }
     }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {

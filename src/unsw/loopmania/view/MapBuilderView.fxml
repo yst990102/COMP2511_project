@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="387.0" stylesheets="@MapBuilder.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="main-container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="508.0" prefWidth="387.0" stylesheets="@MapBuilder.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane id="map" fx:id="map" layoutY="-2.0" prefHeight="450.0" prefWidth="257.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane id="map" fx:id="map" layoutY="-5.0" prefHeight="450.0" prefWidth="257.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="-5.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -35,11 +35,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Text fx:id="prompt" fill="WHITE" layoutX="284.0" layoutY="-10.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="98.0" AnchorPane.topAnchor="-5.0">
+      <Text fx:id="prompt" fill="WHITE" layoutX="266.0" layoutY="40.86474609375" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="114.0" AnchorPane.topAnchor="27.0">
          <font>
-            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+            <Font name="Berlin Sans FB Demi Bold" size="12.0" />
          </font></Text>
-      <Label layoutX="284.0" layoutY="89.0" text="Starting Point" textFill="WHITE">
+      <Label layoutX="276.0" layoutY="93.0" text="Starting Point" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="15.0" />
          </font>
@@ -61,5 +61,10 @@
       <Button fx:id="downButton" layoutX="320.0" layoutY="406.0" mnemonicParsing="false" onMouseClicked="#handleDownButtonClick" text="↓" />
       <Button fx:id="leftButton" layoutX="284.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleLeftButtonClick" text="←" />
       <Button fx:id="rightButton" layoutX="350.0" layoutY="374.0" mnemonicParsing="false" onMouseClicked="#handleRightButtonClick" text="→" />
+      <Label layoutX="305.0" layoutY="3.0" text="Prompt" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
