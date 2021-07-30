@@ -184,6 +184,12 @@ public class LoopManiaWorld {
         // character_info
         JSONObject characterInfo = getCharacter().toJson();
         current_process.put("character_info", characterInfo);
+        // cards
+        JSONArray cards = new JSONArray();
+        for (Card c : cardEntities) {
+            cards.put(c.toJson());
+        }
+        current_process.put("cards", cards);
 
         return current_process;
     }
