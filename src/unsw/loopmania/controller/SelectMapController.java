@@ -41,7 +41,7 @@ public class SelectMapController {
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(path.getJSONObject("path"), MAP_TYPE.FOREST);
-        gameController.loadInitialEntities(forest.getJSONArray("entities"), MAP_TYPE.FOREST);
+        gameController.loadInitialEntities(forest.getJSONArray("BuildingEntities"), MAP_TYPE.FOREST);
         if (forest.has("character_info")) {
             gameController.loadCharacter(forest.getJSONObject("character_info"));
         } else {
@@ -54,7 +54,7 @@ public class SelectMapController {
     void handleIceworldButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(iceworld.getJSONObject("path"), MAP_TYPE.ICEWORLD);
-        gameController.loadInitialEntities(iceworld.getJSONArray("entities"), MAP_TYPE.ICEWORLD);
+        gameController.loadInitialEntities(iceworld.getJSONArray("BuildingEntities"), MAP_TYPE.ICEWORLD);
         if (iceworld.has("character_info")) {
             gameController.loadCharacter(iceworld.getJSONObject("character_info"));
         } else {
@@ -67,7 +67,7 @@ public class SelectMapController {
     void handleDesertButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
         gameController.loadPath(desert.getJSONObject("path"), MAP_TYPE.DESERT);
-        gameController.loadInitialEntities(desert.getJSONArray("entities"), MAP_TYPE.DESERT);
+        gameController.loadInitialEntities(desert.getJSONArray("BuildingEntities"), MAP_TYPE.DESERT);
         if (desert.has("character_info")) {
             gameController.loadCharacter(desert.getJSONObject("character_info"));
         } else {

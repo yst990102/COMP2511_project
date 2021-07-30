@@ -12,7 +12,7 @@
       ]
     }
     ,
-    "entities": [
+    "BuildingEntities": [
       {"x": 0, "y": 0, "type": "HeroCastle"}
     ],
     "path": {

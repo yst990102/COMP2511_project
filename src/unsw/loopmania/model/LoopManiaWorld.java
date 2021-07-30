@@ -178,7 +178,7 @@ public class LoopManiaWorld {
         for (Building b : buildingEntities) {
             entities.put(b.toJson());
         }
-        current_process.put("entities", entities);
+        current_process.put("BuildingEntities", entities);
         // path
         current_process.put("path", initialpath);
         // character_info

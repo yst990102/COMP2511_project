@@ -1743,7 +1743,7 @@ public class LoopManiaWorldController {
 
         // load initialy non-path entities
         for (int i = 0; i < jsonEntities.length(); i++) {
-            loader.loadEntity(world, jsonEntities.getJSONObject(i), world.getOrderedPath(), entityImages);
+            loader.loadBuildingEntity(world, jsonEntities.getJSONObject(i), world.getOrderedPath(), entityImages);
         }
 
         // load entities image

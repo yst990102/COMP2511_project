@@ -75,7 +75,7 @@ public abstract class LoopManiaWorldLoader {
      * @param json a JSON object to parse (different from the )
      * @param orderedPath list of pairs of x, y cell coordinates representing game path
      */
-    public void loadEntity(LoopManiaWorld world, JSONObject currentJson, List<Pair<Integer, Integer>> orderedPath,
+    public void loadBuildingEntity(LoopManiaWorld world, JSONObject currentJson, List<Pair<Integer, Integer>> orderedPath,
             List<ImageView> entityImages) {
         String type = currentJson.getString("type");
         int x = currentJson.getInt("x");

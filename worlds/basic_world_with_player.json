@@ -3,7 +3,7 @@
   "height": 3,
   "rareitems": [],
   "goal-condition": {"goal": "experience", "quantity": 123456 },
-  "entities": [
+  "BuildingEntities": [
     {"x": 0, "y": 0, "type": "HeroCastle"}
   ],
   "path": {
