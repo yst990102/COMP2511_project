@@ -192,7 +192,7 @@ public class GameSavedController {
             this.mainWorldController.setjsonfile(savedfile03);
         }
 
-        this.mainWorldController.loadWholeMapByJson();
+        this.mainWorldController.loadWholeMapByJson(mainWorldController.getjsonfile());
     }
 
     @FXML
