@@ -13,9 +13,7 @@
   }
   ,
   "BuildingEntities": [
-    {"x": 0, "y": 0, "type": "HeroCastle"},
-    {"x": 3, "y": 12, "type": "SnowMan"},
-    {"x": 5, "y": 13, "type": "SnowTree"}
+    {"x": 0, "y": 0, "type": "HeroCastle"}
   ],
   "path": {
     "type": "path_tile",
