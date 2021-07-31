@@ -29,7 +29,7 @@ public class GoalLeaf extends GoalComponent {
             string_goal = "$";
             return (string_goal + quantity);
         case "bosses":
-            string_goal = "👾";
+            string_goal = "BOSS";
             return (string_goal);
         default:
             break;
