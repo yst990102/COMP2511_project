@@ -18,8 +18,8 @@ public class EnemyTest {
         assertEquals(slug.hp, 15);
         assertEquals(slug.attack, 5);
         assertEquals(slug.speed, 5);
-        assertEquals(slug.battleRadius, 2);
-        assertEquals(slug.supportRadius, 2);
+        assertEquals(slug.battleRadius, 1);
+        assertEquals(slug.supportRadius, 1);
 
         assertEquals(slug.goldWhenKilled, 50);
         assertEquals(slug.expWhenKilled, 100);
@@ -33,8 +33,8 @@ public class EnemyTest {
         assertEquals(zombie.hp, 20);
         assertEquals(zombie.attack, 10);
         assertEquals(zombie.speed, 2);
-        assertEquals(zombie.battleRadius, 3);
-        assertEquals(zombie.supportRadius, 3);
+        assertEquals(zombie.battleRadius, 2);
+        assertEquals(zombie.supportRadius, 2);
 
         assertEquals(zombie.criticalPercentage, 20);
 
@@ -50,8 +50,8 @@ public class EnemyTest {
         assertEquals(vampire.hp, 25);
         assertEquals(vampire.attack, 20);
         assertEquals(vampire.speed, 3);
-        assertEquals(vampire.battleRadius, 5);
-        assertEquals(vampire.supportRadius, 5);
+        assertEquals(vampire.battleRadius, 2);
+        assertEquals(vampire.supportRadius, 3);
 
         assertEquals(vampire.criticalPercentage, 20);
         assertEquals(vampire.criticalExtraDamage, 10);
