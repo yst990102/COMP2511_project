@@ -18,11 +18,12 @@ public class GoalComposite extends GoalComponent {
         if (goal.has("quantity")) {
             leftComponent = new GoalLeaf(goal, world);
             rightComponent = null;
+        } else if (goal.has("subgoals")) {
+            leftComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(0), world);
+            rightComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(1), world);
         } else {
-            if (goal.has("subgoals")) {
-                leftComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(0), world);
-                rightComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(1), world);
-            }
+            leftComponent = new GoalLeaf(goal, world);
+            rightComponent = null;
         }
     }
 
@@ -47,7 +48,7 @@ public class GoalComposite extends GoalComponent {
         } else if (rightContent.equals("")) {
             return leftContent;
         } else {
-            return (leftContent + " " + goal + " " + rightContent);
+            return ("(" + leftContent + " " + goal + " " + rightContent + ")");
         }
 
     }

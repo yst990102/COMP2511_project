@@ -109,7 +109,11 @@ public class LoopManiaWorld {
     private List<Building> buildingEntities;
 
     // has elanmuske been spawn
-    private boolean hasMuskeSpawn = false;
+    public boolean hasMuskeSpawn = false;
+    public boolean hasDoggieSpawn = false;
+
+    public boolean hasMuskeKilled = false;
+    public boolean hasDoggieKilled = false;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -402,6 +406,15 @@ public class LoopManiaWorld {
             // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
             // due to mutating list we're iterating over
             killEnemy(e);
+
+            if (e instanceof Doggie) {
+                hasDoggieKilled = true;
+            }
+
+            if (e instanceof ElanMuske) {
+                hasMuskeKilled = true;
+            }
+
         }
         return defeatedEnemies;
     }
@@ -1331,6 +1344,10 @@ public class LoopManiaWorld {
         }
 
         if (nthCycle >= 40 && getCharacter().getXP() >= 10000) {
+            if (enemies.size() <= 1) {
+                return null;
+            }
+
             int randint = new Random(System.currentTimeMillis()).nextInt(enemies.size());
 
             int x = enemies.get(randint).getX();
@@ -1349,29 +1366,25 @@ public class LoopManiaWorld {
     }
 
     public Doggie checkDoggieSpawn() {
-        if (nthCycle >= 20) {
+        if (hasDoggieSpawn == true) {
+            return null;
+        }
 
+        if (nthCycle >= 20) {
             if (enemies.size() <= 1) {
                 return null;
             }
 
-            int doggiecount = 0;
-            for (Enemy e : enemies) {
-                if (e instanceof Doggie) {
-                    doggiecount++;
-                }
-            }
-            if (doggiecount >= 3) {
-                return null;
-            }
+            int randint = new Random(System.currentTimeMillis()).nextInt(enemies.size());
 
-            Enemy randenemy = enemies.get(new Random(System.currentTimeMillis()).nextInt(enemies.size()));
-            int x = randenemy.getX();
-            int y = randenemy.getY();
+            int x = enemies.get(randint).getX();
+            int y = enemies.get(randint).getY();
             int indexInPath = orderedPath.indexOf(new Pair<Integer, Integer>(x, y));
 
             Doggie doggie = new Doggie(new PathPosition(indexInPath, orderedPath));
             enemies.add(doggie);
+
+            hasDoggieSpawn = true;
 
             return doggie;
         } else {
