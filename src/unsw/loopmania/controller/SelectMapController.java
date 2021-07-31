@@ -43,7 +43,7 @@ public class SelectMapController {
 
         gameController.setMapType(MAP_TYPE.FOREST);
         gameController.setjsonfile(forest);
-        gameController.loadWholeMapByJson();
+        gameController.loadWholeMapByJson(gameController.getjsonfile());
     }
 
     @FXML
@@ -52,7 +52,7 @@ public class SelectMapController {
 
         gameController.setMapType(MAP_TYPE.ICEWORLD);
         gameController.setjsonfile(iceworld);
-        gameController.loadWholeMapByJson();
+        gameController.loadWholeMapByJson(gameController.getjsonfile());
     }
 
     @FXML
@@ -61,7 +61,7 @@ public class SelectMapController {
 
         gameController.setMapType(MAP_TYPE.DESERT);
         gameController.setjsonfile(desert);
-        gameController.loadWholeMapByJson();
+        gameController.loadWholeMapByJson(gameController.getjsonfile());
     }
 
     public void setModeSwitcher(MenuSwitcher modeSwitcher) {

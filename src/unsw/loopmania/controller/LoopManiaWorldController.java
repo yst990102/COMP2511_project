@@ -10,6 +10,7 @@ import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -43,6 +44,7 @@ import javafx.beans.binding.Bindings;
 import java.util.EnumMap;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import unsw.loopmania.model.Character;
@@ -476,8 +478,18 @@ public class LoopManiaWorldController {
         initialiseUnequippedInventoryPane();
         initialisecardsPane();
 
-        loadWholeMapByJson();
+        if (mapType.equals(MAP_TYPE.FOREST)) {
+            loadWholeMapByJson(new JSONObject(new JSONTokener(new FileReader("worlds/" + "forest.json"))));
+        } else if (mapType.equals(MAP_TYPE.ICEWORLD)) {
+            loadWholeMapByJson(new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json"))));
+        } else if (mapType.equals(MAP_TYPE.DESERT)) {
+            loadWholeMapByJson(new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json"))));
+        }
 
+    }
+
+    public JSONObject getjsonfile() {
+        return this.jsonfile;
     }
 
     public List<ImageView> getentityImages() {
@@ -492,33 +504,33 @@ public class LoopManiaWorldController {
         return this.initialEntities;
     }
 
-    public void loadWholeMapByJson() throws FileNotFoundException, JSONException {
-        loadPath(this.jsonfile.getJSONObject("path"), mapType);
-        loadInitialEntities(this.jsonfile.getJSONArray("BuildingEntities"), mapType);
-        if (this.jsonfile.has("character_info")) {
-            loadCharacter(this.jsonfile.getJSONObject("character_info"));
+    public void loadWholeMapByJson(JSONObject jsonfile) throws FileNotFoundException, JSONException {
+        loadPath(jsonfile.getJSONObject("path"), mapType);
+        loadInitialEntities(jsonfile.getJSONArray("BuildingEntities"), mapType);
+        if (jsonfile.has("character_info")) {
+            loadCharacter(jsonfile.getJSONObject("character_info"));
         } else {
             bornnewcharacter();
         }
 
-        if (this.jsonfile.has("cards")) {
-            loadCards(this.jsonfile.getJSONArray("cards"));
+        if (jsonfile.has("cards")) {
+            loadCards(jsonfile.getJSONArray("cards"));
         }
 
-        if (this.jsonfile.has("rareitems")) {
-            loadRareItems(this.jsonfile.getJSONArray("rareitems"));
+        if (jsonfile.has("rareitems")) {
+            loadRareItems(jsonfile.getJSONArray("rareitems"));
         }
 
-        if (this.jsonfile.has("unequippedequipments")) {
-            loadUnequippedEquipment(this.jsonfile.getJSONArray("unequippedequipments"));
+        if (jsonfile.has("unequippedequipments")) {
+            loadUnequippedEquipment(jsonfile.getJSONArray("unequippedequipments"));
         }
 
-        if (this.jsonfile.has("potions")) {
-            loadPotions(this.jsonfile.getJSONArray("potions"));
+        if (jsonfile.has("potions")) {
+            loadPotions(jsonfile.getJSONArray("potions"));
         }
 
-        if (this.jsonfile.has("enemies")) {
-            loadEnemies(this.jsonfile.getJSONArray("enemies"));
+        if (jsonfile.has("enemies")) {
+            loadEnemies(jsonfile.getJSONArray("enemies"));
         }
     }
 
