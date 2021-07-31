@@ -15,11 +15,7 @@
   -fx-background-image: url("../../../assets/button_background.png");
 }
 
-#pause-button {
-  -fx-background-image: url("../../../assets/button_background.png");
-}
-
-#resetbutton {
+#restart-button {
   -fx-background-image: url("../../../assets/button_background.png");
 }
 

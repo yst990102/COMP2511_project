@@ -237,17 +237,15 @@
                         </Text>
                      </children>
                   </AnchorPane>
-                  <Button id="pause-button" fx:id="restartButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleRestartButtonClick" prefHeight="18.0" prefWidth="96.0" text="Restart" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="28.0">
+                  <Button id="restart-button" fx:id="restartButton" mnemonicParsing="false" onAction="#handleRestartButtonClick" prefHeight="18.0" prefWidth="96.0" text="Restart" textFill="WHITE" translateX="16.0" translateY="25.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
                      <padding>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="20.0" />
                      </padding>
-                     <tooltip>
-                        <Tooltip fx:id="pauseButtondescription" text="PauseButtonDescription" />
-                     </tooltip></Button>
-                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Main Menu" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="25.0">
+                  </Button>
+                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="22.0" prefWidth="96.0" text="Main Menu" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="16.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>

@@ -197,6 +197,9 @@ public class LoopManiaWorldController {
     private ImageView armourequiped;
 
     @FXML
+    private Button restartButton;
+
+    @FXML
     private Button exitButton;
 
     @FXML
@@ -449,11 +452,43 @@ public class LoopManiaWorldController {
         unequippedInventory.getChildren().clear();
         entityImages.clear();
         squares.getChildren().clear();
+        equippedItems.getChildren().clear();
         initialize(); // load card and equipment slot
+        initialiseEquippedItemsPane();
         loadPath(path, mapType);
         loadInitialEntities(initialEntities, mapType);
         bornnewcharacter();
     }
+
+    public void initialiseEquippedItemsPane() {
+        ImageView helmetslot = new ImageView(new Image(new File("src/assets/helmet_slot.png").toURI().toString()));
+        ImageView armourslot = new ImageView(new Image(new File("src/assets/armour_slot.png").toURI().toString()));
+        ImageView shieldslot = new ImageView(
+                new Image(new File("src/assets/shield_unequipped.png").toURI().toString()));
+        ImageView weaponslot = new ImageView(new Image(new File("src/assets/sword_unequipped.png").toURI().toString()));
+
+        for (int i = 0; i < equippedItems.getRowCount(); i++) {
+            for (int j = 0; j < equippedItems.getColumnCount(); j++) {
+                if (i == 0 && j == 1) {
+                    equippedItems.add(helmetslot, j, i);
+                }
+
+                if (i == 1 && j == 0) {
+                    equippedItems.add(weaponslot, j, i);
+                }
+
+                if (i == 1 && j == 1) {
+                    equippedItems.add(armourslot, j, i);
+                }
+
+                if (i == 1 && j == 2) {
+                    equippedItems.add(shieldslot, j, i);
+                }
+
+            }
+        }
+    }
+
 
     @FXML
     public void initialize() {
@@ -1442,7 +1477,7 @@ public class LoopManiaWorldController {
     public void handleKeyPress(KeyEvent event) {
         // TODO = handle additional key presses, e.g. for consuming a health potion
         switch (event.getCode()) {
-        case SPACE:
+        case P:
             if (isPaused) {
                 startTimer();
             } else {
