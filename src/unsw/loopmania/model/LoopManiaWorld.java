@@ -160,13 +160,13 @@ public class LoopManiaWorld {
 
         cardEntities.clear();
         unequippedInventoryItems.clear();
+        this.orderedPath = orderedPath;
         buildingEntities.clear();
-
-        description = new SimpleStringProperty();
+        description.set("");
         nthCycle = 0;
 
         this.goalObject = goalObject;
-        this.goals = new SimpleStringProperty();
+        this.goals.set("");
         this.maingoal = new GoalComposite(goalObject, this);
         setGoals(maingoal.getContent());
         this.isGoalFinished = maingoal.getLogicResult();

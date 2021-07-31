@@ -236,6 +236,7 @@ public class LoopManiaWorldController {
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
     private List<ImageView> entityImages;
+    private List<ImageView> initialEntities;
 
     /**
      * when we drag a card/item, the picture for whatever we're dragging is set here
@@ -374,7 +375,8 @@ public class LoopManiaWorldController {
     public LoopManiaWorldController(LoopManiaWorld world, List<ImageView> initialEntities) {
         this.world = world;
         gameSpeed = 0.3;
-        entityImages = new ArrayList<>(initialEntities);
+        this.entityImages = new ArrayList<>(initialEntities);
+        this.initialEntities = initialEntities;
 
         // Character
         characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
@@ -451,6 +453,8 @@ public class LoopManiaWorldController {
 
         this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
                 this.world.getGoalObject());
+
+        this.entityImages = new ArrayList<>(initialEntities);
 
         onLoad(this.world.getCharacter());
 
