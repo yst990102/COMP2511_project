@@ -480,6 +480,18 @@ public class LoopManiaWorldController {
 
     }
 
+    public List<ImageView> getentityImages() {
+        return this.entityImages;
+    }
+
+    public void setentityImages(List<ImageView> entityImages) {
+        this.entityImages = entityImages;
+    }
+
+    public List<ImageView> getinitialEntities() {
+        return this.initialEntities;
+    }
+
     public void loadWholeMapByJson() throws FileNotFoundException, JSONException {
         loadPath(this.jsonfile.getJSONObject("path"), mapType);
         loadInitialEntities(this.jsonfile.getJSONArray("BuildingEntities"), mapType);
@@ -1943,24 +1955,24 @@ public class LoopManiaWorldController {
 
         if (character_info.getJSONObject("equipments").has("Armour")) {
             String armourtype = character_info.getJSONObject("equipments").getJSONObject("Armour").getString("type");
-            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
-            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            int x = character_info.getJSONObject("equipments").getJSONObject("Armour").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Armour").getInt("y");
             Armour armour = switchArmourTypeToArmour(armourtype, x, y);
             character.setDressedArmour(armour);
         }
 
         if (character_info.getJSONObject("equipments").has("Shield")) {
             String shieldtype = character_info.getJSONObject("equipments").getJSONObject("Shield").getString("type");
-            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
-            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            int x = character_info.getJSONObject("equipments").getJSONObject("Shield").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Shield").getInt("y");
             Shield shield = switchShieldTypeToShield(shieldtype, x, y);
             character.setDressedShield(shield);
         }
 
         if (character_info.getJSONObject("equipments").has("Helmet")) {
             String helmettype = character_info.getJSONObject("equipments").getJSONObject("Helmet").getString("type");
-            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
-            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            int x = character_info.getJSONObject("equipments").getJSONObject("Helmet").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Helmet").getInt("y");
             Helmet helmet = switchHelmetTypeToHelmet(helmettype, x, y);
             character.setDressedHelmet(helmet);
         }
