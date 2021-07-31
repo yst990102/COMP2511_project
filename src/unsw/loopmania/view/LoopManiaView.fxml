@@ -25,7 +25,7 @@
 <!-- TODO = modify and expand the GUI? -->
 <!-- anchorPaneRoot is the background of the main game -->
 
-<AnchorPane id="main-container" fx:id="anchorPaneRoot" maxHeight="630.0" maxWidth="480.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="508.0" prefWidth="387.0" stylesheets="@LoopMania.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="main-container" fx:id="anchorPaneRoot" maxHeight="630.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="520.0" prefWidth="420.0" stylesheets="@LoopMania.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="24.0" prefWidth="387.0">
          <children>
@@ -256,6 +256,9 @@
                         <Insets bottom="20.0" />
                      </padding></Button>
                </children>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </VBox>
          </children>
       </HBox>
