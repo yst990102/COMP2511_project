@@ -22,7 +22,7 @@ public class SelectMapController {
     private LoopManiaWorldController gameController;
 
     public SelectMapController() throws FileNotFoundException {
-        forest = new JSONObject(new JSONTokener(new FileReader("worlds/" + "world_with_twists_and_turns.json")));
+        forest = new JSONObject(new JSONTokener(new FileReader("worlds/" + "forest.json")));
         iceworld = new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json")));
         desert = new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json")));
         path = new JSONObject(new JSONTokener(new FileReader("worlds/" + "path1.json")));
