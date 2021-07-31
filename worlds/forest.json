@@ -1,0 +1,33 @@
+{
+    "width": 8,
+    "height": 14,
+    "rareitems": [],
+    "goal-condition": { "goal": "AND", "subgoals":
+      [ { "goal": "cycles", "quantity": 30 },
+        { "goal": "OR", "subgoals":
+          [ {"goal": "experience", "quantity": 99999 },
+            {"goal": "gold", "quantity": 88888 }
+          ]
+        }
+      ]
+    }
+    ,
+    "BuildingEntities": [
+      {"x": 0, "y": 0, "type": "HeroCastle"}
+    ],
+    "path": {
+      "type": "path_tile",
+      "x": 0, "y": 0,
+      "path": [
+        "RIGHT", "RIGHT", "DOWN", "RIGHT", "RIGHT", "UP", "RIGHT", "RIGHT", "RIGHT",
+        "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN",
+        "LEFT", "LEFT", "LEFT", "UP", "UP", "RIGHT",
+        "UP", "UP", "UP", "UP", "LEFT", "LEFT", "LEFT",
+        "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN",
+        "RIGHT", "RIGHT", "RIGHT", "RIGHT", "RIGHT", "DOWN", "DOWN",
+        "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT",
+        "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP"
+      ]
+    }
+  }
+  

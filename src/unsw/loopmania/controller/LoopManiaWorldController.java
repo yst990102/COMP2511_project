@@ -9,6 +9,7 @@ import org.codefx.libfx.listener.handle.ListenerHandles;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -40,9 +41,11 @@ import javafx.util.Duration;
 import javafx.beans.binding.Bindings;
 
 import java.util.EnumMap;
+import java.util.Iterator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.FileReader;
 
 import unsw.loopmania.model.Character;
 import unsw.loopmania.model.LoopManiaWorld;
@@ -194,12 +197,6 @@ public class LoopManiaWorldController {
     private ImageView armourequiped;
 
     @FXML
-    private Button pauseButton;
-
-    @FXML
-    private Tooltip pauseButtondescription;
-
-    @FXML
     private Button exitButton;
 
     @FXML
@@ -228,9 +225,6 @@ public class LoopManiaWorldController {
 
     @FXML
     private ImageView goalIcon;
-
-    @FXML
-    private Button resetbutton;
 
     // all image views including tiles, character, enemies, cards... even though
     // cards in separate gridpane...
@@ -363,6 +357,8 @@ public class LoopManiaWorldController {
     private double gameSpeed;
 
     private MAP_TYPE mapType;
+    private JSONObject path;
+    private JSONArray initialEntities;
 
     /**
      * @param world           world object loaded from file
@@ -445,15 +441,18 @@ public class LoopManiaWorldController {
     }
 
     @FXML
-    void resetworlddata() {
-
+    void handleRestartButtonClick() throws FileNotFoundException {
         this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
-                this.world.getGoalObject());
+        this.world.getGoalObject());
 
-        onLoad(this.world.getCharacter());
-
-        this.initialize();
-
+        cards.getChildren().clear();
+        unequippedInventory.getChildren().clear();
+        entityImages.clear();
+        squares.getChildren().clear();
+        initialize(); // load card and equipment slot
+        loadPath(path, mapType);
+        loadInitialEntities(initialEntities, mapType);
+        bornnewcharacter();
     }
 
     @FXML
@@ -493,7 +492,6 @@ public class LoopManiaWorldController {
         description.textProperty().bind(Bindings.convert(world.descriptionProperty()));
 
         // set tip of button
-        pauseButtondescription.setText("Game running. Click to pause.");
         exitButtondescription.setText("Click to exit.");
     }
 
@@ -527,8 +525,6 @@ public class LoopManiaWorldController {
         // TODO = handle more aspects of the behaviour required by the specification
         System.out.println("starting timer");
         isPaused = false;
-        pauseButton.setText("Pause");
-        pauseButtondescription.setText("Game running. Click to pause.");
         // trigger adding code to process main game logic to queue. JavaFX will target
         // framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(gameSpeed), event -> {
@@ -598,8 +594,6 @@ public class LoopManiaWorldController {
      */
     public void pause() {
         isPaused = true;
-        pauseButton.setText("Continue");
-        pauseButtondescription.setText("Game paused. Click to continue.");
         timeline.stop();
     }
 
@@ -1455,25 +1449,8 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
-        case LEFT:
-            try {
-                LoopManiaWorldControllerLoader loader = new LoopManiaWorldControllerLoader("world_1.json");
-                world = loader.load();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
         default:
             break;
-        }
-    }
-
-    @FXML
-    public void handlePauseButtonClick() {
-        if (isPaused) {
-            startTimer();
-        } else {
-            pause();
         }
     }
 
@@ -1520,13 +1497,6 @@ public class LoopManiaWorldController {
     public void checkHeroAlive() {
         if (!world.canHeroRevive()) {
             pause();
-            pauseButton.setVisible(false);
-            exitButton.setText("Quit Game");
-            exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    System.exit(0);
-                }
-            });
             world.setDescription("You die!!!");
         }
     }
@@ -1713,6 +1683,8 @@ public class LoopManiaWorldController {
                 squares.add(groundView, x, y);
             }
         }
+
+        this.path = path;
     }
 
     public void loadPotions(JSONArray potions) {
@@ -1826,6 +1798,7 @@ public class LoopManiaWorldController {
             squares.getChildren().add(entity);
         }
 
+        this.initialEntities = jsonEntities;
     }
 
     public void loadCharacterSoldiers(JSONObject character_info, Character character) {

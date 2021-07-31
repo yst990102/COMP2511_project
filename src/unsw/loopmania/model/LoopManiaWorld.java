@@ -164,6 +164,7 @@ public class LoopManiaWorld {
 
         description = new SimpleStringProperty();
         nthCycle = 0;
+        numStoreVisit = 0;
 
         this.goalObject = goalObject;
         this.goals = new SimpleStringProperty();
