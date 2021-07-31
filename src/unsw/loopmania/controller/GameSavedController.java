@@ -57,29 +57,33 @@ public class GameSavedController {
     private Text saved03;
 
     @FXML
-    void selectrecord01() {
+    void selectrecord01() throws JSONException, FileNotFoundException {
 
         selection1.selectedProperty().set(true);
         selection2.selectedProperty().set(false);
         selection3.selectedProperty().set(false);
 
+        LoadSavedFile();
     }
 
     @FXML
-    void selectrecord02() {
+    void selectrecord02() throws JSONException, FileNotFoundException {
 
         selection1.selectedProperty().set(false);
         selection2.selectedProperty().set(true);
         selection3.selectedProperty().set(false);
 
+        LoadSavedFile();
     }
 
     @FXML
-    void selectrecord03() {
+    void selectrecord03() throws JSONException, FileNotFoundException {
 
         selection1.selectedProperty().set(false);
         selection2.selectedProperty().set(false);
         selection3.selectedProperty().set(true);
+
+        LoadSavedFile();
 
     }
 
