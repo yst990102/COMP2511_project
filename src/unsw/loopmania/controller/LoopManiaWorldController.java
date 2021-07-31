@@ -254,6 +254,14 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
+    // slots
+    private Image inventoryslotImage;
+    private Image cardslotImage;
+    private Image helmetslotImage;
+    private Image armourslotImage;
+    private Image shieldslotImage;
+    private Image weaponslotImage;
+
     // Character
     private Image characterImage;
 
@@ -378,6 +386,14 @@ public class LoopManiaWorldController {
         this.entityImages = new ArrayList<>(initialEntities);
         this.initialEntities = initialEntities;
 
+        // slots
+        inventoryslotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
+        cardslotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
+        helmetslotImage = new Image(new File("src/assets/helmet_slot.png").toURI().toString());
+        armourslotImage = new Image(new File("src/assets/armour_slot.png").toURI().toString());
+        shieldslotImage = new Image(new File("src/assets/shield_unequipped.png").toURI().toString());
+        weaponslotImage = new Image(new File("src/assets/sword_unequipped.png").toURI().toString());
+
         // Character
         characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
 
@@ -456,24 +472,11 @@ public class LoopManiaWorldController {
 
         this.entityImages = new ArrayList<>(initialEntities);
 
-        onLoad(this.world.getCharacter());
-
-        this.initialize();
-
-        equippedItems.getChildren().clear();
-        // squares.getChildren().clear();
-
         initialiseEquippedItemsPane();
+        initialiseUnequippedInventoryPane();
+        initialisecardsPane();
 
-        // loadWholeMapByJson();
-        // loadPath(this.jsonfile.getJSONObject("path"), mapType);
-
-        System.out.println(entityImages);
-
-        // for (ImageView iv : entityImages) {
-        //     System.out.println(iv.getImage().getUrl());
-
-        // }
+        loadWholeMapByJson();
 
     }
 
@@ -508,30 +511,40 @@ public class LoopManiaWorldController {
     }
 
     public void initialiseEquippedItemsPane() {
-        ImageView helmetslot = new ImageView(new Image(new File("src/assets/helmet_slot.png").toURI().toString()));
-        ImageView armourslot = new ImageView(new Image(new File("src/assets/armour_slot.png").toURI().toString()));
-        ImageView shieldslot = new ImageView(
-                new Image(new File("src/assets/shield_unequipped.png").toURI().toString()));
-        ImageView weaponslot = new ImageView(new Image(new File("src/assets/sword_unequipped.png").toURI().toString()));
-
         for (int i = 0; i < equippedItems.getRowCount(); i++) {
             for (int j = 0; j < equippedItems.getColumnCount(); j++) {
                 if (i == 0 && j == 1) {
-                    equippedItems.add(helmetslot, j, i);
+                    equippedItems.add(new ImageView(helmetslotImage), j, i);
                 }
 
                 if (i == 1 && j == 0) {
-                    equippedItems.add(weaponslot, j, i);
+                    equippedItems.add(new ImageView(weaponslotImage), j, i);
                 }
 
                 if (i == 1 && j == 1) {
-                    equippedItems.add(armourslot, j, i);
+                    equippedItems.add(new ImageView(armourslotImage), j, i);
                 }
 
                 if (i == 1 && j == 2) {
-                    equippedItems.add(shieldslot, j, i);
+                    equippedItems.add(new ImageView(shieldslotImage), j, i);
                 }
 
+            }
+        }
+    }
+
+    public void initialiseUnequippedInventoryPane() {
+        for (int i = 0; i < unequippedInventory.getRowCount(); i++) {
+            for (int j = 0; j < unequippedInventory.getColumnCount(); j++) {
+                unequippedInventory.add(new ImageView(inventoryslotImage), j, i);
+            }
+        }
+    }
+
+    public void initialisecardsPane() {
+        for (int i = 0; i < cards.getRowCount(); i++) {
+            for (int j = 0; j < cards.getColumnCount(); j++) {
+                cards.add(new ImageView(cardslotImage), j, i);
             }
         }
     }
@@ -539,14 +552,11 @@ public class LoopManiaWorldController {
     @FXML
     public void initialize() {
         // TODO = load more images/entities during initialization
-
-        Image inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
-        Image cardSlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
 
         // add the ground underneath the cards
         for (int x = 0; x < world.getWidth(); x++) {
-            ImageView groundView = new ImageView(cardSlotImage);
+            ImageView groundView = new ImageView(cardslotImage);
             groundView.setViewport(imagePart);
             cards.add(groundView, x, 0);
         }
@@ -554,7 +564,7 @@ public class LoopManiaWorldController {
         // add the empty slot images for the unequipped inventory
         for (int x = 0; x < LoopManiaWorld.unequippedInventoryWidth; x++) {
             for (int y = 0; y < LoopManiaWorld.unequippedInventoryHeight; y++) {
-                ImageView emptySlotView = new ImageView(inventorySlotImage);
+                ImageView emptySlotView = new ImageView(inventoryslotImage);
                 unequippedInventory.add(emptySlotView, x, y);
             }
         }

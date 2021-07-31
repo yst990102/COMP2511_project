@@ -84,17 +84,20 @@ public class Character extends MovingEntity {
 
         characterInfo.put("equipments", DressedEquipments);
 
-        // JSONArray bagInfo = new JSONArray();
-        // for (Item i : Bag) {
-        //     bagInfo.put(i.toJson());
-        // }
-        // characterInfo.put("Bag", bagInfo);
+        JSONArray bagInfo = new JSONArray();
+        for (Item i : Bag) {
+            bagInfo.put(i.toJson());
+        }
+        characterInfo.put("Bag", bagInfo);
 
-        // JSONArray buildingInfo = new JSONArray();
-        // for (Building b : buildingEntities) {
-        //     buildingInfo.put(b.toJson());
-        // }
-        // characterInfo.put("buildingEntities", buildingEntities);
+        JSONArray buildingInfo = new JSONArray();
+        for (Building b : buildingEntities) {
+            buildingInfo.put(b.toJson());
+        }
+        characterInfo.put("buildingEntities", buildingEntities);
+
+        characterInfo.put("x", getX());
+        characterInfo.put("y", getY());
 
         return characterInfo;
     }
