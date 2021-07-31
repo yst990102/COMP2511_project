@@ -8,6 +8,7 @@ import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
 import org.javatuples.Pair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javafx.animation.Animation;
@@ -362,6 +363,7 @@ public class LoopManiaWorldController {
 
     private double gameSpeed;
 
+    private JSONObject jsonfile;
     private MAP_TYPE mapType;
 
     /**
@@ -445,7 +447,7 @@ public class LoopManiaWorldController {
     }
 
     @FXML
-    void resetworlddata() {
+    void resetworlddata() throws FileNotFoundException, JSONException {
 
         this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
                 this.world.getGoalObject());
@@ -454,13 +456,86 @@ public class LoopManiaWorldController {
 
         this.initialize();
 
+        equippedItems.getChildren().clear();
+        // squares.getChildren().clear();
+
+        initialiseEquippedItemsPane();
+
+        // loadWholeMapByJson();
+        // loadPath(this.jsonfile.getJSONObject("path"), mapType);
+
+        System.out.println(entityImages);
+
+        // for (ImageView iv : entityImages) {
+        //     System.out.println(iv.getImage().getUrl());
+
+        // }
+
+    }
+
+    public void loadWholeMapByJson() throws FileNotFoundException, JSONException {
+        loadPath(this.jsonfile.getJSONObject("path"), mapType);
+        loadInitialEntities(this.jsonfile.getJSONArray("BuildingEntities"), mapType);
+        if (this.jsonfile.has("character_info")) {
+            loadCharacter(this.jsonfile.getJSONObject("character_info"));
+        } else {
+            bornnewcharacter();
+        }
+
+        if (this.jsonfile.has("cards")) {
+            loadCards(this.jsonfile.getJSONArray("cards"));
+        }
+
+        if (this.jsonfile.has("rareitems")) {
+            loadRareItems(this.jsonfile.getJSONArray("rareitems"));
+        }
+
+        if (this.jsonfile.has("unequippedequipments")) {
+            loadUnequippedEquipment(this.jsonfile.getJSONArray("unequippedequipments"));
+        }
+
+        if (this.jsonfile.has("potions")) {
+            loadPotions(this.jsonfile.getJSONArray("potions"));
+        }
+
+        if (this.jsonfile.has("enemies")) {
+            loadEnemies(this.jsonfile.getJSONArray("enemies"));
+        }
+    }
+
+    public void initialiseEquippedItemsPane() {
+        ImageView helmetslot = new ImageView(new Image(new File("src/assets/helmet_slot.png").toURI().toString()));
+        ImageView armourslot = new ImageView(new Image(new File("src/assets/armour_slot.png").toURI().toString()));
+        ImageView shieldslot = new ImageView(
+                new Image(new File("src/assets/shield_unequipped.png").toURI().toString()));
+        ImageView weaponslot = new ImageView(new Image(new File("src/assets/sword_unequipped.png").toURI().toString()));
+
+        for (int i = 0; i < equippedItems.getRowCount(); i++) {
+            for (int j = 0; j < equippedItems.getColumnCount(); j++) {
+                if (i == 0 && j == 1) {
+                    equippedItems.add(helmetslot, j, i);
+                }
+
+                if (i == 1 && j == 0) {
+                    equippedItems.add(weaponslot, j, i);
+                }
+
+                if (i == 1 && j == 1) {
+                    equippedItems.add(armourslot, j, i);
+                }
+
+                if (i == 1 && j == 2) {
+                    equippedItems.add(shieldslot, j, i);
+                }
+
+            }
+        }
     }
 
     @FXML
     public void initialize() {
         // TODO = load more images/entities during initialization
 
-        Image pathTilesImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
         Image inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Image cardSlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
         Rectangle2D imagePart = new Rectangle2D(0, 0, 32, 32);
@@ -2045,6 +2120,10 @@ public class LoopManiaWorldController {
         } else {
             return null;
         }
+    }
+
+    public void setjsonfile(JSONObject jsonfile) {
+        this.jsonfile = jsonfile;
     }
 
     public void setMapType(MAP_TYPE type) {
