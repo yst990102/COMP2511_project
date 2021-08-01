@@ -689,7 +689,7 @@ public class LoopManiaWorldController {
         }
 
         if (enemy instanceof Doggie) {
-            int droppedDoggieCoin_amount = new Random().nextInt(2);
+            int droppedDoggieCoin_amount = new Random().nextInt(3) + 1;
             while (droppedDoggieCoin_amount > 0) {
                 DoggieCoin droppedDoggieCoin = world.addUnsoldCoins();
                 onLoad(droppedDoggieCoin);
