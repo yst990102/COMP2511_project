@@ -85,6 +85,7 @@ public class TrivialTest {
         assertEquals(a.getEnemyAttackDecrease(), 2);
         Slug slug = new Slug(null);
         assertEquals(a.getDefence(slug), 2);
+        assertEquals(a.getAttack(slug), -2);
     }
 
     @Test
