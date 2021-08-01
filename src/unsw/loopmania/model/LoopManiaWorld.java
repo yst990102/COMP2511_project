@@ -1448,6 +1448,7 @@ public class LoopManiaWorld {
                         }
                         b.destroy();
                         buildingIterator.remove();
+                        break;
                     }
                 }
             }

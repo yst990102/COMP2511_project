@@ -21,13 +21,13 @@ public class GoalLeaf extends GoalComponent {
         switch (this.goal) {
         case "cycles":
             string_goal = "cycles";
-            return (string_goal + quantity);
+            return (quantity + " " + string_goal);
         case "experience":
             string_goal = "xp";
-            return (quantity + string_goal);
+            return (quantity + " " + string_goal);
         case "gold":
             string_goal = "$";
-            return (string_goal + quantity);
+            return (quantity + " " + string_goal);
         case "bosses":
             string_goal = "BOSS";
             return (string_goal);
