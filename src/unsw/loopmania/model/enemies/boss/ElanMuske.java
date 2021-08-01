@@ -16,13 +16,12 @@ import unsw.loopmania.model.enemies.Boss;
 
 public class ElanMuske extends Boss {
 
-    private int treatment_amout = 10;
+    public int treatment_amout = 10;
 
     public ElanMuske(PathPosition position) {
         super(position);
 
-        this.hp = 150;
-        this.attack = 35;
+        this.hp = 5000;
         this.speed = 5;
         this.battleRadius = 1;
         this.supportRadius = 1;

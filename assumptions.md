@@ -53,8 +53,7 @@ Doggie
 - Stun Round : 2
 
 ElanMuske
-- HP: 150
-- Attack: 35
+- HP: 5000
 - Speed: 5
 - battle radius: 1
 - support radius: 1

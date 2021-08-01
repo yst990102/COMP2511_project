@@ -637,7 +637,8 @@ public class LoopManiaWorld {
         try {
             writer = new FileOutputStream("fight.txt", true);
 
-            while (true) {
+            int round_count = 15;
+            while (round_count > 0) {
                 // Stage 00: Soldiers Attack Fight Enemy
                 writer.write(("Battle between : soldier ==== " + enemy + "\n").getBytes());
                 SoldiersFightEnemy(character.getSoldiers(), enemy, enemies, writer);
@@ -658,7 +659,7 @@ public class LoopManiaWorld {
                     writer.write(("Character died!!" + "\n\n").getBytes());
                     break;
                 }
-
+                round_count--;
             }
 
             writer.close();
