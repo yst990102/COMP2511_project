@@ -34,7 +34,7 @@
                   <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                </font>
             </Label>
-            <FlowPane prefHeight="24.0" prefWidth="324.0" prefWrapLength="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="3.0">
+            <FlowPane prefHeight="24.0" prefWidth="359.0" prefWrapLength="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="3.0">
                <children>
                   <Text fx:id="goal" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" x="60.0" y="15.0">
                      <font>
