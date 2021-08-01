@@ -1,0 +1,15 @@
+#main-container {
+    -fx-background-image: url("../../../assets/select_mode_background.jpg");
+  }
+  
+#select-path-button {
+-fx-background-image: url("../../../assets/mud_button.png");
+-fx-background-repeat: no-repeat;
+-fx-background-color: transparent;
+}
+  
+#skip-button {
+-fx-background-image: url("../../../assets/mud_button.png");
+-fx-background-repeat: no-repeat;
+-fx-background-color: transparent;
+}

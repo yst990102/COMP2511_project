@@ -25,6 +25,7 @@ public class SelectMapController {
         forest = new JSONObject(new JSONTokener(new FileReader("worlds/" + "world_with_twists_and_turns.json")));
         iceworld = new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json")));
         desert = new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json")));
+        path = null;
     }
 
     @FXML
@@ -39,7 +40,7 @@ public class SelectMapController {
     @FXML
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
-        gameController.loadPath(forest.getJSONObject("path"), MAP_TYPE.FOREST);
+        gameController.loadPath(path != null ? path : forest.getJSONObject("path"), MAP_TYPE.FOREST);
         gameController.loadInitialEntities(forest.getJSONArray("BuildingEntities"), MAP_TYPE.FOREST);
         if (forest.has("character_info")) {
             gameController.loadCharacter(forest.getJSONObject("character_info"));
@@ -73,7 +74,7 @@ public class SelectMapController {
     @FXML
     void handleIceworldButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
-        gameController.loadPath(iceworld.getJSONObject("path"), MAP_TYPE.ICEWORLD);
+        gameController.loadPath(path != null ? path : iceworld.getJSONObject("path"), MAP_TYPE.ICEWORLD);
         gameController.loadInitialEntities(iceworld.getJSONArray("BuildingEntities"), MAP_TYPE.ICEWORLD);
         if (iceworld.has("character_info")) {
             gameController.loadCharacter(iceworld.getJSONObject("character_info"));
@@ -107,7 +108,7 @@ public class SelectMapController {
     @FXML
     void handleDesertButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
-        gameController.loadPath(desert.getJSONObject("path"), MAP_TYPE.DESERT);
+        gameController.loadPath(path != null ? path : desert.getJSONObject("path"), MAP_TYPE.DESERT);
         gameController.loadInitialEntities(desert.getJSONArray("BuildingEntities"), MAP_TYPE.DESERT);
         if (desert.has("character_info")) {
             gameController.loadCharacter(desert.getJSONObject("character_info"));
@@ -144,6 +145,10 @@ public class SelectMapController {
 
     public void setGameController(LoopManiaWorldController controller) {
         this.gameController = controller;
+    }
+
+    public void setPathJson(JSONObject json) {
+        this.path = json;
     }
 
 }

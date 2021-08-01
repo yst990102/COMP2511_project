@@ -16,6 +16,7 @@ public class MainMenuController {
     private MenuSwitcher mapSwitcher;
     private MenuSwitcher GameSavedSwitcher;
     private MenuSwitcher mapBuilderSwitcher;
+    private MenuSwitcher selectPathSwitcher;
 
     private boolean isGameStarted;
 
@@ -44,6 +45,10 @@ public class MainMenuController {
 
     public void setSettingSwitcher(MenuSwitcher settingSwitcher) {
         this.settingSwitcher = settingSwitcher;
+    }
+
+    public void setSelectPathSwitcher(MenuSwitcher selectPathSwitcher) {
+        this.selectPathSwitcher = selectPathSwitcher;
     }
 
     public void setMapSwitcher(MenuSwitcher mapSwitcher) {
@@ -83,7 +88,8 @@ public class MainMenuController {
             gameSwitcher.switchMenu();
         } else {
             // modeSwitcher.switchMenu();
-            mapSwitcher.switchMenu();
+            // mapSwitcher.switchMenu();
+            selectPathSwitcher.switchMenu();
         }
     }
 

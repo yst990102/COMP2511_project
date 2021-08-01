@@ -31,6 +31,7 @@ public class LoopManiaApplication extends Application {
     private SelectModeController selectModeController;
     private StoreController storeController;
     private MapBuilderController mapBuilderController;
+    private SelectPathController selectPathController;
 
     // FXMLLoader
     private FXMLLoader gameLoader;
@@ -40,6 +41,7 @@ public class LoopManiaApplication extends Application {
     private FXMLLoader selectModeLoader;
     private FXMLLoader storeLoader;
     private FXMLLoader mapBuilderLoader;
+    private FXMLLoader selectPathLoader;
 
     // Roots
     private Parent gameRoot;
@@ -49,6 +51,7 @@ public class LoopManiaApplication extends Application {
     private Parent selectModeRoot;
     private Parent storeRoot;
     private Parent mapBuilderRoot;
+    private Parent selectPathRoot;
 
     // scene
     private Scene scene;
@@ -90,6 +93,13 @@ public class LoopManiaApplication extends Application {
         this.selectMapLoader = new FXMLLoader(getClass().getResource("../view/SelectMapView.fxml"));
         selectMapLoader.setController(selectMapController);
         this.selectMapRoot = selectMapLoader.load();
+
+        // load select path view
+        this.selectPathController = new SelectPathController();
+        this.selectPathLoader = new FXMLLoader(getClass().getResource("../view/SelectPathView.fxml"));
+        this.selectPathLoader.setController(selectPathController);
+        this.selectPathRoot = selectPathLoader.load();
+        this.selectPathController.setSelectMapController(selectMapController);
 
         // load the select mode menu
         this.selectModeController = new SelectModeController();
@@ -144,10 +154,21 @@ public class LoopManiaApplication extends Application {
         mainMenuController.setMapBuilderSwitcher(() -> {
             switchToRoot(scene, mapBuilderRoot, primaryStage);
         });
+        mainMenuController.setSelectPathSwitcher(() -> {
+            switchToRoot(scene, selectPathRoot, primaryStage);
+        });
 
 
         settingController.setMainMenuSwitcher(() -> {
             switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
+
+        selectPathController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+        });
+
+        selectPathController.setMapSwitcher(() -> {
+            switchToRoot(scene, selectMapRoot, primaryStage);
         });
 
         selectMapController.setModeSwitcher(() -> {
