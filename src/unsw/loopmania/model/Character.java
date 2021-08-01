@@ -18,10 +18,14 @@ import unsw.loopmania.model.friendlyforces.Soldier;
  */
 public class Character extends MovingEntity {
 
+    /**
+     * Constructor for Character
+     */
     private IntegerProperty hp;
     private IntegerProperty gold;
     private IntegerProperty xp;
     private List<Soldier> soldiers;
+
     private int atk;
     private int def;
 
@@ -50,6 +54,10 @@ public class Character extends MovingEntity {
         buildingEntities = new ArrayList<Building>();
     }
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson() {
         JSONObject characterInfo = new JSONObject();
         characterInfo.put("hp", hp.get());
@@ -188,10 +196,18 @@ public class Character extends MovingEntity {
         this.xp.set(xp);
     }
 
+    /**
+     * get the soldiers
+     * @return List<Soldier>
+     */
     public List<Soldier> getSoldiers() {
         return this.soldiers;
     }
 
+    /**
+     * Get the Enemy Attack
+     * @return int
+     */
     public int getATK() {
         int weaponAtk = 0;
         int helmetAtk = 0;
@@ -431,10 +447,18 @@ public class Character extends MovingEntity {
         setHP(getHP() + 50);
     }
 
+    /**
+     * set the boolean IsFighting
+     * @param status
+     */
     public void setIsFighting(boolean status) {
         isFighting = status;
     }
-
+    
+    /**
+     * check if it is fignting
+     * @return boolean
+     */
     public boolean isFighting() {
         return isFighting;
     }
