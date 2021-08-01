@@ -18,5 +18,9 @@ public interface Weapon {
      */
     public void setAttack(int attack);
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson();
 }

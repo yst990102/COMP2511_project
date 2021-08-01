@@ -30,6 +30,10 @@ public interface Shield {
      */
     public void setCriticalPercentageDecrease(int critical_percentage_decrease);
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson();
 
 }

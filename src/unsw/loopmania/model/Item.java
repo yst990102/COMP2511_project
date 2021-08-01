@@ -46,6 +46,4 @@ public class Item extends StaticEntity {
         this.price = price;
     }
 
-
-
 }

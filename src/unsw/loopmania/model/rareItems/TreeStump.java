@@ -7,8 +7,14 @@ import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Shield;
 import unsw.loopmania.model.enemies.Boss;
 
+/**
+ * represents an equipped or unequipped TreeStump in the backend world
+ */
 public class TreeStump extends RareItem implements Shield {
 
+    /**
+     * Constructor for TreeStump
+     */
     private int defence;
     private int Boss_damage_multiplier;
 
@@ -24,11 +30,20 @@ public class TreeStump extends RareItem implements Shield {
         setPrice(500);
     }
 
+    /**
+     * Get the Defence
+     * @return int 
+     */
     @Override
     public int getDefence() {
         return this.defence;
     }
 
+    /**
+     * Get the Defence
+     * @param enemy
+     * @return int 
+     */
     @Override
     public int getDefence(Enemy enemy) {
         if (enemy instanceof Boss) {
@@ -38,16 +53,28 @@ public class TreeStump extends RareItem implements Shield {
         }
     }
 
+    /**
+     * Set the Defence
+     * @param defence
+     */
     @Override
     public void setDefence(int defence) {
         this.defence = defence;
     }
 
+    /**
+     * Get the Critical Percentage Decrease
+     * @return int
+     */
     @Override
     public int getCriticalPercentageDecrease() {
         return 0;
     }
 
+    /**
+     * Set the Critical Percentage Decrease
+     * @param critical_percentage_decrease
+     */
     @Override
     public void setCriticalPercentageDecrease(int critical_percentage_decrease) {
         return;

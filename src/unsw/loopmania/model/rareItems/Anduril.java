@@ -7,8 +7,14 @@ import unsw.loopmania.model.RareItem;
 import unsw.loopmania.model.Weapon;
 import unsw.loopmania.model.enemies.Boss;
 
+/**
+ * represents an equipped or unequipped Anduril in the backend world
+ */
 public class Anduril extends RareItem implements Weapon {
 
+    /**
+     * Constructor for Anduril
+     */
     private int attack;
     private int Boss_damage_multiplier;
 
@@ -24,11 +30,20 @@ public class Anduril extends RareItem implements Weapon {
         setPrice(500);
     }
 
+    /**
+    * Get the Attack
+    * @return int 
+    */
     @Override
     public int getAttack() {
         return this.attack;
     }
 
+    /**
+    * Get the Attack
+    * @param enemy
+    * @return int 
+    */
     @Override
     public int getAttack(Enemy enemy) {
         if (enemy instanceof Boss) {
@@ -38,6 +53,10 @@ public class Anduril extends RareItem implements Weapon {
         }
     }
 
+    /**
+     * Set the Attack
+     * @param attack
+     */
     @Override
     public void setAttack(int attack) {
         this.attack = attack;

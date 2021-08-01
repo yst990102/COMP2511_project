@@ -4,9 +4,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.RareItem;
 
 /**
- * represents an equipped or unequipped sword in the backend world
+ * represents an equipped or unequipped TheOneRing in the backend world
  */
-
 public class TheOneRing extends RareItem {
 
     public TheOneRing(SimpleIntegerProperty x, SimpleIntegerProperty y) {
