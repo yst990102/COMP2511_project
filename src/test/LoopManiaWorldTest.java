@@ -708,4 +708,48 @@ public class LoopManiaWorldTest {
         RareItem rareItem = world.addRareItem();
         assertEquals(rareItem, world.getHeroItems().get(0));
     }
+
+    @Test
+    public void testRemoveItemByPosition() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+        // test initial world state
+        assertEquals(0, world.getHeroItems().size());
+
+        Equipment equipment = world.addUnequippedEquipment();
+        
+        assertEquals(100, character.getGold());
+        world.removeItemByPositionInUnequippedInventoryItems(0);
+        assertEquals(200, character.getGold());
+    }
+
+    @Test
+    public void testcheckMuskeSpawn() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        // test initial world state
+        assertEquals(world.hasMuskeSpawn, false);
+        assertEquals(world.hasMuskeKilled, false);
+    }
+
+    @Test
+    public void testcheckDoggieSpawn() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        // test initial world state
+        assertEquals(world.hasDoggieSpawn, false);
+        assertEquals(world.hasDoggieKilled, false);
+    }
+
 }
