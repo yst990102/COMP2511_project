@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import unsw.loopmania.controller.StoreController.ITEM_TYPE;
 import unsw.loopmania.model.LoopManiaWorld;
 
-import unsw.loopmania.model.rareItems.TheOneRing;
+import unsw.loopmania.model.rareItems.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -25,6 +25,7 @@ import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.coins.*;
+import unsw.loopmania.model.enemies.boss.*;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -154,6 +155,30 @@ public class TrivialTest {
         assertEquals(coin2.getPrice()>200, true);
 
 
+    }
+
+    @Test
+    public void TestAnduril() {
+        
+        Anduril a = new Anduril(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        Vampire vampire = new Vampire(null);
+        Doggie dog = new Doggie(null);
+        assertEquals(a.getPrice(), 500);
+        assertEquals(a.getAttack(), 8);
+        assertEquals(a.getAttack(vampire), 8);
+        assertEquals(a.getAttack(dog), 24);
+    }
+
+    @Test
+    public void TestTreeStump() {
+        
+        TreeStump a = new TreeStump(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        Vampire vampire = new Vampire(null);
+        Doggie dog = new Doggie(null);
+        assertEquals(a.getPrice(), 500);
+        assertEquals(a.getDefence(), 8);
+        assertEquals(a.getDefence(vampire), 8);
+        assertEquals(a.getDefence(dog), 24);
     }
 
 
