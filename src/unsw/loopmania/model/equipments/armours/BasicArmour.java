@@ -22,11 +22,9 @@ public class BasicArmour extends Equipment implements Armour {
 
         setDefence(5);
         setDamageReducePercentage(50);
-
         setPrice(250);
 
         String description = "===== Basic Armour =====\n" + "+ 5 defence\n" + "-50% enemy attack";
-
         setDescription(description);
 
     }

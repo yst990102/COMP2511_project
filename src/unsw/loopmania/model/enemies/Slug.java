@@ -21,6 +21,10 @@ public class Slug extends Enemy {
         this.expWhenKilled = 100;
     }
 
+    /**
+     * Set the HP
+     * @param newHP
+     */
     @Override
     public void setHP(int newHP) {
         if (newHP > 15) {

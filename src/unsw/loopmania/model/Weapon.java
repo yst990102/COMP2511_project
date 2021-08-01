@@ -10,6 +10,11 @@ public interface Weapon {
     */
     public int getAttack();
 
+    /**
+    * Get the Attack
+    * @param enemy
+    * @return int 
+    */
     public int getAttack(Enemy enemy);
 
     /**

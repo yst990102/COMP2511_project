@@ -10,30 +10,44 @@ import unsw.loopmania.model.Weapon;
  */
 public class Sword extends Equipment implements Weapon {
 
+    /**
+     * Constructor for Sword
+     */
     private int attack;
 
     public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
 
         setAttack(5);
-
         setPrice(150);
 
         String description = "===== Sword =====\n" + "+ 5 attack";
-
         setDescription(description);
     }
 
+    /**
+    * Get the Attack
+    * @return int 
+    */
     @Override
     public int getAttack() {
         return this.attack;
     }
 
+    /**
+    * Get the Attack
+    * @param enemy
+    * @return int 
+    */
     @Override
     public int getAttack(Enemy enemy) {
         return this.attack;
     }
 
+    /**
+     * Set the Attack
+     * @param attack
+     */
     @Override
     public void setAttack(int attack) {
         this.attack = attack;

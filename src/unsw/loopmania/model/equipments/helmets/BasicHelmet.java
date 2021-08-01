@@ -6,7 +6,7 @@ import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Helmet;
 
 /**
- * represents an equipped or unequipped sword in the backend world
+ * represents an equipped or unequipped BasicHelmet in the backend world
  */
 public class BasicHelmet extends Equipment implements Helmet {
 
@@ -22,13 +22,10 @@ public class BasicHelmet extends Equipment implements Helmet {
 
         setAttack(-2);
         setDefence(2);
-
         setEnemyAttackDecrease(2);
-
         setPrice(200);
 
         String description = "===== Basic Helmet =====\n" + "- 2 attack\n" + "+ 2 defence\n" + "- 2 enemy attack";
-
         setDescription(description);
     }
 

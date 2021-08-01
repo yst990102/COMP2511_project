@@ -6,7 +6,7 @@ import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Shield;
 
 /**
- * represents an equipped or unequipped sword in the backend world
+ * represents an equipped or unequipped BasicShield in the backend world
  */
 public class BasicShield extends Equipment implements Shield {
 
@@ -22,11 +22,9 @@ public class BasicShield extends Equipment implements Shield {
 
         setDefence(2);
         setCriticalPercentageDecrease(60);
-
         setPrice(150);
 
         String description = "===== Basic Shield =====\n" + "+ 2 defence\n" + "-60% Vampire crit chance";
-
         setDescription(description);
     }
 
