@@ -97,6 +97,7 @@ import unsw.loopmania.model.enemies.boss.Doggie;
 import unsw.loopmania.model.enemies.boss.ElanMuske;
 import unsw.loopmania.strategy.ModeStrategy;
 import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
+import unsw.loopmania.model.goal.GoalComposite;
 
 /**
  * the draggable types. If you add more draggable types, add an enum value here.
@@ -1803,6 +1804,10 @@ public class LoopManiaWorldController {
             onLoad(newenemy);
             world.addEntity(newenemy);
         }
+    }
+
+    public void loadGoal(JSONObject goal) {
+        world.setGoalComposite(goal);
     }
 
     public void loadInitialEntities(JSONArray jsonEntities, MAP_TYPE type) throws FileNotFoundException {

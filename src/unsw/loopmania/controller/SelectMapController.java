@@ -22,7 +22,7 @@ public class SelectMapController {
     private LoopManiaWorldController gameController;
 
     public SelectMapController() throws FileNotFoundException {
-        forest = new JSONObject(new JSONTokener(new FileReader("worlds/" + "world_with_twists_and_turns.json")));
+        forest = new JSONObject(new JSONTokener(new FileReader("worlds/" + "forest.json")));
         iceworld = new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json")));
         desert = new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json")));
         path = null;
@@ -68,6 +68,10 @@ public class SelectMapController {
             gameController.loadEnemies(forest.getJSONArray("enemies"));
         }
 
+        if (forest.has("goal-condition")) {
+            gameController.loadGoal(forest.getJSONObject("goal-condition"));
+        }
+
         gameController.setMapType(MAP_TYPE.FOREST);
     }
 
@@ -102,6 +106,10 @@ public class SelectMapController {
             gameController.loadEnemies(iceworld.getJSONArray("enemies"));
         }
 
+        if (forest.has("goal-condition")) {
+            gameController.loadGoal(forest.getJSONObject("goal-condition"));
+        }
+
         gameController.setMapType(MAP_TYPE.ICEWORLD);
     }
 
@@ -134,6 +142,10 @@ public class SelectMapController {
 
         if (desert.has("enemies")) {
             gameController.loadEnemies(desert.getJSONArray("enemies"));
+        }
+
+        if (forest.has("goal-condition")) {
+            gameController.loadGoal(forest.getJSONObject("goal-condition"));
         }
 
         gameController.setMapType(MAP_TYPE.DESERT);

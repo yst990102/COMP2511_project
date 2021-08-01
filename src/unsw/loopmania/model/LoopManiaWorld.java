@@ -1212,6 +1212,12 @@ public class LoopManiaWorld {
         this.goals.set(goals);
     }
 
+    public void setGoalComposite(JSONObject goal) {
+        this.maingoal = new GoalComposite(goal, this);
+        setGoals(maingoal.getContent());
+        this.isGoalFinished = maingoal.getLogicResult();
+    }
+
     public JSONObject getGoalObject() {
         return this.goalObject;
     }
