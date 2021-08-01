@@ -9,62 +9,63 @@ import javafx.event.ActionEvent;
 import unsw.loopmania.strategy.StandardModeStrategy;
 import unsw.loopmania.strategy.SurvivalModeStrategy;
 import unsw.loopmania.strategy.BerserkerModeStrategy;
+
 public class SelectModeController {
 
-	private MenuSwitcher gameSwitcher;
-    private LoopManiaWorldController mainController;
-    private MainMenuController mainMenuController;
+  private MenuSwitcher gameSwitcher;
+  private LoopManiaWorldController mainController;
+  private MainMenuController mainMenuController;
 
-    @FXML
-    private Button berserkerModeButton;
+  @FXML
+  private Button berserkerModeButton;
 
-    @FXML
-    private Button survivalModeButton;
+  @FXML
+  private Button survivalModeButton;
 
-    @FXML
-    private Button standardModeButton;
+  @FXML
+  private Button standardModeButton;
 
-    @FXML
-    private Button confusionModeButton;
+  @FXML
+  private Button confusionModeButton;
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
-        this.gameSwitcher = gameSwitcher;
-    }
+  public void setGameSwitcher(MenuSwitcher gameSwitcher) {
+    this.gameSwitcher = gameSwitcher;
+  }
 
-    @FXML
-    void handleStandardModeButtonClick(ActionEvent event) throws IOException {
-		gameSwitcher.switchMenu();
-		mainController.setModeStrategy(new StandardModeStrategy());
-		mainMenuController.setIsGameStarted(true);
-    }
+  @FXML
+  void handleStandardModeButtonClick(ActionEvent event) throws IOException {
+    gameSwitcher.switchMenu();
+    mainController.setModeStrategy(new StandardModeStrategy());
+    mainMenuController.setIsGameStarted(true);
+  }
 
-    @FXML
-    void handleBerserkerModeButtonClick(ActionEvent event) throws IOException {
-		gameSwitcher.switchMenu();
-		mainController.setModeStrategy(new BerserkerModeStrategy());
-		mainMenuController.setIsGameStarted(true);
-    }
+  @FXML
+  void handleBerserkerModeButtonClick(ActionEvent event) throws IOException {
+    gameSwitcher.switchMenu();
+    mainController.setModeStrategy(new BerserkerModeStrategy());
+    mainMenuController.setIsGameStarted(true);
+  }
 
-    @FXML
-    void handleSurvivalModeButtonClick(ActionEvent event) throws IOException {
-		gameSwitcher.switchMenu();
-		mainController.setModeStrategy(new SurvivalModeStrategy());
-		mainMenuController.setIsGameStarted(true);
-    }
+  @FXML
+  void handleSurvivalModeButtonClick(ActionEvent event) throws IOException {
+    gameSwitcher.switchMenu();
+    mainController.setModeStrategy(new SurvivalModeStrategy());
+    mainMenuController.setIsGameStarted(true);
+  }
 
-    @FXML
-    void handleConfusionModeButtonClick(ActionEvent event) throws IOException {
-        gameSwitcher.switchMenu();
-        mainController.setModeStrategy(new StandardModeStrategy());
-        mainMenuController.setIsGameStarted(true);
-    }
-	
-    public void setMainController(LoopManiaWorldController controller) {
-    	mainController = controller;
-    }
+  @FXML
+  void handleConfusionModeButtonClick(ActionEvent event) throws IOException {
+    gameSwitcher.switchMenu();
+    mainController.setModeStrategy(new StandardModeStrategy());
+    mainMenuController.setIsGameStarted(true);
+  }
 
-    public void setMainMenuController(MainMenuController controller) {
-    	mainMenuController = controller;
-    }
+  public void setMainController(LoopManiaWorldController controller) {
+    mainController = controller;
+  }
+
+  public void setMainMenuController(MainMenuController controller) {
+    mainMenuController = controller;
+  }
 
 }

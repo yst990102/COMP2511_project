@@ -8,5 +8,5 @@ public class BarracksBuilding extends Building {
     public BarracksBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
-    
+
 }

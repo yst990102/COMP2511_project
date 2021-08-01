@@ -145,23 +145,23 @@ public class MapBuilderController {
     private void handleUpButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
-            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0()), Integer.valueOf(last.getValue1() - 1)); 
-            
+            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0()),
+                    Integer.valueOf(last.getValue1() - 1));
+
             if (pathContain(newPos)) {
                 prompt.setText("Duplicate tile");
                 return;
             }
-            
+
             if (newPos.getValue1() < 0) {
                 prompt.setText("Out of bound");
                 return;
             }
-            
 
             paths.add(newPos);
             directions.add("UP");
             renderPath();
-        
+
         }
     }
 
@@ -169,23 +169,23 @@ public class MapBuilderController {
     private void handleDownButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
-            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0()), Integer.valueOf(last.getValue1() + 1)); 
-            
+            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0()),
+                    Integer.valueOf(last.getValue1() + 1));
+
             if (pathContain(newPos)) {
                 prompt.setText("Duplicate tile");
                 return;
             }
-            
+
             if (newPos.getValue1() >= height) {
                 prompt.setText("Out of bound");
                 return;
             }
-            
 
             paths.add(newPos);
             directions.add("DOWN");
             renderPath();
-            
+
         }
     }
 
@@ -193,23 +193,23 @@ public class MapBuilderController {
     private void handleLeftButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
-            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0() - 1), Integer.valueOf(last.getValue1())); 
-            
+            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0() - 1),
+                    Integer.valueOf(last.getValue1()));
+
             if (pathContain(newPos)) {
                 prompt.setText("Duplicate tile");
                 return;
             }
-            
+
             if (newPos.getValue0() < 0) {
                 prompt.setText("Out of bound");
                 return;
             }
-            
-           
+
             paths.add(newPos);
             directions.add("LEFT");
             renderPath();
-            
+
         }
     }
 
@@ -217,50 +217,50 @@ public class MapBuilderController {
     private void handleRightButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
-            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0() + 1), Integer.valueOf(last.getValue1())); 
+            Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0() + 1),
+                    Integer.valueOf(last.getValue1()));
 
             if (pathContain(newPos)) {
                 prompt.setText("Duplicate tile");
                 return;
             }
-            
+
             if (newPos.getValue0() >= width) {
                 prompt.setText("Out of bound");
                 return;
             }
 
-            
             paths.add(newPos);
             directions.add("RIGHT");
             renderPath();
-            
+
         }
     }
 
     @FXML
     private void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
-            case W:
-                handleUpButtonClick();
-                break;
-            case S:
-                handleDownButtonClick();
-                break;
-            case A:
-                handleLeftButtonClick();
-                break;
-            case D:
-                handleRightButtonClick();
-                break;
-            case BACK_SPACE:
-                handleUndoButtonClick();
-                break;
-            case DELETE:
-                handleResetButtonClick();
-                break;
-            default:
-                break;
-            }
+        case W:
+            handleUpButtonClick();
+            break;
+        case S:
+            handleDownButtonClick();
+            break;
+        case A:
+            handleLeftButtonClick();
+            break;
+        case D:
+            handleRightButtonClick();
+            break;
+        case BACK_SPACE:
+            handleUndoButtonClick();
+            break;
+        case DELETE:
+            handleResetButtonClick();
+            break;
+        default:
+            break;
+        }
     }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
@@ -269,7 +269,7 @@ public class MapBuilderController {
 
     private boolean pathContain(Pair<Integer, Integer> in) {
         for (Pair<Integer, Integer> pos : paths) {
-            if (pos.getValue0() ==  in.getValue0() && pos.getValue1() == in.getValue1()) {
+            if (pos.getValue0() == in.getValue0() && pos.getValue1() == in.getValue1()) {
                 return true;
             }
         }
@@ -280,12 +280,12 @@ public class MapBuilderController {
         if (paths.size() > 0) {
             Pair<Integer, Integer> first = paths.get(0);
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
-    
+
             boolean adjacentUP = first.getValue0() == last.getValue0() && last.getValue1() - 1 == first.getValue1();
             boolean adjacentDOWN = first.getValue0() == last.getValue0() && last.getValue1() + 1 == first.getValue1();
             boolean adjacentLEFT = first.getValue0() - 1 == last.getValue0() && last.getValue1() == first.getValue1();
             boolean adjacentRIGHT = first.getValue0() + 1 == last.getValue0() && last.getValue1() == first.getValue1();
-    
+
             if (adjacentUP || adjacentDOWN || adjacentLEFT || adjacentRIGHT) {
                 if (adjacentUP) {
                     directions.add("UP");
@@ -313,7 +313,7 @@ public class MapBuilderController {
     private JSONObject toJSON() {
         JSONObject result = new JSONObject();
         JSONObject path = new JSONObject();
-        
+
         path.put("type", "path_tile");
         path.put("x", startX);
         path.put("y", startY);

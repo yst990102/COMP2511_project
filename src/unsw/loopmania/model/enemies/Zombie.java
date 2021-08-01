@@ -11,7 +11,7 @@ import unsw.loopmania.model.PathPosition;
  * a basic form of enemy in the world
  */
 public class Zombie extends Enemy {
-    
+
     private int InfectionPercentage = 100;
 
     public Zombie(PathPosition position) {

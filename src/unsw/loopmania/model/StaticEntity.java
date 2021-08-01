@@ -3,7 +3,6 @@ package unsw.loopmania.model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-
 /**
  * represents a non-moving entity
  * unlike the moving entities, this can be placed anywhere on the game map
@@ -20,7 +19,7 @@ public abstract class StaticEntity extends Entity {
         this.x = x;
         this.y = y;
     }
-    
+
     /**
      * Get the IntegerProperty of X
      */

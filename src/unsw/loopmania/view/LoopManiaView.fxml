@@ -25,7 +25,7 @@
 <!-- TODO = modify and expand the GUI? -->
 <!-- anchorPaneRoot is the background of the main game -->
 
-<AnchorPane id="main-container" fx:id="anchorPaneRoot" maxHeight="630.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="510.0" prefWidth="420.0" stylesheets="@LoopMania.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="main-container" fx:id="anchorPaneRoot" maxHeight="630.0" maxWidth="480.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPress" prefHeight="508.0" prefWidth="387.0" stylesheets="@LoopMania.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="24.0" prefWidth="387.0">
          <children>
@@ -215,7 +215,12 @@
                         <RowConstraints />
                      </rowConstraints>
                   </GridPane>
-                  <Label text="Description" textFill="WHITE" translateX="24.0" translateY="4.0">
+                  <Button fx:id="resetbutton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#resetworlddata" prefHeight="23.0" prefWidth="100.0" text="Reset" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="-10.0" left="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label text="Description" textFill="WHITE" translateX="24.0" translateY="5.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
@@ -223,7 +228,7 @@
                         <Insets bottom="-10.0" />
                      </padding>
                   </Label>
-                  <AnchorPane prefHeight="96.0" prefWidth="125.0" translateY="17.0">
+                  <AnchorPane prefHeight="96.0" prefWidth="125.0" translateY="10.0">
                      <children>
                         <ImageView fitHeight="93.0" fitWidth="125.0" layoutX="3.0" layoutY="2.0" AnchorPane.bottomAnchor="1.0">
                            <image>
@@ -237,15 +242,17 @@
                         </Text>
                      </children>
                   </AnchorPane>
-                  <Button id="restart-button" fx:id="restartButton" mnemonicParsing="false" onAction="#handleRestartButtonClick" prefHeight="18.0" prefWidth="96.0" text="Restart" textFill="WHITE" translateX="16.0" translateY="25.0">
+                  <Button id="pause-button" fx:id="pauseButton" alignment="CENTER" mnemonicParsing="false" onAction="#handlePauseButtonClick" prefHeight="18.0" prefWidth="96.0" text="Pause" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="18.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
                      <padding>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="10.0" />
                      </padding>
-                  </Button>
-                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="22.0" prefWidth="96.0" text="Main Menu" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="16.0">
+                     <tooltip>
+                        <Tooltip fx:id="pauseButtondescription" text="PauseButtonDescription" />
+                     </tooltip></Button>
+                  <Button id="exit-button" fx:id="exitButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="18.0" prefWidth="96.0" text="Main Menu" textAlignment="CENTER" textFill="WHITE" translateX="16.0" translateY="15.0">
                      <font>
                         <Font name="Berlin Sans FB Demi Bold" size="16.0" />
                      </font>
@@ -256,9 +263,6 @@
                         <Insets bottom="20.0" />
                      </padding></Button>
                </children>
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
             </VBox>
          </children>
       </HBox>

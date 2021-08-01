@@ -84,17 +84,20 @@ public class Character extends MovingEntity {
 
         characterInfo.put("equipments", DressedEquipments);
 
-        // JSONArray bagInfo = new JSONArray();
-        // for (Item i : Bag) {
-        //     bagInfo.put(i.toJson());
-        // }
-        // characterInfo.put("Bag", bagInfo);
+        JSONArray bagInfo = new JSONArray();
+        for (Item i : Bag) {
+            bagInfo.put(i.toJson());
+        }
+        characterInfo.put("Bag", bagInfo);
 
-        // JSONArray buildingInfo = new JSONArray();
-        // for (Building b : buildingEntities) {
-        //     buildingInfo.put(b.toJson());
-        // }
-        // characterInfo.put("buildingEntities", buildingEntities);
+        JSONArray buildingInfo = new JSONArray();
+        for (Building b : buildingEntities) {
+            buildingInfo.put(b.toJson());
+        }
+        characterInfo.put("buildingEntities", buildingEntities);
+
+        characterInfo.put("x", getX());
+        characterInfo.put("y", getY());
 
         return characterInfo;
     }
@@ -299,23 +302,6 @@ public class Character extends MovingEntity {
      */
     public void setDEF(int def) {
         this.def = def;
-    }
-
-    /**
-     * Dress up the Equipment
-     * @param equipment
-     */
-    public void DressUpEquipment(Equipment equipment) {
-        if (equipment.getClass().equals(Weapon.class)) {
-            setDressedWeapon((Weapon) equipment);
-        } else if (equipment.getClass().equals(Armour.class)) {
-            this.dressedArmour = (Armour) equipment;
-        } else if (equipment.getClass().equals(Shield.class)) {
-            this.dressedShield = (Shield) equipment;
-        } else if (equipment.getClass().equals(Helmet.class)) {
-            this.dressedHelmet = (Helmet) equipment;
-        }
-
     }
 
     /**

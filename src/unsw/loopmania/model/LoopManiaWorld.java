@@ -51,6 +51,7 @@ import unsw.loopmania.model.cards.BarracksCard;
 import unsw.loopmania.model.cards.TrapCard;
 import unsw.loopmania.model.cards.CampfireCard;
 import unsw.loopmania.strategy.ModeStrategy;
+import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 
 /**
  * A backend world.
@@ -111,7 +112,6 @@ public class LoopManiaWorld {
     // has elanmuske been spawn
     public boolean hasMuskeSpawn = false;
     public boolean hasDoggieSpawn = false;
-
     public boolean hasMuskeKilled = false;
     public boolean hasDoggieKilled = false;
 
@@ -121,6 +121,8 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
 
     private ModeStrategy modeStrategy;
+
+    private MAP_TYPE map_type;
 
     /**
      * create the world (constructor)
@@ -164,14 +166,13 @@ public class LoopManiaWorld {
 
         cardEntities.clear();
         unequippedInventoryItems.clear();
+        this.orderedPath = orderedPath;
         buildingEntities.clear();
-
-        description = new SimpleStringProperty();
+        description.set("");
         nthCycle = 0;
-        numStoreVisit = 0;
 
         this.goalObject = goalObject;
-        this.goals = new SimpleStringProperty();
+        this.goals.set("");
         this.maingoal = new GoalComposite(goalObject, this);
         setGoals(maingoal.getContent());
         this.isGoalFinished = maingoal.getLogicResult();
@@ -236,6 +237,9 @@ public class LoopManiaWorld {
             enemies.put(e.toJson());
         }
         current_process.put("enemies", enemies);
+
+        // map type
+        current_process.put("map_type", map_type.toString());
 
         return current_process;
     }
@@ -406,7 +410,6 @@ public class LoopManiaWorld {
             // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
             // due to mutating list we're iterating over
             killEnemy(e);
-
             if (e instanceof Doggie) {
                 hasDoggieKilled = true;
             }
@@ -1344,7 +1347,7 @@ public class LoopManiaWorld {
         }
 
         if (nthCycle >= 40 && getCharacter().getXP() >= 10000) {
-            if (enemies.size() <= 1) {
+            if (enemies.size() < 1) {
                 return null;
             }
 
@@ -1371,7 +1374,8 @@ public class LoopManiaWorld {
         }
 
         if (nthCycle >= 20) {
-            if (enemies.size() <= 1) {
+
+            if (enemies.size() < 1) {
                 return null;
             }
 
@@ -1561,6 +1565,14 @@ public class LoopManiaWorld {
      */
     public boolean getIsGoalFinished() {
         return this.isGoalFinished;
+    }
+
+    public MAP_TYPE getMapType() {
+        return this.map_type;
+    }
+
+    public void setMapType(MAP_TYPE map_type) {
+        this.map_type = map_type;
     }
 
 }

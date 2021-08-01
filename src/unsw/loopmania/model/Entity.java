@@ -28,14 +28,14 @@ public abstract class Entity {
      * create an Entity
      * this constructor should be called for subclass Entities
      */
-    public Entity(){
+    public Entity() {
         shouldExist = new SimpleBooleanProperty(true);
     }
 
-     /**
-      * specify that this entity should destroy itself
-      * this method will trigger any ChangeListeners attached to shouldExist
-      */
+    /**
+     * specify that this entity should destroy itself
+     * this method will trigger any ChangeListeners attached to shouldExist
+     */
     public void destroy() {
         shouldExist.set(false);
     }

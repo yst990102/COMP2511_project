@@ -9,5 +9,5 @@ public class Gold extends Item {
     // TODO = add more weapon/item types
     public Gold(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-    }    
+    }
 }

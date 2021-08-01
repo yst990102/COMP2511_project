@@ -124,6 +124,7 @@ public class LoopManiaApplication extends Application {
         FXMLLoader gamesaveLoader = new FXMLLoader(getClass().getResource("../view/GameSavedView.fxml"));
         gamesaveLoader.setController(gamesavedController);
         Parent gamesavedRoot = gamesaveLoader.load();
+        gamesavedController.LoadSavedFile();
 
         // load the map builder view
         this.mapBuilderController = new MapBuilderController();
@@ -157,7 +158,6 @@ public class LoopManiaApplication extends Application {
         mainMenuController.setSelectPathSwitcher(() -> {
             switchToRoot(scene, selectPathRoot, primaryStage);
         });
-
 
         settingController.setMainMenuSwitcher(() -> {
             switchToRoot(scene, mainMenuRoot, primaryStage);

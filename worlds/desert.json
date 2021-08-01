@@ -25,6 +25,7 @@
         "LEFT", "LEFT", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN", "DOWN",
         "LEFT", "LEFT", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP","UP", "UP","UP"
       ]
-    }
+    },
+    "map_type" : "DESERT"
   }
   

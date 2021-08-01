@@ -1,0 +1,144 @@
+{
+  "cards": [
+    { "x": 0, "y": 0, "type": "TrapCard" },
+    { "x": 1, "y": 0, "type": "TrapCard" },
+    { "x": 2, "y": 0, "type": "TrapCard" }
+  ],
+  "saved_time": "2021-08-01 12:56:51",
+  "unequippedequipments": [
+    { "x": 1, "y": 0, "type": "Staff" },
+    { "x": 2, "y": 1, "type": "Staff" },
+    { "x": 3, "y": 1, "type": "Staff" }
+  ],
+  "character_info": {
+    "gold": 400,
+    "equipments": {
+      "Helmet": { "x": 0, "y": 0, "type": "BasicHelmet" },
+      "Weapon": { "x": 0, "y": 0, "type": "Staff" }
+    },
+    "buildingEntities": [
+      { "trapAttack": 10, "x": 4, "y": 11 },
+      { "trapAttack": 10, "x": 2, "y": 13 },
+      { "trapAttack": 10, "x": 0, "y": 9 }
+    ],
+    "def": 0,
+    "hp": 290,
+    "xp": 600,
+    "x": 2,
+    "soldiers": [],
+    "atk": 5,
+    "Bag": [
+      { "x": 1, "y": 0, "type": "Staff" },
+      { "x": 2, "y": 0, "type": "TheOneRing" },
+      { "x": 3, "y": 0, "type": "HealthPotion" },
+      { "x": 1, "y": 1, "type": "HealthPotion" },
+      { "x": 2, "y": 1, "type": "Staff" },
+      { "x": 3, "y": 1, "type": "Staff" }
+    ],
+    "y": 11
+  },
+  "goal-condition": {
+    "goal": "AND",
+    "subgoals": [
+      { "goal": "cycles", "quantity": 30 },
+      {
+        "goal": "OR",
+        "subgoals": [
+          { "goal": "experience", "quantity": 99999 },
+          { "goal": "gold", "quantity": 88888 }
+        ]
+      }
+    ]
+  },
+  "enemies": [
+    { "x": 7, "y": 5, "type": "Slug" },
+    { "x": 2, "y": 4, "type": "Slug" }
+  ],
+  "BuildingEntities": [
+    { "x": 0, "y": 0, "type": "HeroCastle" },
+    { "x": 4, "y": 11, "type": "TrapBuilding" },
+    { "x": 2, "y": 13, "type": "TrapBuilding" },
+    { "x": 0, "y": 9, "type": "TrapBuilding" }
+  ],
+  "path": {
+    "path": [
+      "RIGHT",
+      "RIGHT",
+      "DOWN",
+      "RIGHT",
+      "RIGHT",
+      "UP",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "UP",
+      "UP",
+      "RIGHT",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "DOWN",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "RIGHT",
+      "DOWN",
+      "DOWN",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "LEFT",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP",
+      "UP"
+    ],
+    "x": 0,
+    "y": 0,
+    "type": "path_tile"
+  },
+  "map_type": "FOREST",
+  "rareitems": [{ "x": 2, "y": 0, "type": "TheOneRing" }],
+  "potions": [
+    { "x": 3, "y": 0, "type": "HealthPotion" },
+    { "x": 1, "y": 1, "type": "HealthPotion" }
+  ],
+  "width": 8,
+  "height": 14
+}

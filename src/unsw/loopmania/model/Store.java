@@ -11,10 +11,10 @@ import unsw.loopmania.model.equipments.helmets.BasicHelmet;
 import unsw.loopmania.model.equipments.shields.BasicShield;
 import unsw.loopmania.model.equipments.weapons.Staff;
 import unsw.loopmania.model.equipments.weapons.Stake;
-import unsw.loopmania.model.equipments.weapons.Sword; 
+import unsw.loopmania.model.equipments.weapons.Sword;
 
 public class Store {
-    
+
     private List<Item> storeItems;
     private List<Item> heroItems;
 
@@ -45,5 +45,5 @@ public class Store {
     public void setHeroItems(List<Item> items) {
         this.heroItems = items;
     }
-    
+
 }
