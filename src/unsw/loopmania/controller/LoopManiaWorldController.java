@@ -1964,7 +1964,7 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
             Weapon weapon = switchWeaponTypeToWeapon(weapontype, x, y);
             character.setDressedWeapon(weapon);
-            AddWeaponToEquippedItems(weapon, x, y);
+            AddWeaponToEquippedItems(weapon);
         }
 
         if (character_info.getJSONObject("equipments").has("Armour")) {
@@ -1973,7 +1973,7 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Armour").getInt("y");
             Armour armour = switchArmourTypeToArmour(armourtype, x, y);
             character.setDressedArmour(armour);
-            AddArmourToEquippedItems(armour, x, y);
+            AddArmourToEquippedItems(armour);
         }
 
         if (character_info.getJSONObject("equipments").has("Shield")) {
@@ -1982,7 +1982,7 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Shield").getInt("y");
             Shield shield = switchShieldTypeToShield(shieldtype, x, y);
             character.setDressedShield(shield);
-            AddShieldToEquippedItems(shield, x, y);
+            AddShieldToEquippedItems(shield);
         }
 
         if (character_info.getJSONObject("equipments").has("Helmet")) {
@@ -1991,11 +1991,11 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Helmet").getInt("y");
             Helmet helmet = switchHelmetTypeToHelmet(helmettype, x, y);
             character.setDressedHelmet(helmet);
-            AddHelmetToEquippedItems(helmet, x, y);
+            AddHelmetToEquippedItems(helmet);
         }
     }
 
-    public void AddWeaponToEquippedItems(Weapon weapon, int x, int y) {
+    public void AddWeaponToEquippedItems(Weapon weapon) {
         ImageView weaponview;
 
         if (weapon instanceof Sword) {
@@ -2015,7 +2015,7 @@ public class LoopManiaWorldController {
         equippedItems.add(weaponview, 0, 1);
     }
 
-    public void AddArmourToEquippedItems(Armour armour, int x, int y) {
+    public void AddArmourToEquippedItems(Armour armour) {
         ImageView armourview;
 
         if (armour instanceof BasicArmour) {
@@ -2029,7 +2029,7 @@ public class LoopManiaWorldController {
         equippedItems.add(armourview, 1, 1);
     }
 
-    public void AddShieldToEquippedItems(Shield shield, int x, int y) {
+    public void AddShieldToEquippedItems(Shield shield) {
         ImageView shieldview;
 
         if (shield instanceof BasicShield) {
@@ -2045,7 +2045,7 @@ public class LoopManiaWorldController {
         equippedItems.add(shieldview, 2, 1);
     }
 
-    public void AddHelmetToEquippedItems(Helmet helmet, int x, int y) {
+    public void AddHelmetToEquippedItems(Helmet helmet) {
         ImageView helmetview;
 
         if (helmet instanceof BasicHelmet) {
