@@ -179,6 +179,7 @@ public class TrivialTest {
         assertEquals(a.getDefence(), 8);
         assertEquals(a.getDefence(vampire), 8);
         assertEquals(a.getDefence(dog), 24);
+        assertEquals(a.getCriticalPercentageDecrease(), 0);
     }
 
 

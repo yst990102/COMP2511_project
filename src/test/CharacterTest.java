@@ -132,5 +132,71 @@ public class CharacterTest {
         assertEquals(character.getATK(zombie), 8);
         assertEquals(character.getATK(vampire), 13);
 
+        character.setDressedHelmet(new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getATK(slug), 6);
+        assertEquals(character.getATK(zombie), 6);
+        assertEquals(character.getATK(vampire), 11);
+
+        character.setDressedShield(new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getATK(slug), 6);
+        assertEquals(character.getATK(zombie), 6);
+        assertEquals(character.getATK(vampire), 11);
+
+        character.setDressedArmour(new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getATK(slug), 6);
+        assertEquals(character.getATK(zombie), 6);
+        assertEquals(character.getATK(vampire), 11);
+
     }
+
+    @Test
+    public void DefenceTest() {
+        Slug slug = new Slug(null);
+        Zombie zombie = new Zombie(null);
+        Vampire vampire = new Vampire(null);
+
+        Character character = new Character(null);
+
+        assertEquals(character.getDEF(slug), 0);
+        assertEquals(character.getDEF(zombie), 0);
+        assertEquals(character.getDEF(vampire), 0);
+
+        character.setDressedWeapon(new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getDEF(slug), 0);
+        assertEquals(character.getDEF(zombie), 0);
+        assertEquals(character.getDEF(vampire), 0);
+        character.DressUpEquipment(new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+
+        character.setDressedWeapon(new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getDEF(slug), 0);
+        assertEquals(character.getDEF(zombie), 0);
+        assertEquals(character.getDEF(vampire), 0);
+
+        character.setDressedHelmet(new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getDEF(slug), 2);
+        assertEquals(character.getDEF(zombie), 2);
+        assertEquals(character.getDEF(vampire), 2);
+        character.DressUpEquipment(new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+
+        character.setDressedShield(new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getDEF(slug), 4);
+        assertEquals(character.getDEF(zombie), 4);
+        assertEquals(character.getDEF(vampire), 4);
+        character.DressUpEquipment(new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+
+        character.setDressedArmour(new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+        assertEquals(character.getDEF(slug), 9);
+        assertEquals(character.getDEF(zombie), 9);
+        assertEquals(character.getDEF(vampire), 9);
+        character.DressUpEquipment(new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
+
+    }
+
+    @Test
+    public void UsePotionTest() {
+        Character character = new Character(null);
+        character.useHealthPotion();
+        assertEquals(300, character.getHP());
+    }
+
 }
