@@ -454,6 +454,7 @@ public class LoopManiaWorldController {
     void handleRestartButtonClick() throws FileNotFoundException {
         this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
         this.world.getGoalObject());
+        goalIcon.setImage(new Image((new File("src/assets/cross.png")).toURI().toString()));
 
         cards.getChildren().clear();
         unequippedInventory.getChildren().clear();
