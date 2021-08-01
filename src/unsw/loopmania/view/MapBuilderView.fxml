@@ -44,15 +44,15 @@
             <Font name="Berlin Sans FB Demi Bold" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="saveButton" layoutX="169.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleSaveButtonClick" text="Save" />
-      <Button fx:id="undoButton" layoutX="89.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleUndoButtonClick" text="Undo" />
+      <Button fx:id="saveButton" layoutX="158.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleSaveButtonClick" text="Save" />
+      <Button fx:id="undoButton" layoutX="84.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleUndoButtonClick" text="Undo" />
       <Label layoutX="300.0" layoutY="273.0" text="File Name" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB Demi Bold" size="15.0" />
          </font>
       </Label>
       <TextField fx:id="fileName" layoutX="285.0" layoutY="303.0" prefHeight="19.0" prefWidth="98.0" />
-      <Button fx:id="backButton" layoutX="304.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleBackButtonClick" text="Back" />
+      <Button fx:id="backButton" layoutX="315.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#handleBackButtonClick" text="Back" />
       <TextField fx:id="yInput" layoutX="282.0" layoutY="172.0" prefHeight="19.0" prefWidth="98.0" text="y" />
       <TextField layoutX="282.0" layoutY="121.0" prefHeight="19.0" prefWidth="98.0" text="x" fx:id="xInput" />
       <Button fx:id="startButton" layoutX="282.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#handleStartButtonClick" prefHeight="30.0" prefWidth="98.0" text="Start" />
@@ -66,5 +66,6 @@
             <Font name="Berlin Sans FB Demi Bold" size="15.0" />
          </font>
       </Label>
+      <Button fx:id="randomButton" layoutX="223.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleRandomButtonClick" text="Random" />
    </children>
 </AnchorPane>

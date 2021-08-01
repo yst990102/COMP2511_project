@@ -16,7 +16,7 @@ import unsw.loopmania.model.Item;
  */
 public class DoggieCoin extends Item {
 
-    public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y, boolean hasMuskeSpawn) {
+    public DoggieCoin(SimpleIntegerProperty x, SimpleIntegerProperty y, boolean hasMuskeSpawn, boolean hasMuskeKilled) {
         super(x, y);
 
         String description = "===== DoggieCoin =====\n" + "A revolutionary asset type.\nCan sell at shop🐶\n";
@@ -24,10 +24,12 @@ public class DoggieCoin extends Item {
         setDescription(description);
 
         int price = 0;
-        if (hasMuskeSpawn) {
+        if (hasMuskeSpawn & !hasMuskeKilled) {
             price = 200 + new Random(System.currentTimeMillis()).nextInt(100);
+        } else if (hasMuskeSpawn & hasMuskeKilled) {
+            price = -200 + new Random(System.currentTimeMillis()).nextInt(100);
         } else {
-            price = 50 + new Random(System.currentTimeMillis()).nextInt(50);
+            price = 10 + new Random(System.currentTimeMillis()).nextInt(50);
         }
 
         setPrice(price);

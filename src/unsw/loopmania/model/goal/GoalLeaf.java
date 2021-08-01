@@ -27,7 +27,7 @@ public class GoalLeaf extends GoalComponent {
             return (quantity + " " + string_goal);
         case "gold":
             string_goal = "$";
-            return (quantity + " " + string_goal);
+            return (string_goal + quantity);
         case "bosses":
             string_goal = "BOSS";
             return (string_goal);

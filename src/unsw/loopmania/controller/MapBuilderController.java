@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.lang.Integer;
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Random;
 
 public class MapBuilderController {
 
@@ -45,6 +46,9 @@ public class MapBuilderController {
     private Button undoButton;
 
     @FXML
+    private Button randomButton;
+
+    @FXML
     private Button saveButton;
 
     @FXML
@@ -69,6 +73,7 @@ public class MapBuilderController {
     private int startX;
     private int startY;
     private boolean isStartingPointEntered;
+    private boolean isAutoClicked;
     private Image tileImage;
     private List<Pair<Integer, Integer>> paths;
     List<String> directions;
@@ -120,7 +125,7 @@ public class MapBuilderController {
 
     @FXML
     private void handleSaveButtonClick() throws Exception {
-        if (!isConnectedPath()) {
+        if (!isConnectedPath(false)) {
             prompt.setText("Invalid Path");
             return;
         }
@@ -142,99 +147,134 @@ public class MapBuilderController {
     }
 
     @FXML
-    private void handleUpButtonClick() {
+    private boolean handleUpButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
             Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0()),
                     Integer.valueOf(last.getValue1() - 1));
 
             if (pathContain(newPos)) {
-                prompt.setText("Duplicate tile");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Duplicate tile");
+                }
+                return false;
             }
-
+            
+    
             if (newPos.getValue1() < 0) {
-                prompt.setText("Out of bound");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Out of bound");
+                }
+                return false;
             }
 
             paths.add(newPos);
             directions.add("UP");
-            renderPath();
-
+            if (!isAutoClicked) {
+                renderPath();
+            }
+            return true;
+        
         }
+        return false;
+
     }
 
     @FXML
-    private void handleDownButtonClick() {
+    private boolean handleDownButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
             Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0()),
                     Integer.valueOf(last.getValue1() + 1));
 
             if (pathContain(newPos)) {
-                prompt.setText("Duplicate tile");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Duplicate tile");
+                }
+                return false;
             }
 
             if (newPos.getValue1() >= height) {
-                prompt.setText("Out of bound");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Out of bound");  
+                }
+                return false;
             }
 
             paths.add(newPos);
             directions.add("DOWN");
-            renderPath();
+            if (!isAutoClicked) {
+                renderPath();
+            }
+            return true;
 
         }
+        return false;
+
     }
 
     @FXML
-    private void handleLeftButtonClick() {
+    private boolean handleLeftButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
             Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0() - 1),
                     Integer.valueOf(last.getValue1()));
 
             if (pathContain(newPos)) {
-                prompt.setText("Duplicate tile");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Duplicate tile");
+                }
+                return false;
             }
 
             if (newPos.getValue0() < 0) {
-                prompt.setText("Out of bound");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Out of bound");
+                }
+                return false;
             }
 
             paths.add(newPos);
             directions.add("LEFT");
-            renderPath();
-
+            if (!isAutoClicked) {
+                renderPath();  
+            }
+            return true;
         }
+        return false;
+
     }
 
     @FXML
-    private void handleRightButtonClick() {
+    private boolean handleRightButtonClick() {
         if (paths.size() > 0) {
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
             Pair<Integer, Integer> newPos = new Pair<>(Integer.valueOf(last.getValue0() + 1),
                     Integer.valueOf(last.getValue1()));
 
             if (pathContain(newPos)) {
-                prompt.setText("Duplicate tile");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Duplicate tile");
+                }
+                return false;
             }
 
             if (newPos.getValue0() >= width) {
-                prompt.setText("Out of bound");
-                return;
+                if (!isAutoClicked) {
+                    prompt.setText("Out of bound");
+                }
+                return false;
             }
 
             paths.add(newPos);
             directions.add("RIGHT");
-            renderPath();
-
+            if (!isAutoClicked) {
+                renderPath();
+            }
+            return true;
         }
+        return false;
+
     }
 
     @FXML
@@ -263,6 +303,61 @@ public class MapBuilderController {
         }
     }
 
+    @FXML
+    private void handleRandomButtonClick() {
+        isAutoClicked = true;
+        boolean canMoveUp = false;
+        boolean canMoveDown = false;
+        boolean canMoveLeft = false;
+        boolean canMoveRight = false;
+
+        startX = 0;
+        startY = 0;
+        Pair<Integer, Integer> startPos = new Pair<Integer,Integer>(0, 0);
+        paths.clear();
+        directions.clear();
+        paths.add(startPos);
+        map.getChildren().clear();
+        
+        while(true) {
+            int randomInt = new Random().nextInt(4);
+
+            if (randomInt == 0) {
+                canMoveUp = handleUpButtonClick();
+            } else if (randomInt == 1) {
+                canMoveUp = handleDownButtonClick();
+            } else if (randomInt == 2) {
+                canMoveUp = handleLeftButtonClick();
+            } else if (randomInt == 3) {
+                canMoveUp = handleRightButtonClick();
+            }
+
+            if (paths.size() == 50) { // 14
+                if (isConnectedPath(true)) {
+                    renderPath();
+                    break;
+                } else {
+                    paths.clear();
+                    Pair<Integer, Integer> pos = new Pair<>(Integer.valueOf(0), Integer.valueOf(0));
+                    paths.add(pos);
+                    directions.clear();
+                }
+            } else {
+                boolean isDeadPath = !canMoveUp && !canMoveDown && !canMoveLeft && !canMoveRight;
+                if (isDeadPath) {
+                    if (paths.size() < 2) {
+                        continue;
+                    }
+                    paths.remove(paths.size() - 1);
+                    directions.remove(directions.size() - 1);
+                }
+            }
+        }
+
+        isAutoClicked = false;
+
+    }
+
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher) {
         this.mainMenuSwitcher = mainMenuSwitcher;
     }
@@ -276,25 +371,28 @@ public class MapBuilderController {
         return false;
     }
 
-    private boolean isConnectedPath() {
+    private boolean isConnectedPath(boolean isRandom) {
         if (paths.size() > 0) {
             Pair<Integer, Integer> first = paths.get(0);
             Pair<Integer, Integer> last = paths.get(paths.size() - 1);
 
+    
             boolean adjacentUP = first.getValue0() == last.getValue0() && last.getValue1() - 1 == first.getValue1();
             boolean adjacentDOWN = first.getValue0() == last.getValue0() && last.getValue1() + 1 == first.getValue1();
-            boolean adjacentLEFT = first.getValue0() - 1 == last.getValue0() && last.getValue1() == first.getValue1();
-            boolean adjacentRIGHT = first.getValue0() + 1 == last.getValue0() && last.getValue1() == first.getValue1();
-
+            boolean adjacentLEFT = first.getValue0() == last.getValue0() -  1&& last.getValue1() == first.getValue1();
+            boolean adjacentRIGHT = first.getValue0() == last.getValue0() + 1 && last.getValue1() == first.getValue1();
+    
             if (adjacentUP || adjacentDOWN || adjacentLEFT || adjacentRIGHT) {
-                if (adjacentUP) {
-                    directions.add("UP");
-                } else if (adjacentDOWN) {
-                    directions.add("DOWN");
-                } else if (adjacentLEFT) {
-                    directions.add("LEFT");
-                } else if (adjacentRIGHT) {
-                    directions.add("RIGHT");
+                if (!isRandom) {
+                    if (adjacentUP) {
+                        directions.add("UP");
+                    } else if (adjacentDOWN) {
+                        directions.add("DOWN");
+                    } else if (adjacentLEFT) {
+                        directions.add("LEFT");
+                    } else if (adjacentRIGHT) {
+                        directions.add("RIGHT");
+                    }
                 }
                 return true;
             }

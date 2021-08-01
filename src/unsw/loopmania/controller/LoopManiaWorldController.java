@@ -97,6 +97,7 @@ import unsw.loopmania.model.enemies.boss.Doggie;
 import unsw.loopmania.model.enemies.boss.ElanMuske;
 import unsw.loopmania.strategy.ModeStrategy;
 import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
+import unsw.loopmania.model.goal.GoalComposite;
 
 /**
  * the draggable types. If you add more draggable types, add an enum value here.
@@ -375,6 +376,7 @@ public class LoopManiaWorldController {
     private double gameSpeed;
 
     private JSONObject jsonfile;
+    private MAP_TYPE map_type;
 
     /**
      * @param world           world object loaded from file
@@ -489,6 +491,10 @@ public class LoopManiaWorldController {
 
     public JSONObject getjsonfile() {
         return this.jsonfile;
+    }
+
+    public void setMapType(MAP_TYPE maptype) {
+        this.map_type = maptype;
     }
 
     public List<ImageView> getentityImages() {
@@ -651,9 +657,11 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
-            checkHeroAlive();
+            updateCardsView();
 
             List<Enemy> defeatedEnemies = world.runBattles();
+
+            checkHeroAlive();
 
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
@@ -770,7 +778,7 @@ public class LoopManiaWorldController {
         }
 
         if (enemy instanceof Doggie) {
-            int droppedDoggieCoin_amount = new Random().nextInt(2);
+            int droppedDoggieCoin_amount = new Random().nextInt(3) + 1;
             while (droppedDoggieCoin_amount > 0) {
                 DoggieCoin droppedDoggieCoin = world.addUnsoldCoins();
                 onLoad(droppedDoggieCoin);
@@ -1909,6 +1917,10 @@ public class LoopManiaWorldController {
         }
     }
 
+    public void loadGoal(JSONObject goal) {
+        world.setGoalComposite(goal);
+    }
+
     public void loadInitialEntities(JSONArray jsonEntities, MAP_TYPE type) throws FileNotFoundException {
         LoopManiaWorldControllerLoader loader;
 
@@ -2233,8 +2245,10 @@ public class LoopManiaWorldController {
         this.jsonfile = jsonfile;
     }
 
-    public void spawnFightEffect() {
-
+    private void updateCardsView() {
+        for (Node n : cards.getChildren()) {
+            n.setVisible(true);
+        }
     }
 
     /**

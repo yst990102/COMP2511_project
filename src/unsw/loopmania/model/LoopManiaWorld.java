@@ -876,7 +876,7 @@ public class LoopManiaWorld {
         // now we insert the new equipment, as we know we have at least made a slot available...
 
         DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                new SimpleIntegerProperty(firstAvailableSlot.getValue1()), hasMuskeSpawn);
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()), hasMuskeSpawn, hasMuskeKilled);
         unequippedInventoryItems.add(doggieCoin);
         return doggieCoin;
     }
@@ -1213,6 +1213,12 @@ public class LoopManiaWorld {
      */
     public void setGoals(String goals) {
         this.goals.set(goals);
+    }
+
+    public void setGoalComposite(JSONObject goal) {
+        this.maingoal = new GoalComposite(goal, this);
+        setGoals(maingoal.getContent());
+        this.isGoalFinished = maingoal.getLogicResult();
     }
 
     public JSONObject getGoalObject() {

@@ -116,6 +116,13 @@ public class SettingController {
             }
         });
 
+        bgmPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                bgmPlayer.seek(Duration.ZERO); 
+                bgmPlayer.play();
+            }
+        });
+
     }
 
     public void setGameController(LoopManiaWorldController controller) {
