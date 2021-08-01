@@ -1094,7 +1094,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1));
+                                Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedWeapon(sword);
                                 updateCharacterDescription();
                             } else {
@@ -1107,7 +1107,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1));
+                                Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedWeapon(stake);
                                 updateCharacterDescription();
                             } else {
@@ -1120,7 +1120,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1));
+                                Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedWeapon(staff);
                                 updateCharacterDescription();
                             } else {
@@ -1133,8 +1133,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Armour armour = new BasicArmour(new SimpleIntegerProperty(1),
-                                        new SimpleIntegerProperty(1));
+                                Armour armour = new BasicArmour(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedArmour(armour);
                                 updateCharacterDescription();
                             } else {
@@ -1147,8 +1147,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Shield shield = new BasicShield(new SimpleIntegerProperty(1),
-                                        new SimpleIntegerProperty(1));
+                                Shield shield = new BasicShield(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedShield(shield);
                                 updateCharacterDescription();
                             } else {
@@ -1161,7 +1161,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(1),
+                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedHelmet(helmet);
                                 updateCharacterDescription();
@@ -1177,7 +1177,7 @@ public class LoopManiaWorldController {
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
-                                        new SimpleIntegerProperty(1));
+                                        new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedWeapon(anduril);
                                 updateCharacterDescription();
                             } else {
@@ -1191,8 +1191,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(2),
-                                        new SimpleIntegerProperty(1));
+                                TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0),
+                                        new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedShield(treeStump);
                                 updateCharacterDescription();
                             } else {
@@ -1956,12 +1956,15 @@ public class LoopManiaWorldController {
     }
 
     public void loadCharacterEquipped(JSONObject character_info, Character character) {
+        initialiseEquippedItemsPane();
+
         if (character_info.getJSONObject("equipments").has("Weapon")) {
             String weapontype = character_info.getJSONObject("equipments").getJSONObject("Weapon").getString("type");
             int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
             int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
             Weapon weapon = switchWeaponTypeToWeapon(weapontype, x, y);
             character.setDressedWeapon(weapon);
+            AddWeaponToEquippedItems(weapon, x, y);
         }
 
         if (character_info.getJSONObject("equipments").has("Armour")) {
@@ -1970,6 +1973,7 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Armour").getInt("y");
             Armour armour = switchArmourTypeToArmour(armourtype, x, y);
             character.setDressedArmour(armour);
+            AddArmourToEquippedItems(armour, x, y);
         }
 
         if (character_info.getJSONObject("equipments").has("Shield")) {
@@ -1978,6 +1982,7 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Shield").getInt("y");
             Shield shield = switchShieldTypeToShield(shieldtype, x, y);
             character.setDressedShield(shield);
+            AddShieldToEquippedItems(shield, x, y);
         }
 
         if (character_info.getJSONObject("equipments").has("Helmet")) {
@@ -1986,7 +1991,72 @@ public class LoopManiaWorldController {
             int y = character_info.getJSONObject("equipments").getJSONObject("Helmet").getInt("y");
             Helmet helmet = switchHelmetTypeToHelmet(helmettype, x, y);
             character.setDressedHelmet(helmet);
+            AddHelmetToEquippedItems(helmet, x, y);
         }
+    }
+
+    public void AddWeaponToEquippedItems(Weapon weapon, int x, int y) {
+        ImageView weaponview;
+
+        if (weapon instanceof Sword) {
+            weaponview = new ImageView(swordImage);
+        } else if (weapon instanceof Stake) {
+            weaponview = new ImageView(stakeImage);
+        } else if (weapon instanceof Staff) {
+            weaponview = new ImageView(staffImage);
+        } else if (weapon instanceof Anduril) {
+            weaponview = new ImageView(andurilImage);
+        } else {
+            weaponview = new ImageView(weaponslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 0, 1);
+        equippedItems.add(weaponview, 0, 1);
+    }
+
+    public void AddArmourToEquippedItems(Armour armour, int x, int y) {
+        ImageView armourview;
+
+        if (armour instanceof BasicArmour) {
+            armourview = new ImageView(armourImage);
+        } else {
+            armourview = new ImageView(armourslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 1, 1);
+        equippedItems.add(armourview, 1, 1);
+    }
+
+    public void AddShieldToEquippedItems(Shield shield, int x, int y) {
+        ImageView shieldview;
+
+        if (shield instanceof BasicShield) {
+            shieldview = new ImageView(shieldImage);
+        } else if (shield instanceof TreeStump) {
+            shieldview = new ImageView(treeStumpImage);
+        } else {
+            shieldview = new ImageView(shieldslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 2, 1);
+        equippedItems.add(shieldview, 2, 1);
+    }
+
+    public void AddHelmetToEquippedItems(Helmet helmet, int x, int y) {
+        ImageView helmetview;
+
+        if (helmet instanceof BasicHelmet) {
+            helmetview = new ImageView(helmetImage);
+        } else {
+            helmetview = new ImageView(helmetslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 1, 0);
+        equippedItems.add(helmetview, 1, 0);
     }
 
     public void loadCharacter(JSONObject character_info) throws FileNotFoundException {
