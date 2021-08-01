@@ -80,8 +80,8 @@ public class LoopManiaWorld {
     private int height;
 
     // save initial jsonobject
-    private JSONObject initialpath;
-    private JSONArray initialentities;
+    public JSONObject initialpath;
+    public JSONArray initialentities;
 
     /**
      * generic entitites - i.e. those which don't have dedicated fields
@@ -243,14 +243,6 @@ public class LoopManiaWorld {
         return current_process;
     }
 
-    public void setInitialPath(JSONObject initialpath) {
-        this.initialpath = initialpath;
-    }
-
-    public void setInitialEntities(JSONArray initialentities) {
-        this.initialentities = initialentities;
-    }
-
     /**
      * update whether the goal is finished
      */
@@ -356,9 +348,6 @@ public class LoopManiaWorld {
         enemy.destroy();
         enemies.remove(enemy);
         setDescription("You killed a " + enemy.getClass().getSimpleName().toLowerCase() + ".");
-        if (character.getHP() == 0) {
-            setDescription("You die!!!");
-        }
     }
 
     /**
@@ -400,9 +389,6 @@ public class LoopManiaWorld {
             // System.out.println("enemy == " + e + " is in range");
             fight(e, enemies);
             setDescription("You are fighting with a " + e.getClass().getSimpleName().toLowerCase() + ".");
-            if (character.getHP() == 0) {
-                setDescription("You die!!!");
-            }
             character.setIsFighting(true);
             if (e.hp <= 0) {
                 defeatedEnemies.add(e);

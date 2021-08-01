@@ -8,6 +8,7 @@ import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
 import org.javatuples.Pair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -250,6 +251,14 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
+    // slots
+    private Image inventoryslotImage;
+    private Image cardslotImage;
+    private Image helmetslotImage;
+    private Image armourslotImage;
+    private Image shieldslotImage;
+    private Image weaponslotImage;
+
     // Character
     private Image characterImage;
 
@@ -367,6 +376,8 @@ public class LoopManiaWorldController {
     private JSONObject path;
     private JSONArray initialEntities;
 
+    public JSONObject jsonfile;
+
     /**
      * @param world           world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be
@@ -376,6 +387,14 @@ public class LoopManiaWorldController {
         this.world = world;
         gameSpeed = 0.3;
         entityImages = new ArrayList<>(initialEntities);
+
+        // slots
+        inventoryslotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
+        cardslotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
+        helmetslotImage = new Image(new File("src/assets/helmet_slot.png").toURI().toString());
+        armourslotImage = new Image(new File("src/assets/armour_slot.png").toURI().toString());
+        shieldslotImage = new Image(new File("src/assets/shield_unequipped.png").toURI().toString());
+        weaponslotImage = new Image(new File("src/assets/sword_unequipped.png").toURI().toString());
 
         // Character
         characterImage = new Image((new File("src/assets/human_new.png")).toURI().toString());
@@ -453,7 +472,7 @@ public class LoopManiaWorldController {
     @FXML
     void handleRestartButtonClick() throws FileNotFoundException {
         this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
-        this.world.getGoalObject());
+                this.world.getGoalObject());
         goalIcon.setImage(new Image((new File("src/assets/cross.png")).toURI().toString()));
 
         cards.getChildren().clear();
@@ -466,6 +485,36 @@ public class LoopManiaWorldController {
         loadPath(path, mapType);
         loadInitialEntities(initialEntities, mapType);
         bornnewcharacter();
+    }
+
+    public void loadWholeMapByJson(JSONObject jsonfile) throws FileNotFoundException, JSONException {
+        loadPath(jsonfile.getJSONObject("path"), this.mapType);
+        loadInitialEntities(jsonfile.getJSONArray("BuildingEntities"), this.mapType);
+        if (jsonfile.has("character_info")) {
+            loadCharacter(jsonfile.getJSONObject("character_info"));
+        } else {
+            bornnewcharacter();
+        }
+
+        if (jsonfile.has("cards")) {
+            loadCards(jsonfile.getJSONArray("cards"));
+        }
+
+        if (jsonfile.has("rareitems")) {
+            loadRareItems(jsonfile.getJSONArray("rareitems"));
+        }
+
+        if (jsonfile.has("unequippedequipments")) {
+            loadUnequippedEquipment(jsonfile.getJSONArray("unequippedequipments"));
+        }
+
+        if (jsonfile.has("potions")) {
+            loadPotions(jsonfile.getJSONArray("potions"));
+        }
+
+        if (jsonfile.has("enemies")) {
+            loadEnemies(jsonfile.getJSONArray("enemies"));
+        }
     }
 
     public void initialiseEquippedItemsPane() {
@@ -497,6 +546,21 @@ public class LoopManiaWorldController {
         }
     }
 
+    public void initialiseUnequippedInventoryPane() {
+        for (int i = 0; i < unequippedInventory.getRowCount(); i++) {
+            for (int j = 0; j < unequippedInventory.getColumnCount(); j++) {
+                unequippedInventory.add(new ImageView(inventoryslotImage), j, i);
+            }
+        }
+    }
+
+    public void initialisecardsPane() {
+        for (int i = 0; i < cards.getRowCount(); i++) {
+            for (int j = 0; j < cards.getColumnCount(); j++) {
+                cards.add(new ImageView(cardslotImage), j, i);
+            }
+        }
+    }
 
     @FXML
     public void initialize() {
@@ -580,9 +644,9 @@ public class LoopManiaWorldController {
             checkGoalComplete();
             updateCardsView();
             removeFightEffect();
-            checkHeroAlive();
             List<Enemy> defeatedEnemies = world.runBattles();
             spawnFightEffect();
+            checkHeroAlive();
 
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);
@@ -1686,7 +1750,7 @@ public class LoopManiaWorldController {
 
         switch (type) {
         case FOREST:
-            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            loader = new LoopManiaWorldControllerLoader("forest.json");
             break;
         case ICEWORLD:
             loader = new LoopManiaWorldControllerLoader("iceworld.json");
@@ -1847,7 +1911,7 @@ public class LoopManiaWorldController {
             squares.getChildren().add(entity);
         }
 
-        this.initialEntities = jsonEntities;
+        this.getWolrd().initialentities = jsonEntities;
     }
 
     public void loadCharacterSoldiers(JSONObject character_info, Character character) {
@@ -1866,37 +1930,107 @@ public class LoopManiaWorldController {
     }
 
     public void loadCharacterEquipped(JSONObject character_info, Character character) {
+        initialiseEquippedItemsPane();
+
         if (character_info.getJSONObject("equipments").has("Weapon")) {
             String weapontype = character_info.getJSONObject("equipments").getJSONObject("Weapon").getString("type");
             int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
             int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
             Weapon weapon = switchWeaponTypeToWeapon(weapontype, x, y);
             character.setDressedWeapon(weapon);
+            AddWeaponToEquippedItems(weapon);
         }
 
         if (character_info.getJSONObject("equipments").has("Armour")) {
             String armourtype = character_info.getJSONObject("equipments").getJSONObject("Armour").getString("type");
-            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
-            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            int x = character_info.getJSONObject("equipments").getJSONObject("Armour").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Armour").getInt("y");
             Armour armour = switchArmourTypeToArmour(armourtype, x, y);
             character.setDressedArmour(armour);
+            AddArmourToEquippedItems(armour);
         }
 
         if (character_info.getJSONObject("equipments").has("Shield")) {
             String shieldtype = character_info.getJSONObject("equipments").getJSONObject("Shield").getString("type");
-            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
-            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            int x = character_info.getJSONObject("equipments").getJSONObject("Shield").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Shield").getInt("y");
             Shield shield = switchShieldTypeToShield(shieldtype, x, y);
             character.setDressedShield(shield);
+            AddShieldToEquippedItems(shield);
         }
 
         if (character_info.getJSONObject("equipments").has("Helmet")) {
             String helmettype = character_info.getJSONObject("equipments").getJSONObject("Helmet").getString("type");
-            int x = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("x");
-            int y = character_info.getJSONObject("equipments").getJSONObject("Weapon").getInt("y");
+            int x = character_info.getJSONObject("equipments").getJSONObject("Helmet").getInt("x");
+            int y = character_info.getJSONObject("equipments").getJSONObject("Helmet").getInt("y");
             Helmet helmet = switchHelmetTypeToHelmet(helmettype, x, y);
             character.setDressedHelmet(helmet);
+            AddHelmetToEquippedItems(helmet);
         }
+    }
+
+    public void AddWeaponToEquippedItems(Weapon weapon) {
+        ImageView weaponview;
+
+        if (weapon instanceof Sword) {
+            weaponview = new ImageView(swordImage);
+        } else if (weapon instanceof Stake) {
+            weaponview = new ImageView(stakeImage);
+        } else if (weapon instanceof Staff) {
+            weaponview = new ImageView(staffImage);
+        } else if (weapon instanceof Anduril) {
+            weaponview = new ImageView(andurilImage);
+        } else {
+            weaponview = new ImageView(weaponslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 0, 1);
+        equippedItems.add(weaponview, 0, 1);
+    }
+
+    public void AddArmourToEquippedItems(Armour armour) {
+        ImageView armourview;
+
+        if (armour instanceof BasicArmour) {
+            armourview = new ImageView(armourImage);
+        } else {
+            armourview = new ImageView(armourslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 1, 1);
+        equippedItems.add(armourview, 1, 1);
+    }
+
+    public void AddShieldToEquippedItems(Shield shield) {
+        ImageView shieldview;
+
+        if (shield instanceof BasicShield) {
+            shieldview = new ImageView(shieldImage);
+        } else if (shield instanceof TreeStump) {
+            shieldview = new ImageView(treeStumpImage);
+        } else {
+            shieldview = new ImageView(shieldslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 2, 1);
+        equippedItems.add(shieldview, 2, 1);
+    }
+
+    public void AddHelmetToEquippedItems(Helmet helmet) {
+        ImageView helmetview;
+
+        if (helmet instanceof BasicHelmet) {
+            helmetview = new ImageView(helmetImage);
+        } else {
+            helmetview = new ImageView(helmetslotImage);
+        }
+
+        ImageView backgroundImage = new ImageView(equippedSlotBackground);
+        equippedItems.add(backgroundImage, 1, 0);
+        equippedItems.add(helmetview, 1, 0);
     }
 
     public void loadCharacter(JSONObject character_info) throws FileNotFoundException {
@@ -2095,7 +2229,7 @@ public class LoopManiaWorldController {
             if (squares.getChildren().contains(fightEffectView)) {
                 squares.getChildren().remove(fightEffectView);
             }
-        }     
+        }
     }
 
     /**
