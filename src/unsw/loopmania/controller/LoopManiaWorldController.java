@@ -309,6 +309,9 @@ public class LoopManiaWorldController {
     private Image iceTileImage;
     private Image desertTileImage;
 
+    private Image fightEffectImage;
+    private ImageView fightEffectView;
+
     /**
      * the image currently being dragged, if there is one, otherwise null. Holding
      * the ImageView being dragged allows us to spawn it again in the drop location
@@ -432,6 +435,9 @@ public class LoopManiaWorldController {
         forestTileImage = new Image((new File("src/assets/32x32GrassAndDirtPath.png")).toURI().toString());
         iceTileImage = new Image((new File("src/assets/32x32SnowAndIcePath.png")).toURI().toString());
         desertTileImage = new Image((new File("src/assets/32x32SandAndStonePath.png")).toURI().toString());
+
+        fightEffectImage = new Image((new File("src/assets/fight_effect.png")).toURI().toString());
+        fightEffectView = new ImageView(fightEffectImage);
 
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
@@ -572,9 +578,9 @@ public class LoopManiaWorldController {
             checkStoreVisit();
             checkGoalComplete();
             updateCardsView();
-
+            removeFightEffect();
             List<Enemy> defeatedEnemies = world.runBattles();
-
+            spawnFightEffect();
             checkHeroAlive();
 
             for (Enemy e : defeatedEnemies) {
@@ -2074,6 +2080,21 @@ public class LoopManiaWorldController {
         for (Node n : cards.getChildren()) {
             n.setVisible(true);
         }
+    }
+
+    private void spawnFightEffect() {
+        if (world.getCharacter().isFighting()) {
+            squares.add(fightEffectView, world.getCharacter().getX(), world.getCharacter().getY());
+            world.getCharacter().setIsFighting(false);
+        }
+    }
+
+    private void removeFightEffect() {
+        if (!world.getCharacter().isFighting()) {
+            if (squares.getChildren().contains(fightEffectView)) {
+                squares.getChildren().remove(fightEffectView);
+            }
+        }     
     }
 
     /**
