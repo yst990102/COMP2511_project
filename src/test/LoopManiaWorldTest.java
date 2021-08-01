@@ -807,5 +807,29 @@ public class LoopManiaWorldTest {
         assertEquals(true, slugs.size()>=0 && slugs.size()<=2);
     }
 
+    
+    @Test
+    public void testKillEnemy() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
 
+        Slug slug = new Slug(null);
+        Zombie zombie = new Zombie(null);
+        Vampire vampire = new Vampire(null);
+
+
+        assertEquals(100, character.getGold());
+        world.killEnemy(slug);
+        assertEquals(150, character.getGold());
+        world.killEnemy(zombie);
+        assertEquals(250, character.getGold());
+        world.killEnemy(vampire);
+        assertEquals(450, character.getGold());
+    }
+    
 }
