@@ -571,6 +571,7 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
+            updateCardsView();
 
             List<Enemy> defeatedEnemies = world.runBattles();
 
@@ -2069,8 +2070,10 @@ public class LoopManiaWorldController {
         return mapType;
     }
 
-    public void spawnFightEffect() {
-
+    private void updateCardsView() {
+        for (Node n : cards.getChildren()) {
+            n.setVisible(true);
+        }
     }
 
     /**
