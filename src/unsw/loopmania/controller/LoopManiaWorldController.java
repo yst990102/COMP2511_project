@@ -570,9 +570,10 @@ public class LoopManiaWorldController {
             world.updateIsGoalFinished();
             checkStoreVisit();
             checkGoalComplete();
-            checkHeroAlive();
 
             List<Enemy> defeatedEnemies = world.runBattles();
+
+            checkHeroAlive();
 
             for (Enemy e : defeatedEnemies) {
                 reactToEnemyDefeat(e);

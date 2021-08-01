@@ -438,16 +438,19 @@ public class StoreController {
 						DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), false);
 						description.setText(doggieCoin.getDescription());
 						itemPrice.setText(Integer.toString(doggieCoin.getPrice()));
+						currentlySelectedItemPrice = doggieCoin .getPrice();
 						break;
 					case TREE_STUMP:
 						TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
 						description.setText(treeStump.getDescription());
 						itemPrice.setText(Integer.toString(treeStump.getPrice()));
+						currentlySelectedItemPrice = treeStump.getPrice();
 						break;
 					case ANDURIL:
 						Anduril anduril = new Anduril(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
 						description.setText(anduril.getDescription());
 						itemPrice.setText(Integer.toString(anduril.getPrice()));
+						currentlySelectedItemPrice = anduril.getPrice();
 						break;
 					default:
 						break; 
