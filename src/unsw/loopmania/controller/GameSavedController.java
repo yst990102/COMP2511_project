@@ -94,17 +94,17 @@ public class GameSavedController {
 
         if (file1.exists()) {
             savedfile01 = new JSONObject(new JSONTokener(new FileReader(file1.getPath())));
-            saved01.textProperty().set(savedfile01.getString("saved_time") + " + " + savedfile01.getString("map_type"));
+            saved01.textProperty().set(savedfile01.getString("saved_time"));
         }
 
         if (file2.exists()) {
             savedfile02 = new JSONObject(new JSONTokener(new FileReader(file2.getPath())));
-            saved02.textProperty().set(savedfile02.getString("saved_time") + " + " + savedfile01.getString("map_type"));
+            saved02.textProperty().set(savedfile02.getString("saved_time"));
         }
 
         if (file3.exists()) {
             savedfile03 = new JSONObject(new JSONTokener(new FileReader(file3.getPath())));
-            saved03.textProperty().set(savedfile03.getString("saved_time") + " + " + savedfile01.getString("map_type"));
+            saved03.textProperty().set(savedfile03.getString("saved_time"));
         }
 
     }
@@ -128,6 +128,7 @@ public class GameSavedController {
             fileWriter = new FileWriter("worlds/savedRecord01.json");
 
             JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+            currentworldInfo.put("saved_time", currentTime);
 
             WriteJsonObjectTOFile(fileWriter, currentworldInfo);
 
@@ -143,6 +144,7 @@ public class GameSavedController {
             fileWriter = new FileWriter("worlds/savedRecord02.json");
 
             JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+            currentworldInfo.put("saved_time", currentTime);
 
             WriteJsonObjectTOFile(fileWriter, currentworldInfo);
 
@@ -158,6 +160,7 @@ public class GameSavedController {
             fileWriter = new FileWriter("worlds/savedRecord03.json");
 
             JSONObject currentworldInfo = this.mainWorldController.getWolrd().SaveCurrentProcess();
+            currentworldInfo.put("saved_time", currentTime);
 
             WriteJsonObjectTOFile(fileWriter, currentworldInfo);
 
