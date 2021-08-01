@@ -33,7 +33,7 @@ import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.TowerBuilding;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
-
+import unsw.loopmania.model.enemies.Slug;
 public class LoopManiaWorldTest {
 
     @Test
@@ -772,4 +772,40 @@ public class LoopManiaWorldTest {
         assertEquals(false, world.hasMuskeKilled);
 
     }
+
+    @Test
+    public void testCheckSlugSpawn() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+
+        orderedPath.add(new Pair<Integer, Integer>(1, 1));
+        orderedPath.add(new Pair<Integer, Integer>(1, 2));
+        orderedPath.add(new Pair<Integer, Integer>(1, 3));
+
+        orderedPath.add(new Pair<Integer, Integer>(2, 1));
+        orderedPath.add(new Pair<Integer, Integer>(2, 2));
+        orderedPath.add(new Pair<Integer, Integer>(2, 3));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 1);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(2, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 3);
+        Pair<Integer, Integer> pathPos5 = new Pair<Integer, Integer>(5, 5);
+
+        orderedPath.add(pathPos1);
+        orderedPath.add(pathPos2);
+        orderedPath.add(pathPos3);
+        orderedPath.add(pathPos4);
+        orderedPath.add(pathPos5);
+
+        List<Slug> slugs = world.checkSlugSpawn();
+
+        assertEquals(true, slugs.size()>=0 && slugs.size()<=2);
+    }
+
+
 }
