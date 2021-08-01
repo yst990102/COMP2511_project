@@ -2,23 +2,26 @@
   -fx-background-image: url("../../../assets/select_mode_background.jpg");
 }
 
-.button {
+#standard-mode-btn {
+  -fx-background-image: url("../../../assets/mud_button.png");
   -fx-background-repeat: no-repeat;
   -fx-background-color: transparent;
 }
 
-.button:hover {
-  -fx-cursor: hand;
-}
-
-#standard-mode-btn {
-  -fx-background-image: url("../../../assets/standard_mode_button.png");
-}
-
 #berserker-mode-btn {
-  -fx-background-image: url("../../../assets/berserker_mode_button.png");
+  -fx-background-image: url("../../../assets/mud_button.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-color: transparent;
 }
 
 #survival-mode-btn {
-  -fx-background-image: url("../../../assets/survival_mode_button.png");
+  -fx-background-image: url("../../../assets/mud_button.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-color: transparent;
+}
+
+#confusion-mode-btn {
+  -fx-background-image: url("../../../assets/mud_button.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-color: transparent;
 }

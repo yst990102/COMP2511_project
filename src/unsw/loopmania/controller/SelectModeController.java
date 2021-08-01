@@ -24,8 +24,11 @@ public class SelectModeController {
     @FXML
     private Button standardModeButton;
 
+    @FXML
+    private Button confusionModeButton;
+
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
-    this.gameSwitcher = gameSwitcher;
+        this.gameSwitcher = gameSwitcher;
     }
 
     @FXML
@@ -47,6 +50,13 @@ public class SelectModeController {
 		gameSwitcher.switchMenu();
 		mainController.setModeStrategy(new SurvivalModeStrategy());
 		mainMenuController.setIsGameStarted(true);
+    }
+
+    @FXML
+    void handleConfusionModeButtonClick(ActionEvent event) throws IOException {
+        gameSwitcher.switchMenu();
+        mainController.setModeStrategy(new StandardModeStrategy());
+        mainMenuController.setIsGameStarted(true);
     }
 	
     public void setMainController(LoopManiaWorldController controller) {
