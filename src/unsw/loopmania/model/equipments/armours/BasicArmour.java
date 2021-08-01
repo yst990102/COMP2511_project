@@ -11,6 +11,9 @@ import unsw.loopmania.model.Equipment;
  */
 public class BasicArmour extends Equipment implements Armour {
 
+    /**
+     * Constructor for BasicArmour
+     */
     private int defence;
     private int damageReducePercentage;
 

@@ -10,8 +10,12 @@ import unsw.loopmania.model.Shield;
  */
 public class BasicShield extends Equipment implements Shield {
 
+    /**
+     * Constructor for BasicShield
+     */
     private int defence;
-    private int critical_percentage_decrease; // decrease 60% chance of critical bite from enemy
+    // decrease 60% chance of critical bite from enemy
+    private int critical_percentage_decrease; 
 
     public BasicShield(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);

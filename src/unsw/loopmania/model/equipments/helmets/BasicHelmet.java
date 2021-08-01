@@ -10,6 +10,9 @@ import unsw.loopmania.model.Helmet;
  */
 public class BasicHelmet extends Equipment implements Helmet {
 
+    /**
+     * Constructor for BasicHelmet
+     */
     private int attack;
     private int defence;
     private int enemyAttackDecrease;

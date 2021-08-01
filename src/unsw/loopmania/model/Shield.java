@@ -10,6 +10,11 @@ public interface Shield {
      */
     public int getDefence();
 
+    /**
+     * Get the Defence
+     * @param enemy
+     * @return int 
+     */
     public int getDefence(Enemy enemy);
 
     /**

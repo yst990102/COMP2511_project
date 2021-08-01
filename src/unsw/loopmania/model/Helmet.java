@@ -10,6 +10,11 @@ public interface Helmet {
      */
     public int getAttack();
 
+    /**
+     * Get the Attack
+     * @param enemy
+     * @return int 
+     */
     public int getAttack(Enemy enemy);
 
     /**
@@ -24,6 +29,11 @@ public interface Helmet {
      */
     public int getDefence();
 
+    /**
+     * Get the Defence
+     * @param enemy
+     * @return int 
+     */
     public int getDefence(Enemy enemy);
 
     /**
@@ -44,6 +54,10 @@ public interface Helmet {
      */
     public void setEnemyAttackDecrease(int enemyAttackDecrease);
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson();
 
 }

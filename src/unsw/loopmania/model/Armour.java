@@ -10,6 +10,11 @@ public interface Armour {
      */
     public int getDefence();
 
+    /**
+     * Get the Defence
+     * @param enemy
+     * @return int 
+     */
     public int getDefence(Enemy enemy);
 
     /**
@@ -30,6 +35,10 @@ public interface Armour {
      */
     public void setDamageReducePercentage(int damageReducePercentage);
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson();
 
 }
