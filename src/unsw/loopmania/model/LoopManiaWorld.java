@@ -873,7 +873,7 @@ public class LoopManiaWorld {
         // now we insert the new equipment, as we know we have at least made a slot available...
 
         DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-                new SimpleIntegerProperty(firstAvailableSlot.getValue1()), hasMuskeSpawn);
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()), hasMuskeSpawn, hasMuskeKilled);
         unequippedInventoryItems.add(doggieCoin);
         return doggieCoin;
     }

@@ -435,7 +435,7 @@ public class StoreController {
 						currentlySelectedItemPrice = healthPotion.getPrice();
 						break;
 					case DOGGIE_COIN:
-						DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), false);
+						DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), false, false);
 						description.setText(doggieCoin.getDescription());
 						itemPrice.setText(Integer.toString(doggieCoin.getPrice()));
 						currentlySelectedItemPrice = doggieCoin .getPrice();
