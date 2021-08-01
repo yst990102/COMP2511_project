@@ -1784,7 +1784,7 @@ public class LoopManiaWorldController {
 
         switch (type) {
         case FOREST:
-            loader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+            loader = new LoopManiaWorldControllerLoader("forest.json");
             break;
         case ICEWORLD:
             loader = new LoopManiaWorldControllerLoader("iceworld.json");
