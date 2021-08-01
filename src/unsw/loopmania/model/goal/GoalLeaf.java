@@ -20,7 +20,7 @@ public class GoalLeaf extends GoalComponent {
         String string_goal;
         switch (this.goal) {
         case "cycles":
-            string_goal = "◯";
+            string_goal = "cycles";
             return (string_goal + quantity);
         case "experience":
             string_goal = "xp";

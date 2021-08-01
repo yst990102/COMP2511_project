@@ -21,7 +21,7 @@ public class GoalComposite extends GoalComponent {
         } else if (goal.has("subgoals")) {
             leftComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(0), world);
             rightComponent = new GoalComposite(goal.getJSONArray("subgoals").getJSONObject(1), world);
-        } else {
+        } else if (goal.has("goal")) {
             leftComponent = new GoalLeaf(goal, world);
             rightComponent = null;
         }
