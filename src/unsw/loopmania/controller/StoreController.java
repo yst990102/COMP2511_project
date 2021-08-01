@@ -18,6 +18,9 @@ import unsw.loopmania.model.equipments.weapons.Stake;
 import unsw.loopmania.model.equipments.weapons.Sword;
 import unsw.loopmania.model.potions.HealthPotion;
 import unsw.loopmania.model.rareItems.TheOneRing;
+import unsw.loopmania.model.rareItems.TreeStump;
+import unsw.loopmania.model.rareItems.Anduril;
+import unsw.loopmania.model.coins.DoggieCoin;
 import unsw.loopmania.model.Store;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -36,7 +39,7 @@ import java.lang.Integer;
 
 public class StoreController {
 	public enum ITEM_TYPE {
-		SWORD, HELMET, SHIELD, STAKE, STAFF, ARMOUR, THE_ONE_RING, HEALTH_POTION
+		SWORD, HELMET, SHIELD, STAKE, STAFF, ARMOUR, THE_ONE_RING, HEALTH_POTION, DOGGIE_COIN, TREE_STUMP, ANDURIL
 	}
 
 	private Store store;
@@ -53,6 +56,9 @@ public class StoreController {
 	private Image healthPotionImage;
 	private Image theOneRingImage;
 	private Image inventorySlotImage;
+	private Image doggieCoinImage;
+	private Image treeStumpImage;
+	private Image andurilImage;
 
 	private int currentlySelectedItemPrice;
 	private Entity currentlySelectedItem;
@@ -106,6 +112,9 @@ public class StoreController {
         armourImage = new Image((new File("src/assets/armour.png")).toURI().toString());
 		theOneRingImage =  new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
 		healthPotionImage = new Image((new File("src/assets/health_potion.png")).toURI().toString());
+		doggieCoinImage = new Image((new File("src/assets/doggiecoin.png")).toURI().toString());
+		treeStumpImage = new Image((new File("src/assets/tree_stump.png")).toURI().toString());
+		andurilImage = new Image((new File("src/assets/anduril_flame_of_the_west.png")).toURI().toString());
 
 	}
 
@@ -337,6 +346,15 @@ public class StoreController {
         } else if (item.getClass().equals(TheOneRing.class)) {
 			view = new ImageView(theOneRingImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.THE_ONE_RING, item);
+		} else if (item.getClass().equals(DoggieCoin.class)) {
+			view = new ImageView(doggieCoinImage);
+			addClickEventHandlersForItem(view, ITEM_TYPE.DOGGIE_COIN, item );
+		} else if (item.getClass().equals(TreeStump.class)) {
+			view = new ImageView(treeStumpImage);
+			addClickEventHandlersForItem(view, ITEM_TYPE.TREE_STUMP, item);
+		} else if (item.getClass().equals(Anduril.class)) {
+			view = new ImageView(andurilImage);
+			addClickEventHandlersForItem(view, ITEM_TYPE.ANDURIL, item);
 		} else {
 			view = new ImageView();
 		}
@@ -415,6 +433,22 @@ public class StoreController {
 						description.setText(healthPotion.getDescription());
 						itemPrice.setText(Integer.toString(healthPotion.getPrice()));
 						currentlySelectedItemPrice = healthPotion.getPrice();
+						break;
+					case DOGGIE_COIN:
+						DoggieCoin doggieCoin = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), false);
+						description.setText(doggieCoin.getDescription());
+						itemPrice.setText(Integer.toString(doggieCoin.getPrice()));
+						break;
+					case TREE_STUMP:
+						TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						description.setText(treeStump.getDescription());
+						itemPrice.setText(Integer.toString(treeStump.getPrice()));
+						break;
+					case ANDURIL:
+						Anduril anduril = new Anduril(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+						description.setText(anduril.getDescription());
+						itemPrice.setText(Integer.toString(anduril.getPrice()));
+						break;
 					default:
 						break; 
 				}
