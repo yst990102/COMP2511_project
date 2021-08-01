@@ -51,6 +51,8 @@ public class TrivialTest {
 
         assertEquals(a.getDefence(), 5);
         assertEquals(a.getDamageReducePercentage(), 50);
+        Slug slug = new Slug(null);
+        assertEquals(a.getDefence(slug), 5);
     }
 
     @Test
@@ -69,6 +71,8 @@ public class TrivialTest {
 
         assertEquals(a.getDefence(), 2);
         assertEquals(a.getCriticalPercentageDecrease(), 60);
+        Slug slug = new Slug(null);
+        assertEquals(a.getDefence(slug), 2);
     }
 
     @Test
@@ -79,6 +83,8 @@ public class TrivialTest {
         assertEquals(a.getDefence(), 2);
         assertEquals(a.getAttack(), -2);
         assertEquals(a.getEnemyAttackDecrease(), 2);
+        Slug slug = new Slug(null);
+        assertEquals(a.getDefence(slug), 2);
     }
 
     @Test
