@@ -13,6 +13,10 @@ public class Equipment extends Item {
         super(x, y);
     }
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson() {
         JSONObject Info = new JSONObject();
         Info.put("x", this.getX());
