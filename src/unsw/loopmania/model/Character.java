@@ -305,23 +305,6 @@ public class Character extends MovingEntity {
     }
 
     /**
-     * Dress up the Equipment
-     * @param equipment
-     */
-    public void DressUpEquipment(Equipment equipment) {
-        if (equipment.getClass().equals(Weapon.class)) {
-            setDressedWeapon((Weapon) equipment);
-        } else if (equipment.getClass().equals(Armour.class)) {
-            this.dressedArmour = (Armour) equipment;
-        } else if (equipment.getClass().equals(Shield.class)) {
-            this.dressedShield = (Shield) equipment;
-        } else if (equipment.getClass().equals(Helmet.class)) {
-            this.dressedHelmet = (Helmet) equipment;
-        }
-
-    }
-
-    /**
      * Get the dressed Weapon
      * @return Weapon
      */

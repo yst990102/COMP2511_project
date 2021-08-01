@@ -41,7 +41,7 @@ public class SelectMapController {
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
 
-        gameController.setMapType(MAP_TYPE.FOREST);
+        gameController.getWolrd().setMapType(MAP_TYPE.FOREST);
         gameController.setjsonfile(forest);
         gameController.loadWholeMapByJson(gameController.getjsonfile());
     }
@@ -50,7 +50,7 @@ public class SelectMapController {
     void handleIceworldButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
 
-        gameController.setMapType(MAP_TYPE.ICEWORLD);
+        gameController.getWolrd().setMapType(MAP_TYPE.ICEWORLD);
         gameController.setjsonfile(iceworld);
         gameController.loadWholeMapByJson(gameController.getjsonfile());
     }
@@ -59,7 +59,7 @@ public class SelectMapController {
     void handleDesertButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
 
-        gameController.setMapType(MAP_TYPE.DESERT);
+        gameController.getWolrd().setMapType(MAP_TYPE.DESERT);
         gameController.setjsonfile(desert);
         gameController.loadWholeMapByJson(gameController.getjsonfile());
     }

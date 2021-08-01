@@ -28,5 +28,6 @@
       "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT", "LEFT",
       "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP", "UP"
     ]
-  }
+  },
+  "map_type" : "FOREST"
 }

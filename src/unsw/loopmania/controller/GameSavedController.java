@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
+import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 import unsw.loopmania.model.LoopManiaWorld;
 
 public class GameSavedController {
@@ -94,17 +95,17 @@ public class GameSavedController {
 
         if (file1.exists()) {
             savedfile01 = new JSONObject(new JSONTokener(new FileReader(file1.getPath())));
-            saved01.textProperty().set(savedfile01.getString("saved_time"));
+            saved01.textProperty().set(savedfile01.getString("saved_time") + " + " + savedfile01.getString("map_type"));
         }
 
         if (file2.exists()) {
             savedfile02 = new JSONObject(new JSONTokener(new FileReader(file2.getPath())));
-            saved02.textProperty().set(savedfile02.getString("saved_time"));
+            saved02.textProperty().set(savedfile02.getString("saved_time") + " + " + savedfile01.getString("map_type"));
         }
 
         if (file3.exists()) {
             savedfile03 = new JSONObject(new JSONTokener(new FileReader(file3.getPath())));
-            saved03.textProperty().set(savedfile03.getString("saved_time"));
+            saved03.textProperty().set(savedfile03.getString("saved_time") + " + " + savedfile01.getString("map_type"));
         }
 
     }
@@ -119,7 +120,6 @@ public class GameSavedController {
         FileWriter fileWriter;
 
         if (selection1.isSelected()) {
-            saved01.textProperty().set(currentTime);
 
             json = new File("worlds/savedRecord01.json");
             if (!json.exists()) {
@@ -134,8 +134,9 @@ public class GameSavedController {
 
             fileWriter.close();
 
+            saved01.textProperty().set(currentTime + " + " + currentworldInfo.getString("map_type"));
+
         } else if (selection2.isSelected()) {
-            saved02.textProperty().set(currentTime);
 
             json = new File("worlds/savedRecord02.json");
             if (!json.exists()) {
@@ -150,8 +151,9 @@ public class GameSavedController {
 
             fileWriter.close();
 
+            saved02.textProperty().set(currentTime + " + " + currentworldInfo.getString("map_type"));
+
         } else if (selection3.isSelected()) {
-            saved03.textProperty().set(currentTime);
 
             json = new File("worlds/savedRecord03.json");
             if (!json.exists()) {
@@ -165,6 +167,8 @@ public class GameSavedController {
             WriteJsonObjectTOFile(fileWriter, currentworldInfo);
 
             fileWriter.close();
+
+            saved03.textProperty().set(currentTime + " + " + currentworldInfo.getString("map_type"));
         }
 
         LoadSavedFile();
@@ -184,13 +188,29 @@ public class GameSavedController {
 
         if (selection1.isSelected()) {
             this.mainWorldController.setjsonfile(savedfile01);
+            this.mainWorldController.getWolrd().setMapType(StringToMapType(savedfile01.getString("map_type")));
         } else if (selection2.isSelected()) {
             this.mainWorldController.setjsonfile(savedfile02);
+            this.mainWorldController.getWolrd().setMapType(StringToMapType(savedfile01.getString("map_type")));
         } else if (selection3.isSelected()) {
             this.mainWorldController.setjsonfile(savedfile03);
+            this.mainWorldController.getWolrd().setMapType(StringToMapType(savedfile03.getString("map_type")));
         }
 
         this.mainWorldController.loadWholeMapByJson(mainWorldController.getjsonfile());
+    }
+
+    public MAP_TYPE StringToMapType(String map_type) {
+        switch (map_type) {
+        case "FOREST":
+            return MAP_TYPE.FOREST;
+        case "ICEWORLD":
+            return MAP_TYPE.ICEWORLD;
+        case "DESERT":
+            return MAP_TYPE.DESERT;
+        default:
+            return MAP_TYPE.FOREST;
+        }
     }
 
     @FXML

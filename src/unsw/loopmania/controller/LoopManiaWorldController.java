@@ -375,7 +375,6 @@ public class LoopManiaWorldController {
     private double gameSpeed;
 
     private JSONObject jsonfile;
-    private MAP_TYPE mapType;
 
     /**
      * @param world           world object loaded from file
@@ -478,11 +477,11 @@ public class LoopManiaWorldController {
         initialiseUnequippedInventoryPane();
         initialisecardsPane();
 
-        if (mapType.equals(MAP_TYPE.FOREST)) {
+        if (getWolrd().getMapType().equals(MAP_TYPE.FOREST)) {
             loadWholeMapByJson(new JSONObject(new JSONTokener(new FileReader("worlds/" + "forest.json"))));
-        } else if (mapType.equals(MAP_TYPE.ICEWORLD)) {
+        } else if (getWolrd().getMapType().equals(MAP_TYPE.ICEWORLD)) {
             loadWholeMapByJson(new JSONObject(new JSONTokener(new FileReader("worlds/" + "iceworld.json"))));
-        } else if (mapType.equals(MAP_TYPE.DESERT)) {
+        } else if (getWolrd().getMapType().equals(MAP_TYPE.DESERT)) {
             loadWholeMapByJson(new JSONObject(new JSONTokener(new FileReader("worlds/" + "desert.json"))));
         }
 
@@ -505,8 +504,8 @@ public class LoopManiaWorldController {
     }
 
     public void loadWholeMapByJson(JSONObject jsonfile) throws FileNotFoundException, JSONException {
-        loadPath(jsonfile.getJSONObject("path"), mapType);
-        loadInitialEntities(jsonfile.getJSONArray("BuildingEntities"), mapType);
+        loadPath(jsonfile.getJSONObject("path"), getWolrd().getMapType());
+        loadInitialEntities(jsonfile.getJSONArray("BuildingEntities"), getWolrd().getMapType());
         if (jsonfile.has("character_info")) {
             loadCharacter(jsonfile.getJSONObject("character_info"));
         } else {
@@ -934,25 +933,25 @@ public class LoopManiaWorldController {
         ImageView view;
 
         if (enemy instanceof Slug) {
-            if (mapType == MAP_TYPE.ICEWORLD) {
+            if (getWolrd().getMapType() == MAP_TYPE.ICEWORLD) {
                 view = new ImageView(christmasSlugEnemyImage);
             } else {
                 view = new ImageView(slugEnemyImage);
             }
         } else if (enemy instanceof Vampire) {
-            if (mapType == MAP_TYPE.ICEWORLD) {
+            if (getWolrd().getMapType() == MAP_TYPE.ICEWORLD) {
                 view = new ImageView(christmasVampireEnemyImage);
             } else {
                 view = new ImageView(vampireEnemyImage);
             }
         } else if (enemy instanceof Zombie) {
-            if (mapType == MAP_TYPE.ICEWORLD) {
+            if (getWolrd().getMapType() == MAP_TYPE.ICEWORLD) {
                 view = new ImageView(christmasZombieEnemyImage);
             } else {
                 view = new ImageView(zombieEnemyImage);
             }
         } else if (enemy instanceof Doggie) {
-            if (mapType == MAP_TYPE.ICEWORLD) {
+            if (getWolrd().getMapType() == MAP_TYPE.ICEWORLD) {
                 view = new ImageView(christmasDoggieEnemyImage);
             } else {
                 view = new ImageView(doggieEnemyImage);
@@ -1095,7 +1094,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedWeapon(sword);
                                 updateCharacterDescription();
                             } else {
@@ -1108,7 +1107,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedWeapon(stake);
                                 updateCharacterDescription();
                             } else {
@@ -1121,7 +1120,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+                                Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedWeapon(staff);
                                 updateCharacterDescription();
                             } else {
@@ -1134,8 +1133,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Armour armour = new BasicArmour(new SimpleIntegerProperty(0),
-                                        new SimpleIntegerProperty(0));
+                                Armour armour = new BasicArmour(new SimpleIntegerProperty(1),
+                                        new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedArmour(armour);
                                 updateCharacterDescription();
                             } else {
@@ -1148,8 +1147,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Shield shield = new BasicShield(new SimpleIntegerProperty(0),
-                                        new SimpleIntegerProperty(0));
+                                Shield shield = new BasicShield(new SimpleIntegerProperty(1),
+                                        new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedShield(shield);
                                 updateCharacterDescription();
                             } else {
@@ -1162,7 +1161,7 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(0),
+                                Helmet helmet = new BasicHelmet(new SimpleIntegerProperty(1),
                                         new SimpleIntegerProperty(0));
                                 world.getCharacter().setDressedHelmet(helmet);
                                 updateCharacterDescription();
@@ -1178,7 +1177,7 @@ public class LoopManiaWorldController {
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
                                 Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
-                                        new SimpleIntegerProperty(0));
+                                        new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedWeapon(anduril);
                                 updateCharacterDescription();
                             } else {
@@ -1192,8 +1191,8 @@ public class LoopManiaWorldController {
                                 removeItemByCoordinates(nodeX, nodeY);
                                 targetGridPane.add(silverBackground, x, y, 1, 1);
                                 targetGridPane.add(image, x, y, 1, 1);
-                                TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0),
-                                        new SimpleIntegerProperty(0));
+                                TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(2),
+                                        new SimpleIntegerProperty(1));
                                 world.getCharacter().setDressedShield(treeStump);
                                 updateCharacterDescription();
                             } else {
@@ -2162,14 +2161,6 @@ public class LoopManiaWorldController {
 
     public void setjsonfile(JSONObject jsonfile) {
         this.jsonfile = jsonfile;
-    }
-
-    public void setMapType(MAP_TYPE type) {
-        this.mapType = type;
-    }
-
-    public MAP_TYPE getMapType() {
-        return mapType;
     }
 
     public void spawnFightEffect() {

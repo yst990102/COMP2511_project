@@ -51,6 +51,7 @@ import unsw.loopmania.model.cards.BarracksCard;
 import unsw.loopmania.model.cards.TrapCard;
 import unsw.loopmania.model.cards.CampfireCard;
 import unsw.loopmania.strategy.ModeStrategy;
+import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 
 /**
  * A backend world.
@@ -120,6 +121,8 @@ public class LoopManiaWorld {
     private List<Pair<Integer, Integer>> orderedPath;
 
     private ModeStrategy modeStrategy;
+
+    private MAP_TYPE map_type;
 
     /**
      * create the world (constructor)
@@ -234,6 +237,9 @@ public class LoopManiaWorld {
             enemies.put(e.toJson());
         }
         current_process.put("enemies", enemies);
+
+        // map type
+        current_process.put("map_type", map_type.toString());
 
         return current_process;
     }
@@ -1558,6 +1564,14 @@ public class LoopManiaWorld {
      */
     public boolean getIsGoalFinished() {
         return this.isGoalFinished;
+    }
+
+    public MAP_TYPE getMapType() {
+        return this.map_type;
+    }
+
+    public void setMapType(MAP_TYPE map_type) {
+        this.map_type = map_type;
     }
 
 }
