@@ -48,35 +48,24 @@ public class GameSavedController {
 
     @FXML
     void selectrecord01() {
-        if (selection1.isSelected()) {
-            return;
-        } else {
-            selection1.selectedProperty().set(true);
-            selection2.selectedProperty().set(false);
-            selection3.selectedProperty().set(false);
-        }
+
+        selection1.selectedProperty().set(true);
+        selection2.selectedProperty().set(false);
+        selection3.selectedProperty().set(false);
     }
 
     @FXML
     void selectrecord02() {
-        if (selection2.isSelected()) {
-            return;
-        } else {
-            selection1.selectedProperty().set(false);
-            selection2.selectedProperty().set(true);
-            selection3.selectedProperty().set(false);
-        }
+        selection1.selectedProperty().set(false);
+        selection2.selectedProperty().set(true);
+        selection3.selectedProperty().set(false);
     }
 
     @FXML
     void selectrecord03() {
-        if (selection3.isSelected()) {
-            return;
-        } else {
-            selection1.selectedProperty().set(false);
-            selection2.selectedProperty().set(false);
-            selection3.selectedProperty().set(true);
-        }
+        selection1.selectedProperty().set(false);
+        selection2.selectedProperty().set(false);
+        selection3.selectedProperty().set(true);
     }
 
     @FXML
