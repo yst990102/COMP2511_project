@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import unsw.loopmania.model.enemies.Slug;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
+import unsw.loopmania.model.enemies.boss.*;
 
 public class EnemyTest {
 
@@ -24,6 +25,13 @@ public class EnemyTest {
         assertEquals(slug.goldWhenKilled, 50);
         assertEquals(slug.expWhenKilled, 100);
 
+        slug.setHP(20);
+        assertEquals(slug.hp, 15);
+        slug.setHP(-1);
+        assertEquals(slug.hp, 0);
+        slug.setHP(10);
+        assertEquals(slug.hp, 10);
+
     }
 
     @Test
@@ -40,6 +48,15 @@ public class EnemyTest {
 
         assertEquals(zombie.goldWhenKilled, 100);
         assertEquals(zombie.expWhenKilled, 200);
+
+        zombie.setHP(21);
+        assertEquals(zombie.hp, 20);
+        zombie.setHP(-1);
+        assertEquals(zombie.hp, 0);
+        zombie.setHP(10);
+        assertEquals(zombie.hp, 10);
+        assertEquals(zombie.getInfectionPercentage(), 100);
+
 
     }
 
@@ -59,5 +76,33 @@ public class EnemyTest {
         assertEquals(vampire.goldWhenKilled, 200);
         assertEquals(vampire.expWhenKilled, 300);
 
+        vampire.setHP(30);
+        assertEquals(vampire.hp, 25);
+        vampire.setHP(-1);
+        assertEquals(vampire.hp, 0);
+        vampire.setHP(10);
+        assertEquals(vampire.hp, 10);
+
     }
+
+    @Test
+    public void DoggieTest() {
+        Doggie dog = new Doggie(null);
+        assertEquals(dog.getStun_percentage(), 20);
+        assertEquals(dog.getStun_round(), 2);
+        
+    }
+
+
+    @Test
+    public void ElanMuskeTest() {
+        ElanMuske em = new ElanMuske(null);
+        assertEquals(em.hp, 150);
+        assertEquals(em.attack, 35);
+        assertEquals(em.speed, 5);
+        assertEquals(em.battleRadius, 1);
+        assertEquals(em.supportRadius, 1);
+        
+    }
+
 }

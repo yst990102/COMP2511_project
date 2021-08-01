@@ -24,6 +24,7 @@ import unsw.loopmania.model.Store;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
 import unsw.loopmania.model.enemies.Slug;
+import unsw.loopmania.model.coins.*;
 
 /**
  * this class is a dummy class demonstrating how to setup tests for the project
@@ -50,6 +51,8 @@ public class TrivialTest {
 
         assertEquals(a.getDefence(), 5);
         assertEquals(a.getDamageReducePercentage(), 50);
+        Slug slug = new Slug(null);
+        assertEquals(a.getDefence(slug), 5);
     }
 
     @Test
@@ -68,6 +71,8 @@ public class TrivialTest {
 
         assertEquals(a.getDefence(), 2);
         assertEquals(a.getCriticalPercentageDecrease(), 60);
+        Slug slug = new Slug(null);
+        assertEquals(a.getDefence(slug), 2);
     }
 
     @Test
@@ -78,6 +83,9 @@ public class TrivialTest {
         assertEquals(a.getDefence(), 2);
         assertEquals(a.getAttack(), -2);
         assertEquals(a.getEnemyAttackDecrease(), 2);
+        Slug slug = new Slug(null);
+        assertEquals(a.getDefence(slug), 2);
+        assertEquals(a.getAttack(slug), -2);
     }
 
     @Test
@@ -135,4 +143,18 @@ public class TrivialTest {
         assertEquals(store.getStoreItems().size(), 7);
         assertEquals(store.getHeroItems().size(), 0);
     }
+
+    @Test
+    public void TestDoggieCoin() {
+        
+        DoggieCoin coin1 = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), false);
+        DoggieCoin coin2 = new DoggieCoin(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1), true);
+
+        assertEquals(coin1.getPrice()<200, true);
+        assertEquals(coin2.getPrice()>200, true);
+
+
+    }
+
+
 }
