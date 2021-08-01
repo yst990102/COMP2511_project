@@ -8,10 +8,13 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
 /**
- * a basic form of enemy in the world
+ * a basic form of Zombie in the world
  */
 public class Zombie extends Enemy {
     
+    /**
+     * Constructor for Zombie
+     */
     private int InfectionPercentage = 100;
 
     public Zombie(PathPosition position) {
@@ -27,6 +30,10 @@ public class Zombie extends Enemy {
         this.expWhenKilled = 200;
     }
 
+    /**
+     * get attack by critical
+     * @return Pair<Integer, Boolean>
+     */
     public Pair<Integer, Boolean> getAttackByCritical() {
         int randomInt = new Random().nextInt(100);
 
@@ -37,6 +44,18 @@ public class Zombie extends Enemy {
         return new Pair<>(super.getAttack(), isCriticalBite);
     }
 
+    /**
+     * get infection percentage
+     * @return int
+     */
+    public int getInfectionPercentage() {
+        return this.InfectionPercentage;
+    }
+
+    /**
+     * Set the HP
+     * @param newHP
+     */
     @Override
     public void setHP(int newHP) {
         if (newHP > 20) {
@@ -47,10 +66,6 @@ public class Zombie extends Enemy {
             this.hp = newHP;
         }
         return;
-    }
-
-    public int getInfectionPercentage() {
-        return this.InfectionPercentage;
     }
 
 }

@@ -16,6 +16,9 @@ import unsw.loopmania.model.enemies.Boss;
 
 public class ElanMuske extends Boss {
 
+    /**
+     * Constructor for ElanMuske
+     */
     public int treatment_amout = 10;
 
     public ElanMuske(PathPosition position) {

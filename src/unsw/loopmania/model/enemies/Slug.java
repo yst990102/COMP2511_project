@@ -4,7 +4,7 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
 /**
- * a basic form of enemy in the world
+ * a basic form of Slug in the world
  */
 public class Slug extends Enemy {
 

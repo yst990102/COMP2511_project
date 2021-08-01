@@ -19,6 +19,9 @@ import unsw.loopmania.model.enemies.Boss;
  */
 public class Doggie extends Boss {
 
+    /**
+     * Constructor for Doggie
+     */
     private int stun_percentage = 20;
     private int stun_round = 2;
 
@@ -33,6 +36,10 @@ public class Doggie extends Boss {
 
     }
 
+    /**
+     * get attack by stun
+     * @return Pair<Boolean, Integer>
+     */
     public Pair<Boolean, Integer> getAttackByStun() {
         int randint = new Random(System.currentTimeMillis()).nextInt(100);
         if (randint < stun_percentage) {
@@ -42,18 +49,34 @@ public class Doggie extends Boss {
         }
     }
 
+    /**
+     * get stun percentage
+     * @return int 
+     */
     public int getStun_percentage() {
         return this.stun_percentage;
     }
 
+    /**
+     * set stun percentage
+     * @param stun_percentage
+     */
     public void setStun_percentage(int stun_percentage) {
         this.stun_percentage = stun_percentage;
     }
 
+    /**
+     * get stun round
+     * @return int 
+     */
     public int getStun_round() {
         return this.stun_round;
     }
 
+    /**
+     * set stun round
+     * @param stun_round
+     */
     public void setStun_round(int stun_round) {
         this.stun_round = stun_round;
     }

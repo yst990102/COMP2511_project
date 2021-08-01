@@ -6,11 +6,14 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.PathPosition;
 
 /**
- * a basic form of enemy in the world
+ * a basic form of Vampire in the world
  */
 public class Vampire extends Enemy {
 
-    // if critical, make 10 extra damage
+    /**
+     * Constructor for Vampire
+     * If critical, make 10 extra damage
+     */
     public int criticalExtraDamage = 10;
 
     public Vampire(PathPosition position) {
@@ -26,6 +29,10 @@ public class Vampire extends Enemy {
         this.expWhenKilled = 300;
     }
 
+    /**
+     * Get the Attack
+     * @return int
+     */
     @Override
     public int getAttack() {
         int critical_random = new Random().nextInt(100);
@@ -37,6 +44,11 @@ public class Vampire extends Enemy {
         }
     }
 
+    /**
+     * Get the Attack
+     * @param critical_percentage_decrease
+     * @return int
+     */
     public int getAttack(int critical_percentage_decrease) {
         int critical_random = new Random().nextInt(100);
         if (critical_random < (criticalPercentage * (1 - Double.valueOf(critical_percentage_decrease) / 100))) {
@@ -47,6 +59,10 @@ public class Vampire extends Enemy {
         }
     }
 
+    /**
+     * Set the HP
+     * @param newHP
+     */
     @Override
     public void setHP(int newHP) {
         if (newHP > 25) {

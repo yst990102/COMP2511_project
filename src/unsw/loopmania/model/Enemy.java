@@ -63,6 +63,10 @@ public class Enemy extends MovingEntity {
         this.hp = newHP;
     }
 
+    /**
+     * save the data to Json
+     * @return JSONObject
+     */
     public JSONObject toJson() {
         JSONObject Info = new JSONObject();
         Info.put("x", this.getX());
