@@ -1213,6 +1213,7 @@ public class LoopManiaWorld {
     }
 
     public void setGoalComposite(JSONObject goal) {
+        this.goalObject = goal;
         this.maingoal = new GoalComposite(goal, this);
         setGoals(maingoal.getContent());
         this.isGoalFinished = maingoal.getLogicResult();
