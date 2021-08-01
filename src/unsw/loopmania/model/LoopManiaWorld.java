@@ -175,7 +175,10 @@ public class LoopManiaWorld {
         this.maingoal = new GoalComposite(goalObject, this);
         setGoals(maingoal.getContent());
         this.isGoalFinished = maingoal.getLogicResult();
-
+        this.hasMuskeSpawn = false;
+        this.hasDoggieSpawn = false;
+        this.hasMuskeKilled = false;
+        this.hasDoggieKilled = false;
     }
 
     public JSONObject SaveCurrentProcess() {
