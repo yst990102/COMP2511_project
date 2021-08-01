@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import unsw.loopmania.strategy.StandardModeStrategy;
 import unsw.loopmania.strategy.SurvivalModeStrategy;
 import unsw.loopmania.strategy.BerserkerModeStrategy;
+import unsw.loopmania.strategy.ConfusionModeStrategy;
 public class SelectModeController {
 
 	private MenuSwitcher gameSwitcher;
@@ -55,7 +56,7 @@ public class SelectModeController {
     @FXML
     void handleConfusionModeButtonClick(ActionEvent event) throws IOException {
         gameSwitcher.switchMenu();
-        mainController.setModeStrategy(new StandardModeStrategy());
+        mainController.setModeStrategy(new ConfusionModeStrategy());
         mainMenuController.setIsGameStarted(true);
     }
 	
