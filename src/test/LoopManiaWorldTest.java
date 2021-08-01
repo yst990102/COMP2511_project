@@ -21,6 +21,8 @@ import unsw.loopmania.model.Building;
 import unsw.loopmania.model.Card;
 import unsw.loopmania.model.Character;
 import unsw.loopmania.model.Potion;
+import unsw.loopmania.model.RareItem;
+import unsw.loopmania.model.rareItems.TheOneRing;
 import unsw.loopmania.model.potions.HealthPotion;
 import unsw.loopmania.model.PathPosition;
 import unsw.loopmania.model.cards.TowerCard;
@@ -495,10 +497,16 @@ public class LoopManiaWorldTest {
         world.setCharacter(character);
         character.setHP(0);
 
+        RareItem rareItem;
         // test hero cannot revive without the one ring
         assertEquals(false, world.canHeroRevive());
 
-        world.addRareItem();
+        while(true) {
+            rareItem = world.addRareItem();
+            if (rareItem instanceof TheOneRing) {
+                break;
+            }
+        }
 
         // test hero can revive wit the one ring
         assertEquals(true, world.canHeroRevive());
