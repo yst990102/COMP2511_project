@@ -43,6 +43,7 @@ public class SelectPathController {
             if (pathJson != null) {
                 pathJson = pathJson.getJSONObject("path");
                 selectMapController.setPathJson(pathJson);
+                System.out.println(pathJson.toString());
                 mapSwitcher.switchMenu();
             }
         }

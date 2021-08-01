@@ -40,6 +40,7 @@ public class SelectMapController {
     @FXML
     void handleForestButtonClick() throws FileNotFoundException {
         modeSwitcher.switchMenu();
+        System.out.println(path.toString());
         gameController.loadPath(path != null ? path : forest.getJSONObject("path"), MAP_TYPE.FOREST);
         gameController.loadInitialEntities(forest.getJSONArray("BuildingEntities"), MAP_TYPE.FOREST);
         if (forest.has("character_info")) {

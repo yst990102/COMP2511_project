@@ -130,7 +130,7 @@ public class MapBuilderController {
             return;
         }
 
-        PrintWriter pathFile = new PrintWriter("worlds/paths" + fileName.getText() + ".json", "UTF-8");
+        PrintWriter pathFile = new PrintWriter("worlds/paths/" + fileName.getText() + ".json", "UTF-8");
         pathFile.println(toJSON().toString());
         pathFile.close();
         prompt.setText("File has been saved");
