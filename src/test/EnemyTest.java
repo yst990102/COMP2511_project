@@ -96,9 +96,12 @@ public class EnemyTest {
 
     @Test
     public void ElanMuskeTest() {
-        Doggie dog = new Doggie(null);
-        assertEquals(dog.getStun_percentage(), 20);
-        assertEquals(dog.getStun_round(), 2);
+        ElanMuske em = new ElanMuske(null);
+        assertEquals(em.hp, 150);
+        assertEquals(em.attack, 35);
+        assertEquals(em.speed, 5);
+        assertEquals(em.battleRadius, 1);
+        assertEquals(em.supportRadius, 1);
         
     }
 
