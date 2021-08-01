@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
@@ -55,6 +56,11 @@ public class GameSavedController {
 
     @FXML
     private Text saved03;
+
+    @FXML
+    public void initialize() throws JSONException, FileNotFoundException {
+        LoadSavedFile();
+    }
 
     @FXML
     void selectrecord01() throws JSONException, FileNotFoundException {

@@ -488,6 +488,8 @@ public class LoopManiaWorldController {
     }
 
     public void loadWholeMapByJson(JSONObject jsonfile) throws FileNotFoundException, JSONException {
+        handleRestartButtonClick();
+
         loadPath(jsonfile.getJSONObject("path"), this.mapType);
         loadInitialEntities(jsonfile.getJSONArray("BuildingEntities"), this.mapType);
         if (jsonfile.has("character_info")) {
