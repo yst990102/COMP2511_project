@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+
 /**
  * controller for the main menu.
  * TODO = you could extend this, for example with a settings menu, or a menu to load particular maps.
@@ -34,7 +35,7 @@ public class MainMenuController {
     @FXML
     private Button mapBuilderButton;
 
-    public void setModeSwitcher(MenuSwitcher modeSwitcher){
+    public void setModeSwitcher(MenuSwitcher modeSwitcher) {
         this.modeSwitcher = modeSwitcher;
     }
 

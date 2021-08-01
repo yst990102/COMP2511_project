@@ -99,12 +99,12 @@ public class StoreController {
 
 		inventorySlotImage = new Image((new File("src/assets/empty_slot.png")).toURI().toString());
 		swordImage = new Image((new File("src/assets/basic_sword.png")).toURI().toString());
-        helmetImage = new Image((new File("src/assets/helmet.png")).toURI().toString());
-        shieldImage = new Image((new File("src/assets/shield.png")).toURI().toString());
-        stakeImage = new Image((new File("src/assets/stake.png")).toURI().toString());
-        staffImage = new Image((new File("src/assets/staff.png")).toURI().toString());
-        armourImage = new Image((new File("src/assets/armour.png")).toURI().toString());
-		theOneRingImage =  new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
+		helmetImage = new Image((new File("src/assets/helmet.png")).toURI().toString());
+		shieldImage = new Image((new File("src/assets/shield.png")).toURI().toString());
+		stakeImage = new Image((new File("src/assets/stake.png")).toURI().toString());
+		staffImage = new Image((new File("src/assets/staff.png")).toURI().toString());
+		armourImage = new Image((new File("src/assets/armour.png")).toURI().toString());
+		theOneRingImage = new Image((new File("src/assets/the_one_ring.png")).toURI().toString());
 		healthPotionImage = new Image((new File("src/assets/health_potion.png")).toURI().toString());
 
 	}
@@ -136,13 +136,14 @@ public class StoreController {
 	void handleBuyButtonClick(ActionEvent event) {
 		if (isStoreItemSelected) {
 			int numHeroItems = mainController.getHeroItems().size();
-			
+
 			if (numHeroItems >= 16) {
 				description.setText("Your inventory is full!\nPlease sell some items!");
 				return;
 			}
 
-			if (!mainController.getModeStrategy().satisfyItemBuyConstraint(numHealthPotionBought, numProtectiveGearBought, description, currentlySelectedItemType)) {
+			if (!mainController.getModeStrategy().satisfyItemBuyConstraint(numHealthPotionBought,
+					numProtectiveGearBought, description, currentlySelectedItemType)) {
 				return;
 			}
 
@@ -151,56 +152,57 @@ public class StoreController {
 			Item selectedItem = null;
 			ImageView unequippedtemView = null;
 
-			switch(currentlySelectedItemType) {
-				case SWORD:
-					Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = sword;
-					unequippedtemView = new ImageView(swordImage);
-					break;
-				case STAKE:
-					Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = stake;
-					unequippedtemView = new ImageView(stakeImage);
-					break;
-				case STAFF:
-					Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = staff;
-					unequippedtemView = new ImageView(staffImage);
-					break;
-				case SHIELD:
-					BasicShield shield = new BasicShield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = shield;
-					unequippedtemView = new ImageView(shieldImage);
-					numProtectiveGearBought++;
-					break;
-				case ARMOUR:
-					BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = armour;
-					unequippedtemView = new ImageView(armourImage);
-					numProtectiveGearBought++;
-					break;
-				case HELMET:
-					BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = helmet;
-					unequippedtemView = new ImageView(helmetImage);
-					numProtectiveGearBought++;
-					break;
-				case HEALTH_POTION:
-					HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
-					new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-					selectedItem = healthPotion;
-					unequippedtemView = new ImageView(healthPotionImage);
-					numHealthPotionBought++;
-				default:
-					break; 
+			switch (currentlySelectedItemType) {
+			case SWORD:
+				Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = sword;
+				unequippedtemView = new ImageView(swordImage);
+				break;
+			case STAKE:
+				Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = stake;
+				unequippedtemView = new ImageView(stakeImage);
+				break;
+			case STAFF:
+				Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = staff;
+				unequippedtemView = new ImageView(staffImage);
+				break;
+			case SHIELD:
+				BasicShield shield = new BasicShield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = shield;
+				unequippedtemView = new ImageView(shieldImage);
+				numProtectiveGearBought++;
+				break;
+			case ARMOUR:
+				BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = armour;
+				unequippedtemView = new ImageView(armourImage);
+				numProtectiveGearBought++;
+				break;
+			case HELMET:
+				BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = helmet;
+				unequippedtemView = new ImageView(helmetImage);
+				numProtectiveGearBought++;
+				break;
+			case HEALTH_POTION:
+				HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+						new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+				selectedItem = healthPotion;
+				unequippedtemView = new ImageView(healthPotionImage);
+				numHealthPotionBought++;
+			default:
+				break;
 			}
-			boolean playerHasEnoughGold = mainController.getWolrd().getCharacter().getGold() - currentlySelectedItemPrice >= 0;
+			boolean playerHasEnoughGold = mainController.getWolrd().getCharacter().getGold()
+					- currentlySelectedItemPrice >= 0;
 
 			if (!playerHasEnoughGold) {
 				description.setText("You do not have enough gold!");
@@ -229,7 +231,7 @@ public class StoreController {
 
 		isStoreShowed.addListener((observable, oldValue, newValue) -> {
 			if (newValue.booleanValue() == true)
-			addHeroItems();
+				addHeroItems();
 		});
 
 		initStoreInventory();
@@ -304,37 +306,35 @@ public class StoreController {
 		}
 	}
 
-	
-
 	public void setIsStoreShowed() {
 		isStoreShowed.set(true);
 	}
 
 	private ImageView onLoad(Entity item) {
-        ImageView view;
+		ImageView view;
 
-        if (item.getClass().equals(BasicHelmet.class)) {
-            view = new ImageView(helmetImage);
+		if (item.getClass().equals(BasicHelmet.class)) {
+			view = new ImageView(helmetImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.HELMET, item);
-        } else if (item.getClass().equals(BasicShield.class)) {
-            view = new ImageView(shieldImage);
+		} else if (item.getClass().equals(BasicShield.class)) {
+			view = new ImageView(shieldImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.SHIELD, item);
-        } else if (item.getClass().equals(BasicArmour.class)) {
-            view = new ImageView(armourImage);
+		} else if (item.getClass().equals(BasicArmour.class)) {
+			view = new ImageView(armourImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.ARMOUR, item);
-        } else if (item.getClass().equals(Sword.class)) {
-            view = new ImageView(swordImage);
+		} else if (item.getClass().equals(Sword.class)) {
+			view = new ImageView(swordImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.SWORD, item);
-        } else if (item.getClass().equals(Stake.class)) {
-            view = new ImageView(stakeImage);
+		} else if (item.getClass().equals(Stake.class)) {
+			view = new ImageView(stakeImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.STAKE, item);
-        } else if (item.getClass().equals(Staff.class)) {
-            view = new ImageView(staffImage);
+		} else if (item.getClass().equals(Staff.class)) {
+			view = new ImageView(staffImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.STAFF, item);
-        } else if (item.getClass().equals(HealthPotion.class)) {
-            view = new ImageView(healthPotionImage);
+		} else if (item.getClass().equals(HealthPotion.class)) {
+			view = new ImageView(healthPotionImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.HEALTH_POTION, item);
-        } else if (item.getClass().equals(TheOneRing.class)) {
+		} else if (item.getClass().equals(TheOneRing.class)) {
 			view = new ImageView(theOneRingImage);
 			addClickEventHandlersForItem(view, ITEM_TYPE.THE_ONE_RING, item);
 		} else {
@@ -352,7 +352,7 @@ public class StoreController {
 				currentlySelectedItemType = clickType;
 				currentlySelectedItem = item;
 				itemPricePane.setVisible(true);
-				
+
 				if (view.getParent().getId().equals("storeInventory")) {
 					isStoreItemSelected = true;
 					sellButton.setStyle("-fx-text-fill: #7f7f7f");
@@ -367,61 +367,60 @@ public class StoreController {
 					buyButton.setCursor(Cursor.DEFAULT);
 				}
 
-				switch(clickType) {
-					case SWORD:
-						Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(sword.getDescription());
-						itemPrice.setText(Integer.toString(sword.getPrice()));
-						currentlySelectedItemPrice = sword.getPrice();
-						break;
-					case STAKE:
-						Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(stake.getDescription());
-						itemPrice.setText(Integer.toString(stake.getPrice()));
-						currentlySelectedItemPrice = stake.getPrice();
-						break;
-					case STAFF:
-						Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(staff.getDescription());
-						itemPrice.setText(Integer.toString(staff.getPrice()));
-						currentlySelectedItemPrice = staff.getPrice();
-						break;
-					case SHIELD:
-						BasicShield shield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(shield.getDescription());
-						itemPrice.setText(Integer.toString(shield.getPrice()));
-						currentlySelectedItemPrice = shield.getPrice();
-						break;
-					case ARMOUR:
-						BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(armour.getDescription());
-						itemPrice.setText(Integer.toString(armour.getPrice()));
-						currentlySelectedItemPrice = armour.getPrice();
-						break;
-					case HELMET:
-						BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(helmet.getDescription());
-						itemPrice.setText(Integer.toString(helmet.getPrice()));
-						currentlySelectedItemPrice = helmet.getPrice();
-						break;
-					case THE_ONE_RING:
-						TheOneRing theOneRing = new TheOneRing(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(theOneRing.getDescription());
-						itemPrice.setText(Integer.toString(theOneRing.getPrice()));
-						currentlySelectedItemPrice = theOneRing.getPrice();
-						break;
-					case HEALTH_POTION:
-						HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-						description.setText(healthPotion.getDescription());
-						itemPrice.setText(Integer.toString(healthPotion.getPrice()));
-						currentlySelectedItemPrice = healthPotion.getPrice();
-					default:
-						break; 
+				switch (clickType) {
+				case SWORD:
+					Sword sword = new Sword(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(sword.getDescription());
+					itemPrice.setText(Integer.toString(sword.getPrice()));
+					currentlySelectedItemPrice = sword.getPrice();
+					break;
+				case STAKE:
+					Stake stake = new Stake(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(stake.getDescription());
+					itemPrice.setText(Integer.toString(stake.getPrice()));
+					currentlySelectedItemPrice = stake.getPrice();
+					break;
+				case STAFF:
+					Staff staff = new Staff(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(staff.getDescription());
+					itemPrice.setText(Integer.toString(staff.getPrice()));
+					currentlySelectedItemPrice = staff.getPrice();
+					break;
+				case SHIELD:
+					BasicShield shield = new BasicShield(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(shield.getDescription());
+					itemPrice.setText(Integer.toString(shield.getPrice()));
+					currentlySelectedItemPrice = shield.getPrice();
+					break;
+				case ARMOUR:
+					BasicArmour armour = new BasicArmour(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(armour.getDescription());
+					itemPrice.setText(Integer.toString(armour.getPrice()));
+					currentlySelectedItemPrice = armour.getPrice();
+					break;
+				case HELMET:
+					BasicHelmet helmet = new BasicHelmet(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(helmet.getDescription());
+					itemPrice.setText(Integer.toString(helmet.getPrice()));
+					currentlySelectedItemPrice = helmet.getPrice();
+					break;
+				case THE_ONE_RING:
+					TheOneRing theOneRing = new TheOneRing(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+					description.setText(theOneRing.getDescription());
+					itemPrice.setText(Integer.toString(theOneRing.getPrice()));
+					currentlySelectedItemPrice = theOneRing.getPrice();
+					break;
+				case HEALTH_POTION:
+					HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(0),
+							new SimpleIntegerProperty(0));
+					description.setText(healthPotion.getDescription());
+					itemPrice.setText(Integer.toString(healthPotion.getPrice()));
+					currentlySelectedItemPrice = healthPotion.getPrice();
+				default:
+					break;
 				}
 			}
 		});
 	}
 
 }
-
-

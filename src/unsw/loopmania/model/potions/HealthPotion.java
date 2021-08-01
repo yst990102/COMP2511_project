@@ -7,7 +7,7 @@ import unsw.loopmania.model.Potion;
  * represents an equipped or unequipped sword in the backend world
  */
 public class HealthPotion extends Potion {
-    
+
     private int healthRecovered;
 
     public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y) {
