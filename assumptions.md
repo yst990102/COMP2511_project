@@ -179,7 +179,7 @@ Campfire
 - Slug: $50, XP 100
 - Zombie: $100, XP 200
 - Vampire: $200, XP 300
-- Doggie: $1000, XP 1000, (1, 5) DoggieCoins
+- Doggie: $1000, XP 1000, (1, 3) DoggieCoins
 - Elan Muske: $1500, XP 1500
 
 

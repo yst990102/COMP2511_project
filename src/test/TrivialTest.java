@@ -143,16 +143,18 @@ public class TrivialTest {
         assertEquals(store.getHeroItems().size(), 0);
     }
 
-    // @Test
-    // public void TestDoggieCoin() {
+    @Test
+    public void TestDoggieCoin() {
 
-    //     DoggieCoin coin1 = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), false);
-    //     DoggieCoin coin2 = new DoggieCoin(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1), true);
+        DoggieCoin coin1 = new DoggieCoin(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0), true, false);
+        DoggieCoin coin2 = new DoggieCoin(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1), true, true);
+        DoggieCoin coin3 = new DoggieCoin(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1), false, false);
 
-    //     assertEquals(coin1.getPrice()<200, true);
-    //     assertEquals(coin2.getPrice()>200, true);
+        assertEquals(coin1.getPrice()>200, true);
+        assertEquals(coin2.getPrice()<200, true);
+        assertEquals(coin3.getPrice()>10&&coin3.getPrice()<61, true);
 
-    // }
+    }
 
     @Test
     public void TestAnduril() {

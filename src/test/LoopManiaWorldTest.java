@@ -33,7 +33,7 @@ import unsw.loopmania.model.buildings.TrapBuilding;
 import unsw.loopmania.model.buildings.TowerBuilding;
 import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
-
+import unsw.loopmania.model.enemies.Slug;
 public class LoopManiaWorldTest {
 
     @Test
@@ -752,4 +752,84 @@ public class LoopManiaWorldTest {
         assertEquals(world.hasDoggieKilled, false);
     }
 
+    @Test
+    public void testRestart() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+        world.hasDoggieSpawn = true;
+        world.hasDoggieKilled = true;
+        world.hasMuskeSpawn = true;
+        world.hasMuskeKilled = true;
+        world.ResetWorldData(8, 14, orderedPath, goalObject);
+        assertEquals(false, world.hasDoggieSpawn);
+        assertEquals(false, world.hasDoggieKilled);
+        assertEquals(false, world.hasMuskeSpawn);
+        assertEquals(false, world.hasMuskeKilled);
+
+    }
+
+    @Test
+    public void testCheckSlugSpawn() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+
+        orderedPath.add(new Pair<Integer, Integer>(1, 1));
+        orderedPath.add(new Pair<Integer, Integer>(1, 2));
+        orderedPath.add(new Pair<Integer, Integer>(1, 3));
+
+        orderedPath.add(new Pair<Integer, Integer>(2, 1));
+        orderedPath.add(new Pair<Integer, Integer>(2, 2));
+        orderedPath.add(new Pair<Integer, Integer>(2, 3));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        Pair<Integer, Integer> pathPos1 = new Pair<Integer, Integer>(1, 1);
+        Pair<Integer, Integer> pathPos2 = new Pair<Integer, Integer>(1, 2);
+        Pair<Integer, Integer> pathPos3 = new Pair<Integer, Integer>(2, 1);
+        Pair<Integer, Integer> pathPos4 = new Pair<Integer, Integer>(2, 3);
+        Pair<Integer, Integer> pathPos5 = new Pair<Integer, Integer>(5, 5);
+
+        orderedPath.add(pathPos1);
+        orderedPath.add(pathPos2);
+        orderedPath.add(pathPos3);
+        orderedPath.add(pathPos4);
+        orderedPath.add(pathPos5);
+
+        List<Slug> slugs = world.checkSlugSpawn();
+
+        assertEquals(true, slugs.size()>=0 && slugs.size()<=2);
+    }
+
+    
+    @Test
+    public void testKillEnemy() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+
+        Slug slug = new Slug(null);
+        Zombie zombie = new Zombie(null);
+        Vampire vampire = new Vampire(null);
+
+
+        assertEquals(100, character.getGold());
+        world.killEnemy(slug);
+        assertEquals(150, character.getGold());
+        world.killEnemy(zombie);
+        assertEquals(250, character.getGold());
+        world.killEnemy(vampire);
+        assertEquals(450, character.getGold());
+    }
+    
 }
