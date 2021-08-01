@@ -752,4 +752,24 @@ public class LoopManiaWorldTest {
         assertEquals(world.hasDoggieKilled, false);
     }
 
+    @Test
+    public void testRestart() {
+        // initialize world
+        List<Pair<Integer, Integer>> orderedPath = new ArrayList<>();
+        orderedPath.add(new Pair<Integer, Integer>(0, 0));
+        JSONObject goalObject = new JSONObject();
+        LoopManiaWorld world = new LoopManiaWorld(8, 14, orderedPath, goalObject);
+        Character character = new Character(new PathPosition(0, orderedPath));
+        world.setCharacter(character);
+        world.hasDoggieSpawn = true;
+        world.hasDoggieKilled = true;
+        world.hasMuskeSpawn = true;
+        world.hasMuskeKilled = true;
+        world.ResetWorldData(8, 14, orderedPath, goalObject);
+        assertEquals(false, world.hasDoggieSpawn);
+        assertEquals(false, world.hasDoggieKilled);
+        assertEquals(false, world.hasMuskeSpawn);
+        assertEquals(false, world.hasMuskeKilled);
+
+    }
 }
