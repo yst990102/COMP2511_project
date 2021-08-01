@@ -341,7 +341,7 @@ public class LoopManiaWorld {
      * kill an enemy
      * @param enemy enemy to be killed
      */
-    private void killEnemy(Enemy enemy) {
+    public void killEnemy(Enemy enemy) {
         // Gold and XP obtained when killing an enemy
         // - Slug: $50, XP 100
         // - Zombie: $100, XP 200
