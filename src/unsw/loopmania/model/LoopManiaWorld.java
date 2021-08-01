@@ -59,7 +59,6 @@ import unsw.loopmania.strategy.ModeStrategy;
  * entity can occupy the same square.
  */
 public class LoopManiaWorld {
-    // TODO = add additional backend functionality
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
@@ -150,6 +149,14 @@ public class LoopManiaWorld {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
+    /**
+     * reset the world data
+     * 
+     * @param width
+     * @param height
+     * @param orderedPath
+     * @param goalObject
+     */
     public void ResetWorldData(int width, int height, List<Pair<Integer, Integer>> orderedPath, JSONObject goalObject) {
         nonSpecifiedEntities.clear();
 
@@ -181,6 +188,10 @@ public class LoopManiaWorld {
         this.hasDoggieKilled = false;
     }
 
+    /**
+     * save the current process
+     * @return JSONObject
+     */
     public JSONObject SaveCurrentProcess() {
         JSONObject current_process = new JSONObject();
 
@@ -242,11 +253,19 @@ public class LoopManiaWorld {
 
         return current_process;
     }
-
+    
+    /**
+     * set the initial path
+     * @param initialpath
+     */
     public void setInitialPath(JSONObject initialpath) {
         this.initialpath = initialpath;
     }
 
+    /**
+     * set the initial entities
+     * @param initialentities
+     */
     public void setInitialEntities(JSONArray initialentities) {
         this.initialentities = initialentities;
     }
@@ -321,10 +340,18 @@ public class LoopManiaWorld {
         return cardEntities;
     }
 
+    /**
+     * get the unequipped inventory items
+     * @return List<Item>
+     */
     public List<Item> getUnequippedInventoryItems() {
         return unequippedInventoryItems;
     }
 
+    /**
+     * get the enemies
+     * @return List<Enemy>
+     */
     public List<Enemy> getEnemies() {
         return enemies;
     }
@@ -1222,6 +1249,10 @@ public class LoopManiaWorld {
         this.goals.set(goals);
     }
 
+    /**
+     * set the goal composite
+     * @param goal
+     */
     public void setGoalComposite(JSONObject goal) {
         this.goalObject = goal;
         this.maingoal = new GoalComposite(goal, this);
@@ -1229,6 +1260,10 @@ public class LoopManiaWorld {
         this.isGoalFinished = maingoal.getLogicResult();
     }
 
+    /**
+     * get the goal object
+     * @return JSONObject
+     */
     public JSONObject getGoalObject() {
         return this.goalObject;
     }
@@ -1355,6 +1390,10 @@ public class LoopManiaWorld {
         return zombies;
     }
 
+    /**
+     * check if there exist ElanMuske and create an ElanMuske
+     * @return ElanMuske
+     */
     public ElanMuske checkMuskeSpawn() {
         if (hasMuskeSpawn == true) {
             return null;
@@ -1382,6 +1421,10 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * check if there exist Doggie and create a Doggie
+     * @return Doggie
+     */
     public Doggie checkDoggieSpawn() {
         if (hasDoggieSpawn == true) {
             return null;
