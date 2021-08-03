@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Shield;
+import unsw.loopmania.model.rareitemproperty.TreeStumpProperty;
 
 /**
  * represents an equipped or unequipped sword in the backend world
@@ -28,12 +29,16 @@ public class BasicShield extends Equipment implements Shield {
 
     @Override
     public int getDefence() {
-        return this.defence;
+        if (this.rareItemProperty.getClass().equals(TreeStumpProperty.class)) {
+            return this.defence + 4;
+        } else {
+            return this.defence;
+        }
     }
 
     @Override
     public int getDefence(Enemy enemy) {
-        return this.defence;
+        return getDefence();
     }
 
     @Override

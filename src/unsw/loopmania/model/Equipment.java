@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Equipment extends Item {
 
+    public RareItemProperty rareItemProperty;
+
     /**
      * Constructor for Equipment
      */

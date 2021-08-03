@@ -6,6 +6,7 @@ import unsw.loopmania.model.Enemy;
 import unsw.loopmania.model.Equipment;
 import unsw.loopmania.model.Weapon;
 import unsw.loopmania.model.enemies.Vampire;
+import unsw.loopmania.model.rareitemproperty.AndurilProperty;
 
 /**
  * represents an equipped or unequipped sword in the backend world
@@ -31,15 +32,26 @@ public class Stake extends Equipment implements Weapon {
 
     @Override
     public int getAttack() {
-        return this.attack;
+        if (this.rareItemProperty.getClass().equals(AndurilProperty.class)) {
+            return 3 * this.attack;
+        } else {
+            return this.attack;
+        }
     }
 
     @Override
     public int getAttack(Enemy enemy) {
+        int attack;
         if (enemy instanceof Vampire) {
-            return this.attackToVampire;
+            attack = this.attackToVampire;
         } else {
-            return this.attack;
+            attack = this.attack;
+        }
+
+        if (this.rareItemProperty.getClass().equals(AndurilProperty.class)) {
+            return 3 * attack;
+        } else {
+            return attack;
         }
     }
 
