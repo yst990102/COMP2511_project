@@ -1547,12 +1547,28 @@ public class LoopManiaWorld {
             Item item;
             while (itemIterator.hasNext()) {
                 item = itemIterator.next();
-                if (item instanceof TheOneRing) {
-                    heroHasTheOneRing = true;
-                    item.destroy();
-                    itemIterator.remove();
-                    setDescription("You used a ring to revive!");
-                    character.setHP(300);
+                
+
+                if (this.modeStrategy instanceof ConfusionModeStrategy){
+                    if (item instanceof RareItem) {
+                        if ((RareItem)item instanceof TheOneRing || ((RareItem)item).subrareitem instanceof TheOneRing){
+                            heroHasTheOneRing = true;
+                            item.destroy();
+                            itemIterator.remove();
+                            setDescription("You used a ring to revive!");
+                            character.setHP(300);
+                            break;
+                        }
+                    }
+                }else{
+                    if (item instanceof TheOneRing) {
+                        heroHasTheOneRing = true;
+                        item.destroy();
+                        itemIterator.remove();
+                        setDescription("You used a ring to revive!");
+                        character.setHP(300);
+                        break;
+                    }
                 }
             }
             if (heroHasTheOneRing) {
