@@ -95,6 +95,7 @@ import unsw.loopmania.model.enemies.Vampire;
 import unsw.loopmania.model.enemies.Zombie;
 import unsw.loopmania.model.enemies.boss.Doggie;
 import unsw.loopmania.model.enemies.boss.ElanMuske;
+import unsw.loopmania.strategy.ConfusionModeStrategy;
 import unsw.loopmania.strategy.ModeStrategy;
 import unsw.loopmania.controller.LoopManiaWorldLoader.MAP_TYPE;
 import unsw.loopmania.model.goal.GoalComposite;
@@ -104,8 +105,8 @@ import unsw.loopmania.model.goal.GoalComposite;
  * This is so we can see what type is being dragged.
  */
 enum DRAGGABLE_TYPE {
-    CARD, ITEM, VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD,
-    SWORD, STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING, ANDURIL, TREESTUMP, DOGGIECOIN
+    VAMPIRE_CASTLE_CARD, ZOMBIE_PIT_CARD, TOWER_CARD, VILLAGE_CARD, BARRACKS_CARD, TRAP_CARD, CAMPFIRE_CARD, SWORD,
+    STAKE, STAFF, ARMOUR, SHIELD, HELMET, GOLD, HEALTH_POTION, THE_ONE_RING, ANDURIL, TREESTUMP, DOGGIECOIN
 }
 
 enum CLICKABLE_TYPE {
@@ -324,7 +325,7 @@ public class LoopManiaWorldController {
     /**
      * null if nothing being dragged, or the type of item being dragged
      */
-    private DRAGGABLE_TYPE currentlyDraggedType;
+    private List<DRAGGABLE_TYPE> currentlyDraggedType;
 
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
@@ -440,7 +441,7 @@ public class LoopManiaWorldController {
         fightEffectView = new ImageView(fightEffectImage);
 
         currentlyDraggedImage = null;
-        currentlyDraggedType = null;
+        currentlyDraggedType = new ArrayList<DRAGGABLE_TYPE>();
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -453,7 +454,7 @@ public class LoopManiaWorldController {
     @FXML
     void handleRestartButtonClick() throws FileNotFoundException {
         this.getWolrd().ResetWorldData(this.world.getWidth(), this.world.getHeight(), this.world.getOrderedPath(),
-        this.world.getGoalObject());
+                this.world.getGoalObject());
         goalIcon.setImage(new Image((new File("src/assets/cross.png")).toURI().toString()));
 
         cards.getChildren().clear();
@@ -496,7 +497,6 @@ public class LoopManiaWorldController {
             }
         }
     }
-
 
     @FXML
     public void initialize() {
@@ -691,7 +691,7 @@ public class LoopManiaWorldController {
             droppedPotion_amount--;
         }
 
-        if (IfRareItemDropped == 0) {
+        if (IfRareItemDropped <= 20) {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
@@ -726,25 +726,25 @@ public class LoopManiaWorldController {
 
         if (card.getClass().equals(VampireCastleCard.class)) {
             view = new ImageView(vampireCastleCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.VAMPIRE_CASTLE_CARD, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.VAMPIRE_CASTLE_CARD);}}, cards, squares);
         } else if (card.getClass().equals(ZombiePitCard.class)) {
             view = new ImageView(zombiePitCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.ZOMBIE_PIT_CARD, cards, squares);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.ZOMBIE_PIT_CARD);}}, cards, squares);
         } else if (card.getClass().equals(TowerCard.class)) {
             view = new ImageView(towerCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.TOWER_CARD, cards, squares);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.TOWER_CARD);}}, cards, squares);
         } else if (card.getClass().equals(VillageCard.class)) {
             view = new ImageView(villageCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.VILLAGE_CARD, cards, squares);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.VILLAGE_CARD);}}, cards, squares);
         } else if (card.getClass().equals(BarracksCard.class)) {
             view = new ImageView(barracksCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.BARRACKS_CARD, cards, squares);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.BARRACKS_CARD);}}, cards, squares);
         } else if (card.getClass().equals(TrapCard.class)) {
             view = new ImageView(trapCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.TRAP_CARD, cards, squares);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.TRAP_CARD);}}, cards, squares);
         } else if (card.getClass().equals(CampfireCard.class)) {
             view = new ImageView(campfireCardImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.CAMPFIRE_CARD, cards, squares);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.CAMPFIRE_CARD);}}, cards, squares);
         } else {
             view = new ImageView();
         }
@@ -790,22 +790,22 @@ public class LoopManiaWorldController {
 
         if (equipment.getClass().equals(BasicHelmet.class)) {
             view = new ImageView(helmetImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.HELMET);}}, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicShield.class)) {
             view = new ImageView(shieldImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.SHIELD);}}, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicArmour.class)) {
             view = new ImageView(armourImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.ARMOUR, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.ARMOUR);}}, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Sword.class)) {
             view = new ImageView(swordImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.SWORD, unequippedInventory, equippedItems);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.SWORD);}}, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Stake.class)) {
             view = new ImageView(stakeImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.STAKE);}}, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Staff.class)) {
             view = new ImageView(staffImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.STAFF, unequippedInventory, equippedItems);
+            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.STAFF);}}, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
         }
@@ -832,23 +832,45 @@ public class LoopManiaWorldController {
             view = new ImageView(healthPotionImage);
             view.setCursor(Cursor.HAND);
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
-        } else if (item.getClass().equals(TheOneRing.class)) {
-            view = new ImageView(theOneRingImage);
-        } else if (item.getClass().equals(Anduril.class)) {
-            view = new ImageView(andurilImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.ANDURIL, unequippedInventory, equippedItems);
-        } else if (item.getClass().equals(TreeStump.class)) {
-            view = new ImageView(treeStumpImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.TREESTUMP, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(DoggieCoin.class)) {
             view = new ImageView(doggieCoinImage);
-            addDragEventHandlers(view, DRAGGABLE_TYPE.DOGGIECOIN, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.DOGGIECOIN);}}, unequippedInventory, equippedItems);
+        } else if (item instanceof RareItem) {
+            Pair<RareItem, RareItem> itemProperty = RareItemProperty((RareItem) item);
+            List<DRAGGABLE_TYPE> draggable_types = new ArrayList<>();
+
+            if (itemProperty.getValue0().getClass().equals(TheOneRing.class)) {
+                view = new ImageView(theOneRingImage);
+            } else if (itemProperty.getValue0().getClass().equals(Anduril.class)) {
+                view = new ImageView(andurilImage);
+                draggable_types.add(DRAGGABLE_TYPE.ANDURIL);
+            } else if (itemProperty.getValue0().getClass().equals(TreeStump.class)) {
+                view = new ImageView(treeStumpImage);
+                draggable_types.add(DRAGGABLE_TYPE.TREESTUMP);
+            } else {
+                view = new ImageView();
+            }
+
+            if (this.getModeStrategy() instanceof ConfusionModeStrategy){
+                if (itemProperty.getValue1().getClass().equals(Anduril.class)) {
+                    draggable_types.add(DRAGGABLE_TYPE.ANDURIL);
+                } else if (itemProperty.getValue1().getClass().equals(TreeStump.class)) {
+                    draggable_types.add(DRAGGABLE_TYPE.TREESTUMP);
+                }
+            }
+
+            addDragEventHandlers(view, draggable_types, unequippedInventory, equippedItems);
+
         } else {
             view = new ImageView();
         }
 
         addEntity(item, view);
         unequippedInventory.getChildren().add(view);
+    }
+
+    public Pair<RareItem, RareItem> RareItemProperty(RareItem rareItem) {
+        return new Pair<>(rareItem, rareItem.subrareitem);
     }
 
     /**
@@ -920,7 +942,13 @@ public class LoopManiaWorldController {
                  * store the last valid drop location!)
                  */
 
-                if (currentlyDraggedType == draggableType) {
+                System.out.println("============================================");
+                System.out.println("targetGridPane:" + targetGridPane);
+                System.out.println("draggableType:" + draggableType.toString());
+                System.out.println("currentlyDraggedType:" + currentlyDraggedType.toString());
+                System.out.println("============================================");
+
+                if (currentlyDraggedType.contains(draggableType)) {
                     // problem = event is drop completed is false when should be true...
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
                     // putting drop completed at start not making complete on VLAB...
@@ -1155,7 +1183,7 @@ public class LoopManiaWorldController {
             // https://github.com/joelgraff/java_fx_node_link_demo/blob/master/Draggable_Node/DraggableNodeDemo/src/application/RootLayout.java#L110
             @Override
             public void handle(DragEvent event) {
-                if (currentlyDraggedType == draggableType) {
+                if (currentlyDraggedType.contains(draggableType)) {
                     if (event.getGestureSource() != anchorPaneRoot && event.getDragboard().hasImage()) {
                         event.acceptTransferModes(TransferMode.MOVE);
                     }
@@ -1171,7 +1199,7 @@ public class LoopManiaWorldController {
         // dropping over GridPanes, we consume the event
         anchorPaneRootSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                if (currentlyDraggedType == draggableType) {
+                if (currentlyDraggedType.contains(draggableType)) {
                     // Data dropped
                     // If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
@@ -1236,13 +1264,13 @@ public class LoopManiaWorldController {
      * @param targetGridPane the relevant gridpane to which the entity would be
      *                       dragged to
      */
-    private void addDragEventHandlers(ImageView view, DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
+    private void addDragEventHandlers(ImageView view, List<DRAGGABLE_TYPE> draggableTypes, GridPane sourceGridPane,
             GridPane targetGridPane) {
         view.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can
                                               // detect it...
-                currentlyDraggedType = draggableType;
+                currentlyDraggedType = draggableTypes;
                 // Drag was detected, start drap-and-drop gesture
                 // Allow any transfer node
                 Dragboard db = view.startDragAndDrop(TransferMode.MOVE);
@@ -1253,184 +1281,188 @@ public class LoopManiaWorldController {
                 db.setContent(cbContent);
                 view.setVisible(false);
 
-                buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane, view);
+                for (DRAGGABLE_TYPE draggableType : draggableTypes) {
+                    buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane, view);
 
-                draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
-                switch (draggableType) {
-                case CARD:
-                    draggedEntity.setImage(vampireCastleCardImage);
-                    break;
-                case ITEM:
-                    draggedEntity.setImage(swordImage);
-                    break;
-                case VAMPIRE_CASTLE_CARD:
-                    draggedEntity.setImage(vampireCastleCardImage);
-                    break;
-                case ZOMBIE_PIT_CARD:
-                    draggedEntity.setImage(zombiePitCardImage);
-                    break;
-                case TOWER_CARD:
-                    draggedEntity.setImage(towerCardImage);
-                    break;
-                case VILLAGE_CARD:
-                    draggedEntity.setImage(villageCardImage);
-                    break;
-                case BARRACKS_CARD:
-                    draggedEntity.setImage(barracksCardImage);
-                    break;
-                case TRAP_CARD:
-                    draggedEntity.setImage(trapCardImage);
-                    break;
-                case CAMPFIRE_CARD:
-                    draggedEntity.setImage(campfireCardImage);
-                    break;
-                case SWORD:
-                    draggedEntity.setImage(swordImage);
-                    break;
-                case STAKE:
-                    draggedEntity.setImage(stakeImage);
-                    break;
-                case STAFF:
-                    draggedEntity.setImage(staffImage);
-                    break;
-                case ARMOUR:
-                    draggedEntity.setImage(armourImage);
-                    break;
-                case SHIELD:
-                    draggedEntity.setImage(shieldImage);
-                    break;
-                case HELMET:
-                    draggedEntity.setImage(helmetImage);
-                    break;
-                default:
-                    break;
-                }
+                    draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+                    switch (draggableType) {
+                    case VAMPIRE_CASTLE_CARD:
+                        draggedEntity.setImage(vampireCastleCardImage);
+                        break;
+                    case ZOMBIE_PIT_CARD:
+                        draggedEntity.setImage(zombiePitCardImage);
+                        break;
+                    case TOWER_CARD:
+                        draggedEntity.setImage(towerCardImage);
+                        break;
+                    case VILLAGE_CARD:
+                        draggedEntity.setImage(villageCardImage);
+                        break;
+                    case BARRACKS_CARD:
+                        draggedEntity.setImage(barracksCardImage);
+                        break;
+                    case TRAP_CARD:
+                        draggedEntity.setImage(trapCardImage);
+                        break;
+                    case CAMPFIRE_CARD:
+                        draggedEntity.setImage(campfireCardImage);
+                        break;
+                    case SWORD:
+                        draggedEntity.setImage(swordImage);
+                        break;
+                    case STAKE:
+                        draggedEntity.setImage(stakeImage);
+                        break;
+                    case STAFF:
+                        draggedEntity.setImage(staffImage);
+                        break;
+                    case ARMOUR:
+                        draggedEntity.setImage(armourImage);
+                        break;
+                    case SHIELD:
+                        draggedEntity.setImage(shieldImage);
+                        break;
+                    case HELMET:
+                        draggedEntity.setImage(helmetImage);
+                        break;
+                    case ANDURIL:
+                        draggedEntity.setImage(andurilImage);
+                        break;
+                    case TREESTUMP:
+                        draggedEntity.setImage(treeStumpImage);
+                        break;
+                    default:
+                        break;
+                    }
 
-                draggedEntity.setVisible(true);
-                draggedEntity.setMouseTransparent(true);
-                draggedEntity.toFront();
+                    draggedEntity.setVisible(true);
+                    draggedEntity.setMouseTransparent(true);
+                    draggedEntity.toFront();
 
-                // IMPORTANT!!!
-                // to be able to remove event handlers, need to use addEventHandler
-                // https://stackoverflow.com/a/67283792
-                targetGridPane.addEventHandler(DragEvent.DRAG_DROPPED, gridPaneSetOnDragDropped.get(draggableType));
-                anchorPaneRoot.addEventHandler(DragEvent.DRAG_OVER, anchorPaneRootSetOnDragOver.get(draggableType));
-                anchorPaneRoot.addEventHandler(DragEvent.DRAG_DROPPED,
-                        anchorPaneRootSetOnDragDropped.get(draggableType));
+                    // IMPORTANT!!!
+                    // to be able to remove event handlers, need to use addEventHandler
+                    // https://stackoverflow.com/a/67283792
+                    targetGridPane.addEventHandler(DragEvent.DRAG_DROPPED, gridPaneSetOnDragDropped.get(draggableType));
+                    anchorPaneRoot.addEventHandler(DragEvent.DRAG_OVER, anchorPaneRootSetOnDragOver.get(draggableType));
+                    anchorPaneRoot.addEventHandler(DragEvent.DRAG_DROPPED,
+                            anchorPaneRootSetOnDragDropped.get(draggableType));
 
-                for (Node n : targetGridPane.getChildren()) {
-                    // events for entering and exiting are attached to squares children because that
-                    // impacts opacity change
-                    // these do not affect visibility of original image...
-                    // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
-                    gridPaneNodeSetOnDragEntered.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = be more selective about whether highlighting changes - if it cannot be
-                        // dropped in the location, the location shouldn't be highlighted!
-                        public void handle(DragEvent event) {
-                            if (currentlyDraggedType == draggableType) {
-                                Integer cIndex = GridPane.getColumnIndex(n);
-                                Integer rIndex = GridPane.getRowIndex(n);
-                                int targetX = cIndex == null ? 0 : cIndex;
-                                int targetY = rIndex == null ? 0 : rIndex;
-                                Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(targetX),
-                                        Integer.valueOf(targetY));
-                                boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true
-                                        : false;
-                                boolean targetPosInHelmetSlot = targetX == 1 && targetY == 0 ? true : false;
-                                boolean targetPosInSwordSlot = targetX == 0 && targetY == 1 ? true : false;
-                                boolean targetPosInArmourSlot = targetX == 1 && targetY == 1 ? true : false;
-                                boolean targetPosInShieldSlot = targetX == 2 && targetY == 1 ? true : false;
+                    for (Node n : targetGridPane.getChildren()) {
+                        // events for entering and exiting are attached to squares children because that
+                        // impacts opacity change
+                        // these do not affect visibility of original image...
+                        // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
+                        gridPaneNodeSetOnDragEntered.put(draggableType, new EventHandler<DragEvent>() {
+                            // TODO = be more selective about whether highlighting changes - if it cannot be
+                            // dropped in the location, the location shouldn't be highlighted!
+                            public void handle(DragEvent event) {
+                                if (currentlyDraggedType.contains(draggableType)) {
+                                    Integer cIndex = GridPane.getColumnIndex(n);
+                                    Integer rIndex = GridPane.getRowIndex(n);
+                                    int targetX = cIndex == null ? 0 : cIndex;
+                                    int targetY = rIndex == null ? 0 : rIndex;
+                                    Pair<Integer, Integer> targetPos = new Pair<>(Integer.valueOf(targetX),
+                                            Integer.valueOf(targetY));
+                                    boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true
+                                            : false;
+                                    boolean targetPosInHelmetSlot = targetX == 1 && targetY == 0 ? true : false;
+                                    boolean targetPosInSwordSlot = targetX == 0 && targetY == 1 ? true : false;
+                                    boolean targetPosInArmourSlot = targetX == 1 && targetY == 1 ? true : false;
+                                    boolean targetPosInShieldSlot = targetX == 2 && targetY == 1 ? true : false;
 
-                                if (event.getGestureSource() != n && event.getDragboard().hasImage()) {
-                                    switch (draggableType) {
-                                    case VAMPIRE_CASTLE_CARD:
-                                        if (!targetPosInPath) {
-                                            n.setOpacity(0.7);
+                                    if (event.getGestureSource() != n && event.getDragboard().hasImage()) {
+                                        switch (draggableType) {
+                                        case VAMPIRE_CASTLE_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case ZOMBIE_PIT_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case TOWER_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case VILLAGE_CARD:
+                                            if (targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case BARRACKS_CARD:
+                                            if (targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case TRAP_CARD:
+                                            if (targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case CAMPFIRE_CARD:
+                                            if (!targetPosInPath) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case SWORD:
+                                            if (targetPosInSwordSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case STAKE:
+                                            if (targetPosInSwordSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case STAFF:
+                                            if (targetPosInSwordSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case ARMOUR:
+                                            if (targetPosInArmourSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case SHIELD:
+                                            if (targetPosInShieldSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case HELMET:
+                                            if (targetPosInHelmetSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        default:
+                                            break;
                                         }
-                                        break;
-                                    case ZOMBIE_PIT_CARD:
-                                        if (!targetPosInPath) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case TOWER_CARD:
-                                        if (!targetPosInPath) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case VILLAGE_CARD:
-                                        if (targetPosInPath) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case BARRACKS_CARD:
-                                        if (targetPosInPath) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case TRAP_CARD:
-                                        if (targetPosInPath) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case CAMPFIRE_CARD:
-                                        if (!targetPosInPath) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case SWORD:
-                                        if (targetPosInSwordSlot) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case STAKE:
-                                        if (targetPosInSwordSlot) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case STAFF:
-                                        if (targetPosInSwordSlot) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case ARMOUR:
-                                        if (targetPosInArmourSlot) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case SHIELD:
-                                        if (targetPosInShieldSlot) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    case HELMET:
-                                        if (targetPosInHelmetSlot) {
-                                            n.setOpacity(0.7);
-                                        }
-                                        break;
-                                    default:
-                                        break;
                                     }
                                 }
+                                event.consume();
                             }
-                            event.consume();
-                        }
-                    });
-                    gridPaneNodeSetOnDragExited.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = since being more selective about whether highlighting changes, you
-                        // could program the game so if the new highlight location is invalid the
-                        // highlighting doesn't change, or leave this as-is
-                        public void handle(DragEvent event) {
-                            if (currentlyDraggedType == draggableType) {
-                                n.setOpacity(1);
-                            }
+                        });
+                        gridPaneNodeSetOnDragExited.put(draggableType, new EventHandler<DragEvent>() {
+                            // TODO = since being more selective about whether highlighting changes, you
+                            // could program the game so if the new highlight location is invalid the
+                            // highlighting doesn't change, or leave this as-is
+                            public void handle(DragEvent event) {
+                                if (currentlyDraggedType.contains(draggableType)) {
+                                    n.setOpacity(1);
+                                }
 
-                            event.consume();
-                        }
-                    });
-                    n.addEventHandler(DragEvent.DRAG_ENTERED, gridPaneNodeSetOnDragEntered.get(draggableType));
-                    n.addEventHandler(DragEvent.DRAG_EXITED, gridPaneNodeSetOnDragExited.get(draggableType));
+                                event.consume();
+                            }
+                        });
+                        n.addEventHandler(DragEvent.DRAG_ENTERED, gridPaneNodeSetOnDragEntered.get(draggableType));
+                        n.addEventHandler(DragEvent.DRAG_EXITED, gridPaneNodeSetOnDragExited.get(draggableType));
+                    }
+
                 }
+
                 event.consume();
             }
 
@@ -1627,17 +1659,17 @@ public class LoopManiaWorldController {
 
     public void buyItemFromStore(Item item, ImageView view, int price) {
         if (item.getClass().equals(BasicHelmet.class)) {
-            addDragEventHandlers(view, DRAGGABLE_TYPE.HELMET, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.HELMET);}}, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(BasicShield.class)) {
-            addDragEventHandlers(view, DRAGGABLE_TYPE.SHIELD, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.SHIELD);}}, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(BasicArmour.class)) {
-            addDragEventHandlers(view, DRAGGABLE_TYPE.ARMOUR, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.ARMOUR);}}, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(Sword.class)) {
-            addDragEventHandlers(view, DRAGGABLE_TYPE.SWORD, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.SWORD);}}, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(Stake.class)) {
-            addDragEventHandlers(view, DRAGGABLE_TYPE.STAKE, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.STAKE);}}, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(Staff.class)) {
-            addDragEventHandlers(view, DRAGGABLE_TYPE.STAFF, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.STAFF);}}, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(HealthPotion.class)) {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
@@ -2095,7 +2127,7 @@ public class LoopManiaWorldController {
             if (squares.getChildren().contains(fightEffectView)) {
                 squares.getChildren().remove(fightEffectView);
             }
-        }     
+        }
     }
 
     /**

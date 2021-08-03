@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class RareItem extends Item {
 
+    public RareItem subrareitem;
+
     /**
      * Constructor for RareItem
      */

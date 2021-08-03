@@ -50,6 +50,7 @@ import unsw.loopmania.model.cards.VillageCard;
 import unsw.loopmania.model.cards.BarracksCard;
 import unsw.loopmania.model.cards.TrapCard;
 import unsw.loopmania.model.cards.CampfireCard;
+import unsw.loopmania.strategy.ConfusionModeStrategy;
 import unsw.loopmania.strategy.ModeStrategy;
 
 /**
@@ -923,6 +924,29 @@ public class LoopManiaWorld {
                     new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
             break;
         }
+
+        if (this.modeStrategy instanceof ConfusionModeStrategy){
+            int randint2 = (randint + 1) % 3 ;
+
+            switch (randint2) {
+            case 1:
+                dropped_item.subrareitem = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            case 0:
+                dropped_item.subrareitem = new Anduril(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+
+            default:
+                dropped_item.subrareitem = new TreeStump(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                        new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+                break;
+            }
+        }
+
+        System.out.println("RareItem added : " + dropped_item.getClass().getSimpleName() + " ---- "
+                + ((dropped_item.subrareitem == null) ? "null" : dropped_item.subrareitem.getClass().getSimpleName()));
 
         unequippedInventoryItems.add(dropped_item);
         return dropped_item;
