@@ -1182,8 +1182,8 @@ public class LoopManiaWorldController {
                             break;
 
                         case ANDURIL:
-                            if (world.getModeStrategy() instanceof ConfusionModeStrategy){
-                                if (targetPosInShieldSlot){
+                            if (world.getModeStrategy() instanceof ConfusionModeStrategy) {
+                                if (targetPosInShieldSlot) {
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
                                     targetGridPane.add(silverBackground, x, y, 1, 1);
@@ -1192,17 +1192,17 @@ public class LoopManiaWorldController {
                                             new SimpleIntegerProperty(0));
                                     world.getCharacter().setDressedShield(treeStump);
                                     updateCharacterDescription();
-                                }else if (targetPosInWeaponSlot){
+                                } else if (targetPosInWeaponSlot) {
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
                                     targetGridPane.add(silverBackground, x, y, 1, 1);
                                     targetGridPane.add(image, x, y, 1, 1);
                                     Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
-                                                new SimpleIntegerProperty(0));
+                                            new SimpleIntegerProperty(0));
                                     world.getCharacter().setDressedWeapon(anduril);
                                     updateCharacterDescription();
-                                }                                
-                            }else{
+                                }
+                            } else {
                                 if (targetPosInWeaponSlot) {
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
@@ -1216,7 +1216,7 @@ public class LoopManiaWorldController {
                                     view.setVisible(true);
                                 }
                             }
-                            
+
                             break;
 
                         case TREESTUMP:
