@@ -325,7 +325,7 @@ public class LoopManiaWorldController {
     /**
      * null if nothing being dragged, or the type of item being dragged
      */
-    private List<DRAGGABLE_TYPE> currentlyDraggedType;
+    private DRAGGABLE_TYPE currentlyDraggedType;
 
     /**
      * mapping from draggable type enum CARD/TYPE to the event handler triggered
@@ -441,7 +441,7 @@ public class LoopManiaWorldController {
         fightEffectView = new ImageView(fightEffectImage);
 
         currentlyDraggedImage = null;
-        currentlyDraggedType = new ArrayList<DRAGGABLE_TYPE>();
+        currentlyDraggedType = null;
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -726,25 +726,53 @@ public class LoopManiaWorldController {
 
         if (card.getClass().equals(VampireCastleCard.class)) {
             view = new ImageView(vampireCastleCardImage);
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.VAMPIRE_CASTLE_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.VAMPIRE_CASTLE_CARD);
+                }
+            }, cards, squares);
         } else if (card.getClass().equals(ZombiePitCard.class)) {
             view = new ImageView(zombiePitCardImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.ZOMBIE_PIT_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.ZOMBIE_PIT_CARD);
+                }
+            }, cards, squares);
         } else if (card.getClass().equals(TowerCard.class)) {
             view = new ImageView(towerCardImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.TOWER_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.TOWER_CARD);
+                }
+            }, cards, squares);
         } else if (card.getClass().equals(VillageCard.class)) {
             view = new ImageView(villageCardImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.VILLAGE_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.VILLAGE_CARD);
+                }
+            }, cards, squares);
         } else if (card.getClass().equals(BarracksCard.class)) {
             view = new ImageView(barracksCardImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.BARRACKS_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.BARRACKS_CARD);
+                }
+            }, cards, squares);
         } else if (card.getClass().equals(TrapCard.class)) {
             view = new ImageView(trapCardImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.TRAP_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.TRAP_CARD);
+                }
+            }, cards, squares);
         } else if (card.getClass().equals(CampfireCard.class)) {
             view = new ImageView(campfireCardImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.CAMPFIRE_CARD);}}, cards, squares);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.CAMPFIRE_CARD);
+                }
+            }, cards, squares);
         } else {
             view = new ImageView();
         }
@@ -790,22 +818,46 @@ public class LoopManiaWorldController {
 
         if (equipment.getClass().equals(BasicHelmet.class)) {
             view = new ImageView(helmetImage);
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.HELMET);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.HELMET);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicShield.class)) {
             view = new ImageView(shieldImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.SHIELD);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.SHIELD);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(BasicArmour.class)) {
             view = new ImageView(armourImage);
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.ARMOUR);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.ARMOUR);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Sword.class)) {
             view = new ImageView(swordImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.SWORD);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.SWORD);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Stake.class)) {
             view = new ImageView(stakeImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.STAKE);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.STAKE);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (equipment.getClass().equals(Staff.class)) {
             view = new ImageView(staffImage);
-            addDragEventHandlers(view,  new ArrayList<>(){{add(DRAGGABLE_TYPE.STAFF);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.STAFF);
+                }
+            }, unequippedInventory, equippedItems);
         } else {
             view = new ImageView();
         }
@@ -834,7 +886,11 @@ public class LoopManiaWorldController {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
         } else if (item.getClass().equals(DoggieCoin.class)) {
             view = new ImageView(doggieCoinImage);
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.DOGGIECOIN);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.DOGGIECOIN);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item instanceof RareItem) {
             Pair<RareItem, RareItem> itemProperty = RareItemProperty((RareItem) item);
             List<DRAGGABLE_TYPE> draggable_types = new ArrayList<>();
@@ -851,7 +907,7 @@ public class LoopManiaWorldController {
                 view = new ImageView();
             }
 
-            if (this.getModeStrategy() instanceof ConfusionModeStrategy){
+            if (this.getModeStrategy() instanceof ConfusionModeStrategy) {
                 if (itemProperty.getValue1().getClass().equals(Anduril.class)) {
                     draggable_types.add(DRAGGABLE_TYPE.ANDURIL);
                 } else if (itemProperty.getValue1().getClass().equals(TreeStump.class)) {
@@ -925,8 +981,8 @@ public class LoopManiaWorldController {
      * @param targetGridPane the gridpane the human player should be dragging to
      *                       (but we of course cannot guarantee they will do so)
      */
-    private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane,
-            GridPane targetGridPane, ImageView view) {
+    private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, List<DRAGGABLE_TYPE> draggableTypes,
+            GridPane sourceGridPane, GridPane targetGridPane, ImageView view) {
         // TODO = be more selective about where something can be dropped
         // for example, in the specification, villages can only be dropped on path,
         // whilst vampire castles cannot go on the path
@@ -948,7 +1004,7 @@ public class LoopManiaWorldController {
                 System.out.println("currentlyDraggedType:" + currentlyDraggedType.toString());
                 System.out.println("============================================");
 
-                if (currentlyDraggedType.contains(draggableType)) {
+                if (currentlyDraggedType == draggableType) {
                     // problem = event is drop completed is false when should be true...
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
                     // putting drop completed at start not making complete on VLAB...
@@ -1126,18 +1182,41 @@ public class LoopManiaWorldController {
                             break;
 
                         case ANDURIL:
-                            if (targetPosInWeaponSlot) {
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                removeItemByCoordinates(nodeX, nodeY);
-                                targetGridPane.add(silverBackground, x, y, 1, 1);
-                                targetGridPane.add(image, x, y, 1, 1);
-                                Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
-                                        new SimpleIntegerProperty(0));
-                                world.getCharacter().setDressedWeapon(anduril);
-                                updateCharacterDescription();
-                            } else {
-                                view.setVisible(true);
+                            if (world.getModeStrategy().getClass().equals(ConfusionModeStrategy.class)){
+                                if (targetPosInShieldSlot){
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                    TreeStump treeStump = new TreeStump(new SimpleIntegerProperty(0),
+                                            new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedShield(treeStump);
+                                    updateCharacterDescription();
+                                }else if (targetPosInWeaponSlot){
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                    Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
+                                                new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedWeapon(anduril);
+                                    updateCharacterDescription();
+                                }                                
+                            }else{
+                                if (targetPosInWeaponSlot) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    removeItemByCoordinates(nodeX, nodeY);
+                                    targetGridPane.add(silverBackground, x, y, 1, 1);
+                                    targetGridPane.add(image, x, y, 1, 1);
+                                    Anduril anduril = new Anduril(new SimpleIntegerProperty(0),
+                                            new SimpleIntegerProperty(0));
+                                    world.getCharacter().setDressedWeapon(anduril);
+                                    updateCharacterDescription();
+                                } else {
+                                    view.setVisible(true);
+                                }
                             }
+                            
                             break;
 
                         case TREESTUMP:
@@ -1153,6 +1232,7 @@ public class LoopManiaWorldController {
                             } else {
                                 view.setVisible(true);
                             }
+
                             break;
                         default:
                             break;
@@ -1167,6 +1247,9 @@ public class LoopManiaWorldController {
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
+
+                draggableTypes.clear();
+
                 event.setDropCompleted(true);
                 // consuming prevents the propagation of the event to the anchorPaneRoot (as a
                 // sub-node of anchorPaneRoot, GridPane is prioritized)
@@ -1183,7 +1266,7 @@ public class LoopManiaWorldController {
             // https://github.com/joelgraff/java_fx_node_link_demo/blob/master/Draggable_Node/DraggableNodeDemo/src/application/RootLayout.java#L110
             @Override
             public void handle(DragEvent event) {
-                if (currentlyDraggedType.contains(draggableType)) {
+                if (currentlyDraggedType == draggableType) {
                     if (event.getGestureSource() != anchorPaneRoot && event.getDragboard().hasImage()) {
                         event.acceptTransferModes(TransferMode.MOVE);
                     }
@@ -1199,7 +1282,7 @@ public class LoopManiaWorldController {
         // dropping over GridPanes, we consume the event
         anchorPaneRootSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                if (currentlyDraggedType.contains(draggableType)) {
+                if (currentlyDraggedType == draggableType) {
                     // Data dropped
                     // If there is an image on the dragboard, read it and use it
                     Dragboard db = event.getDragboard();
@@ -1268,21 +1351,23 @@ public class LoopManiaWorldController {
             GridPane targetGridPane) {
         view.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can
-                                              // detect it...
-                currentlyDraggedType = draggableTypes;
-                // Drag was detected, start drap-and-drop gesture
-                // Allow any transfer node
-                Dragboard db = view.startDragAndDrop(TransferMode.MOVE);
-
-                // Put ImageView on dragboard
-                ClipboardContent cbContent = new ClipboardContent();
-                cbContent.putImage(view.getImage());
-                db.setContent(cbContent);
-                view.setVisible(false);
-
                 for (DRAGGABLE_TYPE draggableType : draggableTypes) {
-                    buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane, view);
+                    currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can
+                                                  // detect it...
+                    currentlyDraggedType = draggableType;
+                    System.out.println("2511 fuck u1 : currentlyDraggedType == " + currentlyDraggedType);
+                    System.out.println("2511 fuck u2 : draggableTypes == " + draggableTypes);
+                    // Drag was detected, start drap-and-drop gesture
+                    // Allow any transfer node
+                    Dragboard db = view.startDragAndDrop(TransferMode.MOVE);
+
+                    // Put ImageView on dragboard
+                    ClipboardContent cbContent = new ClipboardContent();
+                    cbContent.putImage(view.getImage());
+                    db.setContent(cbContent);
+                    view.setVisible(false);
+
+                    buildNonEntityDragHandlers(draggableType, draggableTypes, sourceGridPane, targetGridPane, view);
 
                     draggedEntity.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
                     switch (draggableType) {
@@ -1356,7 +1441,7 @@ public class LoopManiaWorldController {
                             // TODO = be more selective about whether highlighting changes - if it cannot be
                             // dropped in the location, the location shouldn't be highlighted!
                             public void handle(DragEvent event) {
-                                if (currentlyDraggedType.contains(draggableType)) {
+                                if (draggableTypes.contains(currentlyDraggedType)) {
                                     Integer cIndex = GridPane.getColumnIndex(n);
                                     Integer rIndex = GridPane.getRowIndex(n);
                                     int targetX = cIndex == null ? 0 : cIndex;
@@ -1366,7 +1451,7 @@ public class LoopManiaWorldController {
                                     boolean targetPosInPath = world.getOrderedPath().indexOf(targetPos) != -1 ? true
                                             : false;
                                     boolean targetPosInHelmetSlot = targetX == 1 && targetY == 0 ? true : false;
-                                    boolean targetPosInSwordSlot = targetX == 0 && targetY == 1 ? true : false;
+                                    boolean targetPosInWeaponSlot = targetX == 0 && targetY == 1 ? true : false;
                                     boolean targetPosInArmourSlot = targetX == 1 && targetY == 1 ? true : false;
                                     boolean targetPosInShieldSlot = targetX == 2 && targetY == 1 ? true : false;
 
@@ -1408,17 +1493,17 @@ public class LoopManiaWorldController {
                                             }
                                             break;
                                         case SWORD:
-                                            if (targetPosInSwordSlot) {
+                                            if (targetPosInWeaponSlot) {
                                                 n.setOpacity(0.7);
                                             }
                                             break;
                                         case STAKE:
-                                            if (targetPosInSwordSlot) {
+                                            if (targetPosInWeaponSlot) {
                                                 n.setOpacity(0.7);
                                             }
                                             break;
                                         case STAFF:
-                                            if (targetPosInSwordSlot) {
+                                            if (targetPosInWeaponSlot) {
                                                 n.setOpacity(0.7);
                                             }
                                             break;
@@ -1437,6 +1522,16 @@ public class LoopManiaWorldController {
                                                 n.setOpacity(0.7);
                                             }
                                             break;
+                                        case ANDURIL:
+                                            if (targetPosInWeaponSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
+                                        case TREESTUMP:
+                                            if (targetPosInShieldSlot) {
+                                                n.setOpacity(0.7);
+                                            }
+                                            break;
                                         default:
                                             break;
                                         }
@@ -1450,7 +1545,7 @@ public class LoopManiaWorldController {
                             // could program the game so if the new highlight location is invalid the
                             // highlighting doesn't change, or leave this as-is
                             public void handle(DragEvent event) {
-                                if (currentlyDraggedType.contains(draggableType)) {
+                                if (draggableTypes.contains(currentlyDraggedType)) {
                                     n.setOpacity(1);
                                 }
 
@@ -1659,17 +1754,41 @@ public class LoopManiaWorldController {
 
     public void buyItemFromStore(Item item, ImageView view, int price) {
         if (item.getClass().equals(BasicHelmet.class)) {
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.HELMET);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.HELMET);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(BasicShield.class)) {
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.SHIELD);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.SHIELD);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(BasicArmour.class)) {
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.ARMOUR);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.ARMOUR);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(Sword.class)) {
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.SWORD);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.SWORD);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(Stake.class)) {
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.STAKE);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.STAKE);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(Staff.class)) {
-            addDragEventHandlers(view, new ArrayList<>(){{add(DRAGGABLE_TYPE.STAFF);}}, unequippedInventory, equippedItems);
+            addDragEventHandlers(view, new ArrayList<>() {
+                {
+                    add(DRAGGABLE_TYPE.STAFF);
+                }
+            }, unequippedInventory, equippedItems);
         } else if (item.getClass().equals(HealthPotion.class)) {
             addClickEventHandlers(view, CLICKABLE_TYPE.HEALTH_POTION);
             view.setCursor(Cursor.HAND);
