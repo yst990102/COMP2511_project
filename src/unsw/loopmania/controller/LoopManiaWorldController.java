@@ -1182,7 +1182,7 @@ public class LoopManiaWorldController {
                             break;
 
                         case ANDURIL:
-                            if (world.getModeStrategy().getClass().equals(ConfusionModeStrategy.class)){
+                            if (world.getModeStrategy() instanceof ConfusionModeStrategy){
                                 if (targetPosInShieldSlot){
                                     removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     removeItemByCoordinates(nodeX, nodeY);
