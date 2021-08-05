@@ -16,7 +16,7 @@ import unsw.loopmania.model.enemies.Boss;
 
 public class ElanMuske extends Boss {
 
-    public int treatment_amout = 10;
+    public static int treatment_amount = 3;
 
     public ElanMuske(PathPosition position) {
         super(position);

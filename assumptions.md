@@ -57,7 +57,7 @@ ElanMuske
 - Speed: 5
 - battle radius: 1
 - support radius: 1
-- treatment_amount: 10
+- treatment_amount: 3
 
 
 #### 3. There will be 5 slugs spawned randomly on path tiles each turn.

@@ -660,6 +660,12 @@ public class LoopManiaWorld {
                     writer.write(("Character died!!" + "\n\n").getBytes());
                     break;
                 }
+
+                if (hasMuskeSpawn && !hasMuskeKilled){
+                    enemy.setHP(enemy.getHP() + ElanMuske.treatment_amount);
+                    writer.write(("Muske healing !! + 3 hp\n").getBytes());
+                }
+
                 round_count--;
             }
 
