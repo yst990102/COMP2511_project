@@ -691,7 +691,7 @@ public class LoopManiaWorldController {
             droppedPotion_amount--;
         }
 
-        if (IfRareItemDropped <= 20) {
+        if (IfRareItemDropped == 20) {
             RareItem droppedRareItem = world.addRareItem();
             onLoad(droppedRareItem);
         }
@@ -1355,8 +1355,8 @@ public class LoopManiaWorldController {
                     currentlyDraggedImage = view; // set image currently being dragged, so squares setOnDragEntered can
                                                   // detect it...
                     currentlyDraggedType = draggableType;
-                    System.out.println("2511 fuck u1 : currentlyDraggedType == " + currentlyDraggedType);
-                    System.out.println("2511 fuck u2 : draggableTypes == " + draggableTypes);
+                    // System.out.println("2511 fuck u1 : currentlyDraggedType == " + currentlyDraggedType);
+                    // System.out.println("2511 fuck u2 : draggableTypes == " + draggableTypes);
                     // Drag was detected, start drap-and-drop gesture
                     // Allow any transfer node
                     Dragboard db = view.startDragAndDrop(TransferMode.MOVE);
