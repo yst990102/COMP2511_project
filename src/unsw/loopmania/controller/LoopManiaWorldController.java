@@ -460,7 +460,6 @@ public class LoopManiaWorldController {
         unequippedInventory.getChildren().clear();
         entityImages.clear();
         squares.getChildren().clear();
-        equippedItems.getChildren().clear();
         initialize(); // load card and equipment slot
         initialiseEquippedItemsPane();
         loadPath(path, mapType);
@@ -469,30 +468,27 @@ public class LoopManiaWorldController {
     }
 
     public void initialiseEquippedItemsPane() {
-        ImageView helmetslot = new ImageView(new Image(new File("src/assets/helmet_slot.png").toURI().toString()));
-        ImageView armourslot = new ImageView(new Image(new File("src/assets/armour_slot.png").toURI().toString()));
-        ImageView shieldslot = new ImageView(
-                new Image(new File("src/assets/shield_unequipped.png").toURI().toString()));
-        ImageView weaponslot = new ImageView(new Image(new File("src/assets/sword_unequipped.png").toURI().toString()));
-
-        for (int i = 0; i < equippedItems.getRowCount(); i++) {
-            for (int j = 0; j < equippedItems.getColumnCount(); j++) {
-                if (i == 0 && j == 1) {
-                    equippedItems.add(helmetslot, j, i);
+        for (Node node : equippedItems.getChildren()) {
+            Integer rowIndex = GridPane.getRowIndex(node);
+            Integer colIndex = GridPane.getColumnIndex(node);
+            
+            ImageView imageView = (ImageView) node;
+            if (rowIndex != null && colIndex != null) {
+                if (rowIndex == 0 && colIndex == 1) {
+                    imageView.setImage(new Image(new File("src/assets/helmet_slot.png").toURI().toString()));
                 }
 
-                if (i == 1 && j == 0) {
-                    equippedItems.add(weaponslot, j, i);
+                if (rowIndex == 1 && colIndex == 0) {
+                    imageView.setImage(new Image(new File("src/assets/sword_unequipped.png").toURI().toString()));
                 }
 
-                if (i == 1 && j == 1) {
-                    equippedItems.add(armourslot, j, i);
+                if (rowIndex == 1 && colIndex == 1) {
+                    imageView.setImage(new Image(new File("src/assets/armour_slot.png").toURI().toString()));
                 }
 
-                if (i == 1 && j == 2) {
-                    equippedItems.add(shieldslot, j, i);
+                if (rowIndex == 1 && colIndex == 2) {
+                    imageView.setImage(new Image(new File("src/assets/shield_unequipped.png").toURI().toString()));
                 }
-
             }
         }
     }
